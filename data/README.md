@@ -21,6 +21,8 @@ To rebuild from scratch, place these files as shown.
 | `raw/fte/raw_polls.csv` | [FiveThirtyEight pollster-ratings raw polls](https://github.com/fivethirtyeight/data/tree/master/pollster-ratings) | 1998-2022 polls matched to results, with partisan flags. Raw polls only -- 538 grades are not used |
 | `raw/fte/generic_ballot_polls_historical.csv`, `president_approval_polls*.csv`, `governor_polls_historical.csv` | 538 poll lists via Internet Archive snapshots (projects.fivethirtyeight.com/polls-page/data/) | Generic ballot 2018-2024; approval Trump I + Biden |
 | `raw/downballot/specials_YYYY.csv`, `special_elections_index_1989.csv` | [The Downballot data hub](https://www.the-downballot.com/p/data) special-election sheets | 2017-2022, 2025-2026; index from 1989 |
+| `raw/ddhq/generic-ballot.html` | [Decision Desk HQ public generic-ballot page](https://polls.decisiondeskhq.com/averages/generic-ballot/national/lv-rv-adults) | Primary generic-ballot source (VoteHub stopped adding national polls after June 2026) |
+| `raw/app_approval/g_*.csv` | [American Presidency Project](https://www.presidency.ucsb.edu/statistics/data/presidential-job-approval) Gallup approval sheets | Truman-Biden |
 | `raw/county_pres/` | [tonmcg county results](https://github.com/tonmcg/US_County_Level_Election_Results_08-24) | Only used for county-name → FIPS lookup |
 
 ## Known data quirks (handled in `core/build_county_results.py`)
@@ -34,3 +36,8 @@ To rebuild from scratch, place these files as shown.
 - Alaska has no counties (reports by legislative district) — handled separately.
 - Remaining validation gaps: small (2–3%) total-vote gaps in MA/ME/WY/NY from blanks and
   write-ins; Maine 2004 ~7% short (missing towns); two-party votes match exactly.
+
+## Attribution
+
+Race, approval, and generic-ballot poll data from VoteHub (https://votehub.com), licensed CC BY 4.0.
+Generic-ballot polls from Decision Desk HQ. Presidential results by district from The Downballot.

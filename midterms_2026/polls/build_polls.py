@@ -137,6 +137,48 @@ def combine(vh: pd.DataFrame, wk: pd.DataFrame) -> pd.DataFrame:
     return out.sort_values(race + ["end_date"]).reset_index(drop=True)
 
 
+DDHQ_GENERIC = "https://polls.decisiondeskhq.com/averages/generic-ballot/national/lv-rv-adults"
+
+
+def ddhq_generic(refresh: bool = False) -> pd.DataFrame:
+    """Generic-ballot polls from Decision Desk HQ's public polling page.
+
+    VoteHub stopped adding national generic-ballot polls after June 2026, while
+    DDHQ is current. The page embeds its poll list in Next.js data chunks; each
+    poll can carry several population versions (LV / RV / Adults), kept as
+    separate rows so the likely-vs-registered gap can be measured."""
+    path = ROOT / "data" / "raw" / "ddhq" / "generic-ballot.html"
+    if refresh or not path.exists():
+        path.parent.mkdir(parents=True, exist_ok=True)
+        r = requests.get(DDHQ_GENERIC, headers={"User-Agent": "Mozilla/5.0"}, timeout=120)
+        r.raise_for_status()
+        path.write_text(r.text, encoding="utf-8")
+    t = path.read_text(encoding="utf-8")
+    chunks = re.findall(r'self\.__next_f\.push\(\[1,"(.*?)"\]\)', t, re.S)
+    text = "".join(json.loads(f'"{c}"') for c in chunks)
+    dec, rows, seen = json.JSONDecoder(), [], set()
+    for m in re.finditer(r'\{"base_poll_id":', text):
+        try:
+            p, _ = dec.raw_decode(text, m.start())
+        except json.JSONDecodeError:
+            continue
+        for meta in p.get("poll_metadata", []):
+            if meta.get("poll_type") != "Generic Ballot" or meta["id"] in seen:
+                continue
+            seen.add(meta["id"])
+            vals = {e["label"]: e["value"] for e in meta.get("entries", [])}
+            rows.append({
+                "pollster": p["pollster_sponsor_name"], "partisan": "D" if p.get("internal_candidate") == "Democrat"
+                else "R" if p.get("internal_candidate") == "Republican" else "",
+                "sponsors": "", "start_date": pd.to_datetime(p["start_date"]), "end_date": pd.to_datetime(p["end_date"]),
+                "sample_size": meta.get("sample_size"),
+                "population": {"Adults": "a"}.get(meta.get("population"), str(meta.get("population")).lower()),
+                "dem_pct": vals.get("Democrat"), "rep_pct": vals.get("Republican"), "url": p.get("source"),
+                "source": "ddhq",
+            })
+    return pd.DataFrame(rows)
+
+
 def national(vh: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     def flat(df, keys):
         rows = []
@@ -159,6 +201,14 @@ def main(refresh: bool = False) -> None:
     polls = combine(votehub_race_polls(vh, races), wikipedia_race_polls())
     polls.to_csv(PROC / "polls_2026_races.csv", index=False)
     gen, app = national(vh)
+    # DDHQ is the primary generic-ballot source; VoteHub rows add polls DDHQ lacks
+    # (same pollster key within 2 days of a DDHQ poll = duplicate).
+    dd = ddhq_generic(refresh)
+    gen = gen.assign(source="votehub", k=gen["pollster"].map(_pkey))
+    dd_keys = dd.assign(k=dd["pollster"].map(_pkey))[["k", "end_date"]]
+    m = gen.reset_index().merge(dd_keys, on="k", how="left", suffixes=("", "_dd"))
+    dup = m.loc[(m["end_date"] - m["end_date_dd"]).abs() <= pd.Timedelta(days=2), "index"].unique()
+    gen = pd.concat([dd, gen.drop(index=dup).drop(columns="k")], ignore_index=True).sort_values("end_date")
     gen.to_csv(PROC / "polls_2026_generic.csv", index=False)
     app.to_csv(PROC / "polls_2026_approval.csv", index=False)
 

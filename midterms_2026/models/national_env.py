@@ -66,7 +66,7 @@ def fundamentals_model(midterm, net_app, y=None):
 # How noisy do we believe the specials read is BEFORE seeing its (only three) data
 # points? None = weak prior (let the 3 elections speak); a number = a prior centered
 # on that many points of noise. This is a judgment call the user decides.
-SPECIALS_NOISE_PRIOR = None
+SPECIALS_NOISE_PRIOR = 3.0  # user decision 2026-09-22: treat 2018-22 fit as partly luck
 
 
 def offset_model(signal, y=None, bias_sd=3.0, sigma_sd=4.0, sigma_center=None):
