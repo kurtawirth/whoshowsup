@@ -13,6 +13,7 @@ To rebuild from scratch, place these files as shown.
 | `raw/medsl_2022/*.zip` | [MEDSL/2022-elections-official](https://github.com/MEDSL/2022-elections-official) | Precinct returns, `individual_states/` |
 | `raw/medsl_2024/2024-senate-county.csv` | [MEDSL/2024-elections-official](https://github.com/MEDSL/2024-elections-official) | County Senate returns |
 | `raw/wikipedia/*.html` | Wikipedia race pages | Cached automatically by `core/wiki_county_patch.py` |
+| `raw/cvap/county_cvap_*.csv` | [Census CVAP special tabulation](https://www.census.gov/programs-surveys/decennial-census/about/voting-rights/cvap.html), 5-year releases 2006-2010 ... 2020-2024 | County file extracted from each release zip |
 | `raw/county_pres/` | [tonmcg county results](https://github.com/tonmcg/US_County_Level_Election_Results_08-24) | Only used for county-name → FIPS lookup |
 
 ## Known data quirks (handled in `core/build_county_results.py`)
