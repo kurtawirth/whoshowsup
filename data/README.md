@@ -18,6 +18,9 @@ To rebuild from scratch, place these files as shown.
 | `raw/wikipedia/2026_*.html` | Wikipedia 2026 House/Senate/gubernatorial overview pages | Candidate + incumbent tables only; ratings tables ignored by design |
 | `raw/votehub/polls_all.json` | [VoteHub open polling API](https://api.votehub.com/polls) | Race, generic-ballot, approval polls; refreshed with `build_polls.py --refresh` |
 | `raw/wikipedia/2026_*election*.html` | Wikipedia 2026 race pages | Poll tables; refreshed with `scrape_wikipedia_polls.py --refresh` |
+| `raw/fte/raw_polls.csv` | [FiveThirtyEight pollster-ratings raw polls](https://github.com/fivethirtyeight/data/tree/master/pollster-ratings) | 1998-2022 polls matched to results, with partisan flags. Raw polls only -- 538 grades are not used |
+| `raw/fte/generic_ballot_polls_historical.csv`, `president_approval_polls*.csv`, `governor_polls_historical.csv` | 538 poll lists via Internet Archive snapshots (projects.fivethirtyeight.com/polls-page/data/) | Generic ballot 2018-2024; approval Trump I + Biden |
+| `raw/downballot/specials_YYYY.csv`, `special_elections_index_1989.csv` | [The Downballot data hub](https://www.the-downballot.com/p/data) special-election sheets | 2017-2022, 2025-2026; index from 1989 |
 | `raw/county_pres/` | [tonmcg county results](https://github.com/tonmcg/US_County_Level_Election_Results_08-24) | Only used for county-name → FIPS lookup |
 
 ## Known data quirks (handled in `core/build_county_results.py`)
