@@ -9,7 +9,7 @@ Columns
   pres_party          party holding the White House ("D"/"R"); midterm flag
   approval, net_approval   president's job approval as of the forecast date:
                       Gallup (APP) through 2016; all-pollster average from 2017
-  generic_margin      generic-ballot average D-R: 538's average through 2016,
+  generic_margin      generic-ballot average, TWO-PARTY D-R: 538's average through 2016,
                       our own per-pollster average of raw polls from 2018
   generic_lv_margin / generic_rv_margin   same, likely- vs registered-voter polls only
   specials_overperf   mean Democratic overperformance in D-vs-R specials so far this cycle
@@ -96,7 +96,10 @@ def generic_polls() -> pd.DataFrame:
     v = pd.read_csv(PROC / "polls_2026_generic.csv", parse_dates=["end_date"])
     v = v[v["partisan"].isna()][["pollster", "end_date", "population", "dem_pct", "rep_pct"]]
     out = pd.concat([g, v])
-    out["margin"] = out["dem_pct"] - out["rep_pct"]
+    # Two-party margin: elections have no undecideds, so a 43-35 poll is read as
+    # 55.1-44.9 (D+10.3), not D+8. Comparing raw poll margins to two-party
+    # results would understate the leader whenever many voters are undecided.
+    out["margin"] = 100 * (out["dem_pct"] - out["rep_pct"]) / (out["dem_pct"] + out["rep_pct"])
     return out
 
 
@@ -119,7 +122,8 @@ def main() -> None:
                "last_pres_margin": pm.get(y - 2 if y % 4 == 2 else y - 4, np.nan)}
         if y <= 2016:
             t = top[top["date"] == day]
-            row["generic_margin"] = float(t["dem_estimate"].iloc[0] - t["rep_estimate"].iloc[0]) if len(t) else np.nan
+            d_, r_ = (float(t["dem_estimate"].iloc[0]), float(t["rep_estimate"].iloc[0])) if len(t) else (np.nan, np.nan)
+            row["generic_margin"] = 100 * (d_ - r_) / (d_ + r_)  # two-party, as above
         else:
             row["generic_margin"] = _pollster_average(gen, day, ["margin"])["margin"]
             for pop in ("lv", "rv"):
