@@ -14,6 +14,8 @@ To rebuild from scratch, place these files as shown.
 | `raw/medsl_2024/2024-senate-county.csv` | [MEDSL/2024-elections-official](https://github.com/MEDSL/2024-elections-official) | County Senate returns |
 | `raw/wikipedia/*.html` | Wikipedia race pages | Cached automatically by `core/wiki_county_patch.py` |
 | `raw/cvap/county_cvap_*.csv` | [Census CVAP special tabulation](https://www.census.gov/programs-surveys/decennial-census/about/voting-rights/cvap.html), 5-year releases 2006-2010 ... 2020-2024 | County file extracted from each release zip |
+| `raw/downballot/pres_by_cd_2026_lines.csv` | [The Downballot: presidential results by congressional district](https://www.the-downballot.com/p/the-downballots-calculations-of-presidential) (2026 lines, 2024 + unchanged-line 2020) | Google Sheet CSV export; cite as The Downballot |
+| `raw/wikipedia/2026_*.html` | Wikipedia 2026 House/Senate/gubernatorial overview pages | Candidate + incumbent tables only; ratings tables ignored by design |
 | `raw/county_pres/` | [tonmcg county results](https://github.com/tonmcg/US_County_Level_Election_Results_08-24) | Only used for county-name → FIPS lookup |
 
 ## Known data quirks (handled in `core/build_county_results.py`)
