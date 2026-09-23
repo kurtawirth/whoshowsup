@@ -116,19 +116,31 @@ def shrink(est: pd.DataFrame) -> pd.DataFrame:
     return est.assign(beta=mu + k * (est["beta_raw"] - mu), shrink_weight=k, beta_mean=mu, tau=np.sqrt(tau2))
 
 
-def main() -> None:
+def county_panel() -> pd.DataFrame:
     res = pd.read_parquet(PROC / "county_results.parquet")
-    df = top_of_ticket(res).merge(load_cvap(), on=["county_fips", "year"], how="inner")
+    return top_of_ticket(res).merge(load_cvap(), on=["county_fips", "year"], how="inner")
+
+
+def compute(df: pd.DataFrame, exclude_years: tuple = (), min_transitions: int = MIN_TRANSITIONS) -> pd.DataFrame:
+    """Betas and residual volatility per county. `exclude_years` drops every
+    transition into or out of those elections -- used for honest backtests, so
+    the election being predicted never informs the betas."""
     out = []
     # "total" = all votes cast: pure turnout, immune to voters switching parties.
     for party in ("dem", "rep", "total"):
         tr = transitions(df, party)
+        tr = tr[~tr["year"].isin(exclude_years) & ~tr["prev_year"].isin(exclude_years)]
         est = tr.groupby("county_fips").apply(fit_county, include_groups=False)
-        est = shrink(est[est["n"] >= MIN_TRANSITIONS].dropna())
+        est = shrink(est[est["n"] >= min_transitions].dropna())
         out.append(est.add_prefix(f"{party}_"))
     sens = pd.concat(out, axis=1).reset_index()
     names = df.drop_duplicates("county_fips")[["county_fips", "state_po", "name"]]
-    sens = names.merge(sens, on="county_fips")
+    return names.merge(sens, on="county_fips")
+
+
+def main() -> None:
+    df = county_panel()
+    sens = compute(df)
     sens.to_parquet(PROC / "county_turnout_sensitivity.parquet", index=False)
 
     pd.set_option("display.width", 200)
