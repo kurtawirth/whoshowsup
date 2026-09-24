@@ -63,6 +63,11 @@ POP_WEIGHT = {"lv": 1.0, "rv": 0.8, "v": 0.9, "a": 0.6}
 # prior, deliberately modest, and swamped by polls wherever polls exist.
 QUALITY_PER_TIER = 1.0
 TURNOUT_SHARE_MEAN, TURNOUT_SHARE_CONC = 0.65, 6.0
+# Close-seat effect: in all four backtest cycles (2018-2024) Democrats ran ~3 pts ahead of
+# lean + national environment in competitive House districts (not explained by lean
+# compression). Applied as a bump that fades with distance from an even district:
+# bonus * exp(-(lean / width)^2). Estimated by midterms_2026/models/backtest_races.py.
+CLOSE_SEAT_BONUS, CLOSE_SEAT_WIDTH = 3.0, 10.0  # all-years estimate 3.07; leave-one-out 2.7-3.4
 STATE_SHOCK_SD, REGION_SHOCK_SD = 2.0, 2.0
 # Osborn ran ~15 pts ahead of a generic Democrat's expected margin in NE in 2024;
 # shrink toward zero and widen, since independents' appeal is volatile.
@@ -161,43 +166,44 @@ def poll_summary(races: pd.DataFrame) -> pd.DataFrame:
     return races.merge(summ, on=["office", "state_po", "district", "special"], how="left")
 
 
-def simulate() -> None:
-    rng = np.random.default_rng(SEED)
-    races = poll_summary(load_races())
-    races["inc_side"] = races.apply(incumbency_side, axis=1)
-    races["quality_diff"] = np.where(races["office"] == "HOUSE", 0.0, quality_diff(races))
+def run_simulation(races: pd.DataFrame, env: np.ndarray, nat_d0: float, nat_r0: float,
+                   rng: np.random.Generator, n_sims: int = N_SIMS, close_bonus: float = CLOSE_SEAT_BONUS):
+    """The model itself, shared by the 2026 forecast and the backtests.
+
+    `races` needs: office, state_po, district, race_type, race_note, d24/r24 (the
+    baseline presidential vote -- counts or percentages; only their ratio matters),
+    pres24 (baseline two-party margin), inc_side, quality_diff, prior_edge,
+    poll_avg, poll_n_eff. `env` = draws of the national House margin;
+    nat_d0/nat_r0 = the baseline presidential election's national D/R votes.
+    Returns (live races with forecasts, fixed races, margin draws, E, a)."""
     fixed = races["race_type"] == "same_party"
-
-    env = pd.read_csv(OUT / "national_env_2026_draws.csv")["dem_margin"].to_numpy()
-    E = rng.choice(env, N_SIMS)
+    E = rng.choice(env, n_sims)
     E_bar = env.mean()
-    a = rng.beta(TURNOUT_SHARE_MEAN * TURNOUT_SHARE_CONC, (1 - TURNOUT_SHARE_MEAN) * TURNOUT_SHARE_CONC, N_SIMS)
+    a = rng.beta(TURNOUT_SHARE_MEAN * TURNOUT_SHARE_CONC, (1 - TURNOUT_SHARE_MEAN) * TURNOUT_SHARE_CONC, n_sims)
 
-    # National 2024 presidential baseline (two-party), for the swing and the shaped scaling.
-    nat = pd.read_csv(RAW / "medsl" / "president_1976_2024.csv", encoding="latin-1")
-    nat = nat[(nat.year == 2024) & nat.party_simplified.isin(["DEMOCRAT", "REPUBLICAN"])]
-    D0, R0 = (nat.loc[nat.party_simplified == p, "candidatevotes"].sum() for p in ("DEMOCRAT", "REPUBLICAN"))
-    nat_pres = two_party(D0, R0)
+    nat_pres = two_party(nat_d0, nat_r0)
     s = (E / 100 + 1) / 2
-    ratio = s / (1 - s) * R0 / D0                        # multiply D votes by this to hit E nationally
+    ratio = s / (1 - s) * nat_r0 / nat_d0                  # multiply D votes by this to hit E nationally
 
     live = races[~fixed].reset_index(drop=True)
-    d24, r24, pres24 = (live[c].to_numpy()[:, None] for c in ("d24", "r24", "pres24"))
+    d24, r24, pres24 = (live[c].to_numpy(dtype=float)[:, None] for c in ("d24", "r24", "pres24"))
     shaped = two_party(d24 * ratio[None, :], r24)
     swing = pres24 + (E - nat_pres)[None, :]
     base = a[None, :] * shaped + (1 - a[None, :]) * swing
 
     office = live["office"].to_numpy()
     inc = live["inc_side"].to_numpy() * np.vectorize(INCUMBENCY.get)(office)
-    edge = prior_edge(live).to_numpy()
-    adj = live["quality_diff"].to_numpy() * QUALITY_PER_TIER
+    edge = live["prior_edge"].to_numpy(dtype=float)
+    adj = live["quality_diff"].to_numpy(dtype=float) * QUALITY_PER_TIER
+    lean = live["pres24"].to_numpy(dtype=float) - nat_pres
+    adj += np.where(office == "HOUSE", close_bonus * np.exp(-(lean / CLOSE_SEAT_WIDTH) ** 2), 0.0)
     fund_sd = np.where(office == "HOUSE", np.where(live["inc_side"] != 0, FUND_SD["HOUSE_inc"], FUND_SD["HOUSE_open"]),
                        np.vectorize(FUND_SD.get)(np.where(office == "HOUSE", "SEN", office)))
     for i, r in live.iterrows():
         k = (r["office"], r["state_po"], int(r["district"]) if r["office"] == "HOUSE" else 0)
-        if k in INDEPENDENT_ADJ:
+        if k in INDEPENDENT_ADJ and r["race_type"] == "independent":
             shift, extra = INDEPENDENT_ADJ[k]
-            adj[i] += shift if r["race_type"] == "independent" and r["office"] == "SEN" else 0
+            adj[i] += shift
             fund_sd[i] = np.hypot(fund_sd[i], extra)
     # Senate/Governor incumbents: replace the flat incumbency bonus with the personal vote.
     for i in range(len(live)):
@@ -208,26 +214,25 @@ def simulate() -> None:
             inc[i] = live.loc[i, "inc_side"] * (p_["intercept"] + p_["rho"] * prev)
             if not np.isnan(edge[i]):
                 fund_sd[i] = p_["sd"]
-    live["prior_edge"] = edge
     fund = base + (inc + adj)[:, None]
 
     # ---- polls: Bayesian precision weighting against the fundamentals ----
     has_poll = live["poll_avg"].notna().to_numpy()
-    n_eff = live["poll_n_eff"].fillna(0).to_numpy()
+    n_eff = live["poll_n_eff"].fillna(0).to_numpy(dtype=float)
     floor = np.vectorize(POLL_FLOOR.get)(office)
     spread = np.vectorize(POLL_SPREAD.get)(office)
     env_sd = env.std()
     poll_sd = np.sqrt(np.maximum(floor ** 2 - env_sd ** 2, 1.0) + spread ** 2 / np.maximum(n_eff, 1e-9))
     w_poll = np.where(has_poll, fund_sd ** 2 / (fund_sd ** 2 + poll_sd ** 2), 0.0)
-    poll_now = live["poll_avg"].fillna(0).to_numpy()[:, None] + (E - E_bar)[None, :]
+    poll_now = live["poll_avg"].fillna(0).to_numpy(dtype=float)[:, None] + (E - E_bar)[None, :]
     mean = w_poll[:, None] * poll_now + (1 - w_poll[:, None]) * fund
     post_sd = np.where(has_poll, np.sqrt(fund_sd ** 2 * poll_sd ** 2 / (fund_sd ** 2 + poll_sd ** 2)), fund_sd)
 
     # ---- correlated error: state + region + race ----
     states = sorted(races["state_po"].unique())
     regions = sorted(set(REGION.values()))
-    st_shock = rng.normal(0, STATE_SHOCK_SD, (len(states), N_SIMS))
-    rg_shock = rng.normal(0, REGION_SHOCK_SD, (len(regions), N_SIMS))
+    st_shock = rng.normal(0, STATE_SHOCK_SD, (len(states), n_sims))
+    rg_shock = rng.normal(0, REGION_SHOCK_SD, (len(regions), n_sims))
     si = live["state_po"].map({s_: i for i, s_ in enumerate(states)}).to_numpy()
     ri = live["state_po"].map(lambda s_: regions.index(REGION[s_])).to_numpy()
     own_sd = np.sqrt(np.maximum(post_sd ** 2 - STATE_SHOCK_SD ** 2 - REGION_SHOCK_SD ** 2, 2.0 ** 2))
@@ -240,6 +245,22 @@ def simulate() -> None:
     live["poll_weight"] = w_poll
     fixed_r = races[fixed].copy()
     fixed_r["p_dem"] = (fixed_r["race_note"] == "D").astype(float)
+    return live, fixed_r, margin, E, a
+
+
+def simulate() -> None:
+    rng = np.random.default_rng(SEED)
+    races = poll_summary(load_races())
+    races["inc_side"] = races.apply(incumbency_side, axis=1)
+    races["quality_diff"] = np.where(races["office"] == "HOUSE", 0.0, quality_diff(races))
+    races["prior_edge"] = prior_edge(races)
+
+    env = pd.read_csv(OUT / "national_env_2026_draws.csv")["dem_margin"].to_numpy()
+    nat = pd.read_csv(RAW / "medsl" / "president_1976_2024.csv", encoding="latin-1")
+    nat = nat[(nat.year == 2024) & nat.party_simplified.isin(["DEMOCRAT", "REPUBLICAN"])]
+    D0, R0 = (nat.loc[nat.party_simplified == p, "candidatevotes"].sum() for p in ("DEMOCRAT", "REPUBLICAN"))
+    live, fixed_r, margin, E, a = run_simulation(races, env, D0, R0, rng)
+    office = live["office"].to_numpy()
     out = pd.concat([live, fixed_r], ignore_index=True)
     OUT.mkdir(parents=True, exist_ok=True)
     cols = ["office", "state_po", "district", "special", "race_type", "incumbent", "incumbent_party", "inc_side",
