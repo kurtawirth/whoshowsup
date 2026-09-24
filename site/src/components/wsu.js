@@ -111,6 +111,8 @@ export function hexMap(races, layout, {width = 960} = {}) {
   const k = width / (x1 - x0);
   const height = (y1 - y0) * k;
   const R = k / Math.sqrt(3); // circumradius for unit-width pointy-top hexes
+  const gap = Math.max(1.6, R * 0.15); // radius trimmed from every tile -> ~2x this between neighbours
+  const lineW = Math.max(1, Math.min(1.6, gap * 0.55));
   const hexPath = (cx, cy, r) =>
     d3.range(6).map((i) => {
       const a = (Math.PI / 180) * (60 * i - 90);
@@ -125,7 +127,7 @@ export function hexMap(races, layout, {width = 960} = {}) {
   g.selectAll("path.hex").data(hexes).join("a")
     .attr("href", (h) => { const r = byKey.get(`${h.state}-${h.district}`); return r ? raceHref(r.race_id) : null; })
     .append("path").attr("class", "hex")
-    .attr("d", (h) => hexPath(X(h.x), Y(h.y), R - 1.2)) // 2px surface gap between tiles
+    .attr("d", (h) => hexPath(X(h.x), Y(h.y), R - gap)) // every tile identical; the gap holds the state lines
     .attr("fill", (h) => { const r = byKey.get(`${h.state}-${h.district}`); return r ? t[r.rating] : t.hair; })
     .attr("tabindex", 0)
     .on("pointerenter focus", function (event, h) {
@@ -135,20 +137,23 @@ export function hexMap(races, layout, {width = 960} = {}) {
     })
     .on("pointermove", (event) => t_.move(event))
     .on("pointerleave blur", function () { d3.select(this).attr("stroke", null); t_.hide(); });
-  // state outlines
-  svg.append("path").attr("fill", "none").attr("stroke", t.surface).attr("stroke-width", Math.max(4, R * 0.28)).attr("stroke-linecap", "round")
+  // State lines run down the middle of the gap, so they never cut into a tile.
+  svg.append("path").attr("fill", "none").attr("stroke", t["ink-2"]).attr("stroke-width", lineW).attr("stroke-linecap", "round")
     .attr("d", layout.borders.map(([a, b, c, d]) => `M${X(a)},${Y(b)}L${X(c)},${Y(d)}`).join(""))
     .style("pointer-events", "none");
-  // state labels on the largest states only (small ones stay legible via tooltip + table)
+  // Every state gets a label, centered on its most central tile; on narrow screens only the larger states.
   const byState = d3.group(hexes, (h) => h.state);
-  svg.append("g").style("pointer-events", "none").selectAll("text").data([...byState].filter(([, hs]) => hs.length >= 5))
-    .join("text")
-    .attr("x", ([, hs]) => X(d3.mean(hs, (h) => h.x))).attr("y", ([, hs]) => Y(d3.mean(hs, (h) => h.y)))
-    .attr("text-anchor", "middle").attr("dy", "0.35em")
-    .attr("font-size", Math.max(9, R * 0.55)).attr("font-weight", 700)
-    .attr("fill", t.ink).attr("paint-order", "stroke").attr("stroke", t.surface).attr("stroke-width", 3)
-    .attr("opacity", 0.85)
-    .text(([s]) => s);
+  const labels = [...byState].filter(([, hs]) => R >= 10 || hs.length >= 5).map(([s, hs]) => {
+    const mx = d3.mean(hs, (h) => h.x), my = d3.mean(hs, (h) => h.y);
+    const c = d3.least(hs, (h) => (h.x - mx) ** 2 + (h.y - my) ** 2);
+    return {s, x: hs.length >= 5 ? mx : c.x, y: hs.length >= 5 ? my : c.y};
+  });
+  svg.append("g").style("pointer-events", "none").selectAll("text").data(labels).join("text")
+    .attr("x", (d) => X(d.x)).attr("y", (d) => Y(d.y))
+    .attr("text-anchor", "middle").attr("dy", "0.36em")
+    .attr("font-size", Math.max(8, Math.min(13, R * 0.62))).attr("font-weight", 700).attr("letter-spacing", "0.02em")
+    .attr("fill", t.ink).attr("paint-order", "stroke").attr("stroke", t.surface).attr("stroke-width", 2.5).attr("stroke-linejoin", "round")
+    .text((d) => d.s);
   return svg.node();
 }
 
