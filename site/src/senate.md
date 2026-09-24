@@ -86,7 +86,7 @@ display(html`<p>The 51st seat, the one that decides control if every race breaks
 
 ## How the Senate could split
 
-<p class="caption">Every possible outcome across 20,000 simulations; taller bars are more likely. Democrats need 51 seats for control; at 50–50, Vice President Vance breaks ties for Republicans.</p>
+<p class="caption">Each bar is one possible split of the 100 seats; the percentage is how often it came up in 20,000 simulations. It takes 51 seats to control the Senate, and at 50–50 Vice President Vance breaks ties for Republicans.</p>
 
 ```js
 display(seatChart(seats.senate, 51, {width, label: "Senate", total: 100, height: 250}));

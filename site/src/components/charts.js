@@ -6,31 +6,66 @@ import {tokens, pct, margin, date} from "./wsu.js";
 
 const base = (t) => ({background: "transparent", color: t["ink-3"], fontSize: "12px", fontFamily: "var(--sans)"});
 
-/** Seat-count distribution with the control threshold marked. Party-neutral: ticks read
- *  "Democratic–Republican" seats, bars are colored by which party controls in that outcome. */
+/** How the seats could split across all simulations, party-neutral and self-explaining:
+ *  a one-line summary on top ("Democratic control in 58% of simulations | Republican control in 42%"),
+ *  bars colored by who controls in that outcome, and each labelled split spelled out in two
+ *  colored lines under the axis ("51 D" over "49 R"). */
 export function seatChart(dist, need, {width, label, total, height = 230,
-    sides = ["← Republican control", "Democratic control →"], axisLabel = null, tieNeutral = false}) {
+    sides = ["Republican control", "Democratic control"], tieNeutral = false}) {
   const t = tokens();
   const shown = dist.filter((d) => d.p > 0.0004);
-  return Plot.plot({
-    width, height, marginLeft: 8, marginRight: 8, marginBottom: 36, marginTop: 22,
-    x: {label: axisLabel ?? `${label} seats (Democratic–Republican)`, labelAnchor: "center", labelOffset: 32, nice: false,
-      tickFormat: (d) => `${d}–${total - d}`, ticks: width < 500 ? 4 : 7},
+  const isTie = (d) => tieNeutral && d.seats * 2 === total;
+  const pD = d3.sum(dist.filter((d) => d.seats >= need), (d) => d.p);
+  const pTie = d3.sum(dist.filter(isTie), (d) => d.p);
+  const pR = 1 - pD - pTie;
+  const fmtP = (p) => (p > 0.99 ? ">99%" : p < 0.01 ? "<1%" : `${Math.round(p * 100)}%`);
+  const summary = document.createElement("div");
+  summary.className = "seat-summary";
+  summary.innerHTML = `<span class="d">${sides[1]} in <b>${fmtP(pD)}</b> of simulations</span>`
+    + `<span class="r">${sides[0]} in <b>${fmtP(pR)}</b></span>`
+    + (pTie > 0.005 ? `<span class="n">Tie in <b>${fmtP(pTie)}</b></span>` : "");
+
+  // Which splits get a label under the axis: every one if they fit, else a round-number step.
+  const lo = d3.min(shown, (d) => d.seats), hi = d3.max(shown, (d) => d.seats);
+  const perLabel = 46;
+  const fit = Math.floor((width - 16) / perLabel);
+  const step = [1, 2, 5, 10, 20, 25, 50].find((s) => (hi - lo) / s + 1 <= fit) ?? 50;
+  const ticks = d3.range(Math.ceil(lo / step) * step, hi + 1, step);
+  const labelPct = shown.length <= 16 && width >= 420;
+  // Widen the x range if a side of the control line is too narrow for its label.
+  let x0 = lo - 0.6, x1 = hi + 0.6;
+  const room = (text) => text.length * 7 + 14;
+  for (let i = 0; i < 3; i++) {
+    const px = (width - 16) / (x1 - x0), line = need - 0.5;
+    if ((line - x0) * px < room(sides[0])) x0 = line - room(sides[0]) / px;
+    if ((x1 - line) * px < room(sides[1])) x1 = line + room(sides[1]) / px;
+  }
+
+  const plot = Plot.plot({
+    width, height, marginLeft: 8, marginRight: 8, marginBottom: 40, marginTop: labelPct ? 38 : 24,
+    x: {axis: null, domain: [x0, x1]},
     y: {axis: null},
     style: base(t),
     marks: [
       Plot.rectY(shown, {x1: (d) => d.seats - 0.42, x2: (d) => d.seats + 0.42, y: "p",
-        fill: (d) => (d.seats >= need ? t.dem : tieNeutral && d.seats * 2 === total ? t["Toss-up"] : t.rep), rx: 2}),
+        fill: (d) => (d.seats >= need ? t.dem : isTie(d) ? t["Toss-up"] : t.rep), rx: 2}),
+      labelPct ? Plot.text(shown.filter((d) => d.p >= 0.01), {x: "seats", y: "p", dy: -8, text: (d) => fmtP(d.p),
+        fill: t["ink-2"], fontSize: 11}) : null,
       Plot.ruleX([need - 0.5], {stroke: t.ink, strokeWidth: 1}),
-      Plot.text([need - 0.5], {x: (d) => d, frameAnchor: "top", dy: -14, dx: -8, textAnchor: "end",
+      Plot.text([need - 0.5], {x: (d) => d, frameAnchor: "top", dy: labelPct ? -30 : -16, dx: -8, textAnchor: "end",
         text: () => sides[0], fill: t.rep, fontSize: 12, fontWeight: 650}),
-      Plot.text([need - 0.5], {x: (d) => d, frameAnchor: "top", dy: -14, dx: 8, textAnchor: "start",
+      Plot.text([need - 0.5], {x: (d) => d, frameAnchor: "top", dy: labelPct ? -30 : -16, dx: 8, textAnchor: "start",
         text: () => sides[1], fill: t.dem, fontSize: 12, fontWeight: 650}),
       Plot.ruleY([0], {stroke: t.axis}),
+      Plot.text(ticks, {x: (d) => d, y: 0, dy: 13, text: (d) => `${d} D`, fill: t.dem, fontSize: 11, fontWeight: 600}),
+      Plot.text(ticks, {x: (d) => d, y: 0, dy: 27, text: (d) => `${total - d} R`, fill: t.rep, fontSize: 11, fontWeight: 600}),
       Plot.tip(shown, Plot.pointerX({x: "seats", y: "p",
-        title: (d) => `${d.seats} D – ${total - d.seats} R · ${d.seats >= need ? sides[1].replace(" →", "") : sides[0].replace("← ", "")}\n${(d.p * 100).toFixed(1)}% of simulations`}))
+        title: (d) => `${d.seats} Democrats, ${total - d.seats} Republicans\n${d.seats >= need ? sides[1] : isTie(d) ? "Tie" : sides[0]}\n${(d.p * 100).toFixed(1)}% of simulations`}))
     ]
   });
+  const wrap = document.createElement("div");
+  wrap.append(summary, plot);
+  return wrap;
 }
 
 /** A race's forecast margin as nested ranges (50% and 90%) with the median marked. */

@@ -176,6 +176,12 @@ svg text { font-family: var(--sans); }
 figure { max-width: none; margin: 0; }
 
 /* ---------- race page ---------- */
+.seat-summary { display: flex; flex-wrap: wrap; gap: 6px 22px; font-family: var(--sans); font-size: 14px; margin: 4px 0 10px; }
+.seat-summary span { color: var(--ink-2); }
+.seat-summary span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 2px; background: var(--dem); margin-right: 7px; vertical-align: -1px; }
+.seat-summary .r::before { background: var(--rep); }
+.seat-summary .n::before { background: var(--tossup); }
+.seat-summary b { color: var(--ink); }
 .race-title { text-wrap: balance; }
 .race-title .matchup { display: block; text-wrap: balance; }
 .callout { font-family: var(--sans); font-size: 14px; line-height: 1.5; color: var(--ink-2); background: var(--card); box-shadow: 0 0 0 1px var(--card-ring);

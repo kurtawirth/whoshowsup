@@ -41,8 +41,7 @@ display(html`<p><strong>Seats favored to change parties.</strong> ${flipsD.lengt
 
 ```js
 display(seatChart(seats.governor, 19, {width, label: "Governorships", total: 36, height: 230,
-  sides: ["← Republicans win most", "Democrats win most →"], tieNeutral: true,
-  axisLabel: "Governor's races won (Democratic–Republican)"}));
+  sides: ["Republicans win most races", "Democrats win most races"], tieNeutral: true}));
 ```
 
 <p class="caption">Every possible outcome across 20,000 simulations; taller bars are more likely. The line marks a majority of this year's 36 races; the gray bar is an 18–18 tie.</p>
