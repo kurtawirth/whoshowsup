@@ -23,6 +23,8 @@ To rebuild from scratch, place these files as shown.
 | `raw/downballot/specials_YYYY.csv`, `special_elections_index_1989.csv` | [The Downballot data hub](https://www.the-downballot.com/p/data) special-election sheets | 2017-2022, 2025-2026; index from 1989 |
 | `raw/ddhq/generic-ballot.html` | [Decision Desk HQ public generic-ballot page](https://polls.decisiondeskhq.com/averages/generic-ballot/national/lv-rv-adults) | Primary generic-ballot source (VoteHub stopped adding national polls after June 2026) |
 | `raw/app_approval/g_*.csv` | [American Presidency Project](https://www.presidency.ucsb.edu/statistics/data/presidential-job-approval) Gallup approval sheets | Truman-Biden |
+| `raw/tilegrams/us-congressional-districts-2018.json` | [Pitch Interactive Tilegrams](https://github.com/PitchInteractiveInc/tilegrams) (ISC license) | Base layout for the House hex map (`core/build_hexmap.py`) |
+| `raw/census/2024_Gaz_119CDs_national.txt` | [Census 2024 Gazetteer, 119th Congress districts](https://www.census.gov/geographies/reference-files/time-series/geo/gazetteer-files.html) | District center points for hex placement |
 | `raw/county_pres/` | [tonmcg county results](https://github.com/tonmcg/US_County_Level_Election_Results_08-24) | Only used for county-name → FIPS lookup |
 
 ## Known data quirks (handled in `core/build_county_results.py`)
