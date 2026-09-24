@@ -138,17 +138,18 @@ def backtest(df: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-def main() -> None:
+def main(run_backtest: bool = True) -> dict:
     df = load()
     OUT.mkdir(parents=True, exist_ok=True)
     pd.set_option("display.width", 200)
 
-    print("=== Backtest (leave one election out, as of Sept 22) ===")
-    bt = backtest(df)
-    print(bt.round(1).to_string(index=False))
-    print(f"Mean abs error {bt['error'].abs().mean():.1f} pts | 80% interval hit rate "
-          f"{bt['inside_80'].mean():.0%} (should be ~80%)")
-    bt.to_csv(OUT / "national_env_backtest.csv", index=False)
+    if run_backtest:
+        print("=== Backtest (leave one election out, as of the forecast day) ===")
+        bt = backtest(df)
+        print(bt.round(1).to_string(index=False))
+        print(f"Mean abs error {bt['error'].abs().mean():.1f} pts | 80% interval hit rate "
+              f"{bt['inside_80'].mean():.0%} (should be ~80%)")
+        bt.to_csv(OUT / "national_env_backtest.csv", index=False)
 
     print("\n=== 2026 ===")
     reads = fit_reads(df[df["y"].notna()])
@@ -163,6 +164,9 @@ def main() -> None:
     print(f"  Combined national House margin: D{d.mean():+.1f}  "
           f"(80% interval D{np.percentile(d, 10):+.1f} to D{np.percentile(d, 90):+.1f})")
     pd.DataFrame({"dem_margin": d}).to_csv(OUT / "national_env_2026_draws.csv", index=False)
+    pd.DataFrame([{"read": k, "dem_margin": m, "noise_sd": s_, "weight": res["weights"][k]}
+                  for k, (m, s_) in res["parts"].items()]).to_csv(OUT / "national_env_reads.csv", index=False)
+    return res
 
 
 if __name__ == "__main__":

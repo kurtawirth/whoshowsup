@@ -34,8 +34,8 @@ PRES_PARTY = {1976: "R", 1978: "D", 1980: "D", 1982: "R", 1984: "R", 1986: "R", 
               2024: "D", 2026: "R"}
 
 
-def asof(year: int) -> pd.Timestamp:
-    return pd.Timestamp(year, *FORECAST_MMDD)
+def asof(year: int, mmdd: tuple = FORECAST_MMDD) -> pd.Timestamp:
+    return pd.Timestamp(year, *mmdd)
 
 
 def house_margins() -> pd.Series:
@@ -103,7 +103,8 @@ def generic_polls() -> pd.DataFrame:
     return out
 
 
-def main() -> None:
+def main(mmdd: tuple = FORECAST_MMDD) -> pd.DataFrame:
+    """Build the table as of calendar day `mmdd` (month, day) in every year."""
     years = list(range(1976, 2027, 2))
     hm, pm = house_margins(), pres_margins()
     gal, mod, gen = gallup_approval(), modern_approval(), generic_polls()
@@ -113,7 +114,7 @@ def main() -> None:
 
     rows = []
     for y in years:
-        day = asof(y)
+        day = asof(y, mmdd)
         appr_src = gal if y <= 2016 else mod
         a = _pollster_average(appr_src, day, ["approve", "disapprove"])
         row = {"year": y, "pres_party": PRES_PARTY[y], "midterm": y % 4 == 2,
@@ -138,9 +139,9 @@ def main() -> None:
     sign = np.where(df["pres_party"] == "D", 1, -1)
     df["house_margin_pres_party"] = sign * df["house_margin"]
     df.to_csv(PROC / "national_history.csv", index=False)
-    pd.set_option("display.width", 220)
-    print(df.round(1).to_string(index=False))
+    return df
 
 
 if __name__ == "__main__":
-    main()
+    pd.set_option("display.width", 220)
+    print(main().round(1).to_string(index=False))

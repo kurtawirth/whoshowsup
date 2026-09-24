@@ -52,8 +52,20 @@ PERSONAL = {"SEN": {"intercept": 3.0, "rho": 0.43, "sd": 9.1},
 # Governors whose previous race was not their own (first elected 2024, or took office mid-term).
 GOV_NO_PRIOR = {"NH", "SD"}
 FUND_SD = {"HOUSE_inc": 6.0, "HOUSE_open": 7.0, "SEN": 11.0, "GOV": 8.5}
+# Poll-average accuracy depends on how far out we are; core/poll_average_error.py writes
+# the values for the current forecast date. These defaults are the Sept 22 (42 days) fit.
 POLL_FLOOR = {"HOUSE": 9.0, "SEN": 6.0, "GOV": 6.1}
 POLL_SPREAD = {"HOUSE": 1.2, "SEN": 6.5, "GOV": 6.2}
+ELECTION_DAY = pd.Timestamp("2026-11-03")
+
+
+def load_poll_error() -> None:
+    """Replace the default poll-accuracy constants with the latest fitted values."""
+    path = PROC / "poll_average_error.csv"
+    if path.exists():
+        e = pd.read_csv(path).set_index("office")
+        for ours, theirs in [("HOUSE", "House-G"), ("SEN", "Sen-G"), ("GOV", "Gov-G")]:
+            POLL_FLOOR[ours], POLL_SPREAD[ours] = float(e.loc[theirs, "floor"]), float(e.loc[theirs, "spread"])
 PARTISAN_BIAS = {"HOUSE": {"D": 5.4, "R": -5.6}, "SEN": {"D": 3.4, "R": -3.9}, "GOV": {"D": 4.1, "R": -3.5}}
 PARTISAN_WEIGHT = 0.5                  # user decision: corrected partisan polls count half
 POLL_HALF_LIFE_DAYS = 30
@@ -138,9 +150,9 @@ def prior_edge(races: pd.DataFrame) -> pd.Series:
     return out
 
 
-def poll_summary(races: pd.DataFrame) -> pd.DataFrame:
+def poll_summary(races: pd.DataFrame, forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
     polls = pd.read_csv(PROC / "polls_2026_races.csv", parse_dates=["end_date"])
-    polls = polls[polls["end_date"] <= FORECAST_DATE]
+    polls = polls[polls["end_date"] <= forecast_date]
     # Multi-candidate primary polls (e.g. California's all-party primary) can list both
     # nominees; if the pair holds under 60% it was not a head-to-head general poll.
     polls = polls[(polls["dem_pct"] + polls["rep_pct"]) >= 60]
@@ -151,7 +163,7 @@ def poll_summary(races: pd.DataFrame) -> pd.DataFrame:
     polls["margin"] = two_party(polls["dem_pct"], polls["rep_pct"])
     bias = polls.apply(lambda p: PARTISAN_BIAS[p["office"]].get(p["partisan"], 0.0), axis=1)
     polls["adj"] = polls["margin"] - bias
-    age = (FORECAST_DATE - polls["end_date"]).dt.days.clip(lower=0)
+    age = (forecast_date - polls["end_date"]).dt.days.clip(lower=0)
     n = polls["sample_size"].fillna(600).clip(200, 3000)
     polls["w"] = (0.5 ** (age / POLL_HALF_LIFE_DAYS)
                   * np.sqrt(n / 600)
@@ -248,9 +260,11 @@ def run_simulation(races: pd.DataFrame, env: np.ndarray, nat_d0: float, nat_r0: 
     return live, fixed_r, margin, E, a
 
 
-def simulate() -> None:
+def simulate(forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
+    """Run the 2026 forecast as of `forecast_date`; returns the chamber summary."""
+    load_poll_error()
     rng = np.random.default_rng(SEED)
-    races = poll_summary(load_races())
+    races = poll_summary(load_races(), forecast_date)
     races["inc_side"] = races.apply(incumbency_side, axis=1)
     races["quality_diff"] = np.where(races["office"] == "HOUSE", 0.0, quality_diff(races))
     races["prior_edge"] = prior_edge(races)
@@ -295,10 +309,20 @@ def simulate() -> None:
         ("Governors: Democratic wins of 36", f"{np.median(summ['GOV']):.0f}",
          f"{np.percentile(summ['GOV'], 10):.0f}-{np.percentile(summ['GOV'], 90):.0f}"),
     ]
-    pd.DataFrame(lines, columns=["measure", "median", "80% range"]).to_csv(OUT / "chamber_summary.csv", index=False)
-    for l in lines:
-        print(f"{l[0]:<40} {l[1]:>6}   {l[2]}")
+    summary = pd.DataFrame(lines, columns=["measure", "median", "80% range"])
+    summary.to_csv(OUT / "chamber_summary.csv", index=False)
+    # Machine-readable topline for the run history / dashboard.
+    pd.DataFrame([{
+        "forecast_date": forecast_date.date(), "nat_median": np.median(E), "nat_p10": np.percentile(E, 10),
+        "nat_p90": np.percentile(E, 90), "house_median": np.median(house_d), "house_p10": np.percentile(house_d, 10),
+        "house_p90": np.percentile(house_d, 90), "p_house_d": (house_d >= 218).mean(),
+        "senate_median": np.median(sen_d), "senate_p10": np.percentile(sen_d, 10), "senate_p90": np.percentile(sen_d, 90),
+        "p_senate_d": (sen_d >= 51).mean(), "p_osborn": summ["SEN_osborn_win"],
+        "gov_median": np.median(summ["GOV"]), "gov_p10": np.percentile(summ["GOV"], 10), "gov_p90": np.percentile(summ["GOV"], 90),
+    }]).to_csv(OUT / "topline.csv", index=False)
+    return summary
 
 
 if __name__ == "__main__":
-    simulate()
+    for l in simulate().itertuples(index=False):
+        print(f"{l[0]:<40} {l[1]:>6}   {l[2]}")

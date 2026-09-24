@@ -1,8 +1,8 @@
 """How accurate is a race's poll average ~6 weeks before the election?
 
 From 538's raw_polls (1998-2022, results known): for every D-vs-R general-
-election race, average the polls taken 42-100 days before the election --
-roughly what we know on Sept 22 -- using the same rules as the 2026 model
+election race, average the polls taken at least `days_out` days before the
+election (42 = Sept 22) -- using the same rules as the 2026 model
 (partisan polls corrected by the historical bias and given half weight).
 Then compare with the actual margin.
 
@@ -27,13 +27,13 @@ PARTISAN_BIAS = {"D": 3.4, "R": -4.4}   # 2018-2022 estimates from poll_bias_his
 PARTISAN_WEIGHT = 0.5
 
 
-def race_averages() -> pd.DataFrame:
+def race_averages(days_out: int = 42, window: int = 58) -> pd.DataFrame:
     d = pd.read_csv(ROOT / "data" / "raw" / "fte" / "raw_polls.csv", low_memory=False)
     d = d[d["type_simple"].isin(["Sen-G", "Gov-G", "House-G"])]
     d = d[d["cand1_party"].isin(["DEM", "REP"]) & d["cand2_party"].isin(["DEM", "REP"]) & (d["cand1_party"] != d["cand2_party"])]
     sign = np.where(d["cand1_party"] == "DEM", 1, -1)
     d = d.assign(poll=sign * d["margin_poll"], actual=sign * d["margin_actual"])
-    d = d[(d["time_to_election"] >= 42) & (d["time_to_election"] <= 100)]
+    d = d[(d["time_to_election"] >= days_out) & (d["time_to_election"] <= days_out + window)]
     side = d["partisan"].map({"DEM": "D", "REP": "R"})
     d["adj"] = d["poll"] - side.map(PARTISAN_BIAS).fillna(0)
     d["w"] = np.where(side.notna(), PARTISAN_WEIGHT, 1.0)
@@ -55,8 +55,10 @@ def fit(errors: np.ndarray, n: np.ndarray) -> tuple[float, float]:
     return tuple(np.exp(r.x))
 
 
-def main() -> None:
-    a = race_averages()
+def main(days_out: int = 42) -> pd.DataFrame:
+    """Error of poll averages built from polls taken at least `days_out` days before
+    the election -- i.e. what we know on a forecast date that far out."""
+    a = race_averages(days_out)
     rows = []
     for office in ["Sen-G", "Gov-G", "House-G"]:
         x = a[a["type_simple"] == office]
@@ -66,8 +68,8 @@ def main() -> None:
                      "sd_1_poll": np.hypot(floor, spread), "sd_5_polls": np.hypot(floor, spread / np.sqrt(5))})
     res = pd.DataFrame(rows)
     res.to_csv(ROOT / "data" / "processed" / "poll_average_error.csv", index=False)
-    print(res.round(2).to_string(index=False))
+    return res
 
 
 if __name__ == "__main__":
-    main()
+    print(main().round(2).to_string(index=False))

@@ -28,6 +28,22 @@ data/processed/  cleaned, validated datasets
 midterms_2026/   2026-specific polls, models, outputs
 ```
 
+## Running the forecast
+
+```bash
+.venv/Scripts/python.exe midterms_2026/run_forecast.py                 # refresh all data, forecast as of today
+.venv/Scripts/python.exe midterms_2026/run_forecast.py --no-refresh    # rerun the models on cached data (~1 min)
+.venv/Scripts/python.exe midterms_2026/run_forecast.py --date 2026-10-15
+.venv/Scripts/python.exe midterms_2026/run_forecast.py --push          # also commit + push the results
+```
+
+Outputs land in `midterms_2026/outputs/`: `chamber_summary.csv`, `race_forecasts.csv`,
+`forecast_history.csv` (one row per forecast date), and a dated snapshot in `history/`.
+Warnings at the end flag stale sources, changed race counts, or unusually big moves.
+
+Validation: `midterms_2026/models/national_env.py` (national backtest, 1996-2024) and
+`midterms_2026/models/backtest_races.py` (full race model on 2018-2024).
+
 ## Setup
 
 ```bash

@@ -18,10 +18,25 @@ from pathlib import Path
 import re
 
 import pandas as pd
+import requests
 
 ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / "data" / "raw" / "downballot"
 OUT = ROOT / "data" / "processed" / "special_elections.csv"
+
+
+# The Downballot's live 2025-26 Big Board: one tab per year of results.
+LIVE_SHEET = "1JGk1r1VXnxBrAIVHz1C5HTB5jxCO6Zw4QNPivdhyWHw"
+LIVE_TABS = {2025: "415249345", 2026: "1173601967"}
+
+
+def refresh() -> None:
+    """Re-download the current cycle's special-election results (older years are final)."""
+    for year, gid in LIVE_TABS.items():
+        r = requests.get(f"https://docs.google.com/spreadsheets/d/{LIVE_SHEET}/export?format=csv&gid={gid}",
+                         timeout=60)
+        r.raise_for_status()
+        (RAW / f"specials_{year}.csv").write_text(r.text, encoding="utf-8")
 
 
 def _pct(v) -> float:
@@ -57,15 +72,18 @@ def parse_year(path: Path) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-def main() -> None:
+def main(refresh_live: bool = False) -> pd.DataFrame:
+    if refresh_live:
+        refresh()
     df = pd.concat([parse_year(p) for p in sorted(RAW.glob("specials_20*.csv"))], ignore_index=True)
     df = df.dropna(subset=["special_margin"]).sort_values("date").reset_index(drop=True)
     df["year"] = df["date"].dt.year
     df.to_csv(OUT, index=False)
     s = df.groupby("year").agg(n=("overperformance", "count"), mean_overperf=("overperformance", "mean"),
                               median_overperf=("overperformance", "median"), baseline=("pres_baseline", "first"))
-    print(s.round(1).to_string())
+    return s
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+    print(main("--refresh" in sys.argv).round(1).to_string())
