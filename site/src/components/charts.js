@@ -11,14 +11,14 @@ const base = (t) => ({background: "transparent", color: t["ink-3"], fontSize: "1
  *  bars colored by who controls in that outcome, and each labelled split spelled out in two
  *  colored lines under the axis ("51 D" over "49 R"). */
 export function seatChart(dist, need, {width, label, total, height = 230,
-    sides = ["Republican control", "Democratic control"], tieNeutral = false}) {
+    sides = ["Republican control", "Democratic control"], tieNeutral = false, pControl = null}) {
   const t = tokens();
   const shown = dist.filter((d) => d.p > 0.0004);
   const isTie = (d) => tieNeutral && d.seats * 2 === total;
-  const pD = d3.sum(dist.filter((d) => d.seats >= need), (d) => d.p);
+  const pD = pControl ?? d3.sum(dist.filter((d) => d.seats >= need), (d) => d.p);
   const pTie = d3.sum(dist.filter(isTie), (d) => d.p);
   const pR = 1 - pD - pTie;
-  const fmtP = (p) => (p > 0.99 ? ">99%" : p < 0.01 ? "<1%" : `${Math.round(p * 100)}%`);
+  const fmtP = pct;  // same rounding as the headline cards
   const summary = document.createElement("div");
   summary.className = "seat-summary";
   summary.innerHTML = `<span class="d">${sides[1]} in <b>${fmtP(pD)}</b> of simulations</span>`

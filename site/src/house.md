@@ -42,7 +42,7 @@ display(hexMap(races, layout, {width: Math.min(width, 1100)}));
 ## How many seats each party wins
 
 ```js
-display(seatChart(seats.house, 218, {width, label: "House", total: 435, height: 250}));
+display(seatChart(seats.house, 218, {width, label: "House", total: 435, height: 250, pControl: top.p_house_d}));
 ```
 
 ## The most competitive districts

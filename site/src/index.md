@@ -82,8 +82,8 @@ const senDist = seats.senate.filter((d) => d.p > 0.0004);
 ```js
 const colW = width >= 800 ? (width - 32) / 2 : width;
 display(html`<div class="grid-2">
-  <div class="panel"><h3>House</h3>${seatChart(houseDist, 218, {width: colW, label: "House", total: 435})}</div>
-  <div class="panel"><h3>Senate</h3>${seatChart(senDist, 51, {width: colW, label: "Senate", total: 100})}</div>
+  <div class="panel"><h3>House</h3>${seatChart(houseDist, 218, {width: colW, label: "House", total: 435, pControl: top.p_house_d})}</div>
+  <div class="panel"><h3>Senate</h3>${seatChart(senDist, 51, {width: colW, label: "Senate", total: 100, pControl: top.p_senate_d})}</div>
 </div>`);
 ```
 
