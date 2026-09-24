@@ -93,6 +93,17 @@ def races() -> pd.DataFrame:
     return f
 
 
+def poll_label(pollster: str, sponsors) -> str:
+    """"YouGov for University of Texas": name the sponsor, since the link usually goes to the sponsor's release."""
+    if not isinstance(sponsors, str) or not sponsors.strip() or sponsors.startswith("("):
+        return pollster
+    names = [x.strip() for x in sponsors.split(";") if x.strip()]
+    if any(n.lower() in pollster.lower() for n in names):
+        return pollster
+    who = names[0] if len(names) == 1 else f"{names[0]} and {names[1]}" if len(names) == 2 else f"{names[0]} and others"
+    return f"{pollster} for {who}"
+
+
 def race_detail(f: pd.DataFrame) -> dict:
     polls = pd.read_csv(PROC / "polls_2026_races.csv", parse_dates=["end_date", "start_date"])
     polls["race_id"] = polls.apply(race_id, axis=1)
@@ -115,7 +126,7 @@ def race_detail(f: pd.DataFrame) -> dict:
         rid = r["race_id"]
         p = polls[polls["race_id"] == rid].sort_values("end_date", ascending=False)
         out[rid] = {
-            "polls": [{"pollster": x.pollster, "end": x.end_date, "start": x.start_date, "n": x.sample_size,
+            "polls": [{"pollster": poll_label(x.pollster, x.sponsors), "end": x.end_date, "start": x.start_date, "n": x.sample_size,
                        "pop": x.population, "partisan": x.partisan if isinstance(x.partisan, str) else "",
                        "sponsors": x.sponsors if isinstance(x.sponsors, str) else "", "d": x.dem_pct,
                        "r": x.rep_pct, "margin": x.margin, "adj": x.adj, "url": x.url, "source": x.source}
