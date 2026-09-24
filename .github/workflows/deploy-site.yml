@@ -40,6 +40,8 @@ jobs:
 
   deploy:
     needs: build
+    # Pages hosting needs a public repo on the free plan: skip (don't fail) while the repo is private.
+    if: ${{ !github.event.repository.private }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages

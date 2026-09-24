@@ -21,7 +21,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "midterms_2026" / "models"))
-from race_model import race_id, two_party  # noqa: E402
+from race_model import race_id, two_party, PARTISAN_BIAS  # noqa: E402
 
 PROC, RAW = ROOT / "data" / "processed", ROOT / "data" / "raw"
 OUT = ROOT / "midterms_2026" / "outputs"
@@ -97,6 +97,10 @@ def race_detail(f: pd.DataFrame) -> dict:
     polls = pd.read_csv(PROC / "polls_2026_races.csv", parse_dates=["end_date", "start_date"])
     polls["race_id"] = polls.apply(race_id, axis=1)
     polls["margin"] = two_party(polls["dem_pct"], polls["rep_pct"])
+    # sponsored polls: the same correction the model applies (measured historical lean toward the sponsor)
+    polls["bias"] = polls.apply(lambda x: PARTISAN_BIAS[x["office"]].get(x["partisan"], 0.0)
+                                if isinstance(x["partisan"], str) else 0.0, axis=1)
+    polls["adj"] = polls["margin"] - polls["bias"]
     q = pd.read_csv(OUT / "race_quantiles.csv").set_index("race_id")
     # forecast history per race from the dated snapshots
     snaps = []
@@ -114,7 +118,7 @@ def race_detail(f: pd.DataFrame) -> dict:
             "polls": [{"pollster": x.pollster, "end": x.end_date, "start": x.start_date, "n": x.sample_size,
                        "pop": x.population, "partisan": x.partisan if isinstance(x.partisan, str) else "",
                        "sponsors": x.sponsors if isinstance(x.sponsors, str) else "", "d": x.dem_pct,
-                       "r": x.rep_pct, "margin": x.margin, "url": x.url, "source": x.source}
+                       "r": x.rep_pct, "margin": x.margin, "adj": x.adj, "url": x.url, "source": x.source}
                       for x in p.itertuples()],
             "quantiles": q.loc[rid].drop("control_leverage").tolist() if rid in q.index else None,
             "history": hist[hist["race_id"] == rid][["date", "p_dem", "margin_median"]].to_dict("records"),

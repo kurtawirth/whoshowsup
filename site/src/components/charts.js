@@ -1,6 +1,7 @@
 // Who Shows Up -- shared charts (Observable Plot). Thin marks, hairline axes,
 // selective labels, a hover tip on every chart.
 import * as Plot from "npm:@observablehq/plot";
+import * as d3 from "npm:d3";
 import {tokens, pct, margin, date} from "./wsu.js";
 
 const base = (t) => ({background: "transparent", color: t["ink-3"], fontSize: "12px", fontFamily: "var(--sans)"});
@@ -40,6 +41,11 @@ export function marginRange(q, {width, height = 110, actual = null}) {
   ];
   const med = at(50);
   const col = med >= 0 ? t.dem : t.rep;
+  const zones = d3.range(0, 241).map((i) => {
+    const x = at(5) + ((at(95) - at(5)) * i) / 240;
+    const b = x >= at(25) && x <= at(75) ? bands[1] : bands[0];
+    return {x, tip: `${b.label} fall between\n${margin(b.a)} and ${margin(b.b)}`};
+  });
   return Plot.plot({
     width, height, marginLeft: 14, marginRight: 14, marginTop: 28, marginBottom: 34,
     x: {domain: [lo - pad, hi + pad], label: "Forecast margin", labelAnchor: "center", labelOffset: 30,
@@ -55,46 +61,71 @@ export function marginRange(q, {width, height = 110, actual = null}) {
       Plot.text([med], {x: (d) => d, y: 0.9, text: (d) => `Median ${margin(d)}`, fill: t.ink, fontWeight: 700, fontSize: 13}),
       Plot.text([bands[0]], {x: "a", y: 0.12, text: () => margin(at(5)), fill: t["ink-3"], textAnchor: "start"}),
       Plot.text([bands[0]], {x: "b", y: 0.12, text: () => margin(at(95)), fill: t["ink-3"], textAnchor: "end"}),
-      Plot.tip(bands, Plot.pointerX({x: (d) => (d.a + d.b) / 2, y: 0.5,
-        title: (d) => `${d.label} fall between\n${margin(d.a)} and ${margin(d.b)}`}))
+      // Hover zones follow the bands: the dark middle reports the 50% range, the light ends the 90% range.
+      Plot.tip(zones, Plot.pointerX({x: "x", y: 0.5, maxRadius: 12, title: "tip"}))
     ]
   });
 }
 
-/** Polls over time (two-party margin), with the model's recency-weighted trend. */
+/** Polls over time (two-party margin), with the model's trend. Sponsored polls are drawn where they
+ *  were published (hollow diamond) with a dotted line to where the model counts them after correcting
+ *  for the sponsor's historical lean; the trend uses the corrected values, exactly as the model does. */
 export function pollChart(polls, {width, height = 260, halfLife = 14, dLabel = "D", yLabel = "Poll margin (two-party)"}) {
   const t = tokens();
   const data = polls.filter((p) => p.end && p.margin != null)
-    .map((p) => ({...p, date: new Date(`${p.end}T12:00:00`), partisanPoll: !!p.partisan}));
+    .map((p) => ({...p, date: new Date(`${p.end}T12:00:00`), sponsored: !!p.partisan, adj: p.adj ?? p.margin}));
   if (!data.length) return null;
-  // Trend: at each day, the average of polls to date weighted by a 14-day half-life (as the model does).
-  const days = [];
-  const first = new Date(Math.min(...data.map((d) => d.date))), last = new Date(Math.max(...data.map((d) => d.date)));
-  for (let d = new Date(first); d <= last; d.setDate(d.getDate() + 2)) days.push(new Date(d));
-  const trend = days.map((day) => {
+  const fmt = (v) => (Math.abs(v) < 0.05 ? "Even" : margin(v).replace(".0", "").replace("D+", `${dLabel}+`));
+  // Trend: at each day, the average of corrected polls to date, weight halving every 14 days
+  // and half weight for sponsored polls (as the model does).
+  const first = d3.min(data, (d) => d.date), last = d3.max(data, (d) => d.date);
+  const raw = [];
+  for (let d = new Date(first); d <= last; d.setDate(d.getDate() + 2)) {
     let w = 0, s = 0;
     for (const p of data) {
-      const age = (day - p.date) / 864e5;
+      const age = (d - p.date) / 864e5;
       if (age < 0) continue;
-      const wi = Math.pow(0.5, age / halfLife) * (p.partisanPoll ? 0.5 : 1);
-      w += wi; s += wi * p.margin;
+      const wi = Math.pow(0.5, age / halfLife) * (p.sponsored ? 0.5 : 1);
+      w += wi; s += wi * p.adj;
     }
-    return {date: day, margin: w > 0.15 ? s / w : null};
-  }).filter((d) => d.margin != null);
-  const ext = Math.max(8, ...data.map((d) => Math.abs(d.margin))) + 2;
+    if (w > 0.15) raw.push({date: new Date(d), margin: s / w});
+  }
+  // Split the trend where it crosses zero so each side takes its party's color.
+  const trend = [];
+  let seg = 0;
+  raw.forEach((p, i) => {
+    const prev = raw[i - 1];
+    if (prev && (prev.margin >= 0) !== (p.margin >= 0)) {
+      const f = prev.margin / (prev.margin - p.margin);
+      const cross = new Date(+prev.date + f * (p.date - prev.date));
+      trend.push({date: cross, margin: 0, seg});
+      seg += 1;
+      trend.push({date: cross, margin: 0, seg});
+    }
+    trend.push({...p, seg});
+  });
+  const segDem = d3.rollup(trend, (v) => d3.mean(v, (d) => d.margin) >= 0, (d) => d.seg);
+  const ext = Math.max(8, ...data.map((d) => Math.max(Math.abs(d.margin), Math.abs(d.adj)))) + 2;
+  const sponsored = data.filter((d) => d.sponsored);
   return Plot.plot({
     width, height, marginLeft: 44, marginRight: 12,
     x: {label: null, type: "utc"},
-    y: {domain: [-ext, ext], label: yLabel, grid: true,
-      tickFormat: (d) => (d === 0 ? "Even" : margin(d).replace(".0", "").replace("D+", `${dLabel}+`))},
+    y: {domain: [-ext, ext], label: yLabel, grid: true, tickFormat: fmt},
     style: base(t),
     marks: [
+      Plot.rect([0], {x1: first, x2: last, y1: 0, y2: ext, fill: t.dem, fillOpacity: 0.035}),
+      Plot.rect([0], {x1: first, x2: last, y1: -ext, y2: 0, fill: t.rep, fillOpacity: 0.035}),
       Plot.ruleY([0], {stroke: t.axis}),
-      Plot.dot(data, {x: "date", y: "margin", r: 4, fill: (d) => (d.margin >= 0 ? t.dem : t.rep), fillOpacity: 0.55,
-        stroke: t.surface, strokeWidth: 1.5, symbol: (d) => (d.partisanPoll ? "diamond" : "circle")}),
-      Plot.line(trend, {x: "date", y: "margin", stroke: t.ink, strokeWidth: 2, curve: "monotone-x"}),
-      Plot.tip(data, Plot.pointer({x: "date", y: "margin",
-        title: (d) => `${d.pollster}${d.partisan ? ` (${d.partisan}-sponsored)` : ""}\n${date(d.end)} · ${d.n ? `${Math.round(d.n)} ${String(d.pop || "").toUpperCase()}` : ""}\n${margin(d.margin).replace("D+", `${dLabel}+`)}`}))
+      Plot.ruleX(sponsored, {x: "date", y1: "margin", y2: "adj", stroke: t["ink-3"], strokeOpacity: 0.6, strokeDasharray: "2,2"}),
+      Plot.dot(sponsored, {x: "date", y: "margin", r: 4.5, symbol: "diamond", fill: "none",
+        stroke: (d) => (d.margin >= 0 ? t.dem : t.rep), strokeWidth: 1.5, strokeOpacity: 0.8}),
+      Plot.dot(data, {x: "date", y: "adj", r: 4, fill: (d) => (d.adj >= 0 ? t.dem : t.rep),
+        fillOpacity: 0.7, stroke: t.surface, strokeWidth: 1}),
+      Plot.line(trend, {x: "date", y: "margin", z: "seg", stroke: (d) => (segDem.get(d.seg) ? t.dem : t.rep),
+        strokeWidth: 2.5, curve: "monotone-x", strokeLinejoin: "round"}),
+      Plot.tip(data, Plot.pointer({x: "date", y: "adj",
+        title: (d) => `${d.pollster}${d.sponsored ? ` (${d.partisan}-sponsored)` : ""}\n${date(d.end)}${d.n ? ` · ${Math.round(d.n)} ${String(d.pop || "").toUpperCase()}` : ""}\n` +
+          (d.sponsored ? `Published: ${fmt(d.margin)}\nCounted as: ${fmt(d.adj)} after sponsor correction` : fmt(d.margin))}))
     ]
   });
 }

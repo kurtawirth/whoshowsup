@@ -23,15 +23,18 @@ const dName = r.race_type === "independent" ? r.race_note : first(r.dem_candidat
 const rName = first(r.rep_candidate) || "Republican";
 const dTag = r.race_type === "independent" ? "I" : "D";
 const fixed = r.race_type === "same_party";
-const title = fixed ? `${place} ${officeName === "House" ? "House" : officeName} race`
-  : `${place}${r.office === "HOUSE" ? "" : ` ${officeName}${r.special ? " special election" : ""}`}: ${dName} vs. ${rName}`;
+const heading = fixed ? `${place} ${officeName === "House" ? "House" : officeName} race`
+  : `${place}${r.office === "HOUSE" ? "" : ` ${officeName}${r.special ? " special election" : ""}`}`;
 ```
 
 ```js
 display(html`<p class="kicker"><a href="${link(r.office === "HOUSE" ? "house" : r.office === "SEN" ? "senate" : "governors")}">${officeName}</a> · ${r.state_name} · Updated ${date(top.forecast_date)}</p>`);
 ```
 
-# ${title}
+```js
+display(fixed ? html`<h1 class="race-title">${heading}</h1>`
+  : html`<h1 class="race-title">${heading}:<span class="matchup">${dName} vs. ${rName}</span></h1>`);
+```
 
 ```js
 if (fixed) {
@@ -66,6 +69,8 @@ if (!fixed) {
   const start = r.pres24;
   const shift = top.nat_median - top.nat_pres24;
   const other = r.fundamentals_mean - (start + shift);
+  const sp = (det.polls ?? []).filter((p) => p.partisan);
+  const sponsorNote = sp.length ? `After correcting ${sp.length} campaign- or party-sponsored poll${sp.length === 1 ? "" : "s"} for ${sp.length === 1 ? "its" : "their"} sponsor's usual lean (see Polls below).` : "";
   const hasPolls = r.poll_count > 0 && r.poll_avg != null && r.poll_weight > 0;
   const row = (label, value, why, cls = "") => html`<div class="row ${cls}"><div>${label}</div><div class="v">${value}</div><div></div>${why ? html`<div class="why">${why}</div>` : ""}</div>`;
   const inc = r.inc_side === 1 ? `${dName} is the incumbent` : r.inc_side === -1 ? `${rName} is the incumbent` : "No incumbent on the ballot";
@@ -75,7 +80,7 @@ if (!fixed) {
     ${row("National environment shift", `${shift >= 0 ? "+" : "–"}${Math.abs(shift).toFixed(1)}`, `The nation is expected to move from ${margin(top.nat_pres24)} in 2024 to about ${margin(top.nat_median)} in the House vote.`)}
     ${row("Incumbency, candidates and local factors", `${other >= 0 ? "D +" : "R +"}${Math.abs(other).toFixed(1)}`, `${inc}.${r.prior_edge != null ? ` Last time, the incumbent ran ${Math.abs(r.prior_edge).toFixed(0)} points ${r.prior_edge >= 0 ? "ahead of" : "behind"} expectations; part of that carries forward.` : ""}${r.quality_diff ? ` Candidate experience edge: ${r.quality_diff > 0 ? dName : rName}.` : ""}${r.office === "HOUSE" && Math.abs(start - top.nat_pres24) < 15 ? " Includes the close-seat effect found in past elections." : ""}`)}
     ${row("Fundamentals estimate", margin(r.fundamentals_mean), "", "total")}
-    ${hasPolls ? row(`Poll average (${r.poll_count} poll${r.poll_count === 1 ? "" : "s"})`, margin(r.poll_avg), `Polls get ${Math.round(r.poll_weight * 100)}% of the weight here, based on how many there are and how accurate race polling has been at this point in past elections.`) : row("Polls", "None", "No public polls, so this forecast rests on fundamentals.")}
+    ${hasPolls ? row(`Poll average (${r.poll_count} poll${r.poll_count === 1 ? "" : "s"})`, margin(r.poll_avg), `${sponsorNote ? `${sponsorNote} ` : ""}Polls get ${Math.round(r.poll_weight * 100)}% of the weight here, based on how many there are and how accurate race polling has been at this point in past elections.`) : row("Polls", "None", "No public polls, so this forecast rests on fundamentals.")}
     ${row("Final forecast (median)", margin(r.margin_median), "", "total")}
   </div>`);
 }
@@ -84,7 +89,12 @@ if (!fixed) {
 ```js
 const polls = det.polls ?? [];
 if (polls.length) {
-  display(html`<h2>Polls</h2><p class="caption">Two-party margin of each general-election poll. Diamonds are polls sponsored by a campaign or party. The line is a recency-weighted average (each poll's weight halves every 14 days); the forecast also corrects partisan polls for their measured lean.</p>`);
+  const sp = polls.filter((p) => p.partisan);
+  const bySide = {D: sp.filter((p) => p.partisan === "D").length, R: sp.filter((p) => p.partisan === "R").length};
+  const shift = sp.length ? Math.abs(sp[0].margin - sp[0].adj) : 0;
+  const sideText = [bySide.D ? `${bySide.D} ${bySide.D === 1 ? "was" : "were"} paid for by Democrats` : "", bySide.R ? `${bySide.R} by Republicans` : ""].filter(Boolean).join(" and ");
+  display(html`<h2>Polls</h2><p class="caption">Two-party margin of each general-election poll. The line is our polling average: each poll's weight halves every 14 days, and it turns blue or red with whoever leads.</p>`);
+  if (sp.length) display(html`<div class="callout"><b>Why our average can differ from the polls you see.</b> ${sp.length === polls.length ? `${polls.length === 1 ? "The only poll here was" : `All ${polls.length} polls here were`} paid for by ${bySide.D && bySide.R ? "the campaigns or parties" : bySide.D ? "Democrats" : "Republicans"}.` : `Of these ${polls.length} polls, ${sideText}.`} Polls released by a campaign or party have historically made their side look about ${shift.toFixed(0)} points better than the result, so we shift each one by that much before counting it, and count it at half weight. On the chart, the hollow diamond is the poll as published and the solid dot is how we count it.</div>`);
   display(pollChart(polls, {width: Math.min(width, 1000), dLabel: dTag}));
   const tbl = html`<div class="table-wrap"><table class="wsu-table"><thead><tr>
     <th>Pollster</th><th>Dates</th><th class="num hide-sm">Sample</th><th class="num">${dName}</th><th class="num">${rName}</th><th class="num">Margin</th><th class="hide-sm">Source</th></tr></thead>
@@ -93,7 +103,7 @@ if (polls.length) {
       <td>${p.start && p.start !== p.end ? `${date(p.start).replace(/, \d{4}/, "")}–` : ""}${date(p.end)}</td>
       <td class="num hide-sm">${p.n ? `${Math.round(p.n).toLocaleString()} ${String(p.pop ?? "").toUpperCase()}` : "–"}</td>
       <td class="num">${p.d}%</td><td class="num">${p.r}%</td>
-      <td class="num">${margin(p.margin).replace("D+", `${dTag}+`)}</td>
+      <td class="num">${margin(p.margin).replace("D+", `${dTag}+`)}${p.partisan ? html`<div class="adj">counted as ${margin(p.adj).replace("D+", `${dTag}+`)}</div>` : ""}</td>
       <td class="hide-sm">${p.url ? html`<a href="${p.url}" target="_blank" rel="noopener">${p.source === "votehub" ? "Release" : "List"}</a>` : ""}</td>
     </tr>`)}</tbody></table></div>`;
   display(tbl);
@@ -116,10 +126,15 @@ if ((det.history ?? []).length >= 2 && !fixed) {
 ```
 
 ```js
-const others = races.filter((x) => x.state_po === r.state_po && x.race_id !== r.race_id && (x.office !== "HOUSE" || r.office !== "HOUSE" || Math.abs(x.p_dem - 0.5) < 0.4))
-  .sort((a, b) => (a.office === "HOUSE") - (b.office === "HOUSE") || a.district - b.district).slice(0, 14);
+const inState = races.filter((x) => x.state_po === r.state_po && x.race_id !== r.race_id);
+const officeOrder = {GOV: 0, SEN: 1, HOUSE: 2};
+const others = [
+  ...inState.filter((x) => x.office !== "HOUSE").sort((a, b) => officeOrder[a.office] - officeOrder[b.office] || a.special - b.special),
+  ...inState.filter((x) => x.office === "HOUSE" && x.race_type !== "same_party")
+    .sort((a, b) => Math.abs(a.p_dem - 0.5) - Math.abs(b.p_dem - 0.5)).slice(0, 6)
+];
 if (others.length) {
-  display(html`<h2>Other ${r.state_name} races</h2>
+  display(html`<h2>Other ${r.state_name} races</h2><p class="caption">Statewide races first, then the state's most competitive House districts.</p>
     <div class="table-wrap"><table class="wsu-table"><tbody>${others.map((x) => html`<tr><td>${raceLink(x, x.office === "HOUSE" ? `House: ${x.label}` : `${{SEN: "Senate", GOV: "Governor"}[x.office]}${x.special ? " (special)" : ""}`)}</td><td class="num">${favoriteText(x)}</td><td>${ratingPill(x.rating)}</td></tr>`)}</tbody></table></div>`);
 }
 ```
