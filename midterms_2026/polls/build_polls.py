@@ -140,6 +140,7 @@ def combine(vh: pd.DataFrame, wk: pd.DataFrame) -> pd.DataFrame:
 
 
 DDHQ_GENERIC = "https://polls.decisiondeskhq.com/averages/generic-ballot/national/lv-rv-adults"
+DDHQ_APPROVAL = "https://polls.decisiondeskhq.com/averages/presidential-approval/national/lv-rv-adults"
 
 
 def ddhq_generic(refresh: bool = False) -> pd.DataFrame:
@@ -181,6 +182,55 @@ def ddhq_generic(refresh: bool = False) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def _ddhq_records(url: str, cache: str, refresh: bool):
+    """Yield (poll, population-version) records embedded in a DDHQ polling page's Next.js data chunks."""
+    path = ROOT / "data" / "raw" / "ddhq" / cache
+    if refresh or not path.exists():
+        path.parent.mkdir(parents=True, exist_ok=True)
+        r = requests.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=120)
+        r.raise_for_status()
+        path.write_text(r.text, encoding="utf-8")
+    t = path.read_text(encoding="utf-8")
+    chunks = re.findall(r'self\.__next_f\.push\(\[1,"(.*?)"\]\)', t, re.S)
+    text = "".join(json.loads(f'"{c}"') for c in chunks)
+    dec, seen = json.JSONDecoder(), set()
+    for m in re.finditer(r'\{"base_poll_id":', text):
+        try:
+            p, _ = dec.raw_decode(text, m.start())
+        except json.JSONDecodeError:
+            continue
+        for meta in p.get("poll_metadata", []):
+            if meta["id"] in seen:
+                continue
+            seen.add(meta["id"])
+            yield p, meta
+
+
+def ddhq_approval(refresh: bool = False) -> pd.DataFrame:
+    """Presidential approval polls from Decision Desk HQ (current; VoteHub's national
+    approval feed thinned out after June 2026). One row per poll: a poll released for
+    several populations keeps its all-adults version (the historical approval series
+    is adults), else registered voters, else likely voters."""
+    rank = {"Adults": 0, "RV": 1, "LV": 2}
+    rows = []
+    for p, meta in _ddhq_records(DDHQ_APPROVAL, "approval.html", refresh):
+        if meta.get("poll_type") != "Presidential Approval":
+            continue
+        vals = {e["label"]: e["value"] for e in meta.get("entries", [])}
+        if vals.get("Approve") is None or vals.get("Disapprove") is None:
+            continue
+        rows.append({
+            "pollster": p["pollster_sponsor_name"], "partisan": "", "sponsors": "",
+            "start_date": pd.to_datetime(p["start_date"]), "end_date": pd.to_datetime(p["end_date"]),
+            "sample_size": meta.get("sample_size"),
+            "population": {"Adults": "a"}.get(meta.get("population"), str(meta.get("population")).lower()),
+            "approve": vals["Approve"], "disapprove": vals["Disapprove"], "url": p.get("source"),
+            "source": "ddhq", "_poll": p["base_poll_id"], "_rank": rank.get(meta.get("population"), 3),
+        })
+    df = pd.DataFrame(rows).sort_values(["_poll", "_rank"]).drop_duplicates("_poll")
+    return df.drop(columns=["_poll", "_rank"]).sort_values("end_date").reset_index(drop=True)
+
+
 def national(vh: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     def flat(df, keys):
         rows = []
@@ -212,6 +262,14 @@ def main(refresh: bool = False) -> None:
     dup = m.loc[(m["end_date"] - m["end_date_dd"]).abs() <= pd.Timedelta(days=2), "index"].unique()
     gen = pd.concat([dd, gen.drop(index=dup).drop(columns="k")], ignore_index=True).sort_values("end_date")
     gen.to_csv(PROC / "polls_2026_generic.csv", index=False)
+    # Approval: DDHQ first, VoteHub fills in polls DDHQ lacks (same duplicate rule as above).
+    da = ddhq_approval(refresh)
+    app = app.assign(source="votehub", k=app["pollster"].map(_pkey))
+    da_keys = da.assign(k=da["pollster"].map(_pkey))[["k", "end_date"]]
+    m = app.reset_index().merge(da_keys, on="k", how="left", suffixes=("", "_dd"))
+    dup = m.loc[(m["end_date"] - m["end_date_dd"]).abs() <= pd.Timedelta(days=2), "index"].unique()
+    app = pd.concat([da, app.drop(index=dup).drop(columns="k")], ignore_index=True).sort_values("end_date")
+    app = app[app["end_date"] >= "2025-01-20"]
     app.to_csv(PROC / "polls_2026_approval.csv", index=False)
 
     print(f"Race polls: {len(polls)}  (by source: {polls['source'].value_counts().to_dict()})")

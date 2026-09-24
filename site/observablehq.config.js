@@ -14,6 +14,13 @@ const nav = [
   ["/methodology", "How it works"]
 ];
 
+// Which nav item a page belongs to (race pages count under their chamber).
+function section(path = "") {
+  const m = path.match(/^\/race\/(house|senate|governor)-/);
+  if (m) return {house: "/house", senate: "/senate", governor: "/governors"}[m[1]];
+  return path === "/index" || path === "/" ? "/" : path;
+}
+
 export default {
   title: "Who Shows Up",
   root: "src",
@@ -35,12 +42,12 @@ export default {
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">`,
-  header: `
+  header: ({path}) => `
 <a class="wsu-brand" href="${base}">
   <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 28 9v14L16 30 4 23V9z" fill="var(--safe-d)"/><path d="M16 2 28 9v14L16 30z" fill="var(--safe-r)"/><path d="m10.5 16.5 4 4 7.5-9" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
   <span>Who Shows Up</span>
 </a>
-<nav class="wsu-nav" aria-label="Sections">${nav.map(([p, n]) => `<a href="${base}${p.slice(1)}">${n}</a>`).join("")}</nav>`,
+<nav class="wsu-nav" aria-label="Sections">${nav.map(([p, n]) => `<a href="${base}${p.slice(1)}"${section(path) === p ? ' aria-current="page"' : ""}>${n}</a>`).join("")}</nav>`,
   footer: `
 <div class="wsu-footer">
   <p><strong>Who Shows Up</strong> is an independent, turnout-first forecast of the 2026 midterms by <a href="https://github.com/kurtawirth">Kurt Wirth, Ph.D.</a>

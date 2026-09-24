@@ -28,23 +28,37 @@ const style = {background: "transparent", color: t["ink-3"], fontSize: "12px"};
 
 ## Three readings, one estimate
 
-<p class="caption">Each reading is corrected for how it has missed in past elections, then weighted by how accurate it has been. The bars show each reading's typical historical miss.</p>
+<p class="caption">Each reading is corrected for how it has missed in past elections, then weighted by how accurate it has been. The shaded band is where the result has landed 80% of the time given that reading: the wider and fainter the band, the less reliable the reading, and the less it counts.</p>
 
 ```js
 const readRows = reads.map((r) => ({...r, name: readInfo[r.read][0], lo: r.dem_margin - 1.28 * r.noise_sd, hi: r.dem_margin + 1.28 * r.noise_sd}));
 readRows.push({name: "Combined estimate", dem_margin: env.median, lo: env.p10, hi: env.p90, weight: 1, combined: true});
+// Range: the combined estimate and the readings that carry real weight; a very uncertain reading's band runs off the edge.
+const core = readRows.filter((d) => d.combined || d.weight >= 0.2);
+const xlo = Math.floor(d3.min(core, (d) => d.lo)) - 1, xhi = Math.ceil(d3.max(core, (d) => d.hi)) + 1;
+const clip = (v) => Math.max(xlo, Math.min(xhi, v));
+const narrow = width < 640;
 display(Plot.plot({
-  width, height: 60 * readRows.length + 50, marginLeft: 150, marginRight: 30,
-  x: {label: "House popular vote margin", grid: true, tickFormat: (d) => (d === 0 ? "Even" : margin(d).replace(".0", ""))},
+  width, height: 62 * readRows.length + 40, marginLeft: narrow ? 110 : 150, marginRight: narrow ? 64 : 120, marginTop: 10,
+  x: {domain: [xlo, xhi], label: null, grid: true, tickFormat: (d) => (d === 0 ? "Even" : margin(d).replace(".0", "")), ticks: narrow ? 5 : 10},
   y: {domain: readRows.map((d) => d.name), label: null},
   style,
   marks: [
-    Plot.ruleX([0], {stroke: t.axis}),
-    Plot.ruleY(readRows, {x1: "lo", x2: "hi", y: "name", stroke: (d) => (d.combined ? t.ink : t["ink-3"]), strokeWidth: (d) => (d.combined ? 4 : 2), strokeLinecap: "round"}),
+    Plot.ruleX(xlo <= 0 ? [0] : [], {stroke: t.axis}),
+    // band: 80% range, opacity by weight
+    Plot.barX(readRows, {x1: (d) => clip(d.lo), x2: (d) => clip(d.hi), y: "name", insetTop: 21, insetBottom: 21, rx: 6,
+      fill: (d) => (d.combined ? t.ink : t.dem), fillOpacity: (d) => (d.combined ? 0.22 : 0.1 + 0.5 * d.weight)}),
+    // a band that runs past the chart edge gets a fade-out arrow so it doesn't look like a hard end
+    Plot.text(readRows.filter((d) => d.lo < xlo), {x: xlo, y: "name", text: () => "‹", dx: 6, fill: t["ink-3"], fontSize: 16}),
+    Plot.text(readRows.filter((d) => d.hi > xhi), {x: xhi, y: "name", text: () => "›", dx: -6, fill: t["ink-3"], fontSize: 16}),
     Plot.dot(readRows.filter((d) => !d.combined), {x: "dem_margin", y: "name", r: 6, fill: t.dem, stroke: t.surface, strokeWidth: 2}),
     Plot.dot(readRows.filter((d) => d.combined), {x: "dem_margin", y: "name", r: 8, fill: t.ink, stroke: t.surface, strokeWidth: 2}),
-    Plot.text(readRows, {x: "dem_margin", y: "name", dy: -16, text: (d) => `${margin(d.dem_margin)}${d.combined ? "" : ` · ${Math.round(d.weight * 100)}% weight`}`, fill: t.ink, fontWeight: 600}),
-    Plot.tip(readRows, Plot.pointerY({x: "dem_margin", y: "name", title: (d) => `${d.name}\n${margin(d.dem_margin)}\n80% range: ${margin(d.lo)} to ${margin(d.hi)}`}))
+    Plot.text(readRows.filter((d) => d.lo < xlo && d.hi > xhi), {x: (xlo + xhi) / 2, y: "name", dy: 17, fill: t["ink-3"], fontSize: 11,
+      text: (d) => `Range runs off the chart (${margin(d.lo)} to ${margin(d.hi)}): too uncertain to count for much`}),
+    Plot.text(readRows, {x: "dem_margin", y: "name", dy: -17, text: (d) => margin(d.dem_margin), fill: t.ink, fontWeight: 700}),
+    Plot.text(readRows, {x: xhi, y: "name", dx: 12, textAnchor: "start", fill: (d) => (d.combined ? t.ink : t["ink-2"]), fontWeight: 600,
+      text: (d) => (d.combined ? "Forecast" : `${Math.round(d.weight * 100)}% weight`)}),
+    Plot.tip(readRows, Plot.pointerY({x: "dem_margin", y: "name", title: (d) => `${d.name}: ${margin(d.dem_margin)}${d.combined ? "" : ` (${Math.round(d.weight * 100)}% of the weight)`}\n80% range: ${margin(d.lo)} to ${margin(d.hi)}`}))
   ]
 }));
 display(html`<div class="grid-2" style="margin-top:8px">${reads.map((r) => html`<div class="panel"><h3>${readInfo[r.read][0]}</h3><p style="font-size:16px">${readInfo[r.read][1]}</p></div>`)}</div>`);
@@ -111,32 +125,43 @@ display(html`<p>Democrats ran about 10 points ahead of the presidential baseline
 ## Presidential approval
 
 ```js
-const app = national.approval.map((d) => ({...d, date: new Date(`${d.end_date}T12:00:00`), net: d.approve - d.disapprove}));
-const appDays = d3.utcDays(d3.min(app, (d) => d.date), d3.max(app, (d) => d.date), 4);
+const app = national.approval.map((d) => ({...d, date: new Date(`${d.end_date}T12:00:00`)}));
+const appDays = d3.utcDays(d3.min(app, (d) => d.date), d3.max(app, (d) => d.date), 3);
+// Average: each poll's weight halves every 14 days (the same recency rule as the other poll averages).
 const appTrend = appDays.map((day) => {
-  const xs = app.filter((d) => (day - d.date) / 864e5 >= 0 && (day - d.date) / 864e5 < 30);
-  return {date: day, approve: d3.mean(xs, (d) => d.approve), disapprove: d3.mean(xs, (d) => d.disapprove)};
-}).filter((d) => d.approve);
+  let w = 0, a = 0, dsp = 0;
+  for (const p of app) {
+    const age = (day - p.date) / 864e5;
+    if (age < 0 || age > 60) continue;
+    const wi = Math.pow(0.5, age / 14);
+    w += wi; a += wi * p.approve; dsp += wi * p.disapprove;
+  }
+  return w > 0.5 ? {date: day, approve: a / w, disapprove: dsp / w} : null;
+}).filter(Boolean);
+display(html`<div class="seat-summary" style="margin-top:0"><span class="appr">Approve</span><span class="disappr">Disapprove</span></div>`);
 display(Plot.plot({
-  width, height: 280, marginLeft: 40,
-  x: {label: null, type: "utc"}, y: {label: "Share of adults (%)", grid: true, domain: [25, 65]},
+  width, height: 300, marginLeft: 40, marginRight: 12,
+  x: {label: null, type: "utc"}, y: {label: "Share of respondents (%)", grid: true, domain: [25, 70]},
   style,
   marks: [
-    Plot.line(appTrend, {x: "date", y: "approve", stroke: t.ink, strokeWidth: 2}),
-    Plot.line(appTrend, {x: "date", y: "disapprove", stroke: t["ink-3"], strokeWidth: 2}),
-    Plot.text(appTrend.slice(-1), {x: "date", y: "approve", text: (d) => `Approve ${d.approve.toFixed(0)}%`, dx: -4, dy: 14, textAnchor: "end", fill: t.ink, fontWeight: 700}),
-    Plot.text(appTrend.slice(-1), {x: "date", y: "disapprove", text: (d) => `Disapprove ${d.disapprove.toFixed(0)}%`, dx: -4, dy: -12, textAnchor: "end", fill: t["ink-2"], fontWeight: 700}),
-    Plot.tip(appTrend, Plot.pointerX({x: "date", y: "approve", title: (d) => `${date(d.date.toISOString().slice(0, 10))}\nApprove ${d.approve.toFixed(1)}%\nDisapprove ${d.disapprove.toFixed(1)}%`}))
+    Plot.dot(app, {x: "date", y: "disapprove", r: 2.2, fill: t["ink-3"], fillOpacity: 0.22}),
+    Plot.dot(app, {x: "date", y: "approve", r: 2.2, fill: t.ink, fillOpacity: 0.16}),
+    Plot.line(appTrend, {x: "date", y: "disapprove", stroke: t["ink-3"], strokeWidth: 2.5, curve: "monotone-x"}),
+    Plot.line(appTrend, {x: "date", y: "approve", stroke: t.ink, strokeWidth: 2.5, curve: "monotone-x"}),
+    Plot.text(appTrend.slice(-1), {x: "date", y: "approve", text: (d) => `Approve ${d.approve.toFixed(0)}%`, dx: -4, dy: 16, textAnchor: "end", fill: t.ink, fontWeight: 700}),
+    Plot.text(appTrend.slice(-1), {x: "date", y: "disapprove", text: (d) => `Disapprove ${d.disapprove.toFixed(0)}%`, dx: -4, dy: -14, textAnchor: "end", fill: t["ink-2"], fontWeight: 700}),
+    Plot.tip(app, Plot.pointer({x: "date", y: "approve", title: (d) => `${d.pollster}\n${date(d.end_date)}\nApprove ${d.approve}% · Disapprove ${d.disapprove}%`}))
   ]
 }));
 ```
 
-<p class="caption">President Trump's job approval, 30-day average of polls from VoteHub. Approval feeds the fundamentals reading, which gets the least weight because it has been the least accurate predictor on its own.</p>
+<p class="caption">President Trump's job approval. Each faded dot is a poll; the lines are the average, with each poll's weight halving every two weeks. Polls from Decision Desk HQ and VoteHub. Approval feeds the fundamentals reading, which gets the least weight because it has been the least accurate predictor on its own.</p>
 
 ## Every election since 1978
 
 ```js
 const hist = national.history.filter((d) => d.house_margin != null && d.year >= 1978);
+display(html`<div class="hist-legend"><span class="bars"><i class="d"></i><i class="r"></i>Actual House popular vote</span><span class="polls"><i></i>What generic-ballot polls said in late September</span></div>`);
 display(Plot.plot({
   width, height: 300, marginLeft: 44,
   y: {label: "House popular vote margin", grid: true, tickFormat: (d) => (d === 0 ? "Even" : margin(d).replace(".0", ""))},
@@ -144,11 +169,11 @@ display(Plot.plot({
   marks: [
     Plot.ruleY([0], {stroke: t.axis}),
     Plot.barY(hist, {x: "year", y: "house_margin", fill: (d) => (d.house_margin >= 0 ? t.dem : t.rep), rx: 2, insetLeft: 0.5, insetRight: 0.5}),
-    Plot.dot(hist.filter((d) => d.generic_margin != null), {x: "year", y: "generic_margin", r: 4, fill: t.surface, stroke: t.ink, strokeWidth: 2}),
+    Plot.tickY(hist.filter((d) => d.generic_margin != null), {x: "year", y: "generic_margin", stroke: t.ink, strokeWidth: 3, inset: 1}),
     Plot.tip(hist, Plot.pointerX({x: "year", y: "house_margin", title: (d) => `${d.year}${d.midterm ? " (midterm)" : ""}\nHouse vote: ${margin(d.house_margin)}${d.generic_margin != null ? `\nLate-Sept. generic ballot: ${margin(d.generic_margin)}` : ""}${d.net_approval != null ? `\nPresident's net approval: ${d.net_approval > 0 ? "+" : ""}${d.net_approval.toFixed(0)}` : ""}`}))
   ],
   x: {type: "band", label: null, tickFormat: (d) => (d % 4 === 2 ? `'${String(d).slice(2)}` : "")}
 }));
 ```
 
-<p class="caption">Bars: the actual House popular vote. Circles: the generic ballot in late September of that year (since 1996). In nearly every year the circle sits to the Democratic side of the bar.</p>
+<p class="caption">Polling lines start in 1996. In 14 of the 15 elections since, the late-September polls were more Democratic than the final result (the black line sits above the bar's end), by 3.4 points on average. That's why the model corrects for it.</p>
