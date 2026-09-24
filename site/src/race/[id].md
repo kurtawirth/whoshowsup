@@ -3,7 +3,7 @@ title: Race forecast
 ---
 
 ```js
-import {tokens, pct, margin, date, probBar, ratingPill, favoriteText, raceLink, link} from "../components/wsu.js";
+import {tokens, pct, pctPair, margin, date, probBar, ratingPill, favoriteText, raceLink, link} from "../components/wsu.js";
 import {marginRange, pollChart, probHistory, pastResults} from "../components/charts.js";
 const races = FileAttachment("../data/races.json").json();
 const details = FileAttachment("../data/race_detail.json").json();
@@ -43,11 +43,11 @@ if (fixed) {
   const pD = r.p_dem, lead = pD >= 0.5;
   display(html`<div class="race-head">
     <div class="race-cand"><div class="name">${dName} <span class="party-chip ${dTag === "I" ? "i" : "d"}">${dTag}</span></div>
-      <div class="pct" style="color:${dTag === "I" ? t.ind : t.dem}">${pct(pD)}</div>
+      <div class="pct" style="color:${dTag === "I" ? t.ind : t.dem}">${pctPair(pD)[0]}</div>
       <div class="role">${r.inc_side === 1 ? "Incumbent" : ""}</div></div>
     <div class="race-vs">chance of winning</div>
     <div class="race-cand right"><div class="name"><span class="party-chip r">R</span> ${rName}</div>
-      <div class="pct" style="color:${t.rep}">${pct(1 - pD)}</div>
+      <div class="pct" style="color:${t.rep}">${pctPair(pD)[1]}</div>
       <div class="role">${r.inc_side === -1 ? "Incumbent" : ""}</div></div>
   </div>`);
   display(probBar(pD, {dLabel: dName, rLabel: rName, dColor: dTag === "I" ? t.ind : t.dem}));

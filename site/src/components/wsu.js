@@ -29,6 +29,14 @@ export const ratingOf = (p) =>
 
 // ---------- formatting ----------
 export const pct = (p) => (p >= 0.995 ? ">99%" : p <= 0.005 ? "<1%" : `${Math.round(p * 100)}%`);
+/** Both sides of a two-way chance, rounded so they always add to 100: the favorite is rounded
+ *  (matching pct() of the larger side) and the other side gets the remainder. [dem, rep] */
+export function pctPair(pD) {
+  const lead = Math.max(pD, 1 - pD);
+  if (lead >= 0.995) return pD >= 0.5 ? [">99%", "<1%"] : ["<1%", ">99%"];
+  const L = Math.round(lead * 100), other = `${100 - L}%`;
+  return pD >= 0.5 ? [`${L}%`, other] : [other, `${L}%`];
+}
 export const margin = (m) => (m == null || isNaN(m) ? "–" : m >= 0 ? `D+${Math.abs(m).toFixed(1)}` : `R+${Math.abs(m).toFixed(1)}`);
 export const marginShort = (m) => (m == null || isNaN(m) ? "–" : m >= 0 ? `D+${Math.round(Math.abs(m))}` : `R+${Math.round(Math.abs(m))}`);
 export const date = (s) => new Date(`${s}T12:00:00`).toLocaleDateString("en-US", {month: "short", day: "numeric", year: "numeric"});
@@ -242,8 +250,9 @@ export function probBar(pD, {dLabel = "Democrats", rLabel = "Republicans", dColo
   const lg = document.createElement("div");
   lg.className = "prob-legend";
   const l = document.createElement("span"), r = document.createElement("span");
-  l.append(Object.assign(document.createElement("b"), {textContent: pct(pD)}), ` ${dLabel}`);
-  r.append(`${rLabel} `, Object.assign(document.createElement("b"), {textContent: pct(1 - pD)}));
+  const [dp, rp] = pctPair(pD);
+  l.append(Object.assign(document.createElement("b"), {textContent: dp}), ` ${dLabel}`);
+  r.append(`${rLabel} `, Object.assign(document.createElement("b"), {textContent: rp}));
   lg.append(l, r);
   wrap.append(bar, lg);
   return wrap;

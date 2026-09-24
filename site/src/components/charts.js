@@ -2,7 +2,7 @@
 // selective labels, a hover tip on every chart.
 import * as Plot from "npm:@observablehq/plot";
 import * as d3 from "npm:d3";
-import {tokens, pct, margin, date} from "./wsu.js";
+import {tokens, pct, pctPair, margin, date} from "./wsu.js";
 
 const base = (t) => ({background: "transparent", color: t["ink-3"], fontSize: "12px", fontFamily: "var(--sans)"});
 
@@ -21,9 +21,14 @@ export function seatChart(dist, need, {width, label, total, height = 230,
   const fmtP = pct;  // same rounding as the headline cards
   const summary = document.createElement("div");
   summary.className = "seat-summary";
-  summary.innerHTML = `<span class="d">${sides[1]} in <b>${fmtP(pD)}</b> of simulations</span>`
-    + `<span class="r">${sides[0]} in <b>${fmtP(pR)}</b></span>`
-    + (pTie > 0.005 ? `<span class="n">Tie in <b>${fmtP(pTie)}</b></span>` : "");
+  // Round D and tie; Republicans get the remainder so the shares add to 100.
+  const nD = Math.round(pD * 100), nT = pTie > 0.005 ? Math.round(pTie * 100) : 0, nR = 100 - nD - nT;
+  const show = (n) => (n >= 100 ? ">99%" : n <= 0 ? "<1%" : `${n}%`);
+  // Without a tie, use the same pairing as the headline cards (favorite rounded, other side the remainder).
+  const [dTxt, rTxt] = nT ? [show(nD), show(nR)] : pctPair(pD);
+  summary.innerHTML = `<span class="d">${sides[1]} in <b>${dTxt}</b> of simulations</span>`
+    + `<span class="r">${sides[0]} in <b>${rTxt}</b></span>`
+    + (nT ? `<span class="n">Tie in <b>${show(nT)}</b></span>` : "");
 
   // Which splits get a label under the axis: every one if they fit, else a round-number step.
   const lo = d3.min(shown, (d) => d.seats), hi = d3.max(shown, (d) => d.seats);
