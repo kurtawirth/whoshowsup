@@ -95,12 +95,12 @@ display(html`<div class="grid-2">
 const pivotal = races.filter((r) => r.office === "SEN" && r.control_leverage != null)
   .sort((a, b) => b.control_leverage - a.control_leverage).slice(0, 8);
 display(html`<div class="table-wrap"><table class="wsu-table">
-  <thead><tr><th>Race</th><th>Matchup</th><th class="num">Forecast</th><th></th><th class="num">Swing in control</th></tr></thead>
+  <thead><tr><th>Race</th><th>Matchup</th><th class="num">Forecast</th><th class="hide-sm"></th><th class="num">Swing in control</th></tr></thead>
   <tbody>${pivotal.map((r) => html`<tr>
     <td>${raceLink(r)}</td>
     <td>${r.race_type === "independent" ? `${r.race_note} (I)` : r.dem_candidate} vs. ${String(r.rep_candidate).split(";")[0]}</td>
     <td class="num">${favoriteText(r)}</td>
-    <td>${miniBar(r.p_dem)}</td>
+    <td class="hide-sm">${miniBar(r.p_dem)}</td>
     <td class="num">${Math.round(r.control_leverage * 100)} pts</td>
   </tr>`)}</tbody></table></div>`);
 ```

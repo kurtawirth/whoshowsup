@@ -122,9 +122,12 @@ export function pastResults(rows, {width}) {
   const t = tokens();
   if (!rows.length) return null;
   const data = rows.map((r) => ({...r, key: `${r.year} ${r.office}`}));
-  const ext = (Math.max(10, ...data.map((d) => Math.abs(d.margin))) + 4) * 1.18; // room for value labels
+  // Leave ~46px beyond the longest bar for its value label, whatever the chart width.
+  const marginLeft = width < 500 ? 96 : 120;
+  const half = (width - marginLeft - 20) / 2;
+  const ext = (Math.max(10, ...data.map((d) => Math.abs(d.margin))) + 1) / Math.max(0.35, 1 - 46 / half);
   return Plot.plot({
-    width, height: 26 * data.length + 40, marginLeft: 120, marginRight: 20,
+    width, height: 26 * data.length + 40, marginLeft, marginRight: 20,
     x: {domain: [-ext, ext], label: null, tickFormat: (d) => (d === 0 ? "Even" : margin(d).replace(".0", ""))},
     y: {label: null, domain: data.map((d) => d.key)},
     style: base(t),

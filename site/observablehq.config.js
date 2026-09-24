@@ -43,7 +43,7 @@ export default {
 <nav class="wsu-nav" aria-label="Sections">${nav.map(([p, n]) => `<a href="${base}${p.slice(1)}">${n}</a>`).join("")}</nav>`,
   footer: `
 <div class="wsu-footer">
-  <p><strong>Who Shows Up</strong> is an independent, turnout-first forecast of the 2026 midterms by <a href="https://github.com/kurtawirth">kurtawirth</a>.
+  <p><strong>Who Shows Up</strong> is an independent, turnout-first forecast of the 2026 midterms by <a href="https://github.com/kurtawirth">Kurt Wirth, Ph.D.</a>
   It uses no pundit ratings and no other forecasters' models.</p>
   <p>Poll data from <a href="https://votehub.com">VoteHub</a> (CC BY 4.0), <a href="https://polls.decisiondeskhq.com">Decision Desk HQ</a>, and Wikipedia;
   results from the <a href="https://electionlab.mit.edu">MIT Election Data + Science Lab</a>; district presidential results and special elections from

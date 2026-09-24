@@ -36,7 +36,7 @@ A district's starting point is its 2024 presidential result under the new 2026 l
 - **Turnout-shaped:** each party's vote in the district rises or falls in proportion to its vote nationally, the way an enthusiasm gap works.
 - **Persuasion-shaped:** every district's margin moves by the same amount, the way voters changing sides works.
 
-Across eight past elections, the turnout-shaped version explained about 65% of the pattern on average, but it swung from 0% to 100% depending on the year. So each simulation draws its own mix, and our uncertainty about what kind of year 2026 is flows into the odds.
+Across eight past elections, the turnout-shaped version explained about 65% of the pattern on average, but it swung from 0% to 100% depending on the year. So each simulation draws its own mix, and our uncertainty about what kind of year 2026 will be flows into the odds.
 
 Then come adjustments measured from past races:
 
@@ -103,9 +103,12 @@ const ch = (track.backtest_chambers ?? []).filter((d) => d.races > 0);
 const officeName = {HOUSE: "House", SEN: "Senate races", GOV: "Governor races"};
 const key = (d) => `${d.year} ${officeName[d.office]}`;
 // House totals (~200) and statewide totals (~15) sit on different scales: two panels, not one axis.
-const chamberPlot = (rows, w, label) => Plot.plot({
-  width: w, height: 34 * rows.length + 50, marginLeft: 130, marginRight: 20,
-  x: {label, grid: true},
+const chamberPlot = (rows, w, label) => {
+  const lo = Math.min(...rows.map((d) => Math.min(d.p10, d.actual_D))), hi = Math.max(...rows.map((d) => Math.max(d.p90, d.actual_D)));
+  const pad = Math.max(2, (hi - lo) * 0.08);
+  return Plot.plot({
+  width: w, height: 34 * rows.length + 56, marginLeft: 130, marginRight: 20, marginBottom: 44,
+  x: {label, grid: true, domain: [lo - pad, hi + pad], labelAnchor: "center", labelOffset: 36},
   y: {domain: rows.map(key), label: null},
   style,
   marks: [
@@ -116,7 +119,8 @@ const chamberPlot = (rows, w, label) => Plot.plot({
 Forecast: ${d.pred_median_D} (80% range ${d.p10}–${d.p90})
 Actual: ${d.actual_D}`}))
   ]
-});
+  });
+};
 const half = width >= 800 ? (width - 32) / 2 : width;
 display(html`<div class="grid-2">
   <div class="panel"><h3>House</h3>${chamberPlot(ch.filter((d) => d.office === "HOUSE"), half, "Democratic seats among districts modeled")}</div>

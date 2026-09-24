@@ -87,14 +87,14 @@ if (polls.length) {
   display(html`<h2>Polls</h2><p class="caption">Two-party margin of each general-election poll. Diamonds are polls sponsored by a campaign or party. The line is a recency-weighted average (each poll's weight halves every 14 days); the forecast also corrects partisan polls for their measured lean.</p>`);
   display(pollChart(polls, {width: Math.min(width, 1000), dLabel: dTag}));
   const tbl = html`<div class="table-wrap"><table class="wsu-table"><thead><tr>
-    <th>Pollster</th><th>Dates</th><th class="num">Sample</th><th class="num">${dName}</th><th class="num">${rName}</th><th class="num">Margin</th><th>Source</th></tr></thead>
+    <th>Pollster</th><th>Dates</th><th class="num hide-sm">Sample</th><th class="num">${dName}</th><th class="num">${rName}</th><th class="num">Margin</th><th class="hide-sm">Source</th></tr></thead>
     <tbody>${polls.slice(0, 60).map((p) => html`<tr>
       <td>${p.pollster}${p.partisan ? html` <span class="rating-pill" style="background:${t.hair};color:${t.ink}">${p.partisan}-sponsored</span>` : ""}</td>
       <td>${p.start && p.start !== p.end ? `${date(p.start).replace(/, \d{4}/, "")}–` : ""}${date(p.end)}</td>
-      <td class="num">${p.n ? `${Math.round(p.n).toLocaleString()} ${String(p.pop ?? "").toUpperCase()}` : "–"}</td>
+      <td class="num hide-sm">${p.n ? `${Math.round(p.n).toLocaleString()} ${String(p.pop ?? "").toUpperCase()}` : "–"}</td>
       <td class="num">${p.d}%</td><td class="num">${p.r}%</td>
       <td class="num">${margin(p.margin).replace("D+", `${dTag}+`)}</td>
-      <td>${p.url ? html`<a href="${p.url}" target="_blank" rel="noopener">${p.source === "votehub" ? "Release" : "List"}</a>` : ""}</td>
+      <td class="hide-sm">${p.url ? html`<a href="${p.url}" target="_blank" rel="noopener">${p.source === "votehub" ? "Release" : "List"}</a>` : ""}</td>
     </tr>`)}</tbody></table></div>`;
   display(tbl);
   if (polls.length > 60) display(html`<p class="caption">Showing the 60 most recent of ${polls.length} polls.</p>`);

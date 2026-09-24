@@ -85,6 +85,14 @@ body { font-family: var(--sans); color: var(--ink); -webkit-font-smoothing: anti
 .wsu-brand span { font-weight: 800; font-size: 19px; letter-spacing: -0.02em; }
 .wsu-nav { display: flex; gap: 22px; flex-wrap: wrap; font-size: 14px; font-weight: 500; }
 .wsu-nav a { color: var(--ink-2) !important; text-decoration: none !important; padding: 4px 0; border-bottom: 2px solid transparent; }
+@media (max-width: 640px) {
+  :root { --observablehq-header-height: 84px; }
+  #observablehq-header { left: 0; right: 0; margin: 0; gap: 4px 0; padding: 12px 16px 0; align-content: flex-start; }
+  .wsu-nav { flex-wrap: nowrap; overflow-x: auto; width: 100%; gap: 18px; scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(to right, #000 88%, transparent); mask-image: linear-gradient(to right, #000 88%, transparent); }
+  .wsu-nav::-webkit-scrollbar { display: none; }
+  .wsu-nav a { white-space: nowrap; padding: 6px 0 10px; }
+}
 .wsu-nav a:hover { color: var(--ink) !important; }
 .wsu-nav a[aria-current] { color: var(--ink) !important; border-bottom-color: var(--ink); }
 
@@ -185,6 +193,9 @@ figure { max-width: none; margin: 0; }
   .race-cand .pct { font-size: 36px; }
   .race-head { grid-template-columns: 1fr 1fr; }
   .race-vs { display: none; }
+  .hide-sm { display: none; }
+  .stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 20px; }
+  .stat-row .s .v { font-size: 19px; }
 }
 
 /* framework defaults cap tables and figures at 640px -- let ours use the column */

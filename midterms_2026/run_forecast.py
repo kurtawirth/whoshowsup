@@ -13,6 +13,7 @@ Steps
   5. Race simulation
   6. Checks: data freshness, race counts, big moves since the last run
   7. Snapshot to outputs/history/<date>/ and append to outputs/forecast_history.csv
+  8. Website: export site/src/data/*.json and test-build the site (GitHub Actions deploys it on push)
 
 Anything that looks wrong is printed as a WARNING at the end; it does not stop
 the run, because a partial refresh is still better than none -- but read them.
@@ -116,6 +117,17 @@ def record(asof: pd.Timestamp) -> pd.DataFrame:
     return top
 
 
+def build_site() -> None:
+    """Test-build the website so a broken page is caught here, not after deploy."""
+    npm = shutil.which("npm") or shutil.which("npm.cmd")
+    if npm is None:
+        raise RuntimeError("npm not found; skipped the site build")
+    r = subprocess.run([npm, "run", "build"], cwd=ROOT / "site", capture_output=True, text=True)
+    if r.returncode != 0:
+        print(r.stdout[-3000:], r.stderr[-3000:])
+        raise RuntimeError("site build failed")
+
+
 def push(asof: pd.Timestamp) -> None:
     gh_msg = f"Forecast update {asof.date()}\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
     subprocess.run(["git", "add", "-A"], cwd=ROOT, check=True)
@@ -138,7 +150,7 @@ def main() -> None:
 
     import build_races, scrape_wikipedia_polls, build_polls, build_candidate_quality  # noqa: E401
     import build_special_elections, build_national_history, poll_average_error      # noqa: E401
-    import national_env, race_model                                                 # noqa: E401
+    import national_env, race_model, export_site_data                               # noqa: E401
 
     if refresh:
         step("Refresh overview pages + specials")(refresh_sources)
@@ -154,6 +166,8 @@ def main() -> None:
 
     step("Checks")(check_freshness, asof)
     top = step("Snapshot + history")(record, asof)
+    step("Website data")(export_site_data.main)
+    step("Website test build")(build_site)
 
     print("\n" + "=" * 60)
     if summary is not None:
