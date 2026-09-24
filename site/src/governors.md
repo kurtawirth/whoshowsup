@@ -3,7 +3,7 @@ title: Governor forecasts
 ---
 
 ```js
-import {tokens, pct, margin, date, stateMap, ratingLegend, ratingPill, raceTable, raceLink, miniBar, favoriteText, withSearch, RATINGS} from "./components/wsu.js";
+import {tokens, pct, margin, date, stateMap, ratingLegend, ratingPill, raceTable, raceLink, miniBar, favoriteText, withSearch, RATINGS, RACE_SORTS} from "./components/wsu.js";
 import {seatChart} from "./components/charts.js";
 const top = FileAttachment("data/topline.json").json();
 const seats = FileAttachment("data/seats.json").json();
@@ -37,13 +37,15 @@ const list = (rs) => rs.sort((a, b) => Math.abs(b.p_dem - 0.5) - Math.abs(a.p_de
 display(html`<p><strong>Seats favored to change parties.</strong> ${flipsD.length ? `Toward Democrats: ${list(flipsD)}.` : "No Republican-held seats currently lean Democratic."} ${flipsR.length ? `Toward Republicans: ${list(flipsR)}.` : "No Democratic-held seats currently lean Republican."}</p>`);
 ```
 
-## How many governorships Democrats win
+## How the 36 races could split
 
 ```js
-display(seatChart(seats.governor, 19, {width, label: "Governorships (of 36)", height: 230}));
+display(seatChart(seats.governor, 19, {width, label: "Governorships", total: 36, height: 230,
+  sides: ["← Republicans win most", "Democrats win most →"], tieNeutral: true,
+  axisLabel: "Governor's races won (Democratic–Republican)"}));
 ```
 
-<p class="caption">The line marks 19: winning more than half of this year's 36 races.</p>
+<p class="caption">Every possible outcome across 20,000 simulations; taller bars are more likely. The line marks a majority of this year's 36 races; the gray bar is an 18–18 tie.</p>
 
 ## Every governor's race
 
@@ -58,5 +60,5 @@ display(raceTable(withSearch(gov), [
   {key: "p_dem", label: "Chance", num: true, sort: true, defaultDir: -1, render: (r) => favoriteText(r)},
   {key: "bar", label: "", render: (r) => miniBar(r.p_dem)},
   {key: "rating", label: "Rating", sort: true, sortValue: (r) => RATINGS.indexOf(r.rating), render: (r) => ratingPill(r.rating)}
-], {sort: {key: "p_dem", dir: -1}, pageSize: 40}));
+], {sorts: RACE_SORTS, pageSize: 40}));
 ```

@@ -6,24 +6,29 @@ import {tokens, pct, margin, date} from "./wsu.js";
 
 const base = (t) => ({background: "transparent", color: t["ink-3"], fontSize: "12px", fontFamily: "var(--sans)"});
 
-/** Seat-count distribution with the control threshold marked. */
-export function seatChart(dist, need, {width, label, height = 230}) {
+/** Seat-count distribution with the control threshold marked. Party-neutral: ticks read
+ *  "Democratic–Republican" seats, bars are colored by which party controls in that outcome. */
+export function seatChart(dist, need, {width, label, total, height = 230,
+    sides = ["← Republican control", "Democratic control →"], axisLabel = null, tieNeutral = false}) {
   const t = tokens();
   const shown = dist.filter((d) => d.p > 0.0004);
   return Plot.plot({
     width, height, marginLeft: 8, marginRight: 8, marginBottom: 36, marginTop: 22,
-    x: {label: `${label} seats won by Democrats`, labelAnchor: "center", labelOffset: 32, tickFormat: "d", nice: false},
+    x: {label: axisLabel ?? `${label} seats (Democratic–Republican)`, labelAnchor: "center", labelOffset: 32, nice: false,
+      tickFormat: (d) => `${d}–${total - d}`, ticks: width < 500 ? 4 : 7},
     y: {axis: null},
     style: base(t),
     marks: [
       Plot.rectY(shown, {x1: (d) => d.seats - 0.42, x2: (d) => d.seats + 0.42, y: "p",
-        fill: (d) => (d.seats >= need ? t.dem : t.rep), rx: 2}),
+        fill: (d) => (d.seats >= need ? t.dem : tieNeutral && d.seats * 2 === total ? t["Toss-up"] : t.rep), rx: 2}),
       Plot.ruleX([need - 0.5], {stroke: t.ink, strokeWidth: 1}),
-      Plot.text([need - 0.5], {x: (d) => d, frameAnchor: "top", dy: -14, textAnchor: "middle",
-        text: () => `${need} for control`, fill: t["ink-2"], fontSize: 12, fontWeight: 600}),
+      Plot.text([need - 0.5], {x: (d) => d, frameAnchor: "top", dy: -14, dx: -8, textAnchor: "end",
+        text: () => sides[0], fill: t.rep, fontSize: 12, fontWeight: 650}),
+      Plot.text([need - 0.5], {x: (d) => d, frameAnchor: "top", dy: -14, dx: 8, textAnchor: "start",
+        text: () => sides[1], fill: t.dem, fontSize: 12, fontWeight: 650}),
       Plot.ruleY([0], {stroke: t.axis}),
       Plot.tip(shown, Plot.pointerX({x: "seats", y: "p",
-        title: (d) => `${d.seats} Democratic seats\n${(d.p * 100).toFixed(1)}% of simulations`}))
+        title: (d) => `${d.seats} D – ${total - d.seats} R · ${d.seats >= need ? sides[1].replace(" →", "") : sides[0].replace("← ", "")}\n${(d.p * 100).toFixed(1)}% of simulations`}))
     ]
   });
 }

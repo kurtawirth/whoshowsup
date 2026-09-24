@@ -3,7 +3,7 @@ title: House forecast
 ---
 
 ```js
-import {tokens, pct, margin, date, hexMap, ratingLegend, ratingPill, raceTable, raceLink, miniBar, favoriteText, withSearch, RATINGS} from "./components/wsu.js";
+import {tokens, pct, margin, date, hexMap, ratingLegend, ratingPill, raceTable, raceLink, miniBar, favoriteText, withSearch, RATINGS, RACE_SORTS} from "./components/wsu.js";
 import {seatChart} from "./components/charts.js";
 const top = FileAttachment("data/topline.json").json();
 const seats = FileAttachment("data/seats.json").json();
@@ -42,7 +42,7 @@ display(hexMap(races, layout, {width: Math.min(width, 1100)}));
 ## How many seats each party wins
 
 ```js
-display(seatChart(seats.house, 218, {width, label: "House", height: 250}));
+display(seatChart(seats.house, 218, {width, label: "House", total: 435, height: 250}));
 ```
 
 ## The most competitive districts
@@ -73,7 +73,7 @@ display(raceTable(withSearch(house), [
   ...columns.slice(0, 7),
   {key: "rating", label: "Rating", sort: true, sortValue: (r) => RATINGS.indexOf(r.rating), render: (r) => ratingPill(r.rating)}
 ], {
-  sort: {key: "p_dem", dir: -1},
+  sorts: RACE_SORTS,
   filters: [
     {key: "state", label: "All states", options: states.map((s) => [s, s]), test: (r, v) => r.state_po === v},
     {key: "rating", label: "All ratings", options: RATINGS.map((r) => [r, r]), test: (r, v) => r.rating === v},

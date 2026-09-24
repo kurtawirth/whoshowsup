@@ -185,8 +185,10 @@ export function stateMap(races, topo, states, {office, width = 960} = {}) {
       d3.select(this).attr("stroke", has ? t.surface : t.axis).attr("stroke-width", has ? 1.2 : 0.8);
       t_.hide();
     });
-  // Special elections (FL, OH) marked with a ring so the second race isn't hidden
-  const specials = races.filter((r) => r.office === office && r.special);
+  // A special election in a state that ALSO has a regular race gets a small marker so the second
+  // race isn't hidden. (In 2026, Florida's and Ohio's only Senate races are specials: no marker.)
+  const specials = races.filter((r) => r.office === office && r.special
+    && byState.get(r.state_po).some((x) => !x.special));
   for (const r of specials) {
     const f = feats.find((f) => fipsToPo[f.id] === r.state_po);
     if (!f) continue;
@@ -204,7 +206,7 @@ export function ratingLegend({independent = false, noRace = null} = {}) {
   const el = document.createElement("div");
   el.className = "legend";
   const items = RATINGS.map((r) => [r, t[r]]);
-  if (independent) items.push(["Independent (Osborn)", t.ind]);
+  if (independent) items.push(["Independent", t.ind]);
   if (noRace) items.push([noRace, t.surface]);
   for (const [label, color] of items) {
     const s = document.createElement("span");
@@ -248,7 +250,15 @@ export function probBar(pD, {dLabel = "Democrats", rLabel = "Republicans", dColo
 }
 
 // ---------- sortable, searchable race table ----------
-export function raceTable(rows, columns, {search = true, filters = [], pageSize = 50, sort} = {}) {
+/** Sort presets for race tables (shown as a "Sort" menu). */
+export const RACE_SORTS = [
+  {label: "Most competitive", value: (r) => (r.race_type === "same_party" ? 9 : Math.abs(r.p_dem - 0.5)), dir: 1},
+  {label: "Most Democratic", value: (r) => r.p_dem, dir: -1},
+  {label: "Most Republican", value: (r) => r.p_dem, dir: 1},
+  {label: "State A–Z", value: (r) => `${r.state_name} ${String(r.district ?? 0).padStart(2, "0")}`, dir: 1}
+];
+
+export function raceTable(rows, columns, {search = true, filters = [], pageSize = 50, sort, sorts = null} = {}) {
   const root = document.createElement("div");
   const controls = document.createElement("div");
   controls.className = "table-controls";
@@ -270,6 +280,20 @@ export function raceTable(rows, columns, {search = true, filters = [], pageSize 
     sel.addEventListener("change", () => { active[f.key] = sel.value; shown = pageSize; render(); });
     controls.append(sel);
   }
+  let preset = sorts ? sorts[0] : null;
+  let sortSel = null;
+  if (sorts) {
+    sortSel = document.createElement("select");
+    sortSel.setAttribute("aria-label", "Sort races");
+    sorts.forEach((o, i) => sortSel.append(new Option(`Sort: ${o.label}`, String(i))));
+    sortSel.append(new Option("Sort: by column", "col"));
+    sortSel.lastChild.hidden = true;
+    sortSel.addEventListener("change", () => {
+      if (sortSel.value === "col") return;
+      preset = sorts[+sortSel.value]; sortCol = null; shown = pageSize; render();
+    });
+    controls.append(sortSel);
+  }
   const count = document.createElement("span");
   count.className = "count";
   controls.append(count);
@@ -278,7 +302,7 @@ export function raceTable(rows, columns, {search = true, filters = [], pageSize 
   const table = document.createElement("table");
   table.className = "wsu-table";
   const thead = table.createTHead().insertRow();
-  let sortCol = sort?.key ?? null, sortDir = sort?.dir ?? 1;
+  let sortCol = sorts ? null : sort?.key ?? null, sortDir = sort?.dir ?? 1;
   for (const c of columns) {
     const th = document.createElement("th");
     th.textContent = c.label;
@@ -288,6 +312,8 @@ export function raceTable(rows, columns, {search = true, filters = [], pageSize 
       th.addEventListener("click", () => {
         sortDir = sortCol === c.key ? -sortDir : c.defaultDir ?? 1;
         sortCol = c.key;
+        preset = null;
+        if (sortSel) sortSel.value = "col";
         render();
       });
     }
@@ -304,7 +330,10 @@ export function raceTable(rows, columns, {search = true, filters = [], pageSize 
   function render() {
     let data = rows.filter((r) => (!q || (r._search ?? "").includes(q)) &&
       filters.every((f) => !active[f.key] || f.test(r, active[f.key])));
-    if (sortCol) {
+    if (preset) {
+      data = [...data].sort((a, b) => preset.dir * d3.ascending(preset.value(a), preset.value(b))
+        || d3.ascending(a.state_name, b.state_name) || d3.ascending(a.district, b.district));
+    } else if (sortCol) {
       const col = columns.find((c) => c.key === sortCol);
       const val = col.sortValue ?? ((r) => r[col.key]);
       data = [...data].sort((a, b) => sortDir * d3.ascending(val(a), val(b)));

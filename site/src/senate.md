@@ -3,7 +3,7 @@ title: Senate forecast
 ---
 
 ```js
-import {tokens, pct, margin, date, stateMap, ratingLegend, ratingPill, raceTable, raceLink, miniBar, favoriteText, withSearch, RATINGS, raceHref, tip} from "./components/wsu.js";
+import {tokens, pct, margin, date, stateMap, ratingLegend, ratingPill, raceTable, raceLink, miniBar, favoriteText, withSearch, RATINGS, RACE_SORTS, raceHref, tip} from "./components/wsu.js";
 import {seatChart} from "./components/charts.js";
 const top = FileAttachment("data/topline.json").json();
 const seats = FileAttachment("data/seats.json").json();
@@ -33,7 +33,7 @@ display(ratingLegend({independent: true, noRace: "No Senate race in 2026"}));
 display(stateMap(races, topo, states, {office: "SEN", width: Math.min(width, 1000)}));
 ```
 
-<p class="caption">Florida and Ohio each hold a special election; the small circle is the special race. Nebraska's race pits Republican Pete Ricketts against independent Dan Osborn, with no Democrat on the ballot.</p>
+<p class="caption">Florida and Ohio hold special elections to fill the rest of Marco Rubio's and JD Vance's terms. Nebraska's race pits Republican Pete Ricketts against independent Dan Osborn, with no Democrat on the ballot.</p>
 
 ## The path to 51
 
@@ -84,10 +84,12 @@ const who = tipping.race_type === "independent" ? "Osborn" : "Democrats";
 display(html`<p>The 51st seat, the one that decides control if every race breaks in order, is currently <strong>${tipping.label}</strong>. ${tipping.p_dem >= 0.5 ? `${who} win it in ${pct(tipping.p_dem)}` : `Republicans win it in ${pct(1 - tipping.p_dem)}`} of simulations.</p>`);
 ```
 
-## How many seats Democrats win
+## How the Senate could split
+
+<p class="caption">Every possible outcome across 20,000 simulations; taller bars are more likely. Democrats need 51 seats for control; at 50–50, Vice President Vance breaks ties for Republicans.</p>
 
 ```js
-display(seatChart(seats.senate, 51, {width, label: "Senate", height: 250}));
+display(seatChart(seats.senate, 51, {width, label: "Senate", total: 100, height: 250}));
 ```
 
 ## Every Senate race
@@ -104,5 +106,5 @@ const columns = [
   {key: "bar", label: "", render: (r) => miniBar(r.p_dem)},
   {key: "rating", label: "Rating", sort: true, sortValue: (r) => RATINGS.indexOf(r.rating), render: (r) => ratingPill(r.rating)}
 ];
-display(raceTable(withSearch(sen), columns, {sort: {key: "p_dem", dir: -1}, pageSize: 40}));
+display(raceTable(withSearch(sen), columns, {sorts: RACE_SORTS, pageSize: 40}));
 ```
