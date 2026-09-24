@@ -104,7 +104,9 @@ def wikipedia_race_polls() -> pd.DataFrame:
         partisan=w["pollster_party"].fillna(""),
         sponsors=w["sponsored"].map({True: "(partisan client per Wikipedia)", False: ""}),
         population=w["population"].fillna("").str.lower(),
-        source="wikipedia", url=w["source_page"].map(lambda t: f"https://en.wikipedia.org/wiki/{t}"),
+        # the poll's own release (from its Wikipedia footnote) when there is one, else the Wikipedia list
+        source="wikipedia", url=w.get("source_url", pd.Series("", index=w.index)).fillna("").where(
+            lambda u: u != "", w["source_page"].map(lambda t: f"https://en.wikipedia.org/wiki/{t}")),
     )[["office", "state_po", "district", "special", "dem_candidate", "rep_candidate", "pollster",
        "partisan", "sponsors", "start_date", "end_date", "sample_size", "population",
        "dem_pct", "rep_pct", "other_pct", "undecided_pct", "source", "url"]]

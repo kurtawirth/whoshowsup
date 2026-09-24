@@ -104,7 +104,7 @@ if (polls.length) {
       <td class="num hide-sm">${p.n ? `${Math.round(p.n).toLocaleString()} ${String(p.pop ?? "").toUpperCase()}` : "–"}</td>
       <td class="num">${p.d}%</td><td class="num">${p.r}%</td>
       <td class="num">${margin(p.margin).replace("D+", `${dTag}+`)}${p.partisan ? html`<div class="adj">counted as ${margin(p.adj).replace("D+", `${dTag}+`)}</div>` : ""}</td>
-      <td class="hide-sm">${p.url ? html`<a href="${p.url}" target="_blank" rel="noopener">${p.source === "votehub" ? "Release" : "List"}</a>` : ""}</td>
+      <td class="hide-sm">${p.url ? html`<a href="${p.url}" target="_blank" rel="noopener">${p.url.includes("wikipedia.org") ? "List" : "Source"}</a>` : ""}</td>
     </tr>`)}</tbody></table></div>`;
   display(tbl);
   if (polls.length > 60) display(html`<p class="caption">Showing the 60 most recent of ${polls.length} polls.</p>`);

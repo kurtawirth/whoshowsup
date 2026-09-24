@@ -45,6 +45,22 @@ def fetch(title: str, refresh: bool = False) -> str | None:
     return path.read_text(encoding="utf-8")
 
 
+def page_refs(html: str) -> dict[str, str]:
+    """Footnote number as shown on the page ("12") -> the cited source's URL.
+    Poll tables cite each poll's original release with a numbered footnote on the pollster name."""
+    soup = BeautifulSoup(html, "lxml")
+    out = {}
+    for a in soup.select("sup.reference a[href^='#cite_note']"):
+        label = a.get_text(strip=True).strip("[]")
+        if not label.isdigit() or label in out:
+            continue
+        li = soup.find(id=a["href"][1:])
+        ext = li.select_one("a.external[href^='http']") if li else None
+        if ext:
+            out[label] = ext["href"]
+    return out
+
+
 def poll_tables(html: str):
     """Yield (heading_path, DataFrame) for each poll table, in page order."""
     soup = BeautifulSoup(html, "lxml")
@@ -104,7 +120,7 @@ def pct(v) -> float:
     return float(m.group(1)) if m else float("nan")
 
 
-def parse_table(tb: pd.DataFrame, dem: str, rep: str) -> list[dict]:
+def parse_table(tb: pd.DataFrame, dem: str, rep: str, refs: dict | None = None) -> list[dict]:
     cols = list(tb.columns)
     src = next((c for c in cols if str(c).startswith("Poll source")), None)
     dcol, rcol = find_col(cols, dem), find_col(cols, rep)
@@ -125,7 +141,10 @@ def parse_table(tb: pd.DataFrame, dem: str, rep: str) -> list[dict]:
         n = re.match(r"([\d,]+)", size)
         pop = re.search(r"\((LV|RV|A|V)\)", size)
         start, end = parse_dates(str(r[date_col]))
+        cites = re.findall(r"\[(\d+)\]", raw_src) + re.findall(r"\[(\d+)\]", str(r[date_col]))
+        src_url = next(((refs or {}).get(c) for c in cites if (refs or {}).get(c)), "")
         rows.append({
+            "source_url": src_url,
             "pollster": pollster,
             "pollster_party": party.group(1) if party else "",
             # Upper-case footnote letters on Wikipedia poll tables mark partisan clients.
@@ -191,14 +210,15 @@ def main(refresh: bool = False) -> None:
             if r["office"] == "HOUSE":
                 if page not in house_pages_done:
                     html = fetch(page, refresh)
-                    house_pages_done[page] = list(poll_tables(html)) if html else []
-                tables = [(h, tb) for h, tb in house_pages_done[page]
-                          if district_from_heading(h) == int(r["district"])]
+                    house_pages_done[page] = (list(poll_tables(html)) if html else [], page_refs(html) if html else {})
+                page_tables, refs = house_pages_done[page]
+                tables = [(h, tb) for h, tb in page_tables if district_from_heading(h) == int(r["district"])]
             else:
                 html = fetch(page, refresh)
                 tables = list(poll_tables(html)) if html else []
+                refs = page_refs(html) if html else {}
             for heading, tb in tables:
-                for row in parse_table(tb, dem, rep):
+                for row in parse_table(tb, dem, rep, refs):
                     out.append({"office": r["office"], "state_po": r["state_po"],
                                 "district": r.get("district"), "special": r["special"],
                                 "dem_candidate": dem, "rep_candidate": rep,

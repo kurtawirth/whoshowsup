@@ -147,7 +147,7 @@ export function pollChart(polls, {width, height = 260, halfLife = 14, dLabel = "
   const segDem = d3.rollup(trend, (v) => d3.mean(v, (d) => d.margin) >= 0, (d) => d.seg);
   const ext = Math.max(8, ...data.map((d) => Math.max(Math.abs(d.margin), Math.abs(d.adj)))) + 2;
   const sponsored = data.filter((d) => d.sponsored);
-  return Plot.plot({
+  const plot = Plot.plot({
     width, height, marginLeft: 44, marginRight: 12,
     x: {label: null, type: "utc"},
     y: {domain: [-ext, ext], label: yLabel, grid: true, tickFormat: fmt},
@@ -165,9 +165,14 @@ export function pollChart(polls, {width, height = 260, halfLife = 14, dLabel = "
         strokeWidth: 2.5, curve: "monotone-x", strokeLinejoin: "round"}),
       Plot.tip(data, Plot.pointer({x: "date", y: "adj",
         title: (d) => `${d.pollster}${d.sponsored ? ` (${d.partisan}-sponsored)` : ""}\n${date(d.end)}${d.n ? ` · ${Math.round(d.n)} ${String(d.pop || "").toUpperCase()}` : ""}\n` +
-          (d.sponsored ? `Published: ${fmt(d.margin)}\nCounted as: ${fmt(d.adj)} after sponsor correction` : fmt(d.margin))}))
+          (d.sponsored ? `Published: ${fmt(d.margin)}\nCounted as: ${fmt(d.adj)} after sponsor correction` : fmt(d.margin)) +
+          (d.url ? "\nClick to open the poll" : "")}))
     ]
   });
+  // Clicking while a poll is highlighted opens its original release in a new tab.
+  plot.addEventListener("input", () => { plot.style.cursor = plot.value?.url ? "pointer" : ""; });
+  plot.addEventListener("click", () => { if (plot.value?.url) window.open(plot.value.url, "_blank", "noopener"); });
+  return plot;
 }
 
 /** Forecast probability over time. */
