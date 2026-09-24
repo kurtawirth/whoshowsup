@@ -68,7 +68,7 @@ def load_poll_error() -> None:
             POLL_FLOOR[ours], POLL_SPREAD[ours] = float(e.loc[theirs, "floor"]), float(e.loc[theirs, "spread"])
 PARTISAN_BIAS = {"HOUSE": {"D": 5.4, "R": -5.6}, "SEN": {"D": 3.4, "R": -3.9}, "GOV": {"D": 4.1, "R": -3.5}}
 PARTISAN_WEIGHT = 0.5                  # user decision: corrected partisan polls count half
-POLL_HALF_LIFE_DAYS = 30
+POLL_HALF_LIFE_DAYS = 14  # best or tied at 42, 21, 14, 7 days out in 538 archive tests (vs 3-60 days, equal)
 POP_WEIGHT = {"lv": 1.0, "rv": 0.8, "v": 0.9, "a": 0.6}
 # Candidate quality: points of margin per tier of prior-office advantage. Not estimated
 # from our data (would need coded candidates for past cycles) -- a literature-based
