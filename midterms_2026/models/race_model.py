@@ -39,7 +39,7 @@ OUT = ROOT / "midterms_2026" / "outputs"
 
 N_SIMS = 20000
 SEED = 2026
-FORECAST_DATE = pd.Timestamp("2026-09-22")
+FORECAST_DATE = pd.Timestamp.today().normalize()  # the pipeline passes an explicit date
 
 # ---- calibrated constants (see the core/*_calibration.py scripts) ----
 INCUMBENCY = {"HOUSE": 2.3, "SEN": 5.4, "GOV": 4.5}
@@ -68,6 +68,7 @@ def load_poll_error() -> None:
             POLL_FLOOR[ours], POLL_SPREAD[ours] = float(e.loc[theirs, "floor"]), float(e.loc[theirs, "spread"])
 PARTISAN_BIAS = {"HOUSE": {"D": 5.4, "R": -5.6}, "SEN": {"D": 3.4, "R": -3.9}, "GOV": {"D": 4.1, "R": -3.5}}
 PARTISAN_WEIGHT = 0.5                  # user decision: corrected partisan polls count half
+POLL_WINDOW_DAYS = 100  # polls in this window count fully toward the average's reliability
 POLL_HALF_LIFE_DAYS = 14  # best or tied at 42, 21, 14, 7 days out in 538 archive tests (vs 3-60 days, equal)
 POP_WEIGHT = {"lv": 1.0, "rv": 0.8, "v": 0.9, "a": 0.6}
 # Candidate quality: points of margin per tier of prior-office advantage. Not estimated
@@ -89,6 +90,14 @@ REGION = {**dict.fromkeys(["CT", "ME", "MA", "NH", "RI", "VT", "NJ", "NY", "PA"]
           **dict.fromkeys(["DE", "FL", "GA", "MD", "NC", "SC", "VA", "DC", "WV", "AL", "KY", "MS", "TN",
                            "AR", "LA", "OK", "TX"], "S"),
           **dict.fromkeys(["AZ", "CO", "ID", "MT", "NV", "NM", "UT", "WY", "AK", "CA", "HI", "OR", "WA"], "W")}
+
+
+def race_id(r) -> str:
+    """Stable URL-friendly id: house-tx-28, senate-oh-special, governor-ga."""
+    office = {"HOUSE": "house", "SEN": "senate", "GOV": "governor"}[r["office"]]
+    if r["office"] == "HOUSE":
+        return f"house-{r['state_po'].lower()}-{'al' if int(r['district']) == 0 else int(r['district'])}"
+    return f"{office}-{r['state_po'].lower()}" + ("-special" if bool(r["special"]) else "")
 
 
 def two_party(d, r):
@@ -165,14 +174,21 @@ def poll_summary(races: pd.DataFrame, forecast_date: pd.Timestamp = FORECAST_DAT
     polls["adj"] = polls["margin"] - bias
     age = (forecast_date - polls["end_date"]).dt.days.clip(lower=0)
     n = polls["sample_size"].fillna(600).clip(200, 3000)
-    polls["w"] = (0.5 ** (age / POLL_HALF_LIFE_DAYS)
-                  * np.sqrt(n / 600)
-                  * polls["population"].fillna("").map(POP_WEIGHT).fillna(0.8)
-                  * np.where(polls["partisan"] != "", PARTISAN_WEIGHT, 1.0))
+    quality = (np.sqrt(n / 600)
+               * polls["population"].fillna("").map(POP_WEIGHT).fillna(0.8)
+               * np.where(polls["partisan"] != "", PARTISAN_WEIGHT, 1.0))
+    # Two different jobs, two different weights:
+    #  - w: how much each poll counts WITHIN the average (fresh polls win; 14-day half-life)
+    #  - n_eff: how much the average as a whole is worth vs. the fundamentals. The poll-error
+    #    calibration counted every poll in a ~2-3 month window equally, so we do the same here
+    #    (polls older than 100 days fade out). Otherwise a race whose only polls are two months
+    #    old would treat them as worthless -- Vermont's governor race did exactly that.
+    polls["w"] = 0.5 ** (age / POLL_HALF_LIFE_DAYS) * quality
+    polls["q"] = np.where(age <= POLL_WINDOW_DAYS, 1.0, 0.5 ** ((age - POLL_WINDOW_DAYS) / 30)) * quality
     g = polls.groupby(["office", "state_po", "district", "special"])
     summ = pd.DataFrame({
         "poll_avg": g.apply(lambda x: np.average(x["adj"], weights=x["w"]), include_groups=False),
-        "poll_n_eff": g["w"].sum(), "poll_count": g.size(),
+        "poll_n_eff": g["q"].sum(), "poll_count": g.size(),
         "poll_last": g["end_date"].max(),
     }).reset_index()
     return races.merge(summ, on=["office", "state_po", "district", "special"], how="left")
@@ -280,7 +296,8 @@ def simulate(forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
     cols = ["office", "state_po", "district", "special", "race_type", "incumbent", "incumbent_party", "inc_side",
             "dem_candidate", "rep_candidate", "race_note", "pres24", "quality_diff", "prior_edge", "poll_count", "poll_avg",
             "poll_weight", "fundamentals_mean", "margin_median", "margin_p10", "margin_p90", "p_dem"]
-    out[cols].sort_values(["office", "state_po", "district"]).to_csv(OUT / "race_forecasts.csv", index=False)
+    out["race_id"] = out.apply(race_id, axis=1)
+    out[["race_id"] + cols].sort_values(["office", "state_po", "district"]).to_csv(OUT / "race_forecasts.csv", index=False)
 
     # ---- chambers ----
     win = margin > 0
@@ -299,6 +316,22 @@ def simulate(forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
     house_d = summ["HOUSE"]
     sen_d = 34 + summ["SEN"]                    # 32 D + 2 D-caucusing independents not up
     np.savez_compressed(OUT / "simulations.npz", house_d=house_d, sen_d=sen_d, gov_d=summ["GOV"], E=E, a=a)
+
+    # ---- per-race detail for the website ----
+    # Margin quantiles (for each race's distribution chart) and "leverage": how much
+    # the chance of controlling the chamber moves with this one race.
+    qs = np.arange(5, 100, 5)
+    qtab = pd.DataFrame(np.percentile(margin, qs, axis=1).T, columns=[f"q{q:02d}" for q in qs])
+    qtab.insert(0, "race_id", live.apply(race_id, axis=1))
+    control = {"HOUSE": house_d >= 218, "SEN": sen_d >= 51}
+    lev = np.full(len(live), np.nan)
+    for i in range(len(live)):
+        ctrl = control.get(office[i])
+        w_ = win[i]
+        if ctrl is not None and 0.01 < w_.mean() < 0.99:
+            lev[i] = ctrl[w_].mean() - ctrl[~w_].mean()
+    qtab["control_leverage"] = lev
+    qtab.to_csv(OUT / "race_quantiles.csv", index=False)
     lines = [
         ("National House vote (D-R)", f"D{np.median(E):+.1f}", f"D{np.percentile(E, 10):+.1f} to D{np.percentile(E, 90):+.1f}"),
         ("House: Democratic seats", f"{np.median(house_d):.0f}", f"{np.percentile(house_d, 10):.0f}-{np.percentile(house_d, 90):.0f}"),
