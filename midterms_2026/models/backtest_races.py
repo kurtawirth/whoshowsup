@@ -1,5 +1,13 @@
 """Race-level backtest: run the full 2026 race model on 2018-2024 as of Sept 22.
 
+    .venv/Scripts/python.exe midterms_2026/models/backtest_races.py          # as of Sept 22 (the standard test)
+    .venv/Scripts/python.exe midterms_2026/models/backtest_races.py --eve    # as of Election Eve (outlet comparison)
+
+--eve rebuilds the inputs as they stood right before each election: national history as of
+Nov 1 (1-7 days before every election since 1976), all polls through the day before, and the
+poll-accuracy fit for 1 day out. It writes *_eve.csv outputs and restores the live forecast's
+processed files afterwards.
+
 Midterms (2018, 2022) are the main test; presidential years (2020, 2024; House
 and Senate only -- no governor data) add evidence on systematic biases. No
 538 poll archive exists for 2024, so 2024 runs on fundamentals only.
@@ -133,9 +141,12 @@ def statewide_races(year: int) -> pd.DataFrame:
     return out
 
 
+CUTOFF_DAYS = 42  # polls must end at least this many days before the election (42 ~ Sept 22)
+
+
 def poll_summary(races: pd.DataFrame, year: int) -> pd.DataFrame:
     d = pd.read_csv(RAW / "fte" / "raw_polls.csv", low_memory=False)
-    d = d[(d.cycle == year) & (d.electiondate == YEARS[year]["election"]) & (d.time_to_election >= 42)
+    d = d[(d.cycle == year) & (d.electiondate == YEARS[year]["election"]) & (d.time_to_election >= CUTOFF_DAYS)
           & d.type_simple.isin(["Sen-G", "Gov-G", "House-G"])]
     d = d[d.cand1_party.isin(["DEM", "REP"]) & d.cand2_party.isin(["DEM", "REP"]) & (d.cand1_party != d.cand2_party)]
     dem_first = d.cand1_party == "DEM"
@@ -150,7 +161,7 @@ def poll_summary(races: pd.DataFrame, year: int) -> pd.DataFrame:
     d["margin"] = rm.two_party(d.dem_pct, d.rep_pct)
     bias = [rm.PARTISAN_BIAS[o].get(p, 0.0) for o, p in zip(d.office, d.partisan)]
     d["adj"] = d.margin - bias
-    age = (d.time_to_election - 42).clip(lower=0)
+    age = (d.time_to_election - CUTOFF_DAYS).clip(lower=0)
     n = d.samplesize.fillna(600).clip(200, 3000)
     d["w"] = 0.5 ** (age / rm.POLL_HALF_LIFE_DAYS) * np.sqrt(n / 600) * np.where(d.partisan != "", rm.PARTISAN_WEIGHT, 1.0)
     # Match Senate/Gov polls by the Democrat's name so two same-state Senate races stay separate.
@@ -219,7 +230,7 @@ def run_all(bonus_for: dict | None = None) -> tuple[pd.DataFrame, list]:
     return pd.concat(all_rows, ignore_index=True), chambers
 
 
-def main() -> None:
+def main(tag: str = "") -> None:
     # Pass 1: no close-seat bonus, to measure the errors. Pass 2: each year gets a bonus
     # estimated only from the OTHER years (leave-one-year-out), so the test stays honest.
     first, _ = run_all(None)
@@ -228,7 +239,7 @@ def main() -> None:
           "| all years:", round(close_seat_bonus(first, -1), 2))
     first_scores = score(first[first.office == "HOUSE"], "HOUSE, no bonus")
     res, chambers = run_all(bonus_for)
-    res.to_csv(OUT / "backtest_race_forecasts.csv", index=False)
+    res.to_csv(OUT / f"backtest_race_forecasts{tag}.csv", index=False)
     pd.set_option("display.width", 220)
     print("\n=== Chamber totals (Democratic wins among races modeled) ===")
     ch = pd.DataFrame(chambers)
@@ -248,10 +259,32 @@ def main() -> None:
     cal = res.groupby("bin", observed=True).agg(races=("p_dem", "size"), predicted=("p_dem", "mean"),
                                                  actual=("actual", lambda s: (s > 0).mean()))
     print(cal.round(2).to_string())
-    sc.to_csv(OUT / "backtest_scores.csv", index=False)
-    ch.to_csv(OUT / "backtest_chambers.csv", index=False)
-    cal.to_csv(OUT / "backtest_calibration.csv")
+    sc.to_csv(OUT / f"backtest_scores{tag}.csv", index=False)
+    ch.to_csv(OUT / f"backtest_chambers{tag}.csv", index=False)
+    cal.to_csv(OUT / f"backtest_calibration{tag}.csv")
+
+
+def main_eve() -> None:
+    """Same backtest, as of Election Eve. Swaps in eve-dated inputs, then restores the live ones."""
+    global CUTOFF_DAYS
+    import shutil
+    import build_national_history
+    import poll_average_error
+    live = [PROC / "national_history.csv", PROC / "poll_average_error.csv"]
+    saved = {f: f.with_suffix(".live_backup") for f in live}
+    for f, b in saved.items():
+        shutil.copy(f, b)
+    try:
+        build_national_history.main((11, 1))
+        poll_average_error.main(1)
+        rm.load_poll_error()
+        CUTOFF_DAYS = 1
+        main("_eve")
+    finally:
+        for f, b in saved.items():
+            shutil.move(b, f)
+        rm.load_poll_error()
 
 
 if __name__ == "__main__":
-    main()
+    main_eve() if "--eve" in sys.argv else main()

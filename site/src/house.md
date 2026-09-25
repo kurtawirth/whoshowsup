@@ -32,7 +32,7 @@ display(html`<div class="stat-row">${RATINGS.map((r) => html`<div class="s"><div
 
 ## Every district
 
-<p class="caption">One hexagon per district, grouped by state and placed near its real location. Color shows our forecast. Hover for details; click a district for its full forecast. Lines are the new 2026 maps, including mid-decade redistricting in ten states.</p>
+<p class="caption">One hexagon per district, grouped by state and placed near its real location. Color shows our forecast. Hover for details and click a district for its full forecast. On a phone, pinch or tap + to zoom in, then tap a district to preview it. Lines are the new 2026 maps, including mid-decade redistricting in ten states.</p>
 
 ```js
 display(ratingLegend());

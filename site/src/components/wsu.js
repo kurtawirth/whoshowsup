@@ -62,6 +62,42 @@ export const raceHref = (id) => link(`race/${id}`);
 
 // ---------- tooltip ----------
 let tipEl;
+// ---------- touch card (phones: tap a map area to preview it, then open the race) ----------
+let cardEl = null;
+let lastPointer = "mouse";
+if (typeof window !== "undefined") {
+  window.addEventListener("pointerdown", (e) => { lastPointer = e.pointerType || "mouse"; }, true);
+}
+/** True when the current tap/click came from a finger (or pen) rather than a mouse. */
+export const isTouch = (event) => (event?.pointerType || lastPointer) !== "mouse";
+
+export function touchCard() {
+  if (!cardEl) {
+    cardEl = document.createElement("div");
+    cardEl.className = "wsu-card";
+    cardEl.setAttribute("role", "dialog");
+    cardEl.innerHTML = `<button class="close" aria-label="Close">×</button><div class="body"></div><a class="go"></a>`;
+    cardEl.querySelector(".close").addEventListener("click", () => cardEl.classList.remove("open"));
+    document.body.appendChild(cardEl);
+  }
+  return {
+    show(rows, href, label = "Open the full forecast →") {
+      cardEl.querySelector(".body").replaceChildren(...rows.map(([cls, text]) => {
+        const d = document.createElement("div");
+        d.className = cls;
+        d.textContent = text;
+        return d;
+      }));
+      const go = cardEl.querySelector(".go");
+      go.href = href ?? "";
+      go.textContent = label;
+      go.style.display = href ? "" : "none";
+      cardEl.classList.add("open");
+    },
+    hide() { cardEl.classList.remove("open"); }
+  };
+}
+
 export function tip() {
   if (!tipEl) {
     tipEl = document.createElement("div");
@@ -128,9 +164,12 @@ export function hexMap(races, layout, {width = 960} = {}) {
   const X = (x) => (x - x0) * k, Y = (y) => (y - y0) * k;
   const svg = d3.create("svg").attr("viewBox", [0, 0, width, height]).attr("width", width).attr("height", height)
     .attr("role", "img").attr("aria-label", "Hex map of House forecasts, one hexagon per district")
-    .style("max-width", "100%").style("height", "auto");
-  const t_ = tip();
-  const g = svg.append("g");
+    .style("max-width", "100%").style("height", "auto").style("touch-action", "pan-y").style("display", "block");
+  const t_ = tip(), card = touchCard();
+  const layer = svg.append("g");                 // everything that zooms
+  const g = layer.append("g");
+  let selected = null;
+  const outline = (el, on) => d3.select(el).attr("stroke", on ? t.ink : null).attr("stroke-width", on ? 2 : null);
   g.selectAll("path.hex").data(hexes).join("a")
     .attr("href", (h) => { const r = byKey.get(`${h.state}-${h.district}`); return r ? raceHref(r.race_id) : null; })
     .append("path").attr("class", "hex")
@@ -138,21 +177,73 @@ export function hexMap(races, layout, {width = 960} = {}) {
     .attr("fill", (h) => { const r = byKey.get(`${h.state}-${h.district}`); return r ? t[r.rating] : t.hair; })
     .attr("tabindex", 0)
     .on("pointerenter focus", function (event, h) {
+      if (isTouch(event) && event.type !== "focus") return;   // phones: tap handles it
       const r = byKey.get(`${h.state}-${h.district}`);
-      d3.select(this).attr("stroke", t.ink).attr("stroke-width", 2);
+      outline(this, true);
       if (r) t_.show(event, raceTipRows(r));
     })
-    .on("pointermove", (event) => t_.move(event))
-    .on("pointerleave blur", function () { d3.select(this).attr("stroke", null); t_.hide(); });
+    .on("pointermove", (event) => { if (!isTouch(event)) t_.move(event); })
+    .on("pointerleave blur", function (event) { if (!isTouch(event) || event.type === "blur") { if (this !== selected) outline(this, false); t_.hide(); } })
+    .on("click", function (event, h) {
+      // Phones: the first tap previews the district in a card; the card's button opens the race.
+      if (!isTouch(event)) return;
+      event.preventDefault();
+      const r = byKey.get(`${h.state}-${h.district}`);
+      if (selected) outline(selected, false);
+      selected = this;
+      outline(this, true);
+      d3.select(this.parentNode).raise();
+      if (r) card.show(raceTipRows(r), raceHref(r.race_id));
+    });
   // State names sit in the open space above each state's island (the layout reserves room for them).
   const labels = layout.labels ?? [];
-  svg.append("g").style("pointer-events", "none").selectAll("text").data(labels.filter((d) => R >= 9 || d.n >= 6)).join("text")
+  const labelG = layer.append("g").style("pointer-events", "none");
+  const labelSize = Math.max(8.5, Math.min(12.5, R * 0.72));
+  labelG.selectAll("text").data(labels).join("text")
     .attr("x", (d) => X(d.x)).attr("y", (d) => Y(d.y))
     .attr("text-anchor", "middle").attr("dy", "0.36em")
-    .attr("font-size", Math.max(8.5, Math.min(12.5, R * 0.72))).attr("font-weight", 650).attr("letter-spacing", "0.06em")
+    .attr("font-size", labelSize).attr("font-weight", 650).attr("letter-spacing", "0.06em")
     .attr("fill", t["ink-2"])
+    .style("display", (d) => (R >= 9 || d.n >= 6 ? null : "none"))
     .text((d) => d.state);
-  return svg.node();
+
+  // Zoom: pinch or the buttons on phones; buttons, double-click or ctrl+scroll on desktop.
+  // At full view a one-finger swipe scrolls the page as usual; once zoomed in it pans the map.
+  let zk = 1;
+  const zoom = d3.zoom().scaleExtent([1, 8]).translateExtent([[0, 0], [width, height]]).extent([[0, 0], [width, height]])
+    .filter((event) => {
+      if (event.type === "wheel") return event.ctrlKey || event.metaKey;
+      if (event.type.startsWith("touch")) return event.touches.length > 1 || zk > 1;
+      if (event.type === "mousedown") return !event.button && zk > 1;
+      return !event.button;
+    })
+    .on("zoom", (event) => {
+      zk = event.transform.k;
+      layer.attr("transform", event.transform);
+      // keep labels readable (and show the small states' names) as you zoom in
+      labelG.selectAll("text").attr("font-size", labelSize / Math.sqrt(zk))
+        .style("display", (d) => (R * zk >= 9 || d.n >= 6 ? null : "none"));
+      svg.style("touch-action", zk > 1.01 ? "none" : "pan-y").style("cursor", zk > 1.01 ? "grab" : null);
+      reset.disabled = zk <= 1.01;
+    });
+  svg.call(zoom);
+  const wrap = document.createElement("div");
+  wrap.className = "zoom-wrap";
+  const bar = document.createElement("div");
+  bar.className = "zoom-bar";
+  const btn = (label, aria, fn) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.textContent = label; b.setAttribute("aria-label", aria);
+    b.addEventListener("click", fn);
+    bar.append(b);
+    return b;
+  };
+  btn("+", "Zoom in", () => svg.call(zoom.scaleBy, 1.8));
+  btn("−", "Zoom out", () => svg.call(zoom.scaleBy, 1 / 1.8));
+  const reset = btn("Reset", "Reset zoom", () => svg.call(zoom.transform, d3.zoomIdentity));
+  reset.disabled = true;
+  wrap.append(bar, svg.node());
+  return wrap;
 }
 
 // ---------- state map (Senate / Governors) ----------
@@ -167,6 +258,7 @@ export function stateMap(races, topo, states, {office, width = 960} = {}) {
     .attr("role", "img").attr("aria-label", `Map of ${office === "SEN" ? "Senate" : "governor"} forecasts by state`)
     .style("max-width", "100%").style("height", "auto");
   const t_ = tip();
+  let selectedState = null;
   const fill = (po) => {
     const rs = byState.get(po);
     if (!rs) return t.surface; // no race: blank, so gray always means "toss-up"
@@ -183,15 +275,27 @@ export function stateMap(races, topo, states, {office, width = 960} = {}) {
     .attr("tabindex", (f) => (byState.get(fipsToPo[f.id]) ? 0 : null))
     .on("pointerenter focus", function (event, f) {
       const rs = byState.get(fipsToPo[f.id]);
-      if (!rs) return;
+      if (!rs || (isTouch(event) && event.type !== "focus")) return;
       d3.select(this).attr("stroke", t.ink).attr("stroke-width", 2).raise();
       t_.show(event, rs.flatMap((r, i) => (i ? [["t-sub", " "], ...raceTipRows(r)] : raceTipRows(r))));
     })
-    .on("pointermove", (event) => t_.move(event))
+    .on("pointermove", (event) => { if (!isTouch(event)) t_.move(event); })
     .on("pointerleave blur", function (event, f) {
+      if (isTouch(event) && event.type !== "blur") return;
       const has = byState.get(fipsToPo[f.id]);
       d3.select(this).attr("stroke", has ? t.surface : t.axis).attr("stroke-width", has ? 1.2 : 0.8);
       t_.hide();
+    })
+    .on("click", function (event, f) {
+      // Phones: first tap previews the state's race(s) in a card; the card's button opens the page.
+      const rs = byState.get(fipsToPo[f.id]);
+      if (!rs || !isTouch(event)) return;
+      event.preventDefault();
+      if (selectedState) d3.select(selectedState).attr("stroke", t.surface).attr("stroke-width", 1.2);
+      selectedState = this;
+      d3.select(this).attr("stroke", t.ink).attr("stroke-width", 2).raise();
+      const main = rs.find((r) => !r.special) ?? rs[0];
+      touchCard().show(rs.flatMap((r, i) => (i ? [["t-sub", " "], ...raceTipRows(r)] : raceTipRows(r))), raceHref(main.race_id));
     });
   // A special election in a state that ALSO has a regular race gets a small marker so the second
   // race isn't hidden. (In 2026, Florida's and Ohio's only Senate races are specials: no marker.)

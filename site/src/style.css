@@ -189,6 +189,24 @@ figure { max-width: none; margin: 0; }
 .hist-legend .bars i { width: 9px; height: 14px; border-radius: 2px; background: var(--dem); display: inline-block; }
 .hist-legend .bars i.r { background: var(--rep); margin-left: -6px; }
 .hist-legend .polls i { width: 16px; height: 3px; background: var(--ink); display: inline-block; }
+.zoom-wrap { position: relative; }
+.zoom-bar { display: flex; justify-content: flex-end; gap: 6px; margin: 0 0 6px; }
+.zoom-bar button { font: 600 15px var(--sans); min-width: 36px; height: 34px; padding: 0 10px; border-radius: 8px;
+  border: 1px solid var(--axis); background: var(--card); color: var(--ink); cursor: pointer; }
+.zoom-bar button:disabled { opacity: .4; cursor: default; }
+.wsu-card { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 30; background: var(--card); color: var(--ink);
+  border-radius: 14px; box-shadow: 0 0 0 1px var(--card-ring), 0 12px 32px rgba(0,0,0,.22); padding: 14px 16px 16px;
+  font: 14px/1.45 var(--sans); transform: translateY(140%); transition: transform .18s ease; max-width: 520px; margin: 0 auto; }
+.wsu-card.open { transform: none; }
+.wsu-card .t-title { font-weight: 700; font-size: 16px; padding-right: 30px; }
+.wsu-card .t-sub { color: var(--ink-3); font-size: 13px; }
+.wsu-card .t-val { font-weight: 700; font-size: 20px; }
+.wsu-card .close { position: absolute; top: 8px; right: 10px; border: 0; background: none; font-size: 24px; line-height: 1;
+  color: var(--ink-3); cursor: pointer; padding: 4px 8px; }
+.wsu-card .go { display: block; margin-top: 12px; text-align: center; padding: 10px; border-radius: 10px;
+  background: var(--ink); color: var(--surface) !important; font-weight: 650; text-decoration: none !important; }
+/* charts: a sideways finger-drag scrubs the tooltip; vertical swipes still scroll the page */
+svg[class^="plot"] { touch-action: pan-y; }
 .race-title { text-wrap: balance; }
 .race-title .matchup { display: block; text-wrap: balance; }
 .callout { font-family: var(--sans); font-size: 14px; line-height: 1.5; color: var(--ink-2); background: var(--card); box-shadow: 0 0 0 1px var(--card-ring);
