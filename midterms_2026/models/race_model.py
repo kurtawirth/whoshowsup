@@ -48,7 +48,15 @@ INCUMBENCY = {"HOUSE": 2.3, "SEN": 5.4, "GOV": 4.5}
 # is smaller than for a generic race. Estimated from re-running incumbents
 # (Senate 2012-2024, n=159; Governor 2018->2022, n=26).
 PERSONAL = {"SEN": {"intercept": 3.0, "rho": 0.43, "sd": 9.1},
-            "GOV": {"intercept": 5.1, "rho": 0.63, "sd": 8.2}}
+            "GOV": {"intercept": 5.1, "rho": 0.63, "sd": 8.2},
+            # House (core/house_personal_vote.py, 1,269 re-running incumbents 2016-2024): the
+            # previous race's edge over lean + year, plus a bump for a member's first re-election.
+            # Used only when the previous race is found; otherwise the flat INCUMBENCY bonus.
+            "HOUSE": {"intercept": -0.13, "rho": 0.53, "first_term": 3.63, "sd": 5.78}}
+# The House personal vote moves each incumbent's expected margin but keeps FUND_SD["HOUSE_inc"]:
+# also shrinking that spread (by 5.78/7.32, the fit's residual vs. flat-bonus sd) hurt the
+# backtest's Brier score and calls at both Sept 22 and Election Eve, because it weakened the
+# polls' pull in close races.
 # Governors whose previous race was not their own (first elected 2024, or took office mid-term).
 GOV_NO_PRIOR = {"NH", "SD"}
 FUND_SD = {"HOUSE_inc": 6.0, "HOUSE_open": 7.0, "SEN": 11.0, "GOV": 8.5}
@@ -76,11 +84,11 @@ POP_WEIGHT = {"lv": 1.0, "rv": 0.8, "v": 0.9, "a": 0.6}
 # prior, deliberately modest, and swamped by polls wherever polls exist.
 QUALITY_PER_TIER = 1.0
 TURNOUT_SHARE_MEAN, TURNOUT_SHARE_CONC = 0.65, 6.0
-# Close-seat effect: in all four backtest cycles (2018-2024) Democrats ran ~3 pts ahead of
+# Close-seat effect: in all four backtest cycles (2018-2024) Democrats ran ~2.4 pts ahead of
 # lean + national environment in competitive House districts (not explained by lean
 # compression). Applied as a bump that fades with distance from an even district:
 # bonus * exp(-(lean / width)^2). Estimated by midterms_2026/models/backtest_races.py.
-CLOSE_SEAT_BONUS, CLOSE_SEAT_WIDTH = 3.0, 10.0  # all-years estimate 3.07; leave-one-out 2.7-3.4
+CLOSE_SEAT_BONUS, CLOSE_SEAT_WIDTH = 2.4, 10.0  # all-years estimate 2.42; leave-one-out 1.8-2.9 (3.0 before the House personal vote)
 STATE_SHOCK_SD, REGION_SHOCK_SD = 2.0, 2.0
 # Osborn ran ~15 pts ahead of a generic Democrat's expected margin in NE in 2024;
 # shrink toward zero and widen, since independents' appeal is volatile.
@@ -138,10 +146,35 @@ def quality_diff(races: pd.DataFrame) -> pd.Series:
     return (pd.Series(dem, index=races.index) - pd.Series(rep, index=races.index)).fillna(0)
 
 
+def house_prior_edge(races: pd.DataFrame, year: int = 2026) -> pd.DataFrame:
+    """Each House incumbent's edge in their previous race (toward them, points) and whether that
+    was their first win (so this is their first re-election). Found by name within the state."""
+    import sys
+    sys.path.insert(0, str(ROOT / "core"))
+    from house_calibration import _key
+    e = pd.read_csv(PROC / "house_personal_edges.csv")
+    e = e[e["year"] == year - 2]
+    out = pd.DataFrame({"prior_edge": np.nan, "first_term": 0}, index=races.index)
+    for i, r in races.iterrows():
+        if r["office"] != "HOUSE" or r["inc_side"] == 0:
+            continue
+        name = r["incumbent"] if "incumbent" in r and isinstance(r["incumbent"], str) else None
+        keys = [_key(name)] if name else list(r.get("cand_keys", []))
+        hit = e[(e["state_po"] == r["state_po"]) & e["winner_key"].isin(keys)
+                & (np.where(e["winner_side"] == "D", 1, -1) == r["inc_side"])]
+        if len(hit):
+            out.at[i, "prior_edge"] = hit.iloc[0]["winner_edge"]
+            out.at[i, "first_term"] = int(not hit.iloc[0]["winner_was_incumbent"])
+    return out
+
+
 def prior_edge(races: pd.DataFrame) -> pd.Series:
-    """Each Senate/Governor incumbent's edge in their previous race (toward them, points)."""
+    """Each incumbent's edge in their previous race (toward them, points)."""
     cal = pd.read_csv(PROC / "statewide_calibration.csv")
     out = pd.Series(np.nan, index=races.index)
+    house = house_prior_edge(races)
+    out[house.index] = house["prior_edge"]
+    races["first_term"] = house["first_term"]
     for i, r in races.iterrows():
         if r["office"] not in ("SEN", "GOV") or r["inc_side"] == 0:
             continue
@@ -233,15 +266,18 @@ def run_simulation(races: pd.DataFrame, env: np.ndarray, nat_d0: float, nat_r0: 
             shift, extra = INDEPENDENT_ADJ[k]
             adj[i] += shift
             fund_sd[i] = np.hypot(fund_sd[i], extra)
-    # Senate/Governor incumbents: replace the flat incumbency bonus with the personal vote.
+    # Incumbents: replace the flat incumbency bonus with the personal vote.
+    first = live["first_term"].fillna(0).to_numpy(dtype=float) if "first_term" in live else np.zeros(len(live))
     for i in range(len(live)):
         o = office[i]
         if o in PERSONAL and live.loc[i, "inc_side"] != 0:
+            if o == "HOUSE" and np.isnan(edge[i]):
+                continue  # previous race not found (e.g. was unopposed): keep the flat bonus
             p_ = PERSONAL[o]
             prev = 0.0 if np.isnan(edge[i]) else edge[i]
-            inc[i] = live.loc[i, "inc_side"] * (p_["intercept"] + p_["rho"] * prev)
+            inc[i] = live.loc[i, "inc_side"] * (p_["intercept"] + p_["rho"] * prev + p_.get("first_term", 0.0) * first[i])
             if not np.isnan(edge[i]):
-                fund_sd[i] = p_["sd"]
+                fund_sd[i] = fund_sd[i] if o == "HOUSE" else p_["sd"]
     fund = base + (inc + adj)[:, None]
 
     # ---- polls: Bayesian precision weighting against the fundamentals ----

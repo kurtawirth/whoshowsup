@@ -21,6 +21,7 @@ Sept 22 of that year, then run the SAME simulation engine used for 2026
                         (2016 pres for 2018; 2020 pres on the new 2022 lines)
   incumbency            previous winner found on the ballot by name
   personal vote         Senate: the incumbent's previous race; Governor 2022: 2018
+                        House: the incumbent's previous race (core/house_personal_vote.py), fit without the test year
   polls                 538's archive, only polls taken 42+ days before the election
   candidate quality     not coded for past years -> 0 (a known handicap here)
 
@@ -141,6 +142,10 @@ def statewide_races(year: int) -> pd.DataFrame:
     return out
 
 
+import house_personal_vote as hpv  # noqa: E402
+HOUSE_PERSONAL = True  # House incumbents' personal vote (False = the old flat bonus, for comparison)
+HOUSE_PAIRS = pd.read_csv(PROC / "house_personal_pairs.csv")
+
 CUTOFF_DAYS = 42  # polls must end at least this many days before the election (42 ~ Sept 22)
 
 
@@ -204,6 +209,13 @@ def run_all(bonus_for: dict | None = None) -> tuple[pd.DataFrame, list]:
         races["pres24"] = rm.two_party(races["d24"], races["r24"])
         races["quality_diff"] = 0.0
         races["prior_edge"] = races.get("prior_edge", np.nan)
+        races["first_term"] = 0
+        if HOUSE_PERSONAL:
+            hp = rm.house_prior_edge(races.assign(incumbent=None), year)
+            h = races["office"] == "HOUSE"
+            races.loc[h, "prior_edge"], races.loc[h, "first_term"] = hp.loc[h, "prior_edge"], hp.loc[h, "first_term"]
+            f = hpv.fit(HOUSE_PAIRS[HOUSE_PAIRS["year"] != year])  # leave the test year out
+            rm.PERSONAL["HOUSE"] = {k: f[k] for k in ("intercept", "rho", "first_term", "sd")}
         races = poll_summary(races, year)
         bonus = 0.0 if bonus_for is None else bonus_for[year]
         live, fixed_r, margin, E, a = rm.run_simulation(races, env, D0, R0, np.random.default_rng(year),

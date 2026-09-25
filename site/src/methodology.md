@@ -40,10 +40,9 @@ Across eight past elections, the turnout-shaped version explained about 65% of t
 
 Then come adjustments measured from past races:
 
-- **Incumbency:** about 2.3 points in House races.
-- **Personal vote:** Senate and governor incumbents keep part of how far they outran or trailed expectations last time (43% for senators, 63% for governors). That is why Vermont's Phil Scott, a Republican, is favored in a very Democratic state.
+- **Personal vote:** incumbents keep part of how far they outran or trailed expectations last time: about half for House members, 43% for senators, 63% for governors. A House member's first re-election gets about 3.6 points more. That is why Vermont's Phil Scott, a Republican, is favored in a very Democratic state, and why a Republican who trailed Trump in their own district in 2024 is more exposed than one who ran ahead of him. Where we can't find the incumbent's last race (for example, they ran unopposed), they get the average House incumbency edge of about 2.3 points.
 - **Candidate experience:** modest, up to 3 points in Senate and governor races.
-- **A close-seat effect:** in all four test elections, Democrats ran about three points ahead of expectations in competitive House districts, so the model now expects that.
+- **A close-seat effect:** in all four test elections, Democrats ran about two and a half points ahead of expectations in competitive House districts, so the model now expects that.
 
 ## 3. Polls
 

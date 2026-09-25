@@ -37,9 +37,15 @@ def house_results() -> pd.DataFrame:
     h["party"] = h["party"].astype(str).str.upper()
     h["side"] = np.where(h["party"].str.contains("DEMOCRAT"), "D", np.where(h["party"].eq("REPUBLICAN"), "R", "O"))
     h["district"] = pd.to_numeric(h["district"], errors="coerce").fillna(0).astype(int)
+    # Fusion voting (New York): a nominee's Conservative / Working Families / etc. lines count
+    # for them. Give every line the side of the candidate's major-party line.
+    major = h[h["side"] != "O"].groupby(["year", "state_po", "district", "candidate"])["side"].first()
+    k = pd.MultiIndex.from_frame(h[["year", "state_po", "district", "candidate"]])
+    h["side"] = np.where(h["side"] == "O", major.reindex(k).fillna("O").to_numpy(), h["side"])
     g = h.groupby(["year", "state_po", "district", "side"])["candidatevotes"].sum().unstack(fill_value=0)
     out = pd.DataFrame({"dem": g.get("D", 0), "rep": g.get("R", 0)}).reset_index()
-    winners = h.sort_values("candidatevotes").groupby(["year", "state_po", "district"]).tail(1)
+    tot = h.groupby(["year", "state_po", "district", "candidate", "side"], as_index=False)["candidatevotes"].sum()
+    winners = tot.sort_values("candidatevotes").groupby(["year", "state_po", "district"]).tail(1)
     cands = h.groupby(["year", "state_po", "district"])["candidate"].apply(lambda s: [_key(x) for x in s])
     out = out.merge(winners[["year", "state_po", "district", "candidate", "side"]].rename(
         columns={"candidate": "winner", "side": "winner_side"}), on=["year", "state_po", "district"])

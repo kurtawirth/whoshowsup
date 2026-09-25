@@ -48,12 +48,16 @@ def senate() -> pd.DataFrame:
     s = s[(s["stage"].str.lower() == "gen") & (s["year"] >= 1994)]
     s["side"] = np.where(s["party_simplified"] == "DEMOCRAT", "D", np.where(s["party_simplified"] == "REPUBLICAN", "R", "O"))
     s["special"] = s["special"].astype(str).str.upper().eq("TRUE")
+    # Fusion voting (New York): minor-party lines count for the nominee who holds them.
+    major = s[s["side"] != "O"].groupby(["year", "state_po", "special", "candidate"])["side"].first()
+    k = pd.MultiIndex.from_frame(s[["year", "state_po", "special", "candidate"]])
+    s["side"] = np.where(s["side"] == "O", major.reindex(k).fillna("O").to_numpy(), s["side"])
     rows = []
     for (y, st, sp), g in s.groupby(["year", "state_po", "special"]):
         d, r = g.loc[g.side == "D", "candidatevotes"].sum(), g.loc[g.side == "R", "candidatevotes"].sum()
         if d == 0 or r == 0 or min(d, r) / (d + r) < 0.15:
             continue  # need a real D-vs-R contest
-        w = g.sort_values("candidatevotes").iloc[-1]
+        w = g.groupby(["candidate", "side"], as_index=False)["candidatevotes"].sum().sort_values("candidatevotes").iloc[-1]
         rows.append({"year": y, "state_po": st, "special": sp, "margin": 100 * (d - r) / (d + r),
                      "winner": w["candidate"], "winner_side": w["side"],
                      "dem_key": _key(g.loc[g.side == "D"].sort_values("candidatevotes").iloc[-1]["candidate"]),
