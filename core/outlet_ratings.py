@@ -103,6 +103,17 @@ def revision_html(title: str, asof: str | None) -> tuple[str, str] | None:
     return str(rev), html
 
 
+def rated_on(col: str) -> str | None:
+    """'Cook Sep 23, 2026[27]' -> '2026-09-23' (the date each outlet's column was last updated)."""
+    m = re.search(r"([A-Z][a-z]{2})[a-z]*\.?\s+(\d{1,2})\.?,?\s+(\d{4})", re.sub(r"\[.*?\]", "", str(col)))
+    if not m:
+        return None
+    try:
+        return str(pd.Timestamp(f"{m.group(1)} {m.group(2)} {m.group(3)}").date())
+    except ValueError:
+        return None
+
+
 def outlet_of(col: str) -> str | None:
     c = re.sub(r"\[.*?\]", "", str(col)).strip().lower()
     for key in sorted(OUTLETS, key=len, reverse=True):
@@ -158,7 +169,7 @@ def vertical_house_tables(html: str, state_po: str):
         for _, r in tb.iterrows():
             outlet = outlet_of(r.iloc[0])
             if outlet:
-                yield district, outlet, r.iloc[1]
+                yield district, outlet, r.iloc[1], (rated_on(f"x {r.iloc[2]}") if len(r) > 2 else None)
 
 
 def parse_place(office: str, text: str):
@@ -211,23 +222,36 @@ def ratings(year: int, asof: str | None) -> pd.DataFrame:
                     if cat:
                         rows.append({"year": year, "asof": asof or "current", "office": office,
                                      "state_po": place[0], "district": place[1], "special": place[2],
-                                     "outlet": outlet_of(c), "rating_raw": str(val), "rating": cat, "revid": rev})
+                                     "outlet": outlet_of(c), "rating_raw": str(val), "rating": cat, "revid": rev,
+                                     "rated_on": rated_on(c)})
     if not any(r["office"] == "HOUSE" for r in rows):
         for name, po in STATES.items():
             got = revision_html(f"{year}_United_States_House_of_Representatives_elections_in_{name.replace(' ', '_')}", asof)
             if got is None:
                 continue
             rev, html = got
-            for district, outlet, raw in vertical_house_tables(html, po):
+            for district, outlet, raw, when in vertical_house_tables(html, po):
                 cat = normalize(raw)
                 if cat:
                     rows.append({"year": year, "asof": asof or "current", "office": "HOUSE", "state_po": po,
                                  "district": district, "special": False, "outlet": outlet,
-                                 "rating_raw": str(raw), "rating": cat, "revid": rev})
+                                 "rating_raw": str(raw), "rating": cat, "revid": rev, "rated_on": when})
     df = pd.DataFrame(rows)
     if len(df):
         df = df.drop_duplicates(["year", "asof", "office", "state_po", "district", "special", "outlet"])
     return df
+
+
+def current(year: int = 2026) -> pd.DataFrame:
+    """Refresh only this cycle's ratings (fast; used by the daily run) and merge into the file."""
+    now = ratings(year, None)
+    now["asof"] = "current"
+    path = PROC / "outlet_ratings.csv"
+    old = pd.read_csv(path) if path.exists() else pd.DataFrame(columns=now.columns)
+    out = pd.concat([old[old["year"] != year], now], ignore_index=True)
+    out.to_csv(path, index=False)
+    print(f"{year} ratings: {len(now)} rows from {now['outlet'].nunique()} outlets")
+    return now
 
 
 def main() -> None:
@@ -250,4 +274,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    current() if "--current" in sys.argv else main()

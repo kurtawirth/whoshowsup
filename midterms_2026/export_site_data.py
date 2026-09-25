@@ -198,6 +198,41 @@ def track_record() -> dict:
     return out
 
 
+# Display order and kind for the comparison page. "model" = publishes a statistical forecast.
+OUTLET_ORDER = [("Cook Political Report", "Cook", "rater"), ("Sabato's Crystal Ball", "Sabato", "rater"),
+                ("Inside Elections", "Inside Elections", "rater"), ("Silver Bulletin", "Silver Bulletin", "model"),
+                ("The Economist", "Economist", "model"), ("Split Ticket", "Split Ticket", "model"),
+                ("DDHQ", "DDHQ", "model"), ("FiftyPlusOne", "FiftyPlusOne", "model"),
+                ("RealClearPolitics", "RCP", "rater"), ("Fox News", "Fox News", "rater")]
+
+
+def outlets(f: pd.DataFrame) -> dict:
+    """Other forecasters' current ratings next to ours (display only -- never a model input),
+    plus the past head-to-head results from core/compare_outlets.py."""
+    path = PROC / "outlet_ratings.csv"
+    out = {"outlets": [], "races": {}, "track": [], "track_races": []}
+    if path.exists():
+        r = pd.read_csv(path)
+        r = r[(r["year"] == 2026) & (r["asof"] == "current")].copy()
+        if len(r):
+            r["special"] = r["special"].astype(bool)
+            r["race_id"] = r.apply(race_id, axis=1)
+            r = r[r["race_id"].isin(set(f["race_id"]))]
+            present = set(r["outlet"])
+            order = [o for o in OUTLET_ORDER if o[0] in present] + [(o, o, "rater") for o in sorted(present - {x[0] for x in OUTLET_ORDER})]
+            for name, short, kind in order:
+                x = r[r["outlet"] == name]
+                dates = x["rated_on"].dropna() if "rated_on" in x else pd.Series(dtype=str)
+                out["outlets"].append({"name": name, "short": short, "kind": kind, "races": int(len(x)),
+                                       "rated_on": dates.max() if len(dates) else None})
+            for rid, g in r.groupby("race_id"):
+                out["races"][rid] = {row.outlet: row.rating for row in g.itertuples()}
+    comp = OUT / "outlet_comparison.csv"
+    if comp.exists():
+        out["track"] = pd.read_csv(comp).to_dict("records")
+    return out
+
+
 def seats() -> dict:
     s = np.load(OUT / "simulations.npz")
     def dist(a, lo, hi):
@@ -229,6 +264,7 @@ def main() -> None:
     write("race_detail.json", race_detail(f))
     write("national.json", national())
     write("track_record.json", track_record())
+    write("outlets.json", outlets(f))
     hexmap = json.loads((PROC / "house_hexmap.json").read_text())
     write("hexmap.json", hexmap)
     write("states.json", {"names": STATE_NAMES, "fips": FIPS})

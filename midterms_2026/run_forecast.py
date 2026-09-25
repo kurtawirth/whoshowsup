@@ -13,7 +13,8 @@ Steps
   5. Race simulation
   6. Checks: data freshness, race counts, big moves since the last run
   7. Snapshot to outputs/history/<date>/ and append to outputs/forecast_history.csv
-  8. Website: export site/src/data/*.json and test-build the site (GitHub Actions deploys it on push)
+  8. Other forecasters' current ratings from Wikipedia (Compare page only; never a model input)
+  9. Website: export site/src/data/*.json and test-build the site (GitHub Actions deploys it on push)
 
 Anything that looks wrong is printed as a WARNING at the end; it does not stop
 the run, because a partial refresh is still better than none -- but read them.
@@ -166,6 +167,9 @@ def main() -> None:
 
     step("Checks")(check_freshness, asof)
     top = step("Snapshot + history")(record, asof)
+    if refresh:
+        import outlet_ratings  # other forecasters' current ratings: shown on the Compare page, never a model input
+        step("Other forecasters' ratings (display only)")(outlet_ratings.current)
     step("Website data")(export_site_data.main)
     step("Website test build")(build_site)
 
