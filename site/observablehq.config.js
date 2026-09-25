@@ -37,9 +37,9 @@ export default {
   dynamicPaths: races.map((r) => `/race/${r.race_id}`),
   head: `
 <meta name="description" content="Who Shows Up: a turnout-first forecast of the 2026 U.S. midterm elections.">
-<link rel="icon" href="data:image/svg+xml,${encodeURIComponent(
-    `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M16 2 28 9v14L16 30 4 23V9z' fill='#184f95'/><path d='M16 2 28 9v14L16 30z' fill='#a3232a'/><path d='m10.5 16.5 4 4 7.5-9' fill='none' stroke='#fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/></svg>`
-  )}">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">`,

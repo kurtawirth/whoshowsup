@@ -133,6 +133,18 @@ def score_pair(us: pd.DataFrame, them: pd.DataFrame, name: str, prob: bool) -> d
            "ours_brier": float(np.mean((us["p_dem"] - won_d) ** 2))}
     if prob:
         out["theirs_brier"] = float(np.mean((them["p_dem"] - won_d) ** 2))
+    # Separate "who was sharper" from "who was willing to pick": races where BOTH picked a side,
+    # and races the other side left as a Toss-up while we picked one.
+    su, st = us["rating"].map(SIDE).to_numpy(), them["rating"].map(SIDE).to_numpy()
+    both = (su != 0) & (st != 0)
+    out["both_picked"] = int(both.sum())
+    out["ours_right_both"] = float(((su == 1) == won_d)[both].mean()) if both.any() else np.nan
+    out["theirs_right_both"] = float(((st == 1) == won_d)[both].mean()) if both.any() else np.nan
+    dis = both & (su != st)
+    out["disagreed"], out["ours_won_disagreements"] = int(dis.sum()), int(((su == 1) == won_d)[dis].sum())
+    pick = (st == 0) & (su != 0)
+    out["their_tossups_we_picked"] = int(pick.sum())
+    out["ours_right_on_their_tossups"] = float(((su == 1) == won_d)[pick].mean()) if pick.any() else np.nan
     return out
 
 
@@ -151,9 +163,9 @@ def main() -> None:
 
     results, race_rows = [], []
     for label in ("sep22", "eve"):
-        u = us[us.asof == label]
-        sources = [("FiveThirtyEight (model)", f[f.asof == label], True)]
-        for name, g in rt[rt.asof == label].groupby("outlet"):
+        u = us[us["asof"] == label]
+        sources = [("FiveThirtyEight (model)", f[f["asof"] == label], True)]
+        for name, g in rt[rt["asof"] == label].groupby("outlet"):
             sources.append((name, g, False))
         for name, g, prob in sources:
             m = u.merge(g[KEY + ["rating"] + (["p_dem"] if prob else [])], on=KEY, suffixes=("", "_them"))
@@ -175,7 +187,7 @@ def main() -> None:
     pd.concat(race_rows).to_csv(OUT / "outlet_comparison_races.csv", index=False)
     pd.set_option("display.width", 250)
     for label in ("sep22", "eve"):
-        x = res[(res.asof == label)].sort_values(["subset", "races"], ascending=[True, False])
+        x = res[(res["asof"] == label)].sort_values(["subset", "races"], ascending=[True, False])
         print(f"\n=== As of {'Sept 22' if label == 'sep22' else 'Election Eve'} ===")
         print(x[["subset", "outlet", "races", "years", "offices", "ours_called", "theirs_called", "ours_tossups",
                  "theirs_tossups", "ours_brier", "theirs_brier"]].round(3).to_string(index=False))

@@ -218,6 +218,13 @@ svg[class^="plot"] { touch-action: pan-y; }
 ul.tight { margin: 6px 0 0; padding-left: 18px; font: 14.5px/1.55 var(--sans); }
 ul.tight li { margin: 3px 0; }
 details summary { cursor: pointer; font: 600 14px var(--sans); color: var(--ink-2); margin: 14px 0 6px; }
+.track-table th small { font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--ink-3); }
+.track-table .vs { color: var(--ink-3); font-size: 11px; margin: 0 2px; }
+.track-table .win { font-weight: 700; color: var(--ink); }
+.cmp-block tr.extra { display: none; }
+.cmp-block.all tr.extra { display: table-row; }
+.show-all { margin: 12px 0 4px; font: 600 14px var(--sans); padding: 8px 16px; border-radius: 8px; border: 1px solid var(--axis);
+  background: var(--card); color: var(--ink); cursor: pointer; }
 .race-title { text-wrap: balance; }
 .race-title .matchup { display: block; text-wrap: balance; }
 .callout { font-family: var(--sans); font-size: 14px; line-height: 1.5; color: var(--ink-2); background: var(--card); box-shadow: 0 0 0 1px var(--card-ring);
