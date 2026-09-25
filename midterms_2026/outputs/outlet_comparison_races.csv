@@ -1255,36 +1255,36 @@ year,office,state_po,district,special,asof,outlet,p_dem,rating,rating_them,actua
 2022,SEN,WI,0,False,sep22,FiveThirtyEight (model),0.17815,Likely R,Toss-up,-1.009120533967455
 2022,GOV,AL,0,False,sep22,FiveThirtyEight (model),0.0,Safe R,Safe R,-39.265662813177215
 2022,GOV,AR,0,False,sep22,FiveThirtyEight (model),0.0,Safe R,Safe R,-28.484718522865784
-2022,GOV,AZ,0,False,sep22,FiveThirtyEight (model),0.32995,Lean R,Toss-up,0.6675726050183044
+2022,GOV,AZ,0,False,sep22,FiveThirtyEight (model),0.4286,Toss-up,Toss-up,0.6675726050183044
 2022,GOV,CA,0,False,sep22,FiveThirtyEight (model),0.99995,Safe D,Safe D,18.362536531248995
-2022,GOV,CO,0,False,sep22,FiveThirtyEight (model),0.99735,Safe D,Safe D,19.80162519513396
-2022,GOV,CT,0,False,sep22,FiveThirtyEight (model),0.9885,Safe D,Safe D,12.97734612363641
+2022,GOV,CO,0,False,sep22,FiveThirtyEight (model),0.99855,Safe D,Safe D,19.80162519513396
+2022,GOV,CT,0,False,sep22,FiveThirtyEight (model),0.99595,Safe D,Safe D,12.97734612363641
 2022,GOV,FL,0,False,sep22,FiveThirtyEight (model),0.0174,Safe R,Likely R,-19.531010986044727
-2022,GOV,GA,0,False,sep22,FiveThirtyEight (model),0.04925,Safe R,Likely R,-7.589309711877857
+2022,GOV,GA,0,False,sep22,FiveThirtyEight (model),0.03985,Safe R,Likely R,-7.589309711877857
 2022,GOV,HI,0,False,sep22,FiveThirtyEight (model),0.9977,Safe D,Safe D,26.32422047030697
-2022,GOV,IA,0,False,sep22,FiveThirtyEight (model),0.01215,Safe R,Safe R,-18.97818056147391
+2022,GOV,IA,0,False,sep22,FiveThirtyEight (model),0.00995,Safe R,Safe R,-18.97818056147391
 2022,GOV,ID,0,False,sep22,FiveThirtyEight (model),0.0,Safe R,Safe R,-49.74824441882402
-2022,GOV,IL,0,False,sep22,FiveThirtyEight (model),0.9894,Safe D,Safe D,12.88938733629146
-2022,GOV,KS,0,False,sep22,FiveThirtyEight (model),0.46725,Toss-up,Lean D,2.2772963001991955
+2022,GOV,IL,0,False,sep22,FiveThirtyEight (model),0.99255,Safe D,Safe D,12.88938733629146
+2022,GOV,KS,0,False,sep22,FiveThirtyEight (model),0.54725,Toss-up,Lean D,2.2772963001991955
 2022,GOV,MA,0,False,sep22,FiveThirtyEight (model),1.0,Safe D,Safe D,29.67002298929594
 2022,GOV,MD,0,False,sep22,FiveThirtyEight (model),1.0,Safe D,Safe D,33.537811206102965
 2022,GOV,ME,0,False,sep22,FiveThirtyEight (model),0.96485,Safe D,Likely D,13.321628757629234
-2022,GOV,MI,0,False,sep22,FiveThirtyEight (model),0.936,Likely D,Likely D,10.36557496833808
-2022,GOV,MN,0,False,sep22,FiveThirtyEight (model),0.90575,Likely D,Likely D,7.910569874480428
+2022,GOV,MI,0,False,sep22,FiveThirtyEight (model),0.97805,Safe D,Likely D,10.36557496833808
+2022,GOV,MN,0,False,sep22,FiveThirtyEight (model),0.93995,Likely D,Likely D,7.910569874480428
 2022,GOV,NE,0,False,sep22,FiveThirtyEight (model),0.00195,Safe R,Safe R,-24.41328044476372
-2022,GOV,NH,0,False,sep22,FiveThirtyEight (model),0.00215,Safe R,Safe R,-15.75628425519908
+2022,GOV,NH,0,False,sep22,FiveThirtyEight (model),0.0013,Safe R,Safe R,-15.75628425519908
 2022,GOV,NV,0,False,sep22,FiveThirtyEight (model),0.15735,Likely R,Lean D,-1.56023529676135
-2022,GOV,NY,0,False,sep22,FiveThirtyEight (model),0.99885,Safe D,Safe D,6.195824927968434
+2022,GOV,NY,0,False,sep22,FiveThirtyEight (model),0.9989,Safe D,Safe D,6.195824927968434
 2022,GOV,OH,0,False,sep22,FiveThirtyEight (model),0.00025,Safe R,Safe R,-25.08378145637099
 2022,GOV,OK,0,False,sep22,FiveThirtyEight (model),0.0039,Safe R,Safe R,-14.052228131565524
-2022,GOV,OR,0,False,sep22,FiveThirtyEight (model),0.6788,Lean D,Lean D,3.77321019067196
-2022,GOV,PA,0,False,sep22,FiveThirtyEight (model),0.9703,Safe D,Likely D,15.043452071775578
-2022,GOV,RI,0,False,sep22,FiveThirtyEight (model),0.9765,Safe D,Safe D,19.69136283932321
+2022,GOV,OR,0,False,sep22,FiveThirtyEight (model),0.74265,Lean D,Lean D,3.77321019067196
+2022,GOV,PA,0,False,sep22,FiveThirtyEight (model),0.9819,Safe D,Likely D,15.043452071775578
+2022,GOV,RI,0,False,sep22,FiveThirtyEight (model),0.9834,Safe D,Safe D,19.69136283932321
 2022,GOV,SC,0,False,sep22,FiveThirtyEight (model),0.00335,Safe R,Safe R,-17.57993601088692
 2022,GOV,SD,0,False,sep22,FiveThirtyEight (model),0.00195,Safe R,Safe R,-27.59896879032756
 2022,GOV,TN,0,False,sep22,FiveThirtyEight (model),0.0,Safe R,Safe R,-32.694293882164665
-2022,GOV,TX,0,False,sep22,FiveThirtyEight (model),0.0059,Safe R,Likely R,-11.040283568211642
-2022,GOV,WI,0,False,sep22,FiveThirtyEight (model),0.45615,Toss-up,Lean D,3.434655002513979
+2022,GOV,TX,0,False,sep22,FiveThirtyEight (model),0.0057,Safe R,Likely R,-11.040283568211642
+2022,GOV,WI,0,False,sep22,FiveThirtyEight (model),0.6465,Lean D,Lean D,3.434655002513979
 2018,HOUSE,AK,0,False,sep22,CNN,0.03735,Safe R,Safe R,-6.612617357942614
 2018,HOUSE,AR,2,False,sep22,CNN,0.1536,Likely R,Lean R,-6.44082816402159
 2018,HOUSE,AZ,1,False,sep22,CNN,0.9949,Safe D,Lean D,7.689531771569483
@@ -1980,38 +1980,38 @@ year,office,state_po,district,special,asof,outlet,p_dem,rating,rating_them,actua
 2018,SEN,WY,0,False,sep22,Cook Political Report,0.0,Safe R,Safe R,-37.97819051140364
 2018,GOV,AL,0,False,sep22,Cook Political Report,0.0,Safe R,Safe R,-18.98366315447201
 2018,GOV,AR,0,False,sep22,Cook Political Report,0.00035,Safe R,Safe R,-34.56327458573237
-2018,GOV,AZ,0,False,sep22,Cook Political Report,0.12735,Likely R,Likely R,-14.472794645115007
+2018,GOV,AZ,0,False,sep22,Cook Political Report,0.0437,Safe R,Likely R,-14.472794645115007
 2018,GOV,CA,0,False,sep22,Cook Political Report,1.0,Safe D,Safe D,23.89705425162475
 2018,GOV,CO,0,False,sep22,Cook Political Report,0.92715,Likely D,Lean D,11.033798975918318
-2018,GOV,CT,0,False,sep22,Cook Political Report,0.98475,Safe D,Toss-up,3.300286098668716
+2018,GOV,CT,0,False,sep22,Cook Political Report,0.9857,Safe D,Toss-up,3.300286098668716
 2018,GOV,FL,0,False,sep22,Cook Political Report,0.8344,Likely D,Toss-up,-0.3993417738291432
-2018,GOV,GA,0,False,sep22,Cook Political Report,0.52085,Toss-up,Toss-up,-1.402401224163545
+2018,GOV,GA,0,False,sep22,Cook Political Report,0.43035,Toss-up,Toss-up,-1.402401224163545
 2018,GOV,HI,0,False,sep22,Cook Political Report,1.0,Safe D,Safe D,30.05817025219499
-2018,GOV,IA,0,False,sep22,Cook Political Report,0.3394,Lean R,Toss-up,-2.7952006568787016
+2018,GOV,IA,0,False,sep22,Cook Political Report,0.2242,Lean R,Toss-up,-2.7952006568787016
 2018,GOV,ID,0,False,sep22,Cook Political Report,5e-05,Safe R,Safe R,-22.029820731448083
-2018,GOV,IL,0,False,sep22,Cook Political Report,0.999,Safe D,Lean D,16.81770120200297
-2018,GOV,KS,0,False,sep22,Cook Political Report,0.07865,Likely R,Toss-up,5.573405562462808
-2018,GOV,MA,0,False,sep22,Cook Political Report,0.09845,Likely R,Safe R,-33.57831751284442
-2018,GOV,MD,0,False,sep22,Cook Political Report,0.62295,Lean D,Likely R,-11.982927494082166
-2018,GOV,ME,0,False,sep22,Cook Political Report,0.83115,Likely D,Toss-up,8.200440606601008
-2018,GOV,MI,0,False,sep22,Cook Political Report,0.94425,Likely D,Lean D,9.856662837846518
-2018,GOV,MN,0,False,sep22,Cook Political Report,0.91195,Likely D,Lean D,11.859277397110407
+2018,GOV,IL,0,False,sep22,Cook Political Report,0.9988,Safe D,Lean D,16.81770120200297
+2018,GOV,KS,0,False,sep22,Cook Political Report,0.07455,Likely R,Toss-up,5.573405562462808
+2018,GOV,MA,0,False,sep22,Cook Political Report,0.0981,Likely R,Safe R,-33.57831751284442
+2018,GOV,MD,0,False,sep22,Cook Political Report,0.622,Lean D,Likely R,-11.982927494082166
+2018,GOV,ME,0,False,sep22,Cook Political Report,0.9167,Likely D,Toss-up,8.200440606601008
+2018,GOV,MI,0,False,sep22,Cook Political Report,0.92305,Likely D,Lean D,9.856662837846518
+2018,GOV,MN,0,False,sep22,Cook Political Report,0.93795,Likely D,Lean D,11.859277397110407
 2018,GOV,NE,0,False,sep22,Cook Political Report,0.001,Safe R,Safe R,-18.00091979581106
-2018,GOV,NH,0,False,sep22,Cook Political Report,0.34135,Lean R,Likely R,-7.149770934823039
+2018,GOV,NH,0,False,sep22,Cook Political Report,0.18765,Likely R,Likely R,-7.149770934823039
 2018,GOV,NM,0,False,sep22,Cook Political Report,0.94175,Likely D,Lean D,14.398119630875614
-2018,GOV,NV,0,False,sep22,Cook Political Report,0.70725,Lean D,Toss-up,4.312271616501526
+2018,GOV,NV,0,False,sep22,Cook Political Report,0.6565,Lean D,Toss-up,4.312271616501526
 2018,GOV,NY,0,False,sep22,Cook Political Report,1.0,Safe D,Safe D,27.5631601532228
-2018,GOV,OH,0,False,sep22,Cook Political Report,0.2919,Lean R,Toss-up,-3.85006889430733
-2018,GOV,OK,0,False,sep22,Cook Political Report,0.00145,Safe R,Likely R,-12.535965194072377
-2018,GOV,OR,0,False,sep22,Cook Political Report,0.98865,Safe D,Lean D,9.590332790127784
-2018,GOV,PA,0,False,sep22,Cook Political Report,0.99655,Safe D,Likely D,17.33541436344324
+2018,GOV,OH,0,False,sep22,Cook Political Report,0.23085,Lean R,Toss-up,-3.85006889430733
+2018,GOV,OK,0,False,sep22,Cook Political Report,0.0015,Safe R,Likely R,-12.535965194072377
+2018,GOV,OR,0,False,sep22,Cook Political Report,0.98895,Safe D,Lean D,9.590332790127784
+2018,GOV,PA,0,False,sep22,Cook Political Report,0.9985,Safe D,Likely D,17.33541436344324
 2018,GOV,RI,0,False,sep22,Cook Political Report,0.99815,Safe D,Lean D,17.21322628929106
-2018,GOV,SC,0,False,sep22,Cook Political Report,0.0433,Safe R,Likely R,-8.042103189401029
+2018,GOV,SC,0,False,sep22,Cook Political Report,0.03205,Safe R,Likely R,-8.042103189401029
 2018,GOV,SD,0,False,sep22,Cook Political Report,0.0053,Safe R,Likely R,-3.454865114997439
 2018,GOV,TN,0,False,sep22,Cook Political Report,0.00125,Safe R,Likely R,-21.41070592089212
-2018,GOV,TX,0,False,sep22,Cook Political Report,0.002,Safe R,Safe R,-13.530895009728672
-2018,GOV,VT,0,False,sep22,Cook Political Report,0.98295,Safe D,Safe R,-15.644734628969864
-2018,GOV,WI,0,False,sep22,Cook Political Report,0.71635,Lean D,Toss-up,1.115678752931978
+2018,GOV,TX,0,False,sep22,Cook Political Report,0.0009,Safe R,Safe R,-13.530895009728672
+2018,GOV,VT,0,False,sep22,Cook Political Report,0.9829,Safe D,Safe R,-15.644734628969864
+2018,GOV,WI,0,False,sep22,Cook Political Report,0.63215,Lean D,Toss-up,1.115678752931978
 2018,GOV,WY,0,False,sep22,Cook Political Report,0.0,Safe R,Safe R,-41.81736902020512
 2020,HOUSE,AK,0,False,sep22,Cook Political Report,0.0163,Safe R,Lean R,-9.168082458762097
 2020,HOUSE,AL,1,False,sep22,Cook Political Report,0.0,Safe R,Safe R,-28.857513063685083
@@ -2854,36 +2854,36 @@ year,office,state_po,district,special,asof,outlet,p_dem,rating,rating_them,actua
 2022,SEN,WI,0,False,sep22,Cook Political Report,0.17815,Likely R,Toss-up,-1.009120533967455
 2022,GOV,AL,0,False,sep22,Cook Political Report,0.0,Safe R,Safe R,-39.265662813177215
 2022,GOV,AR,0,False,sep22,Cook Political Report,0.0,Safe R,Safe R,-28.484718522865784
-2022,GOV,AZ,0,False,sep22,Cook Political Report,0.32995,Lean R,Toss-up,0.6675726050183044
+2022,GOV,AZ,0,False,sep22,Cook Political Report,0.4286,Toss-up,Toss-up,0.6675726050183044
 2022,GOV,CA,0,False,sep22,Cook Political Report,0.99995,Safe D,Safe D,18.362536531248995
-2022,GOV,CO,0,False,sep22,Cook Political Report,0.99735,Safe D,Safe D,19.80162519513396
-2022,GOV,CT,0,False,sep22,Cook Political Report,0.9885,Safe D,Likely D,12.97734612363641
+2022,GOV,CO,0,False,sep22,Cook Political Report,0.99855,Safe D,Safe D,19.80162519513396
+2022,GOV,CT,0,False,sep22,Cook Political Report,0.99595,Safe D,Likely D,12.97734612363641
 2022,GOV,FL,0,False,sep22,Cook Political Report,0.0174,Safe R,Likely R,-19.531010986044727
-2022,GOV,GA,0,False,sep22,Cook Political Report,0.04925,Safe R,Lean R,-7.589309711877857
+2022,GOV,GA,0,False,sep22,Cook Political Report,0.03985,Safe R,Lean R,-7.589309711877857
 2022,GOV,HI,0,False,sep22,Cook Political Report,0.9977,Safe D,Safe D,26.32422047030697
-2022,GOV,IA,0,False,sep22,Cook Political Report,0.01215,Safe R,Safe R,-18.97818056147391
+2022,GOV,IA,0,False,sep22,Cook Political Report,0.00995,Safe R,Safe R,-18.97818056147391
 2022,GOV,ID,0,False,sep22,Cook Political Report,0.0,Safe R,Safe R,-49.74824441882402
-2022,GOV,IL,0,False,sep22,Cook Political Report,0.9894,Safe D,Safe D,12.88938733629146
-2022,GOV,KS,0,False,sep22,Cook Political Report,0.46725,Toss-up,Toss-up,2.2772963001991955
+2022,GOV,IL,0,False,sep22,Cook Political Report,0.99255,Safe D,Safe D,12.88938733629146
+2022,GOV,KS,0,False,sep22,Cook Political Report,0.54725,Toss-up,Toss-up,2.2772963001991955
 2022,GOV,MA,0,False,sep22,Cook Political Report,1.0,Safe D,Safe D,29.67002298929594
 2022,GOV,MD,0,False,sep22,Cook Political Report,1.0,Safe D,Safe D,33.537811206102965
 2022,GOV,ME,0,False,sep22,Cook Political Report,0.96485,Safe D,Lean D,13.321628757629234
-2022,GOV,MI,0,False,sep22,Cook Political Report,0.936,Likely D,Lean D,10.36557496833808
-2022,GOV,MN,0,False,sep22,Cook Political Report,0.90575,Likely D,Likely D,7.910569874480428
+2022,GOV,MI,0,False,sep22,Cook Political Report,0.97805,Safe D,Lean D,10.36557496833808
+2022,GOV,MN,0,False,sep22,Cook Political Report,0.93995,Likely D,Likely D,7.910569874480428
 2022,GOV,NE,0,False,sep22,Cook Political Report,0.00195,Safe R,Safe R,-24.41328044476372
-2022,GOV,NH,0,False,sep22,Cook Political Report,0.00215,Safe R,Safe R,-15.75628425519908
+2022,GOV,NH,0,False,sep22,Cook Political Report,0.0013,Safe R,Safe R,-15.75628425519908
 2022,GOV,NV,0,False,sep22,Cook Political Report,0.15735,Likely R,Toss-up,-1.56023529676135
-2022,GOV,NY,0,False,sep22,Cook Political Report,0.99885,Safe D,Safe D,6.195824927968434
+2022,GOV,NY,0,False,sep22,Cook Political Report,0.9989,Safe D,Safe D,6.195824927968434
 2022,GOV,OH,0,False,sep22,Cook Political Report,0.00025,Safe R,Likely R,-25.08378145637099
 2022,GOV,OK,0,False,sep22,Cook Political Report,0.0039,Safe R,Safe R,-14.052228131565524
-2022,GOV,OR,0,False,sep22,Cook Political Report,0.6788,Lean D,Toss-up,3.77321019067196
-2022,GOV,PA,0,False,sep22,Cook Political Report,0.9703,Safe D,Lean D,15.043452071775578
-2022,GOV,RI,0,False,sep22,Cook Political Report,0.9765,Safe D,Safe D,19.69136283932321
+2022,GOV,OR,0,False,sep22,Cook Political Report,0.74265,Lean D,Toss-up,3.77321019067196
+2022,GOV,PA,0,False,sep22,Cook Political Report,0.9819,Safe D,Lean D,15.043452071775578
+2022,GOV,RI,0,False,sep22,Cook Political Report,0.9834,Safe D,Safe D,19.69136283932321
 2022,GOV,SC,0,False,sep22,Cook Political Report,0.00335,Safe R,Safe R,-17.57993601088692
 2022,GOV,SD,0,False,sep22,Cook Political Report,0.00195,Safe R,Safe R,-27.59896879032756
 2022,GOV,TN,0,False,sep22,Cook Political Report,0.0,Safe R,Safe R,-32.694293882164665
-2022,GOV,TX,0,False,sep22,Cook Political Report,0.0059,Safe R,Likely R,-11.040283568211642
-2022,GOV,WI,0,False,sep22,Cook Political Report,0.45615,Toss-up,Toss-up,3.434655002513979
+2022,GOV,TX,0,False,sep22,Cook Political Report,0.0057,Safe R,Likely R,-11.040283568211642
+2022,GOV,WI,0,False,sep22,Cook Political Report,0.6465,Lean D,Toss-up,3.434655002513979
 2024,HOUSE,AR,1,False,sep22,Cook Political Report,0.0,Safe R,Safe R,-50.45822643958829
 2024,HOUSE,AR,2,False,sep22,Cook Political Report,0.00015,Safe R,Safe R,-17.869572882861117
 2024,HOUSE,AR,3,False,sep22,Cook Political Report,0.0,Safe R,Safe R,-33.5179824363256
@@ -3974,38 +3974,38 @@ year,office,state_po,district,special,asof,outlet,p_dem,rating,rating_them,actua
 2018,SEN,WY,0,False,sep22,Daily Kos,0.0,Safe R,Safe R,-37.97819051140364
 2018,GOV,AL,0,False,sep22,Daily Kos,0.0,Safe R,Likely R,-18.98366315447201
 2018,GOV,AR,0,False,sep22,Daily Kos,0.00035,Safe R,Safe R,-34.56327458573237
-2018,GOV,AZ,0,False,sep22,Daily Kos,0.12735,Likely R,Lean R,-14.472794645115007
+2018,GOV,AZ,0,False,sep22,Daily Kos,0.0437,Safe R,Lean R,-14.472794645115007
 2018,GOV,CA,0,False,sep22,Daily Kos,1.0,Safe D,Safe D,23.89705425162475
 2018,GOV,CO,0,False,sep22,Daily Kos,0.92715,Likely D,Lean D,11.033798975918318
-2018,GOV,CT,0,False,sep22,Daily Kos,0.98475,Safe D,Toss-up,3.300286098668716
+2018,GOV,CT,0,False,sep22,Daily Kos,0.9857,Safe D,Toss-up,3.300286098668716
 2018,GOV,FL,0,False,sep22,Daily Kos,0.8344,Likely D,Toss-up,-0.3993417738291432
-2018,GOV,GA,0,False,sep22,Daily Kos,0.52085,Toss-up,Lean R,-1.402401224163545
+2018,GOV,GA,0,False,sep22,Daily Kos,0.43035,Toss-up,Lean R,-1.402401224163545
 2018,GOV,HI,0,False,sep22,Daily Kos,1.0,Safe D,Safe D,30.05817025219499
-2018,GOV,IA,0,False,sep22,Daily Kos,0.3394,Lean R,Lean R,-2.7952006568787016
+2018,GOV,IA,0,False,sep22,Daily Kos,0.2242,Lean R,Lean R,-2.7952006568787016
 2018,GOV,ID,0,False,sep22,Daily Kos,5e-05,Safe R,Safe R,-22.029820731448083
-2018,GOV,IL,0,False,sep22,Daily Kos,0.999,Safe D,Likely D,16.81770120200297
-2018,GOV,KS,0,False,sep22,Daily Kos,0.07865,Likely R,Lean R,5.573405562462808
-2018,GOV,MA,0,False,sep22,Daily Kos,0.09845,Likely R,Safe R,-33.57831751284442
-2018,GOV,MD,0,False,sep22,Daily Kos,0.62295,Lean D,Likely R,-11.982927494082166
-2018,GOV,ME,0,False,sep22,Daily Kos,0.83115,Likely D,Toss-up,8.200440606601008
-2018,GOV,MI,0,False,sep22,Daily Kos,0.94425,Likely D,Lean D,9.856662837846518
-2018,GOV,MN,0,False,sep22,Daily Kos,0.91195,Likely D,Lean D,11.859277397110407
+2018,GOV,IL,0,False,sep22,Daily Kos,0.9988,Safe D,Likely D,16.81770120200297
+2018,GOV,KS,0,False,sep22,Daily Kos,0.07455,Likely R,Lean R,5.573405562462808
+2018,GOV,MA,0,False,sep22,Daily Kos,0.0981,Likely R,Safe R,-33.57831751284442
+2018,GOV,MD,0,False,sep22,Daily Kos,0.622,Lean D,Likely R,-11.982927494082166
+2018,GOV,ME,0,False,sep22,Daily Kos,0.9167,Likely D,Toss-up,8.200440606601008
+2018,GOV,MI,0,False,sep22,Daily Kos,0.92305,Likely D,Lean D,9.856662837846518
+2018,GOV,MN,0,False,sep22,Daily Kos,0.93795,Likely D,Lean D,11.859277397110407
 2018,GOV,NE,0,False,sep22,Daily Kos,0.001,Safe R,Safe R,-18.00091979581106
-2018,GOV,NH,0,False,sep22,Daily Kos,0.34135,Lean R,Likely R,-7.149770934823039
+2018,GOV,NH,0,False,sep22,Daily Kos,0.18765,Likely R,Likely R,-7.149770934823039
 2018,GOV,NM,0,False,sep22,Daily Kos,0.94175,Likely D,Lean D,14.398119630875614
-2018,GOV,NV,0,False,sep22,Daily Kos,0.70725,Lean D,Toss-up,4.312271616501526
+2018,GOV,NV,0,False,sep22,Daily Kos,0.6565,Lean D,Toss-up,4.312271616501526
 2018,GOV,NY,0,False,sep22,Daily Kos,1.0,Safe D,Safe D,27.5631601532228
-2018,GOV,OH,0,False,sep22,Daily Kos,0.2919,Lean R,Toss-up,-3.85006889430733
-2018,GOV,OK,0,False,sep22,Daily Kos,0.00145,Safe R,Lean R,-12.535965194072377
-2018,GOV,OR,0,False,sep22,Daily Kos,0.98865,Safe D,Likely D,9.590332790127784
-2018,GOV,PA,0,False,sep22,Daily Kos,0.99655,Safe D,Likely D,17.33541436344324
+2018,GOV,OH,0,False,sep22,Daily Kos,0.23085,Lean R,Toss-up,-3.85006889430733
+2018,GOV,OK,0,False,sep22,Daily Kos,0.0015,Safe R,Lean R,-12.535965194072377
+2018,GOV,OR,0,False,sep22,Daily Kos,0.98895,Safe D,Likely D,9.590332790127784
+2018,GOV,PA,0,False,sep22,Daily Kos,0.9985,Safe D,Likely D,17.33541436344324
 2018,GOV,RI,0,False,sep22,Daily Kos,0.99815,Safe D,Lean D,17.21322628929106
-2018,GOV,SC,0,False,sep22,Daily Kos,0.0433,Safe R,Likely R,-8.042103189401029
+2018,GOV,SC,0,False,sep22,Daily Kos,0.03205,Safe R,Likely R,-8.042103189401029
 2018,GOV,SD,0,False,sep22,Daily Kos,0.0053,Safe R,Likely R,-3.454865114997439
 2018,GOV,TN,0,False,sep22,Daily Kos,0.00125,Safe R,Likely R,-21.41070592089212
-2018,GOV,TX,0,False,sep22,Daily Kos,0.002,Safe R,Safe R,-13.530895009728672
-2018,GOV,VT,0,False,sep22,Daily Kos,0.98295,Safe D,Safe R,-15.644734628969864
-2018,GOV,WI,0,False,sep22,Daily Kos,0.71635,Lean D,Toss-up,1.115678752931978
+2018,GOV,TX,0,False,sep22,Daily Kos,0.0009,Safe R,Safe R,-13.530895009728672
+2018,GOV,VT,0,False,sep22,Daily Kos,0.9829,Safe D,Safe R,-15.644734628969864
+2018,GOV,WI,0,False,sep22,Daily Kos,0.63215,Lean D,Toss-up,1.115678752931978
 2018,GOV,WY,0,False,sep22,Daily Kos,0.0,Safe R,Safe R,-41.81736902020512
 2020,HOUSE,AK,0,False,sep22,Daily Kos,0.0163,Safe R,Likely R,-9.168082458762097
 2020,HOUSE,AL,1,False,sep22,Daily Kos,0.0,Safe R,Safe R,-28.857513063685083
@@ -4778,38 +4778,38 @@ year,office,state_po,district,special,asof,outlet,p_dem,rating,rating_them,actua
 2018,SEN,WY,0,False,sep22,Fox News,0.0,Safe R,Likely R,-37.97819051140364
 2018,GOV,AL,0,False,sep22,Fox News,0.0,Safe R,Likely R,-18.98366315447201
 2018,GOV,AR,0,False,sep22,Fox News,0.00035,Safe R,Likely R,-34.56327458573237
-2018,GOV,AZ,0,False,sep22,Fox News,0.12735,Likely R,Lean R,-14.472794645115007
+2018,GOV,AZ,0,False,sep22,Fox News,0.0437,Safe R,Lean R,-14.472794645115007
 2018,GOV,CA,0,False,sep22,Fox News,1.0,Safe D,Likely D,23.89705425162475
 2018,GOV,CO,0,False,sep22,Fox News,0.92715,Likely D,Lean D,11.033798975918318
-2018,GOV,CT,0,False,sep22,Fox News,0.98475,Safe D,Toss-up,3.300286098668716
+2018,GOV,CT,0,False,sep22,Fox News,0.9857,Safe D,Toss-up,3.300286098668716
 2018,GOV,FL,0,False,sep22,Fox News,0.8344,Likely D,Toss-up,-0.3993417738291432
-2018,GOV,GA,0,False,sep22,Fox News,0.52085,Toss-up,Lean R,-1.402401224163545
+2018,GOV,GA,0,False,sep22,Fox News,0.43035,Toss-up,Lean R,-1.402401224163545
 2018,GOV,HI,0,False,sep22,Fox News,1.0,Safe D,Likely D,30.05817025219499
-2018,GOV,IA,0,False,sep22,Fox News,0.3394,Lean R,Toss-up,-2.7952006568787016
+2018,GOV,IA,0,False,sep22,Fox News,0.2242,Lean R,Toss-up,-2.7952006568787016
 2018,GOV,ID,0,False,sep22,Fox News,5e-05,Safe R,Likely R,-22.029820731448083
-2018,GOV,IL,0,False,sep22,Fox News,0.999,Safe D,Lean D,16.81770120200297
-2018,GOV,KS,0,False,sep22,Fox News,0.07865,Likely R,Lean R,5.573405562462808
-2018,GOV,MA,0,False,sep22,Fox News,0.09845,Likely R,Likely R,-33.57831751284442
-2018,GOV,MD,0,False,sep22,Fox News,0.62295,Lean D,Likely R,-11.982927494082166
-2018,GOV,ME,0,False,sep22,Fox News,0.83115,Likely D,Toss-up,8.200440606601008
-2018,GOV,MI,0,False,sep22,Fox News,0.94425,Likely D,Toss-up,9.856662837846518
-2018,GOV,MN,0,False,sep22,Fox News,0.91195,Likely D,Lean D,11.859277397110407
+2018,GOV,IL,0,False,sep22,Fox News,0.9988,Safe D,Lean D,16.81770120200297
+2018,GOV,KS,0,False,sep22,Fox News,0.07455,Likely R,Lean R,5.573405562462808
+2018,GOV,MA,0,False,sep22,Fox News,0.0981,Likely R,Likely R,-33.57831751284442
+2018,GOV,MD,0,False,sep22,Fox News,0.622,Lean D,Likely R,-11.982927494082166
+2018,GOV,ME,0,False,sep22,Fox News,0.9167,Likely D,Toss-up,8.200440606601008
+2018,GOV,MI,0,False,sep22,Fox News,0.92305,Likely D,Toss-up,9.856662837846518
+2018,GOV,MN,0,False,sep22,Fox News,0.93795,Likely D,Lean D,11.859277397110407
 2018,GOV,NE,0,False,sep22,Fox News,0.001,Safe R,Likely R,-18.00091979581106
-2018,GOV,NH,0,False,sep22,Fox News,0.34135,Lean R,Lean R,-7.149770934823039
+2018,GOV,NH,0,False,sep22,Fox News,0.18765,Likely R,Lean R,-7.149770934823039
 2018,GOV,NM,0,False,sep22,Fox News,0.94175,Likely D,Lean D,14.398119630875614
-2018,GOV,NV,0,False,sep22,Fox News,0.70725,Lean D,Toss-up,4.312271616501526
+2018,GOV,NV,0,False,sep22,Fox News,0.6565,Lean D,Toss-up,4.312271616501526
 2018,GOV,NY,0,False,sep22,Fox News,1.0,Safe D,Likely D,27.5631601532228
-2018,GOV,OH,0,False,sep22,Fox News,0.2919,Lean R,Lean R,-3.85006889430733
-2018,GOV,OK,0,False,sep22,Fox News,0.00145,Safe R,Likely R,-12.535965194072377
-2018,GOV,OR,0,False,sep22,Fox News,0.98865,Safe D,Likely D,9.590332790127784
-2018,GOV,PA,0,False,sep22,Fox News,0.99655,Safe D,Likely D,17.33541436344324
+2018,GOV,OH,0,False,sep22,Fox News,0.23085,Lean R,Lean R,-3.85006889430733
+2018,GOV,OK,0,False,sep22,Fox News,0.0015,Safe R,Likely R,-12.535965194072377
+2018,GOV,OR,0,False,sep22,Fox News,0.98895,Safe D,Likely D,9.590332790127784
+2018,GOV,PA,0,False,sep22,Fox News,0.9985,Safe D,Likely D,17.33541436344324
 2018,GOV,RI,0,False,sep22,Fox News,0.99815,Safe D,Likely D,17.21322628929106
-2018,GOV,SC,0,False,sep22,Fox News,0.0433,Safe R,Likely R,-8.042103189401029
+2018,GOV,SC,0,False,sep22,Fox News,0.03205,Safe R,Likely R,-8.042103189401029
 2018,GOV,SD,0,False,sep22,Fox News,0.0053,Safe R,Likely R,-3.454865114997439
 2018,GOV,TN,0,False,sep22,Fox News,0.00125,Safe R,Likely R,-21.41070592089212
-2018,GOV,TX,0,False,sep22,Fox News,0.002,Safe R,Likely R,-13.530895009728672
-2018,GOV,VT,0,False,sep22,Fox News,0.98295,Safe D,Likely R,-15.644734628969864
-2018,GOV,WI,0,False,sep22,Fox News,0.71635,Lean D,Toss-up,1.115678752931978
+2018,GOV,TX,0,False,sep22,Fox News,0.0009,Safe R,Likely R,-13.530895009728672
+2018,GOV,VT,0,False,sep22,Fox News,0.9829,Safe D,Likely R,-15.644734628969864
+2018,GOV,WI,0,False,sep22,Fox News,0.63215,Lean D,Toss-up,1.115678752931978
 2018,GOV,WY,0,False,sep22,Fox News,0.0,Safe R,Likely R,-41.81736902020512
 2022,HOUSE,AK,0,False,sep22,Fox News,0.01065,Safe R,Toss-up,-0.3202394429539568
 2022,HOUSE,AL,2,False,sep22,Fox News,0.0,Safe R,Safe R,-40.64274532674422
@@ -5245,36 +5245,36 @@ year,office,state_po,district,special,asof,outlet,p_dem,rating,rating_them,actua
 2022,SEN,WI,0,False,sep22,Fox News,0.17815,Likely R,Lean R,-1.009120533967455
 2022,GOV,AL,0,False,sep22,Fox News,0.0,Safe R,Safe R,-39.265662813177215
 2022,GOV,AR,0,False,sep22,Fox News,0.0,Safe R,Safe R,-28.484718522865784
-2022,GOV,AZ,0,False,sep22,Fox News,0.32995,Lean R,Toss-up,0.6675726050183044
+2022,GOV,AZ,0,False,sep22,Fox News,0.4286,Toss-up,Toss-up,0.6675726050183044
 2022,GOV,CA,0,False,sep22,Fox News,0.99995,Safe D,Safe D,18.362536531248995
-2022,GOV,CO,0,False,sep22,Fox News,0.99735,Safe D,Likely D,19.80162519513396
-2022,GOV,CT,0,False,sep22,Fox News,0.9885,Safe D,Likely D,12.97734612363641
+2022,GOV,CO,0,False,sep22,Fox News,0.99855,Safe D,Likely D,19.80162519513396
+2022,GOV,CT,0,False,sep22,Fox News,0.99595,Safe D,Likely D,12.97734612363641
 2022,GOV,FL,0,False,sep22,Fox News,0.0174,Safe R,Likely R,-19.531010986044727
-2022,GOV,GA,0,False,sep22,Fox News,0.04925,Safe R,Lean R,-7.589309711877857
+2022,GOV,GA,0,False,sep22,Fox News,0.03985,Safe R,Lean R,-7.589309711877857
 2022,GOV,HI,0,False,sep22,Fox News,0.9977,Safe D,Safe D,26.32422047030697
-2022,GOV,IA,0,False,sep22,Fox News,0.01215,Safe R,Safe R,-18.97818056147391
+2022,GOV,IA,0,False,sep22,Fox News,0.00995,Safe R,Safe R,-18.97818056147391
 2022,GOV,ID,0,False,sep22,Fox News,0.0,Safe R,Safe R,-49.74824441882402
-2022,GOV,IL,0,False,sep22,Fox News,0.9894,Safe D,Safe D,12.88938733629146
-2022,GOV,KS,0,False,sep22,Fox News,0.46725,Toss-up,Toss-up,2.2772963001991955
+2022,GOV,IL,0,False,sep22,Fox News,0.99255,Safe D,Safe D,12.88938733629146
+2022,GOV,KS,0,False,sep22,Fox News,0.54725,Toss-up,Toss-up,2.2772963001991955
 2022,GOV,MA,0,False,sep22,Fox News,1.0,Safe D,Safe D,29.67002298929594
 2022,GOV,MD,0,False,sep22,Fox News,1.0,Safe D,Likely D,33.537811206102965
 2022,GOV,ME,0,False,sep22,Fox News,0.96485,Safe D,Toss-up,13.321628757629234
-2022,GOV,MI,0,False,sep22,Fox News,0.936,Likely D,Lean D,10.36557496833808
-2022,GOV,MN,0,False,sep22,Fox News,0.90575,Likely D,Lean D,7.910569874480428
+2022,GOV,MI,0,False,sep22,Fox News,0.97805,Safe D,Lean D,10.36557496833808
+2022,GOV,MN,0,False,sep22,Fox News,0.93995,Likely D,Lean D,7.910569874480428
 2022,GOV,NE,0,False,sep22,Fox News,0.00195,Safe R,Safe R,-24.41328044476372
-2022,GOV,NH,0,False,sep22,Fox News,0.00215,Safe R,Likely R,-15.75628425519908
+2022,GOV,NH,0,False,sep22,Fox News,0.0013,Safe R,Likely R,-15.75628425519908
 2022,GOV,NV,0,False,sep22,Fox News,0.15735,Likely R,Toss-up,-1.56023529676135
-2022,GOV,NY,0,False,sep22,Fox News,0.99885,Safe D,Safe D,6.195824927968434
+2022,GOV,NY,0,False,sep22,Fox News,0.9989,Safe D,Safe D,6.195824927968434
 2022,GOV,OH,0,False,sep22,Fox News,0.00025,Safe R,Likely R,-25.08378145637099
 2022,GOV,OK,0,False,sep22,Fox News,0.0039,Safe R,Safe R,-14.052228131565524
-2022,GOV,OR,0,False,sep22,Fox News,0.6788,Lean D,Toss-up,3.77321019067196
-2022,GOV,PA,0,False,sep22,Fox News,0.9703,Safe D,Lean D,15.043452071775578
-2022,GOV,RI,0,False,sep22,Fox News,0.9765,Safe D,Likely D,19.69136283932321
+2022,GOV,OR,0,False,sep22,Fox News,0.74265,Lean D,Toss-up,3.77321019067196
+2022,GOV,PA,0,False,sep22,Fox News,0.9819,Safe D,Lean D,15.043452071775578
+2022,GOV,RI,0,False,sep22,Fox News,0.9834,Safe D,Likely D,19.69136283932321
 2022,GOV,SC,0,False,sep22,Fox News,0.00335,Safe R,Safe R,-17.57993601088692
 2022,GOV,SD,0,False,sep22,Fox News,0.00195,Safe R,Safe R,-27.59896879032756
 2022,GOV,TN,0,False,sep22,Fox News,0.0,Safe R,Safe R,-32.694293882164665
-2022,GOV,TX,0,False,sep22,Fox News,0.0059,Safe R,Likely R,-11.040283568211642
-2022,GOV,WI,0,False,sep22,Fox News,0.45615,Toss-up,Toss-up,3.434655002513979
+2022,GOV,TX,0,False,sep22,Fox News,0.0057,Safe R,Likely R,-11.040283568211642
+2022,GOV,WI,0,False,sep22,Fox News,0.6465,Lean D,Toss-up,3.434655002513979
 2024,SEN,AZ,0,False,sep22,Fox News,0.4146,Toss-up,Lean D,2.462458314181491
 2024,SEN,CA,0,False,sep22,Fox News,0.98735,Safe D,Safe D,17.7450343823894
 2024,SEN,CT,0,False,sep22,Fox News,0.97815,Safe D,Safe D,19.20478918086353
@@ -6314,36 +6314,36 @@ year,office,state_po,district,special,asof,outlet,p_dem,rating,rating_them,actua
 2022,SEN,WI,0,False,sep22,Inside Elections,0.17815,Likely R,Lean R,-1.009120533967455
 2022,GOV,AL,0,False,sep22,Inside Elections,0.0,Safe R,Safe R,-39.265662813177215
 2022,GOV,AR,0,False,sep22,Inside Elections,0.0,Safe R,Safe R,-28.484718522865784
-2022,GOV,AZ,0,False,sep22,Inside Elections,0.32995,Lean R,Toss-up,0.6675726050183044
+2022,GOV,AZ,0,False,sep22,Inside Elections,0.4286,Toss-up,Toss-up,0.6675726050183044
 2022,GOV,CA,0,False,sep22,Inside Elections,0.99995,Safe D,Safe D,18.362536531248995
-2022,GOV,CO,0,False,sep22,Inside Elections,0.99735,Safe D,Safe D,19.80162519513396
-2022,GOV,CT,0,False,sep22,Inside Elections,0.9885,Safe D,Safe D,12.97734612363641
+2022,GOV,CO,0,False,sep22,Inside Elections,0.99855,Safe D,Safe D,19.80162519513396
+2022,GOV,CT,0,False,sep22,Inside Elections,0.99595,Safe D,Safe D,12.97734612363641
 2022,GOV,FL,0,False,sep22,Inside Elections,0.0174,Safe R,Likely R,-19.531010986044727
-2022,GOV,GA,0,False,sep22,Inside Elections,0.04925,Safe R,Lean R,-7.589309711877857
+2022,GOV,GA,0,False,sep22,Inside Elections,0.03985,Safe R,Lean R,-7.589309711877857
 2022,GOV,HI,0,False,sep22,Inside Elections,0.9977,Safe D,Safe D,26.32422047030697
-2022,GOV,IA,0,False,sep22,Inside Elections,0.01215,Safe R,Safe R,-18.97818056147391
+2022,GOV,IA,0,False,sep22,Inside Elections,0.00995,Safe R,Safe R,-18.97818056147391
 2022,GOV,ID,0,False,sep22,Inside Elections,0.0,Safe R,Safe R,-49.74824441882402
-2022,GOV,IL,0,False,sep22,Inside Elections,0.9894,Safe D,Safe D,12.88938733629146
-2022,GOV,KS,0,False,sep22,Inside Elections,0.46725,Toss-up,Toss-up,2.2772963001991955
+2022,GOV,IL,0,False,sep22,Inside Elections,0.99255,Safe D,Safe D,12.88938733629146
+2022,GOV,KS,0,False,sep22,Inside Elections,0.54725,Toss-up,Toss-up,2.2772963001991955
 2022,GOV,MA,0,False,sep22,Inside Elections,1.0,Safe D,Likely D,29.67002298929594
 2022,GOV,MD,0,False,sep22,Inside Elections,1.0,Safe D,Likely D,33.537811206102965
 2022,GOV,ME,0,False,sep22,Inside Elections,0.96485,Safe D,Lean D,13.321628757629234
-2022,GOV,MI,0,False,sep22,Inside Elections,0.936,Likely D,Lean D,10.36557496833808
-2022,GOV,MN,0,False,sep22,Inside Elections,0.90575,Likely D,Likely D,7.910569874480428
+2022,GOV,MI,0,False,sep22,Inside Elections,0.97805,Safe D,Lean D,10.36557496833808
+2022,GOV,MN,0,False,sep22,Inside Elections,0.93995,Likely D,Likely D,7.910569874480428
 2022,GOV,NE,0,False,sep22,Inside Elections,0.00195,Safe R,Safe R,-24.41328044476372
-2022,GOV,NH,0,False,sep22,Inside Elections,0.00215,Safe R,Likely R,-15.75628425519908
+2022,GOV,NH,0,False,sep22,Inside Elections,0.0013,Safe R,Likely R,-15.75628425519908
 2022,GOV,NV,0,False,sep22,Inside Elections,0.15735,Likely R,Lean D,-1.56023529676135
-2022,GOV,NY,0,False,sep22,Inside Elections,0.99885,Safe D,Safe D,6.195824927968434
+2022,GOV,NY,0,False,sep22,Inside Elections,0.9989,Safe D,Safe D,6.195824927968434
 2022,GOV,OH,0,False,sep22,Inside Elections,0.00025,Safe R,Safe R,-25.08378145637099
 2022,GOV,OK,0,False,sep22,Inside Elections,0.0039,Safe R,Safe R,-14.052228131565524
-2022,GOV,OR,0,False,sep22,Inside Elections,0.6788,Lean D,Lean D,3.77321019067196
-2022,GOV,PA,0,False,sep22,Inside Elections,0.9703,Safe D,Lean D,15.043452071775578
-2022,GOV,RI,0,False,sep22,Inside Elections,0.9765,Safe D,Safe D,19.69136283932321
+2022,GOV,OR,0,False,sep22,Inside Elections,0.74265,Lean D,Lean D,3.77321019067196
+2022,GOV,PA,0,False,sep22,Inside Elections,0.9819,Safe D,Lean D,15.043452071775578
+2022,GOV,RI,0,False,sep22,Inside Elections,0.9834,Safe D,Safe D,19.69136283932321
 2022,GOV,SC,0,False,sep22,Inside Elections,0.00335,Safe R,Safe R,-17.57993601088692
 2022,GOV,SD,0,False,sep22,Inside Elections,0.00195,Safe R,Safe R,-27.59896879032756
 2022,GOV,TN,0,False,sep22,Inside Elections,0.0,Safe R,Safe R,-32.694293882164665
-2022,GOV,TX,0,False,sep22,Inside Elections,0.0059,Safe R,Safe R,-11.040283568211642
-2022,GOV,WI,0,False,sep22,Inside Elections,0.45615,Toss-up,Toss-up,3.434655002513979
+2022,GOV,TX,0,False,sep22,Inside Elections,0.0057,Safe R,Safe R,-11.040283568211642
+2022,GOV,WI,0,False,sep22,Inside Elections,0.6465,Lean D,Toss-up,3.434655002513979
 2024,HOUSE,AR,1,False,sep22,Inside Elections,0.0,Safe R,Safe R,-50.45822643958829
 2024,HOUSE,AR,2,False,sep22,Inside Elections,0.00015,Safe R,Safe R,-17.869572882861117
 2024,HOUSE,AR,3,False,sep22,Inside Elections,0.0,Safe R,Safe R,-33.5179824363256
@@ -7747,36 +7747,36 @@ year,office,state_po,district,special,asof,outlet,p_dem,rating,rating_them,actua
 2022,SEN,WI,0,False,sep22,Politico,0.17815,Likely R,Toss-up,-1.009120533967455
 2022,GOV,AL,0,False,sep22,Politico,0.0,Safe R,Safe R,-39.265662813177215
 2022,GOV,AR,0,False,sep22,Politico,0.0,Safe R,Safe R,-28.484718522865784
-2022,GOV,AZ,0,False,sep22,Politico,0.32995,Lean R,Toss-up,0.6675726050183044
+2022,GOV,AZ,0,False,sep22,Politico,0.4286,Toss-up,Toss-up,0.6675726050183044
 2022,GOV,CA,0,False,sep22,Politico,0.99995,Safe D,Safe D,18.362536531248995
-2022,GOV,CO,0,False,sep22,Politico,0.99735,Safe D,Likely D,19.80162519513396
-2022,GOV,CT,0,False,sep22,Politico,0.9885,Safe D,Lean D,12.97734612363641
+2022,GOV,CO,0,False,sep22,Politico,0.99855,Safe D,Likely D,19.80162519513396
+2022,GOV,CT,0,False,sep22,Politico,0.99595,Safe D,Lean D,12.97734612363641
 2022,GOV,FL,0,False,sep22,Politico,0.0174,Safe R,Likely R,-19.531010986044727
-2022,GOV,GA,0,False,sep22,Politico,0.04925,Safe R,Toss-up,-7.589309711877857
+2022,GOV,GA,0,False,sep22,Politico,0.03985,Safe R,Toss-up,-7.589309711877857
 2022,GOV,HI,0,False,sep22,Politico,0.9977,Safe D,Safe D,26.32422047030697
-2022,GOV,IA,0,False,sep22,Politico,0.01215,Safe R,Safe R,-18.97818056147391
+2022,GOV,IA,0,False,sep22,Politico,0.00995,Safe R,Safe R,-18.97818056147391
 2022,GOV,ID,0,False,sep22,Politico,0.0,Safe R,Safe R,-49.74824441882402
-2022,GOV,IL,0,False,sep22,Politico,0.9894,Safe D,Likely D,12.88938733629146
-2022,GOV,KS,0,False,sep22,Politico,0.46725,Toss-up,Toss-up,2.2772963001991955
+2022,GOV,IL,0,False,sep22,Politico,0.99255,Safe D,Likely D,12.88938733629146
+2022,GOV,KS,0,False,sep22,Politico,0.54725,Toss-up,Toss-up,2.2772963001991955
 2022,GOV,MA,0,False,sep22,Politico,1.0,Safe D,Likely D,29.67002298929594
 2022,GOV,MD,0,False,sep22,Politico,1.0,Safe D,Likely D,33.537811206102965
 2022,GOV,ME,0,False,sep22,Politico,0.96485,Safe D,Lean D,13.321628757629234
-2022,GOV,MI,0,False,sep22,Politico,0.936,Likely D,Lean D,10.36557496833808
-2022,GOV,MN,0,False,sep22,Politico,0.90575,Likely D,Lean D,7.910569874480428
+2022,GOV,MI,0,False,sep22,Politico,0.97805,Safe D,Lean D,10.36557496833808
+2022,GOV,MN,0,False,sep22,Politico,0.93995,Likely D,Lean D,7.910569874480428
 2022,GOV,NE,0,False,sep22,Politico,0.00195,Safe R,Safe R,-24.41328044476372
-2022,GOV,NH,0,False,sep22,Politico,0.00215,Safe R,Likely R,-15.75628425519908
+2022,GOV,NH,0,False,sep22,Politico,0.0013,Safe R,Likely R,-15.75628425519908
 2022,GOV,NV,0,False,sep22,Politico,0.15735,Likely R,Toss-up,-1.56023529676135
-2022,GOV,NY,0,False,sep22,Politico,0.99885,Safe D,Likely D,6.195824927968434
+2022,GOV,NY,0,False,sep22,Politico,0.9989,Safe D,Likely D,6.195824927968434
 2022,GOV,OH,0,False,sep22,Politico,0.00025,Safe R,Likely R,-25.08378145637099
 2022,GOV,OK,0,False,sep22,Politico,0.0039,Safe R,Safe R,-14.052228131565524
-2022,GOV,OR,0,False,sep22,Politico,0.6788,Lean D,Lean D,3.77321019067196
-2022,GOV,PA,0,False,sep22,Politico,0.9703,Safe D,Lean D,15.043452071775578
-2022,GOV,RI,0,False,sep22,Politico,0.9765,Safe D,Likely D,19.69136283932321
+2022,GOV,OR,0,False,sep22,Politico,0.74265,Lean D,Lean D,3.77321019067196
+2022,GOV,PA,0,False,sep22,Politico,0.9819,Safe D,Lean D,15.043452071775578
+2022,GOV,RI,0,False,sep22,Politico,0.9834,Safe D,Likely D,19.69136283932321
 2022,GOV,SC,0,False,sep22,Politico,0.00335,Safe R,Safe R,-17.57993601088692
 2022,GOV,SD,0,False,sep22,Politico,0.00195,Safe R,Safe R,-27.59896879032756
 2022,GOV,TN,0,False,sep22,Politico,0.0,Safe R,Safe R,-32.694293882164665
-2022,GOV,TX,0,False,sep22,Politico,0.0059,Safe R,Likely R,-11.040283568211642
-2022,GOV,WI,0,False,sep22,Politico,0.45615,Toss-up,Toss-up,3.434655002513979
+2022,GOV,TX,0,False,sep22,Politico,0.0057,Safe R,Likely R,-11.040283568211642
+2022,GOV,WI,0,False,sep22,Politico,0.6465,Lean D,Toss-up,3.434655002513979
 2018,HOUSE,AK,0,False,sep22,RealClearPolitics,0.03735,Safe R,Safe R,-6.612617357942614
 2018,HOUSE,AR,2,False,sep22,RealClearPolitics,0.1536,Likely R,Lean R,-6.44082816402159
 2018,HOUSE,AZ,1,False,sep22,RealClearPolitics,0.9949,Safe D,Lean D,7.689531771569483
@@ -7945,38 +7945,38 @@ year,office,state_po,district,special,asof,outlet,p_dem,rating,rating_them,actua
 2018,SEN,WY,0,False,sep22,RealClearPolitics,0.0,Safe R,Safe R,-37.97819051140364
 2018,GOV,AL,0,False,sep22,RealClearPolitics,0.0,Safe R,Safe R,-18.98366315447201
 2018,GOV,AR,0,False,sep22,RealClearPolitics,0.00035,Safe R,Safe R,-34.56327458573237
-2018,GOV,AZ,0,False,sep22,RealClearPolitics,0.12735,Likely R,Lean R,-14.472794645115007
+2018,GOV,AZ,0,False,sep22,RealClearPolitics,0.0437,Safe R,Lean R,-14.472794645115007
 2018,GOV,CA,0,False,sep22,RealClearPolitics,1.0,Safe D,Safe D,23.89705425162475
 2018,GOV,CO,0,False,sep22,RealClearPolitics,0.92715,Likely D,Lean D,11.033798975918318
-2018,GOV,CT,0,False,sep22,RealClearPolitics,0.98475,Safe D,Likely D,3.300286098668716
+2018,GOV,CT,0,False,sep22,RealClearPolitics,0.9857,Safe D,Likely D,3.300286098668716
 2018,GOV,FL,0,False,sep22,RealClearPolitics,0.8344,Likely D,Toss-up,-0.3993417738291432
-2018,GOV,GA,0,False,sep22,RealClearPolitics,0.52085,Toss-up,Toss-up,-1.402401224163545
+2018,GOV,GA,0,False,sep22,RealClearPolitics,0.43035,Toss-up,Toss-up,-1.402401224163545
 2018,GOV,HI,0,False,sep22,RealClearPolitics,1.0,Safe D,Safe D,30.05817025219499
-2018,GOV,IA,0,False,sep22,RealClearPolitics,0.3394,Lean R,Toss-up,-2.7952006568787016
+2018,GOV,IA,0,False,sep22,RealClearPolitics,0.2242,Lean R,Toss-up,-2.7952006568787016
 2018,GOV,ID,0,False,sep22,RealClearPolitics,5e-05,Safe R,Safe R,-22.029820731448083
-2018,GOV,IL,0,False,sep22,RealClearPolitics,0.999,Safe D,Likely D,16.81770120200297
-2018,GOV,KS,0,False,sep22,RealClearPolitics,0.07865,Likely R,Toss-up,5.573405562462808
-2018,GOV,MA,0,False,sep22,RealClearPolitics,0.09845,Likely R,Safe R,-33.57831751284442
-2018,GOV,MD,0,False,sep22,RealClearPolitics,0.62295,Lean D,Likely R,-11.982927494082166
-2018,GOV,ME,0,False,sep22,RealClearPolitics,0.83115,Likely D,Lean D,8.200440606601008
-2018,GOV,MI,0,False,sep22,RealClearPolitics,0.94425,Likely D,Likely D,9.856662837846518
-2018,GOV,MN,0,False,sep22,RealClearPolitics,0.91195,Likely D,Lean D,11.859277397110407
+2018,GOV,IL,0,False,sep22,RealClearPolitics,0.9988,Safe D,Likely D,16.81770120200297
+2018,GOV,KS,0,False,sep22,RealClearPolitics,0.07455,Likely R,Toss-up,5.573405562462808
+2018,GOV,MA,0,False,sep22,RealClearPolitics,0.0981,Likely R,Safe R,-33.57831751284442
+2018,GOV,MD,0,False,sep22,RealClearPolitics,0.622,Lean D,Likely R,-11.982927494082166
+2018,GOV,ME,0,False,sep22,RealClearPolitics,0.9167,Likely D,Lean D,8.200440606601008
+2018,GOV,MI,0,False,sep22,RealClearPolitics,0.92305,Likely D,Likely D,9.856662837846518
+2018,GOV,MN,0,False,sep22,RealClearPolitics,0.93795,Likely D,Lean D,11.859277397110407
 2018,GOV,NE,0,False,sep22,RealClearPolitics,0.001,Safe R,Safe R,-18.00091979581106
-2018,GOV,NH,0,False,sep22,RealClearPolitics,0.34135,Lean R,Likely R,-7.149770934823039
+2018,GOV,NH,0,False,sep22,RealClearPolitics,0.18765,Likely R,Likely R,-7.149770934823039
 2018,GOV,NM,0,False,sep22,RealClearPolitics,0.94175,Likely D,Lean D,14.398119630875614
-2018,GOV,NV,0,False,sep22,RealClearPolitics,0.70725,Lean D,Toss-up,4.312271616501526
+2018,GOV,NV,0,False,sep22,RealClearPolitics,0.6565,Lean D,Toss-up,4.312271616501526
 2018,GOV,NY,0,False,sep22,RealClearPolitics,1.0,Safe D,Safe D,27.5631601532228
-2018,GOV,OH,0,False,sep22,RealClearPolitics,0.2919,Lean R,Toss-up,-3.85006889430733
-2018,GOV,OK,0,False,sep22,RealClearPolitics,0.00145,Safe R,Lean R,-12.535965194072377
-2018,GOV,OR,0,False,sep22,RealClearPolitics,0.98865,Safe D,Lean D,9.590332790127784
-2018,GOV,PA,0,False,sep22,RealClearPolitics,0.99655,Safe D,Likely D,17.33541436344324
+2018,GOV,OH,0,False,sep22,RealClearPolitics,0.23085,Lean R,Toss-up,-3.85006889430733
+2018,GOV,OK,0,False,sep22,RealClearPolitics,0.0015,Safe R,Lean R,-12.535965194072377
+2018,GOV,OR,0,False,sep22,RealClearPolitics,0.98895,Safe D,Lean D,9.590332790127784
+2018,GOV,PA,0,False,sep22,RealClearPolitics,0.9985,Safe D,Likely D,17.33541436344324
 2018,GOV,RI,0,False,sep22,RealClearPolitics,0.99815,Safe D,Lean D,17.21322628929106
-2018,GOV,SC,0,False,sep22,RealClearPolitics,0.0433,Safe R,Safe R,-8.042103189401029
+2018,GOV,SC,0,False,sep22,RealClearPolitics,0.03205,Safe R,Safe R,-8.042103189401029
 2018,GOV,SD,0,False,sep22,RealClearPolitics,0.0053,Safe R,Safe R,-3.454865114997439
 2018,GOV,TN,0,False,sep22,RealClearPolitics,0.00125,Safe R,Likely R,-21.41070592089212
-2018,GOV,TX,0,False,sep22,RealClearPolitics,0.002,Safe R,Likely R,-13.530895009728672
-2018,GOV,VT,0,False,sep22,RealClearPolitics,0.98295,Safe D,Likely R,-15.644734628969864
-2018,GOV,WI,0,False,sep22,RealClearPolitics,0.71635,Lean D,Toss-up,1.115678752931978
+2018,GOV,TX,0,False,sep22,RealClearPolitics,0.0009,Safe R,Likely R,-13.530895009728672
+2018,GOV,VT,0,False,sep22,RealClearPolitics,0.9829,Safe D,Likely R,-15.644734628969864
+2018,GOV,WI,0,False,sep22,RealClearPolitics,0.63215,Lean D,Toss-up,1.115678752931978
 2018,GOV,WY,0,False,sep22,RealClearPolitics,0.0,Safe R,Safe R,-41.81736902020512
 2020,HOUSE,AK,0,False,sep22,RealClearPolitics,0.0163,Safe R,Likely R,-9.168082458762097
 2020,HOUSE,AL,1,False,sep22,RealClearPolitics,0.0,Safe R,Safe R,-28.857513063685083
@@ -8819,36 +8819,36 @@ year,office,state_po,district,special,asof,outlet,p_dem,rating,rating_them,actua
 2022,SEN,WI,0,False,sep22,RealClearPolitics,0.17815,Likely R,Toss-up,-1.009120533967455
 2022,GOV,AL,0,False,sep22,RealClearPolitics,0.0,Safe R,Safe R,-39.265662813177215
 2022,GOV,AR,0,False,sep22,RealClearPolitics,0.0,Safe R,Safe R,-28.484718522865784
-2022,GOV,AZ,0,False,sep22,RealClearPolitics,0.32995,Lean R,Toss-up,0.6675726050183044
+2022,GOV,AZ,0,False,sep22,RealClearPolitics,0.4286,Toss-up,Toss-up,0.6675726050183044
 2022,GOV,CA,0,False,sep22,RealClearPolitics,0.99995,Safe D,Safe D,18.362536531248995
-2022,GOV,CO,0,False,sep22,RealClearPolitics,0.99735,Safe D,Lean D,19.80162519513396
-2022,GOV,CT,0,False,sep22,RealClearPolitics,0.9885,Safe D,Lean D,12.97734612363641
+2022,GOV,CO,0,False,sep22,RealClearPolitics,0.99855,Safe D,Lean D,19.80162519513396
+2022,GOV,CT,0,False,sep22,RealClearPolitics,0.99595,Safe D,Lean D,12.97734612363641
 2022,GOV,FL,0,False,sep22,RealClearPolitics,0.0174,Safe R,Lean R,-19.531010986044727
-2022,GOV,GA,0,False,sep22,RealClearPolitics,0.04925,Safe R,Lean R,-7.589309711877857
+2022,GOV,GA,0,False,sep22,RealClearPolitics,0.03985,Safe R,Lean R,-7.589309711877857
 2022,GOV,HI,0,False,sep22,RealClearPolitics,0.9977,Safe D,Safe D,26.32422047030697
-2022,GOV,IA,0,False,sep22,RealClearPolitics,0.01215,Safe R,Likely R,-18.97818056147391
+2022,GOV,IA,0,False,sep22,RealClearPolitics,0.00995,Safe R,Likely R,-18.97818056147391
 2022,GOV,ID,0,False,sep22,RealClearPolitics,0.0,Safe R,Safe R,-49.74824441882402
-2022,GOV,IL,0,False,sep22,RealClearPolitics,0.9894,Safe D,Likely D,12.88938733629146
-2022,GOV,KS,0,False,sep22,RealClearPolitics,0.46725,Toss-up,Toss-up,2.2772963001991955
+2022,GOV,IL,0,False,sep22,RealClearPolitics,0.99255,Safe D,Likely D,12.88938733629146
+2022,GOV,KS,0,False,sep22,RealClearPolitics,0.54725,Toss-up,Toss-up,2.2772963001991955
 2022,GOV,MA,0,False,sep22,RealClearPolitics,1.0,Safe D,Safe D,29.67002298929594
 2022,GOV,MD,0,False,sep22,RealClearPolitics,1.0,Safe D,Safe D,33.537811206102965
 2022,GOV,ME,0,False,sep22,RealClearPolitics,0.96485,Safe D,Toss-up,13.321628757629234
-2022,GOV,MI,0,False,sep22,RealClearPolitics,0.936,Likely D,Toss-up,10.36557496833808
-2022,GOV,MN,0,False,sep22,RealClearPolitics,0.90575,Likely D,Toss-up,7.910569874480428
+2022,GOV,MI,0,False,sep22,RealClearPolitics,0.97805,Safe D,Toss-up,10.36557496833808
+2022,GOV,MN,0,False,sep22,RealClearPolitics,0.93995,Likely D,Toss-up,7.910569874480428
 2022,GOV,NE,0,False,sep22,RealClearPolitics,0.00195,Safe R,Safe R,-24.41328044476372
-2022,GOV,NH,0,False,sep22,RealClearPolitics,0.00215,Safe R,Safe R,-15.75628425519908
+2022,GOV,NH,0,False,sep22,RealClearPolitics,0.0013,Safe R,Safe R,-15.75628425519908
 2022,GOV,NV,0,False,sep22,RealClearPolitics,0.15735,Likely R,Toss-up,-1.56023529676135
-2022,GOV,NY,0,False,sep22,RealClearPolitics,0.99885,Safe D,Likely D,6.195824927968434
+2022,GOV,NY,0,False,sep22,RealClearPolitics,0.9989,Safe D,Likely D,6.195824927968434
 2022,GOV,OH,0,False,sep22,RealClearPolitics,0.00025,Safe R,Likely R,-25.08378145637099
 2022,GOV,OK,0,False,sep22,RealClearPolitics,0.0039,Safe R,Safe R,-14.052228131565524
-2022,GOV,OR,0,False,sep22,RealClearPolitics,0.6788,Lean D,Toss-up,3.77321019067196
-2022,GOV,PA,0,False,sep22,RealClearPolitics,0.9703,Safe D,Toss-up,15.043452071775578
-2022,GOV,RI,0,False,sep22,RealClearPolitics,0.9765,Safe D,Likely D,19.69136283932321
+2022,GOV,OR,0,False,sep22,RealClearPolitics,0.74265,Lean D,Toss-up,3.77321019067196
+2022,GOV,PA,0,False,sep22,RealClearPolitics,0.9819,Safe D,Toss-up,15.043452071775578
+2022,GOV,RI,0,False,sep22,RealClearPolitics,0.9834,Safe D,Likely D,19.69136283932321
 2022,GOV,SC,0,False,sep22,RealClearPolitics,0.00335,Safe R,Safe R,-17.57993601088692
 2022,GOV,SD,0,False,sep22,RealClearPolitics,0.00195,Safe R,Safe R,-27.59896879032756
 2022,GOV,TN,0,False,sep22,RealClearPolitics,0.0,Safe R,Safe R,-32.694293882164665
-2022,GOV,TX,0,False,sep22,RealClearPolitics,0.0059,Safe R,Lean R,-11.040283568211642
-2022,GOV,WI,0,False,sep22,RealClearPolitics,0.45615,Toss-up,Toss-up,3.434655002513979
+2022,GOV,TX,0,False,sep22,RealClearPolitics,0.0057,Safe R,Lean R,-11.040283568211642
+2022,GOV,WI,0,False,sep22,RealClearPolitics,0.6465,Lean D,Toss-up,3.434655002513979
 2024,HOUSE,WA,8,False,sep22,RealClearPolitics,0.9314,Likely D,Toss-up,8.170833313266648
 2024,SEN,AZ,0,False,sep22,RealClearPolitics,0.4146,Toss-up,Toss-up,2.462458314181491
 2024,SEN,CA,0,False,sep22,RealClearPolitics,0.98735,Safe D,Safe D,17.7450343823894
@@ -8917,38 +8917,38 @@ year,office,state_po,district,special,asof,outlet,p_dem,rating,rating_them,actua
 2018,SEN,WY,0,False,sep22,Sabato's Crystal Ball,0.0,Safe R,Safe R,-37.97819051140364
 2018,GOV,AL,0,False,sep22,Sabato's Crystal Ball,0.0,Safe R,Safe R,-18.98366315447201
 2018,GOV,AR,0,False,sep22,Sabato's Crystal Ball,0.00035,Safe R,Safe R,-34.56327458573237
-2018,GOV,AZ,0,False,sep22,Sabato's Crystal Ball,0.12735,Likely R,Lean R,-14.472794645115007
+2018,GOV,AZ,0,False,sep22,Sabato's Crystal Ball,0.0437,Safe R,Lean R,-14.472794645115007
 2018,GOV,CA,0,False,sep22,Sabato's Crystal Ball,1.0,Safe D,Safe D,23.89705425162475
 2018,GOV,CO,0,False,sep22,Sabato's Crystal Ball,0.92715,Likely D,Lean D,11.033798975918318
-2018,GOV,CT,0,False,sep22,Sabato's Crystal Ball,0.98475,Safe D,Toss-up,3.300286098668716
+2018,GOV,CT,0,False,sep22,Sabato's Crystal Ball,0.9857,Safe D,Toss-up,3.300286098668716
 2018,GOV,FL,0,False,sep22,Sabato's Crystal Ball,0.8344,Likely D,Toss-up,-0.3993417738291432
-2018,GOV,GA,0,False,sep22,Sabato's Crystal Ball,0.52085,Toss-up,Lean R,-1.402401224163545
+2018,GOV,GA,0,False,sep22,Sabato's Crystal Ball,0.43035,Toss-up,Lean R,-1.402401224163545
 2018,GOV,HI,0,False,sep22,Sabato's Crystal Ball,1.0,Safe D,Safe D,30.05817025219499
-2018,GOV,IA,0,False,sep22,Sabato's Crystal Ball,0.3394,Lean R,Toss-up,-2.7952006568787016
+2018,GOV,IA,0,False,sep22,Sabato's Crystal Ball,0.2242,Lean R,Toss-up,-2.7952006568787016
 2018,GOV,ID,0,False,sep22,Sabato's Crystal Ball,5e-05,Safe R,Safe R,-22.029820731448083
-2018,GOV,IL,0,False,sep22,Sabato's Crystal Ball,0.999,Safe D,Likely D,16.81770120200297
-2018,GOV,KS,0,False,sep22,Sabato's Crystal Ball,0.07865,Likely R,Lean R,5.573405562462808
-2018,GOV,MA,0,False,sep22,Sabato's Crystal Ball,0.09845,Likely R,Safe R,-33.57831751284442
-2018,GOV,MD,0,False,sep22,Sabato's Crystal Ball,0.62295,Lean D,Likely R,-11.982927494082166
-2018,GOV,ME,0,False,sep22,Sabato's Crystal Ball,0.83115,Likely D,Toss-up,8.200440606601008
-2018,GOV,MI,0,False,sep22,Sabato's Crystal Ball,0.94425,Likely D,Likely D,9.856662837846518
-2018,GOV,MN,0,False,sep22,Sabato's Crystal Ball,0.91195,Likely D,Lean D,11.859277397110407
+2018,GOV,IL,0,False,sep22,Sabato's Crystal Ball,0.9988,Safe D,Likely D,16.81770120200297
+2018,GOV,KS,0,False,sep22,Sabato's Crystal Ball,0.07455,Likely R,Lean R,5.573405562462808
+2018,GOV,MA,0,False,sep22,Sabato's Crystal Ball,0.0981,Likely R,Safe R,-33.57831751284442
+2018,GOV,MD,0,False,sep22,Sabato's Crystal Ball,0.622,Lean D,Likely R,-11.982927494082166
+2018,GOV,ME,0,False,sep22,Sabato's Crystal Ball,0.9167,Likely D,Toss-up,8.200440606601008
+2018,GOV,MI,0,False,sep22,Sabato's Crystal Ball,0.92305,Likely D,Likely D,9.856662837846518
+2018,GOV,MN,0,False,sep22,Sabato's Crystal Ball,0.93795,Likely D,Lean D,11.859277397110407
 2018,GOV,NE,0,False,sep22,Sabato's Crystal Ball,0.001,Safe R,Safe R,-18.00091979581106
-2018,GOV,NH,0,False,sep22,Sabato's Crystal Ball,0.34135,Lean R,Lean R,-7.149770934823039
+2018,GOV,NH,0,False,sep22,Sabato's Crystal Ball,0.18765,Likely R,Lean R,-7.149770934823039
 2018,GOV,NM,0,False,sep22,Sabato's Crystal Ball,0.94175,Likely D,Lean D,14.398119630875614
-2018,GOV,NV,0,False,sep22,Sabato's Crystal Ball,0.70725,Lean D,Toss-up,4.312271616501526
+2018,GOV,NV,0,False,sep22,Sabato's Crystal Ball,0.6565,Lean D,Toss-up,4.312271616501526
 2018,GOV,NY,0,False,sep22,Sabato's Crystal Ball,1.0,Safe D,Safe D,27.5631601532228
-2018,GOV,OH,0,False,sep22,Sabato's Crystal Ball,0.2919,Lean R,Toss-up,-3.85006889430733
-2018,GOV,OK,0,False,sep22,Sabato's Crystal Ball,0.00145,Safe R,Lean R,-12.535965194072377
-2018,GOV,OR,0,False,sep22,Sabato's Crystal Ball,0.98865,Safe D,Lean D,9.590332790127784
-2018,GOV,PA,0,False,sep22,Sabato's Crystal Ball,0.99655,Safe D,Likely D,17.33541436344324
+2018,GOV,OH,0,False,sep22,Sabato's Crystal Ball,0.23085,Lean R,Toss-up,-3.85006889430733
+2018,GOV,OK,0,False,sep22,Sabato's Crystal Ball,0.0015,Safe R,Lean R,-12.535965194072377
+2018,GOV,OR,0,False,sep22,Sabato's Crystal Ball,0.98895,Safe D,Lean D,9.590332790127784
+2018,GOV,PA,0,False,sep22,Sabato's Crystal Ball,0.9985,Safe D,Likely D,17.33541436344324
 2018,GOV,RI,0,False,sep22,Sabato's Crystal Ball,0.99815,Safe D,Lean D,17.21322628929106
-2018,GOV,SC,0,False,sep22,Sabato's Crystal Ball,0.0433,Safe R,Safe R,-8.042103189401029
+2018,GOV,SC,0,False,sep22,Sabato's Crystal Ball,0.03205,Safe R,Safe R,-8.042103189401029
 2018,GOV,SD,0,False,sep22,Sabato's Crystal Ball,0.0053,Safe R,Likely R,-3.454865114997439
 2018,GOV,TN,0,False,sep22,Sabato's Crystal Ball,0.00125,Safe R,Likely R,-21.41070592089212
-2018,GOV,TX,0,False,sep22,Sabato's Crystal Ball,0.002,Safe R,Safe R,-13.530895009728672
-2018,GOV,VT,0,False,sep22,Sabato's Crystal Ball,0.98295,Safe D,Safe R,-15.644734628969864
-2018,GOV,WI,0,False,sep22,Sabato's Crystal Ball,0.71635,Lean D,Toss-up,1.115678752931978
+2018,GOV,TX,0,False,sep22,Sabato's Crystal Ball,0.0009,Safe R,Safe R,-13.530895009728672
+2018,GOV,VT,0,False,sep22,Sabato's Crystal Ball,0.9829,Safe D,Safe R,-15.644734628969864
+2018,GOV,WI,0,False,sep22,Sabato's Crystal Ball,0.63215,Lean D,Toss-up,1.115678752931978
 2018,GOV,WY,0,False,sep22,Sabato's Crystal Ball,0.0,Safe R,Safe R,-41.81736902020512
 2020,HOUSE,AK,0,False,sep22,Sabato's Crystal Ball,0.0163,Safe R,Lean R,-9.168082458762097
 2020,HOUSE,AL,1,False,sep22,Sabato's Crystal Ball,0.0,Safe R,Safe R,-28.857513063685083
@@ -9791,36 +9791,36 @@ year,office,state_po,district,special,asof,outlet,p_dem,rating,rating_them,actua
 2022,SEN,WI,0,False,sep22,Sabato's Crystal Ball,0.17815,Likely R,Lean R,-1.009120533967455
 2022,GOV,AL,0,False,sep22,Sabato's Crystal Ball,0.0,Safe R,Safe R,-39.265662813177215
 2022,GOV,AR,0,False,sep22,Sabato's Crystal Ball,0.0,Safe R,Safe R,-28.484718522865784
-2022,GOV,AZ,0,False,sep22,Sabato's Crystal Ball,0.32995,Lean R,Toss-up,0.6675726050183044
+2022,GOV,AZ,0,False,sep22,Sabato's Crystal Ball,0.4286,Toss-up,Toss-up,0.6675726050183044
 2022,GOV,CA,0,False,sep22,Sabato's Crystal Ball,0.99995,Safe D,Safe D,18.362536531248995
-2022,GOV,CO,0,False,sep22,Sabato's Crystal Ball,0.99735,Safe D,Likely D,19.80162519513396
-2022,GOV,CT,0,False,sep22,Sabato's Crystal Ball,0.9885,Safe D,Likely D,12.97734612363641
+2022,GOV,CO,0,False,sep22,Sabato's Crystal Ball,0.99855,Safe D,Likely D,19.80162519513396
+2022,GOV,CT,0,False,sep22,Sabato's Crystal Ball,0.99595,Safe D,Likely D,12.97734612363641
 2022,GOV,FL,0,False,sep22,Sabato's Crystal Ball,0.0174,Safe R,Likely R,-19.531010986044727
-2022,GOV,GA,0,False,sep22,Sabato's Crystal Ball,0.04925,Safe R,Lean R,-7.589309711877857
+2022,GOV,GA,0,False,sep22,Sabato's Crystal Ball,0.03985,Safe R,Lean R,-7.589309711877857
 2022,GOV,HI,0,False,sep22,Sabato's Crystal Ball,0.9977,Safe D,Safe D,26.32422047030697
-2022,GOV,IA,0,False,sep22,Sabato's Crystal Ball,0.01215,Safe R,Safe R,-18.97818056147391
+2022,GOV,IA,0,False,sep22,Sabato's Crystal Ball,0.00995,Safe R,Safe R,-18.97818056147391
 2022,GOV,ID,0,False,sep22,Sabato's Crystal Ball,0.0,Safe R,Safe R,-49.74824441882402
-2022,GOV,IL,0,False,sep22,Sabato's Crystal Ball,0.9894,Safe D,Safe D,12.88938733629146
-2022,GOV,KS,0,False,sep22,Sabato's Crystal Ball,0.46725,Toss-up,Toss-up,2.2772963001991955
+2022,GOV,IL,0,False,sep22,Sabato's Crystal Ball,0.99255,Safe D,Safe D,12.88938733629146
+2022,GOV,KS,0,False,sep22,Sabato's Crystal Ball,0.54725,Toss-up,Toss-up,2.2772963001991955
 2022,GOV,MA,0,False,sep22,Sabato's Crystal Ball,1.0,Safe D,Safe D,29.67002298929594
 2022,GOV,MD,0,False,sep22,Sabato's Crystal Ball,1.0,Safe D,Safe D,33.537811206102965
 2022,GOV,ME,0,False,sep22,Sabato's Crystal Ball,0.96485,Safe D,Lean D,13.321628757629234
-2022,GOV,MI,0,False,sep22,Sabato's Crystal Ball,0.936,Likely D,Lean D,10.36557496833808
-2022,GOV,MN,0,False,sep22,Sabato's Crystal Ball,0.90575,Likely D,Lean D,7.910569874480428
+2022,GOV,MI,0,False,sep22,Sabato's Crystal Ball,0.97805,Safe D,Lean D,10.36557496833808
+2022,GOV,MN,0,False,sep22,Sabato's Crystal Ball,0.93995,Likely D,Lean D,7.910569874480428
 2022,GOV,NE,0,False,sep22,Sabato's Crystal Ball,0.00195,Safe R,Safe R,-24.41328044476372
-2022,GOV,NH,0,False,sep22,Sabato's Crystal Ball,0.00215,Safe R,Safe R,-15.75628425519908
+2022,GOV,NH,0,False,sep22,Sabato's Crystal Ball,0.0013,Safe R,Safe R,-15.75628425519908
 2022,GOV,NV,0,False,sep22,Sabato's Crystal Ball,0.15735,Likely R,Toss-up,-1.56023529676135
-2022,GOV,NY,0,False,sep22,Sabato's Crystal Ball,0.99885,Safe D,Safe D,6.195824927968434
+2022,GOV,NY,0,False,sep22,Sabato's Crystal Ball,0.9989,Safe D,Safe D,6.195824927968434
 2022,GOV,OH,0,False,sep22,Sabato's Crystal Ball,0.00025,Safe R,Safe R,-25.08378145637099
 2022,GOV,OK,0,False,sep22,Sabato's Crystal Ball,0.0039,Safe R,Safe R,-14.052228131565524
-2022,GOV,OR,0,False,sep22,Sabato's Crystal Ball,0.6788,Lean D,Toss-up,3.77321019067196
-2022,GOV,PA,0,False,sep22,Sabato's Crystal Ball,0.9703,Safe D,Lean D,15.043452071775578
-2022,GOV,RI,0,False,sep22,Sabato's Crystal Ball,0.9765,Safe D,Likely D,19.69136283932321
+2022,GOV,OR,0,False,sep22,Sabato's Crystal Ball,0.74265,Lean D,Toss-up,3.77321019067196
+2022,GOV,PA,0,False,sep22,Sabato's Crystal Ball,0.9819,Safe D,Lean D,15.043452071775578
+2022,GOV,RI,0,False,sep22,Sabato's Crystal Ball,0.9834,Safe D,Likely D,19.69136283932321
 2022,GOV,SC,0,False,sep22,Sabato's Crystal Ball,0.00335,Safe R,Safe R,-17.57993601088692
 2022,GOV,SD,0,False,sep22,Sabato's Crystal Ball,0.00195,Safe R,Safe R,-27.59896879032756
 2022,GOV,TN,0,False,sep22,Sabato's Crystal Ball,0.0,Safe R,Safe R,-32.694293882164665
-2022,GOV,TX,0,False,sep22,Sabato's Crystal Ball,0.0059,Safe R,Likely R,-11.040283568211642
-2022,GOV,WI,0,False,sep22,Sabato's Crystal Ball,0.45615,Toss-up,Toss-up,3.434655002513979
+2022,GOV,TX,0,False,sep22,Sabato's Crystal Ball,0.0057,Safe R,Likely R,-11.040283568211642
+2022,GOV,WI,0,False,sep22,Sabato's Crystal Ball,0.6465,Lean D,Toss-up,3.434655002513979
 2024,HOUSE,AR,1,False,sep22,Sabato's Crystal Ball,0.0,Safe R,Safe R,-50.45822643958829
 2024,HOUSE,AR,2,False,sep22,Sabato's Crystal Ball,0.00015,Safe R,Safe R,-17.869572882861117
 2024,HOUSE,AR,3,False,sep22,Sabato's Crystal Ball,0.0,Safe R,Safe R,-33.5179824363256
@@ -10641,38 +10641,38 @@ year,office,state_po,district,special,asof,outlet,p_dem,rating,rating_them,actua
 2018,SEN,WY,0,False,eve,FiveThirtyEight (model),0.0,Safe R,Safe R,-37.97819051140364
 2018,GOV,AL,0,False,eve,FiveThirtyEight (model),0.0004,Safe R,Safe R,-18.98366315447201
 2018,GOV,AR,0,False,eve,FiveThirtyEight (model),0.0,Safe R,Safe R,-34.56327458573237
-2018,GOV,AZ,0,False,eve,FiveThirtyEight (model),0.0047,Safe R,Safe R,-14.472794645115007
+2018,GOV,AZ,0,False,eve,FiveThirtyEight (model),0.0012,Safe R,Safe R,-14.472794645115007
 2018,GOV,CA,0,False,eve,FiveThirtyEight (model),1.0,Safe D,Safe D,23.89705425162475
 2018,GOV,CO,0,False,eve,FiveThirtyEight (model),0.9372,Likely D,Safe D,11.033798975918318
-2018,GOV,CT,0,False,eve,FiveThirtyEight (model),0.96985,Safe D,Lean D,3.300286098668716
+2018,GOV,CT,0,False,eve,FiveThirtyEight (model),0.9711,Safe D,Lean D,3.300286098668716
 2018,GOV,FL,0,False,eve,FiveThirtyEight (model),0.7621,Lean D,Lean D,-0.3993417738291432
-2018,GOV,GA,0,False,eve,FiveThirtyEight (model),0.39595,Lean R,Lean R,-1.402401224163545
+2018,GOV,GA,0,False,eve,FiveThirtyEight (model),0.32595,Lean R,Lean R,-1.402401224163545
 2018,GOV,HI,0,False,eve,FiveThirtyEight (model),1.0,Safe D,Safe D,30.05817025219499
-2018,GOV,IA,0,False,eve,FiveThirtyEight (model),0.29155,Lean R,Toss-up,-2.7952006568787016
+2018,GOV,IA,0,False,eve,FiveThirtyEight (model),0.20115,Lean R,Toss-up,-2.7952006568787016
 2018,GOV,ID,0,False,eve,FiveThirtyEight (model),0.0001,Safe R,Safe R,-22.029820731448083
-2018,GOV,IL,0,False,eve,FiveThirtyEight (model),0.99915,Safe D,Likely D,16.81770120200297
-2018,GOV,KS,0,False,eve,FiveThirtyEight (model),0.0941,Likely R,Toss-up,5.573405562462808
-2018,GOV,MA,0,False,eve,FiveThirtyEight (model),0.0807,Likely R,Safe R,-33.57831751284442
-2018,GOV,MD,0,False,eve,FiveThirtyEight (model),0.95425,Safe D,Safe R,-11.982927494082166
-2018,GOV,ME,0,False,eve,FiveThirtyEight (model),0.95735,Safe D,Likely D,8.200440606601008
-2018,GOV,MI,0,False,eve,FiveThirtyEight (model),0.947,Likely D,Likely D,9.856662837846518
-2018,GOV,MN,0,False,eve,FiveThirtyEight (model),0.952,Safe D,Likely D,11.859277397110407
-2018,GOV,NE,0,False,eve,FiveThirtyEight (model),0.00115,Safe R,Safe R,-18.00091979581106
-2018,GOV,NH,0,False,eve,FiveThirtyEight (model),0.23495,Lean R,Likely R,-7.149770934823039
+2018,GOV,IL,0,False,eve,FiveThirtyEight (model),0.99905,Safe D,Likely D,16.81770120200297
+2018,GOV,KS,0,False,eve,FiveThirtyEight (model),0.0895,Likely R,Toss-up,5.573405562462808
+2018,GOV,MA,0,False,eve,FiveThirtyEight (model),0.0805,Likely R,Safe R,-33.57831751284442
+2018,GOV,MD,0,False,eve,FiveThirtyEight (model),0.95385,Safe D,Safe R,-11.982927494082166
+2018,GOV,ME,0,False,eve,FiveThirtyEight (model),0.97775,Safe D,Likely D,8.200440606601008
+2018,GOV,MI,0,False,eve,FiveThirtyEight (model),0.9306,Likely D,Likely D,9.856662837846518
+2018,GOV,MN,0,False,eve,FiveThirtyEight (model),0.96275,Safe D,Likely D,11.859277397110407
+2018,GOV,NE,0,False,eve,FiveThirtyEight (model),0.0011,Safe R,Safe R,-18.00091979581106
+2018,GOV,NH,0,False,eve,FiveThirtyEight (model),0.13095,Likely R,Likely R,-7.149770934823039
 2018,GOV,NM,0,False,eve,FiveThirtyEight (model),0.9756,Safe D,Likely D,14.398119630875614
-2018,GOV,NV,0,False,eve,FiveThirtyEight (model),0.6805,Lean D,Toss-up,4.312271616501526
+2018,GOV,NV,0,False,eve,FiveThirtyEight (model),0.63785,Lean D,Toss-up,4.312271616501526
 2018,GOV,NY,0,False,eve,FiveThirtyEight (model),1.0,Safe D,Safe D,27.5631601532228
-2018,GOV,OH,0,False,eve,FiveThirtyEight (model),0.54965,Toss-up,Toss-up,-3.85006889430733
+2018,GOV,OH,0,False,eve,FiveThirtyEight (model),0.4827,Toss-up,Toss-up,-3.85006889430733
 2018,GOV,OK,0,False,eve,FiveThirtyEight (model),0.001,Safe R,Likely R,-12.535965194072377
-2018,GOV,OR,0,False,eve,FiveThirtyEight (model),0.9823,Safe D,Likely D,9.590332790127784
-2018,GOV,PA,0,False,eve,FiveThirtyEight (model),0.9938,Safe D,Safe D,17.33541436344324
+2018,GOV,OR,0,False,eve,FiveThirtyEight (model),0.983,Safe D,Likely D,9.590332790127784
+2018,GOV,PA,0,False,eve,FiveThirtyEight (model),0.997,Safe D,Safe D,17.33541436344324
 2018,GOV,RI,0,False,eve,FiveThirtyEight (model),0.99895,Safe D,Safe D,17.21322628929106
-2018,GOV,SC,0,False,eve,FiveThirtyEight (model),0.00915,Safe R,Safe R,-8.042103189401029
+2018,GOV,SC,0,False,eve,FiveThirtyEight (model),0.0069,Safe R,Safe R,-8.042103189401029
 2018,GOV,SD,0,False,eve,FiveThirtyEight (model),0.0402,Safe R,Lean R,-3.454865114997439
-2018,GOV,TN,0,False,eve,FiveThirtyEight (model),0.00065,Safe R,Safe R,-21.41070592089212
-2018,GOV,TX,0,False,eve,FiveThirtyEight (model),0.00145,Safe R,Safe R,-13.530895009728672
-2018,GOV,VT,0,False,eve,FiveThirtyEight (model),0.94835,Likely D,Likely R,-15.644734628969864
-2018,GOV,WI,0,False,eve,FiveThirtyEight (model),0.59075,Toss-up,Toss-up,1.115678752931978
+2018,GOV,TN,0,False,eve,FiveThirtyEight (model),0.0007,Safe R,Safe R,-21.41070592089212
+2018,GOV,TX,0,False,eve,FiveThirtyEight (model),0.0007,Safe R,Safe R,-13.530895009728672
+2018,GOV,VT,0,False,eve,FiveThirtyEight (model),0.9481,Likely D,Likely R,-15.644734628969864
+2018,GOV,WI,0,False,eve,FiveThirtyEight (model),0.5101,Toss-up,Toss-up,1.115678752931978
 2018,GOV,WY,0,False,eve,FiveThirtyEight (model),0.0,Safe R,Safe R,-41.81736902020512
 2020,HOUSE,AK,0,False,eve,FiveThirtyEight (model),0.02,Safe R,Lean R,-9.168082458762097
 2020,HOUSE,AL,1,False,eve,FiveThirtyEight (model),0.0,Safe R,Safe R,-28.857513063685083
@@ -11520,36 +11520,36 @@ year,office,state_po,district,special,asof,outlet,p_dem,rating,rating_them,actua
 2022,SEN,WI,0,False,eve,FiveThirtyEight (model),0.1262,Likely R,Likely R,-1.009120533967455
 2022,GOV,AL,0,False,eve,FiveThirtyEight (model),0.0,Safe R,Safe R,-39.265662813177215
 2022,GOV,AR,0,False,eve,FiveThirtyEight (model),0.0,Safe R,Safe R,-28.484718522865784
-2022,GOV,AZ,0,False,eve,FiveThirtyEight (model),0.21925,Lean R,Lean R,0.6675726050183044
+2022,GOV,AZ,0,False,eve,FiveThirtyEight (model),0.27285,Lean R,Lean R,0.6675726050183044
 2022,GOV,CA,0,False,eve,FiveThirtyEight (model),0.99995,Safe D,Safe D,18.362536531248995
-2022,GOV,CO,0,False,eve,FiveThirtyEight (model),0.9934,Safe D,Safe D,19.80162519513396
-2022,GOV,CT,0,False,eve,FiveThirtyEight (model),0.9928,Safe D,Safe D,12.97734612363641
+2022,GOV,CO,0,False,eve,FiveThirtyEight (model),0.9965,Safe D,Safe D,19.80162519513396
+2022,GOV,CT,0,False,eve,FiveThirtyEight (model),0.9975,Safe D,Safe D,12.97734612363641
 2022,GOV,FL,0,False,eve,FiveThirtyEight (model),0.003,Safe R,Safe R,-19.531010986044727
-2022,GOV,GA,0,False,eve,FiveThirtyEight (model),0.0229,Safe R,Likely R,-7.589309711877857
-2022,GOV,HI,0,False,eve,FiveThirtyEight (model),0.99575,Safe D,Safe D,26.32422047030697
-2022,GOV,IA,0,False,eve,FiveThirtyEight (model),0.0011,Safe R,Safe R,-18.97818056147391
+2022,GOV,GA,0,False,eve,FiveThirtyEight (model),0.0195,Safe R,Likely R,-7.589309711877857
+2022,GOV,HI,0,False,eve,FiveThirtyEight (model),0.9956,Safe D,Safe D,26.32422047030697
+2022,GOV,IA,0,False,eve,FiveThirtyEight (model),0.00105,Safe R,Safe R,-18.97818056147391
 2022,GOV,ID,0,False,eve,FiveThirtyEight (model),0.0,Safe R,Safe R,-49.74824441882402
-2022,GOV,IL,0,False,eve,FiveThirtyEight (model),0.9888,Safe D,Safe D,12.88938733629146
-2022,GOV,KS,0,False,eve,FiveThirtyEight (model),0.45715,Toss-up,Lean D,2.2772963001991955
+2022,GOV,IL,0,False,eve,FiveThirtyEight (model),0.9926,Safe D,Safe D,12.88938733629146
+2022,GOV,KS,0,False,eve,FiveThirtyEight (model),0.53695,Toss-up,Lean D,2.2772963001991955
 2022,GOV,MA,0,False,eve,FiveThirtyEight (model),1.0,Safe D,Safe D,29.67002298929594
 2022,GOV,MD,0,False,eve,FiveThirtyEight (model),1.0,Safe D,Safe D,33.537811206102965
 2022,GOV,ME,0,False,eve,FiveThirtyEight (model),0.9236,Likely D,Likely D,13.321628757629234
-2022,GOV,MI,0,False,eve,FiveThirtyEight (model),0.82315,Likely D,Likely D,10.36557496833808
-2022,GOV,MN,0,False,eve,FiveThirtyEight (model),0.90945,Likely D,Likely D,7.910569874480428
+2022,GOV,MI,0,False,eve,FiveThirtyEight (model),0.90585,Likely D,Likely D,10.36557496833808
+2022,GOV,MN,0,False,eve,FiveThirtyEight (model),0.94855,Likely D,Likely D,7.910569874480428
 2022,GOV,NE,0,False,eve,FiveThirtyEight (model),0.00015,Safe R,Safe R,-24.41328044476372
-2022,GOV,NH,0,False,eve,FiveThirtyEight (model),0.0004,Safe R,Safe R,-15.75628425519908
+2022,GOV,NH,0,False,eve,FiveThirtyEight (model),0.0003,Safe R,Safe R,-15.75628425519908
 2022,GOV,NV,0,False,eve,FiveThirtyEight (model),0.15375,Likely R,Lean R,-1.56023529676135
-2022,GOV,NY,0,False,eve,FiveThirtyEight (model),0.9921,Safe D,Likely D,6.195824927968434
+2022,GOV,NY,0,False,eve,FiveThirtyEight (model),0.9922,Safe D,Likely D,6.195824927968434
 2022,GOV,OH,0,False,eve,FiveThirtyEight (model),0.0,Safe R,Safe R,-25.08378145637099
 2022,GOV,OK,0,False,eve,FiveThirtyEight (model),0.00785,Safe R,Likely R,-14.052228131565524
-2022,GOV,OR,0,False,eve,FiveThirtyEight (model),0.7779,Lean D,Lean D,3.77321019067196
-2022,GOV,PA,0,False,eve,FiveThirtyEight (model),0.98135,Safe D,Safe D,15.043452071775578
-2022,GOV,RI,0,False,eve,FiveThirtyEight (model),0.97515,Safe D,Safe D,19.69136283932321
+2022,GOV,OR,0,False,eve,FiveThirtyEight (model),0.82895,Likely D,Lean D,3.77321019067196
+2022,GOV,PA,0,False,eve,FiveThirtyEight (model),0.9881,Safe D,Safe D,15.043452071775578
+2022,GOV,RI,0,False,eve,FiveThirtyEight (model),0.9833,Safe D,Safe D,19.69136283932321
 2022,GOV,SC,0,False,eve,FiveThirtyEight (model),0.00205,Safe R,Safe R,-17.57993601088692
 2022,GOV,SD,0,False,eve,FiveThirtyEight (model),0.00065,Safe R,Safe R,-27.59896879032756
 2022,GOV,TN,0,False,eve,FiveThirtyEight (model),0.0,Safe R,Safe R,-32.694293882164665
-2022,GOV,TX,0,False,eve,FiveThirtyEight (model),0.00285,Safe R,Safe R,-11.040283568211642
-2022,GOV,WI,0,False,eve,FiveThirtyEight (model),0.3859,Lean R,Toss-up,3.434655002513979
+2022,GOV,TX,0,False,eve,FiveThirtyEight (model),0.00275,Safe R,Safe R,-11.040283568211642
+2022,GOV,WI,0,False,eve,FiveThirtyEight (model),0.5372,Toss-up,Toss-up,3.434655002513979
 2018,SEN,AZ,0,False,eve,CNN,0.601,Lean D,Toss-up,2.402957486136784
 2018,SEN,CT,0,False,eve,CNN,0.99985,Safe D,Safe D,20.40857699577625
 2018,SEN,DE,0,False,eve,CNN,0.9997,Safe D,Safe D,22.63900798844609
@@ -12107,38 +12107,38 @@ year,office,state_po,district,special,asof,outlet,p_dem,rating,rating_them,actua
 2018,SEN,WY,0,False,eve,Cook Political Report,0.0,Safe R,Safe R,-37.97819051140364
 2018,GOV,AL,0,False,eve,Cook Political Report,0.0004,Safe R,Safe R,-18.98366315447201
 2018,GOV,AR,0,False,eve,Cook Political Report,0.0,Safe R,Safe R,-34.56327458573237
-2018,GOV,AZ,0,False,eve,Cook Political Report,0.0047,Safe R,Likely R,-14.472794645115007
+2018,GOV,AZ,0,False,eve,Cook Political Report,0.0012,Safe R,Likely R,-14.472794645115007
 2018,GOV,CA,0,False,eve,Cook Political Report,1.0,Safe D,Safe D,23.89705425162475
 2018,GOV,CO,0,False,eve,Cook Political Report,0.9372,Likely D,Lean D,11.033798975918318
-2018,GOV,CT,0,False,eve,Cook Political Report,0.96985,Safe D,Toss-up,3.300286098668716
+2018,GOV,CT,0,False,eve,Cook Political Report,0.9711,Safe D,Toss-up,3.300286098668716
 2018,GOV,FL,0,False,eve,Cook Political Report,0.7621,Lean D,Toss-up,-0.3993417738291432
-2018,GOV,GA,0,False,eve,Cook Political Report,0.39595,Lean R,Toss-up,-1.402401224163545
+2018,GOV,GA,0,False,eve,Cook Political Report,0.32595,Lean R,Toss-up,-1.402401224163545
 2018,GOV,HI,0,False,eve,Cook Political Report,1.0,Safe D,Safe D,30.05817025219499
-2018,GOV,IA,0,False,eve,Cook Political Report,0.29155,Lean R,Toss-up,-2.7952006568787016
+2018,GOV,IA,0,False,eve,Cook Political Report,0.20115,Lean R,Toss-up,-2.7952006568787016
 2018,GOV,ID,0,False,eve,Cook Political Report,0.0001,Safe R,Safe R,-22.029820731448083
-2018,GOV,IL,0,False,eve,Cook Political Report,0.99915,Safe D,Likely D,16.81770120200297
-2018,GOV,KS,0,False,eve,Cook Political Report,0.0941,Likely R,Toss-up,5.573405562462808
-2018,GOV,MA,0,False,eve,Cook Political Report,0.0807,Likely R,Safe R,-33.57831751284442
-2018,GOV,MD,0,False,eve,Cook Political Report,0.95425,Safe D,Likely R,-11.982927494082166
-2018,GOV,ME,0,False,eve,Cook Political Report,0.95735,Safe D,Toss-up,8.200440606601008
-2018,GOV,MI,0,False,eve,Cook Political Report,0.947,Likely D,Lean D,9.856662837846518
-2018,GOV,MN,0,False,eve,Cook Political Report,0.952,Safe D,Likely D,11.859277397110407
-2018,GOV,NE,0,False,eve,Cook Political Report,0.00115,Safe R,Safe R,-18.00091979581106
-2018,GOV,NH,0,False,eve,Cook Political Report,0.23495,Lean R,Lean R,-7.149770934823039
+2018,GOV,IL,0,False,eve,Cook Political Report,0.99905,Safe D,Likely D,16.81770120200297
+2018,GOV,KS,0,False,eve,Cook Political Report,0.0895,Likely R,Toss-up,5.573405562462808
+2018,GOV,MA,0,False,eve,Cook Political Report,0.0805,Likely R,Safe R,-33.57831751284442
+2018,GOV,MD,0,False,eve,Cook Political Report,0.95385,Safe D,Likely R,-11.982927494082166
+2018,GOV,ME,0,False,eve,Cook Political Report,0.97775,Safe D,Toss-up,8.200440606601008
+2018,GOV,MI,0,False,eve,Cook Political Report,0.9306,Likely D,Lean D,9.856662837846518
+2018,GOV,MN,0,False,eve,Cook Political Report,0.96275,Safe D,Likely D,11.859277397110407
+2018,GOV,NE,0,False,eve,Cook Political Report,0.0011,Safe R,Safe R,-18.00091979581106
+2018,GOV,NH,0,False,eve,Cook Political Report,0.13095,Likely R,Lean R,-7.149770934823039
 2018,GOV,NM,0,False,eve,Cook Political Report,0.9756,Safe D,Lean D,14.398119630875614
-2018,GOV,NV,0,False,eve,Cook Political Report,0.6805,Lean D,Toss-up,4.312271616501526
+2018,GOV,NV,0,False,eve,Cook Political Report,0.63785,Lean D,Toss-up,4.312271616501526
 2018,GOV,NY,0,False,eve,Cook Political Report,1.0,Safe D,Safe D,27.5631601532228
-2018,GOV,OH,0,False,eve,Cook Political Report,0.54965,Toss-up,Toss-up,-3.85006889430733
+2018,GOV,OH,0,False,eve,Cook Political Report,0.4827,Toss-up,Toss-up,-3.85006889430733
 2018,GOV,OK,0,False,eve,Cook Political Report,0.001,Safe R,Toss-up,-12.535965194072377
-2018,GOV,OR,0,False,eve,Cook Political Report,0.9823,Safe D,Toss-up,9.590332790127784
-2018,GOV,PA,0,False,eve,Cook Political Report,0.9938,Safe D,Likely D,17.33541436344324
+2018,GOV,OR,0,False,eve,Cook Political Report,0.983,Safe D,Toss-up,9.590332790127784
+2018,GOV,PA,0,False,eve,Cook Political Report,0.997,Safe D,Likely D,17.33541436344324
 2018,GOV,RI,0,False,eve,Cook Political Report,0.99895,Safe D,Lean D,17.21322628929106
-2018,GOV,SC,0,False,eve,Cook Political Report,0.00915,Safe R,Likely R,-8.042103189401029
+2018,GOV,SC,0,False,eve,Cook Political Report,0.0069,Safe R,Likely R,-8.042103189401029
 2018,GOV,SD,0,False,eve,Cook Political Report,0.0402,Safe R,Toss-up,-3.454865114997439
-2018,GOV,TN,0,False,eve,Cook Political Report,0.00065,Safe R,Likely R,-21.41070592089212
-2018,GOV,TX,0,False,eve,Cook Political Report,0.00145,Safe R,Safe R,-13.530895009728672
-2018,GOV,VT,0,False,eve,Cook Political Report,0.94835,Likely D,Safe R,-15.644734628969864
-2018,GOV,WI,0,False,eve,Cook Political Report,0.59075,Toss-up,Toss-up,1.115678752931978
+2018,GOV,TN,0,False,eve,Cook Political Report,0.0007,Safe R,Likely R,-21.41070592089212
+2018,GOV,TX,0,False,eve,Cook Political Report,0.0007,Safe R,Safe R,-13.530895009728672
+2018,GOV,VT,0,False,eve,Cook Political Report,0.9481,Likely D,Safe R,-15.644734628969864
+2018,GOV,WI,0,False,eve,Cook Political Report,0.5101,Toss-up,Toss-up,1.115678752931978
 2018,GOV,WY,0,False,eve,Cook Political Report,0.0,Safe R,Safe R,-41.81736902020512
 2020,HOUSE,AK,0,False,eve,Cook Political Report,0.02,Safe R,Lean R,-9.168082458762097
 2020,HOUSE,AL,1,False,eve,Cook Political Report,0.0,Safe R,Safe R,-28.857513063685083
@@ -12981,36 +12981,36 @@ year,office,state_po,district,special,asof,outlet,p_dem,rating,rating_them,actua
 2022,SEN,WI,0,False,eve,Cook Political Report,0.1262,Likely R,Lean R,-1.009120533967455
 2022,GOV,AL,0,False,eve,Cook Political Report,0.0,Safe R,Safe R,-39.265662813177215
 2022,GOV,AR,0,False,eve,Cook Political Report,0.0,Safe R,Safe R,-28.484718522865784
-2022,GOV,AZ,0,False,eve,Cook Political Report,0.21925,Lean R,Toss-up,0.6675726050183044
+2022,GOV,AZ,0,False,eve,Cook Political Report,0.27285,Lean R,Toss-up,0.6675726050183044
 2022,GOV,CA,0,False,eve,Cook Political Report,0.99995,Safe D,Safe D,18.362536531248995
-2022,GOV,CO,0,False,eve,Cook Political Report,0.9934,Safe D,Safe D,19.80162519513396
-2022,GOV,CT,0,False,eve,Cook Political Report,0.9928,Safe D,Safe D,12.97734612363641
+2022,GOV,CO,0,False,eve,Cook Political Report,0.9965,Safe D,Safe D,19.80162519513396
+2022,GOV,CT,0,False,eve,Cook Political Report,0.9975,Safe D,Safe D,12.97734612363641
 2022,GOV,FL,0,False,eve,Cook Political Report,0.003,Safe R,Likely R,-19.531010986044727
-2022,GOV,GA,0,False,eve,Cook Political Report,0.0229,Safe R,Lean R,-7.589309711877857
-2022,GOV,HI,0,False,eve,Cook Political Report,0.99575,Safe D,Safe D,26.32422047030697
-2022,GOV,IA,0,False,eve,Cook Political Report,0.0011,Safe R,Safe R,-18.97818056147391
+2022,GOV,GA,0,False,eve,Cook Political Report,0.0195,Safe R,Lean R,-7.589309711877857
+2022,GOV,HI,0,False,eve,Cook Political Report,0.9956,Safe D,Safe D,26.32422047030697
+2022,GOV,IA,0,False,eve,Cook Political Report,0.00105,Safe R,Safe R,-18.97818056147391
 2022,GOV,ID,0,False,eve,Cook Political Report,0.0,Safe R,Safe R,-49.74824441882402
-2022,GOV,IL,0,False,eve,Cook Political Report,0.9888,Safe D,Safe D,12.88938733629146
-2022,GOV,KS,0,False,eve,Cook Political Report,0.45715,Toss-up,Toss-up,2.2772963001991955
+2022,GOV,IL,0,False,eve,Cook Political Report,0.9926,Safe D,Safe D,12.88938733629146
+2022,GOV,KS,0,False,eve,Cook Political Report,0.53695,Toss-up,Toss-up,2.2772963001991955
 2022,GOV,MA,0,False,eve,Cook Political Report,1.0,Safe D,Safe D,29.67002298929594
 2022,GOV,MD,0,False,eve,Cook Political Report,1.0,Safe D,Safe D,33.537811206102965
 2022,GOV,ME,0,False,eve,Cook Political Report,0.9236,Likely D,Lean D,13.321628757629234
-2022,GOV,MI,0,False,eve,Cook Political Report,0.82315,Likely D,Lean D,10.36557496833808
-2022,GOV,MN,0,False,eve,Cook Political Report,0.90945,Likely D,Likely D,7.910569874480428
+2022,GOV,MI,0,False,eve,Cook Political Report,0.90585,Likely D,Lean D,10.36557496833808
+2022,GOV,MN,0,False,eve,Cook Political Report,0.94855,Likely D,Likely D,7.910569874480428
 2022,GOV,NE,0,False,eve,Cook Political Report,0.00015,Safe R,Safe R,-24.41328044476372
-2022,GOV,NH,0,False,eve,Cook Political Report,0.0004,Safe R,Safe R,-15.75628425519908
+2022,GOV,NH,0,False,eve,Cook Political Report,0.0003,Safe R,Safe R,-15.75628425519908
 2022,GOV,NV,0,False,eve,Cook Political Report,0.15375,Likely R,Toss-up,-1.56023529676135
-2022,GOV,NY,0,False,eve,Cook Political Report,0.9921,Safe D,Likely D,6.195824927968434
+2022,GOV,NY,0,False,eve,Cook Political Report,0.9922,Safe D,Likely D,6.195824927968434
 2022,GOV,OH,0,False,eve,Cook Political Report,0.0,Safe R,Safe R,-25.08378145637099
 2022,GOV,OK,0,False,eve,Cook Political Report,0.00785,Safe R,Likely R,-14.052228131565524
-2022,GOV,OR,0,False,eve,Cook Political Report,0.7779,Lean D,Toss-up,3.77321019067196
-2022,GOV,PA,0,False,eve,Cook Political Report,0.98135,Safe D,Likely D,15.043452071775578
-2022,GOV,RI,0,False,eve,Cook Political Report,0.97515,Safe D,Safe D,19.69136283932321
+2022,GOV,OR,0,False,eve,Cook Political Report,0.82895,Likely D,Toss-up,3.77321019067196
+2022,GOV,PA,0,False,eve,Cook Political Report,0.9881,Safe D,Likely D,15.043452071775578
+2022,GOV,RI,0,False,eve,Cook Political Report,0.9833,Safe D,Safe D,19.69136283932321
 2022,GOV,SC,0,False,eve,Cook Political Report,0.00205,Safe R,Safe R,-17.57993601088692
 2022,GOV,SD,0,False,eve,Cook Political Report,0.00065,Safe R,Safe R,-27.59896879032756
 2022,GOV,TN,0,False,eve,Cook Political Report,0.0,Safe R,Safe R,-32.694293882164665
-2022,GOV,TX,0,False,eve,Cook Political Report,0.00285,Safe R,Likely R,-11.040283568211642
-2022,GOV,WI,0,False,eve,Cook Political Report,0.3859,Lean R,Toss-up,3.434655002513979
+2022,GOV,TX,0,False,eve,Cook Political Report,0.00275,Safe R,Likely R,-11.040283568211642
+2022,GOV,WI,0,False,eve,Cook Political Report,0.5372,Toss-up,Toss-up,3.434655002513979
 2024,HOUSE,AR,1,False,eve,Cook Political Report,0.0,Safe R,Safe R,-50.45822643958829
 2024,HOUSE,AR,2,False,eve,Cook Political Report,0.00015,Safe R,Safe R,-17.869572882861117
 2024,HOUSE,AR,3,False,eve,Cook Political Report,0.0,Safe R,Safe R,-33.5179824363256
@@ -14137,38 +14137,38 @@ year,office,state_po,district,special,asof,outlet,p_dem,rating,rating_them,actua
 2018,SEN,WY,0,False,eve,Daily Kos,0.0,Safe R,Safe R,-37.97819051140364
 2018,GOV,AL,0,False,eve,Daily Kos,0.0004,Safe R,Safe R,-18.98366315447201
 2018,GOV,AR,0,False,eve,Daily Kos,0.0,Safe R,Safe R,-34.56327458573237
-2018,GOV,AZ,0,False,eve,Daily Kos,0.0047,Safe R,Safe R,-14.472794645115007
+2018,GOV,AZ,0,False,eve,Daily Kos,0.0012,Safe R,Safe R,-14.472794645115007
 2018,GOV,CA,0,False,eve,Daily Kos,1.0,Safe D,Safe D,23.89705425162475
 2018,GOV,CO,0,False,eve,Daily Kos,0.9372,Likely D,Lean D,11.033798975918318
-2018,GOV,CT,0,False,eve,Daily Kos,0.96985,Safe D,Lean D,3.300286098668716
+2018,GOV,CT,0,False,eve,Daily Kos,0.9711,Safe D,Lean D,3.300286098668716
 2018,GOV,FL,0,False,eve,Daily Kos,0.7621,Lean D,Toss-up,-0.3993417738291432
-2018,GOV,GA,0,False,eve,Daily Kos,0.39595,Lean R,Toss-up,-1.402401224163545
+2018,GOV,GA,0,False,eve,Daily Kos,0.32595,Lean R,Toss-up,-1.402401224163545
 2018,GOV,HI,0,False,eve,Daily Kos,1.0,Safe D,Safe D,30.05817025219499
-2018,GOV,IA,0,False,eve,Daily Kos,0.29155,Lean R,Toss-up,-2.7952006568787016
+2018,GOV,IA,0,False,eve,Daily Kos,0.20115,Lean R,Toss-up,-2.7952006568787016
 2018,GOV,ID,0,False,eve,Daily Kos,0.0001,Safe R,Safe R,-22.029820731448083
-2018,GOV,IL,0,False,eve,Daily Kos,0.99915,Safe D,Likely D,16.81770120200297
-2018,GOV,KS,0,False,eve,Daily Kos,0.0941,Likely R,Toss-up,5.573405562462808
-2018,GOV,MA,0,False,eve,Daily Kos,0.0807,Likely R,Safe R,-33.57831751284442
-2018,GOV,MD,0,False,eve,Daily Kos,0.95425,Safe D,Likely R,-11.982927494082166
-2018,GOV,ME,0,False,eve,Daily Kos,0.95735,Safe D,Toss-up,8.200440606601008
-2018,GOV,MI,0,False,eve,Daily Kos,0.947,Likely D,Likely D,9.856662837846518
-2018,GOV,MN,0,False,eve,Daily Kos,0.952,Safe D,Likely D,11.859277397110407
-2018,GOV,NE,0,False,eve,Daily Kos,0.00115,Safe R,Safe R,-18.00091979581106
-2018,GOV,NH,0,False,eve,Daily Kos,0.23495,Lean R,Likely R,-7.149770934823039
+2018,GOV,IL,0,False,eve,Daily Kos,0.99905,Safe D,Likely D,16.81770120200297
+2018,GOV,KS,0,False,eve,Daily Kos,0.0895,Likely R,Toss-up,5.573405562462808
+2018,GOV,MA,0,False,eve,Daily Kos,0.0805,Likely R,Safe R,-33.57831751284442
+2018,GOV,MD,0,False,eve,Daily Kos,0.95385,Safe D,Likely R,-11.982927494082166
+2018,GOV,ME,0,False,eve,Daily Kos,0.97775,Safe D,Toss-up,8.200440606601008
+2018,GOV,MI,0,False,eve,Daily Kos,0.9306,Likely D,Likely D,9.856662837846518
+2018,GOV,MN,0,False,eve,Daily Kos,0.96275,Safe D,Likely D,11.859277397110407
+2018,GOV,NE,0,False,eve,Daily Kos,0.0011,Safe R,Safe R,-18.00091979581106
+2018,GOV,NH,0,False,eve,Daily Kos,0.13095,Likely R,Likely R,-7.149770934823039
 2018,GOV,NM,0,False,eve,Daily Kos,0.9756,Safe D,Lean D,14.398119630875614
-2018,GOV,NV,0,False,eve,Daily Kos,0.6805,Lean D,Toss-up,4.312271616501526
+2018,GOV,NV,0,False,eve,Daily Kos,0.63785,Lean D,Toss-up,4.312271616501526
 2018,GOV,NY,0,False,eve,Daily Kos,1.0,Safe D,Safe D,27.5631601532228
-2018,GOV,OH,0,False,eve,Daily Kos,0.54965,Toss-up,Toss-up,-3.85006889430733
+2018,GOV,OH,0,False,eve,Daily Kos,0.4827,Toss-up,Toss-up,-3.85006889430733
 2018,GOV,OK,0,False,eve,Daily Kos,0.001,Safe R,Lean R,-12.535965194072377
-2018,GOV,OR,0,False,eve,Daily Kos,0.9823,Safe D,Lean D,9.590332790127784
-2018,GOV,PA,0,False,eve,Daily Kos,0.9938,Safe D,Safe D,17.33541436344324
+2018,GOV,OR,0,False,eve,Daily Kos,0.983,Safe D,Lean D,9.590332790127784
+2018,GOV,PA,0,False,eve,Daily Kos,0.997,Safe D,Safe D,17.33541436344324
 2018,GOV,RI,0,False,eve,Daily Kos,0.99895,Safe D,Lean D,17.21322628929106
-2018,GOV,SC,0,False,eve,Daily Kos,0.00915,Safe R,Safe R,-8.042103189401029
+2018,GOV,SC,0,False,eve,Daily Kos,0.0069,Safe R,Safe R,-8.042103189401029
 2018,GOV,SD,0,False,eve,Daily Kos,0.0402,Safe R,Lean R,-3.454865114997439
-2018,GOV,TN,0,False,eve,Daily Kos,0.00065,Safe R,Safe R,-21.41070592089212
-2018,GOV,TX,0,False,eve,Daily Kos,0.00145,Safe R,Safe R,-13.530895009728672
-2018,GOV,VT,0,False,eve,Daily Kos,0.94835,Likely D,Likely R,-15.644734628969864
-2018,GOV,WI,0,False,eve,Daily Kos,0.59075,Toss-up,Toss-up,1.115678752931978
+2018,GOV,TN,0,False,eve,Daily Kos,0.0007,Safe R,Safe R,-21.41070592089212
+2018,GOV,TX,0,False,eve,Daily Kos,0.0007,Safe R,Safe R,-13.530895009728672
+2018,GOV,VT,0,False,eve,Daily Kos,0.9481,Likely D,Likely R,-15.644734628969864
+2018,GOV,WI,0,False,eve,Daily Kos,0.5101,Toss-up,Toss-up,1.115678752931978
 2018,GOV,WY,0,False,eve,Daily Kos,0.0,Safe R,Safe R,-41.81736902020512
 2020,HOUSE,AK,0,False,eve,Daily Kos,0.02,Safe R,Lean R,-9.168082458762097
 2020,HOUSE,AL,1,False,eve,Daily Kos,0.0,Safe R,Safe R,-28.857513063685083
@@ -14973,38 +14973,38 @@ year,office,state_po,district,special,asof,outlet,p_dem,rating,rating_them,actua
 2018,SEN,WY,0,False,eve,Fox News,0.0,Safe R,Likely R,-37.97819051140364
 2018,GOV,AL,0,False,eve,Fox News,0.0004,Safe R,Likely R,-18.98366315447201
 2018,GOV,AR,0,False,eve,Fox News,0.0,Safe R,Likely R,-34.56327458573237
-2018,GOV,AZ,0,False,eve,Fox News,0.0047,Safe R,Likely R,-14.472794645115007
+2018,GOV,AZ,0,False,eve,Fox News,0.0012,Safe R,Likely R,-14.472794645115007
 2018,GOV,CA,0,False,eve,Fox News,1.0,Safe D,Likely D,23.89705425162475
 2018,GOV,CO,0,False,eve,Fox News,0.9372,Likely D,Lean D,11.033798975918318
-2018,GOV,CT,0,False,eve,Fox News,0.96985,Safe D,Lean D,3.300286098668716
+2018,GOV,CT,0,False,eve,Fox News,0.9711,Safe D,Lean D,3.300286098668716
 2018,GOV,FL,0,False,eve,Fox News,0.7621,Lean D,Toss-up,-0.3993417738291432
-2018,GOV,GA,0,False,eve,Fox News,0.39595,Lean R,Toss-up,-1.402401224163545
+2018,GOV,GA,0,False,eve,Fox News,0.32595,Lean R,Toss-up,-1.402401224163545
 2018,GOV,HI,0,False,eve,Fox News,1.0,Safe D,Likely D,30.05817025219499
-2018,GOV,IA,0,False,eve,Fox News,0.29155,Lean R,Toss-up,-2.7952006568787016
+2018,GOV,IA,0,False,eve,Fox News,0.20115,Lean R,Toss-up,-2.7952006568787016
 2018,GOV,ID,0,False,eve,Fox News,0.0001,Safe R,Likely R,-22.029820731448083
-2018,GOV,IL,0,False,eve,Fox News,0.99915,Safe D,Lean D,16.81770120200297
-2018,GOV,KS,0,False,eve,Fox News,0.0941,Likely R,Toss-up,5.573405562462808
-2018,GOV,MA,0,False,eve,Fox News,0.0807,Likely R,Likely R,-33.57831751284442
-2018,GOV,MD,0,False,eve,Fox News,0.95425,Safe D,Likely R,-11.982927494082166
-2018,GOV,ME,0,False,eve,Fox News,0.95735,Safe D,Toss-up,8.200440606601008
-2018,GOV,MI,0,False,eve,Fox News,0.947,Likely D,Lean D,9.856662837846518
-2018,GOV,MN,0,False,eve,Fox News,0.952,Safe D,Lean D,11.859277397110407
-2018,GOV,NE,0,False,eve,Fox News,0.00115,Safe R,Likely R,-18.00091979581106
-2018,GOV,NH,0,False,eve,Fox News,0.23495,Lean R,Lean R,-7.149770934823039
+2018,GOV,IL,0,False,eve,Fox News,0.99905,Safe D,Lean D,16.81770120200297
+2018,GOV,KS,0,False,eve,Fox News,0.0895,Likely R,Toss-up,5.573405562462808
+2018,GOV,MA,0,False,eve,Fox News,0.0805,Likely R,Likely R,-33.57831751284442
+2018,GOV,MD,0,False,eve,Fox News,0.95385,Safe D,Likely R,-11.982927494082166
+2018,GOV,ME,0,False,eve,Fox News,0.97775,Safe D,Toss-up,8.200440606601008
+2018,GOV,MI,0,False,eve,Fox News,0.9306,Likely D,Lean D,9.856662837846518
+2018,GOV,MN,0,False,eve,Fox News,0.96275,Safe D,Lean D,11.859277397110407
+2018,GOV,NE,0,False,eve,Fox News,0.0011,Safe R,Likely R,-18.00091979581106
+2018,GOV,NH,0,False,eve,Fox News,0.13095,Likely R,Lean R,-7.149770934823039
 2018,GOV,NM,0,False,eve,Fox News,0.9756,Safe D,Lean D,14.398119630875614
-2018,GOV,NV,0,False,eve,Fox News,0.6805,Lean D,Toss-up,4.312271616501526
+2018,GOV,NV,0,False,eve,Fox News,0.63785,Lean D,Toss-up,4.312271616501526
 2018,GOV,NY,0,False,eve,Fox News,1.0,Safe D,Likely D,27.5631601532228
-2018,GOV,OH,0,False,eve,Fox News,0.54965,Toss-up,Toss-up,-3.85006889430733
+2018,GOV,OH,0,False,eve,Fox News,0.4827,Toss-up,Toss-up,-3.85006889430733
 2018,GOV,OK,0,False,eve,Fox News,0.001,Safe R,Likely R,-12.535965194072377
-2018,GOV,OR,0,False,eve,Fox News,0.9823,Safe D,Lean D,9.590332790127784
-2018,GOV,PA,0,False,eve,Fox News,0.9938,Safe D,Likely D,17.33541436344324
+2018,GOV,OR,0,False,eve,Fox News,0.983,Safe D,Lean D,9.590332790127784
+2018,GOV,PA,0,False,eve,Fox News,0.997,Safe D,Likely D,17.33541436344324
 2018,GOV,RI,0,False,eve,Fox News,0.99895,Safe D,Likely D,17.21322628929106
-2018,GOV,SC,0,False,eve,Fox News,0.00915,Safe R,Likely R,-8.042103189401029
+2018,GOV,SC,0,False,eve,Fox News,0.0069,Safe R,Likely R,-8.042103189401029
 2018,GOV,SD,0,False,eve,Fox News,0.0402,Safe R,Likely R,-3.454865114997439
-2018,GOV,TN,0,False,eve,Fox News,0.00065,Safe R,Likely R,-21.41070592089212
-2018,GOV,TX,0,False,eve,Fox News,0.00145,Safe R,Likely R,-13.530895009728672
-2018,GOV,VT,0,False,eve,Fox News,0.94835,Likely D,Likely R,-15.644734628969864
-2018,GOV,WI,0,False,eve,Fox News,0.59075,Toss-up,Lean D,1.115678752931978
+2018,GOV,TN,0,False,eve,Fox News,0.0007,Safe R,Likely R,-21.41070592089212
+2018,GOV,TX,0,False,eve,Fox News,0.0007,Safe R,Likely R,-13.530895009728672
+2018,GOV,VT,0,False,eve,Fox News,0.9481,Likely D,Likely R,-15.644734628969864
+2018,GOV,WI,0,False,eve,Fox News,0.5101,Toss-up,Lean D,1.115678752931978
 2018,GOV,WY,0,False,eve,Fox News,0.0,Safe R,Likely R,-41.81736902020512
 2022,HOUSE,AK,0,False,eve,Fox News,0.00665,Safe R,Lean D,-0.3202394429539568
 2022,HOUSE,AL,2,False,eve,Fox News,0.0,Safe R,Safe R,-40.64274532674422
@@ -15440,36 +15440,36 @@ year,office,state_po,district,special,asof,outlet,p_dem,rating,rating_them,actua
 2022,SEN,WI,0,False,eve,Fox News,0.1262,Likely R,Lean R,-1.009120533967455
 2022,GOV,AL,0,False,eve,Fox News,0.0,Safe R,Safe R,-39.265662813177215
 2022,GOV,AR,0,False,eve,Fox News,0.0,Safe R,Safe R,-28.484718522865784
-2022,GOV,AZ,0,False,eve,Fox News,0.21925,Lean R,Toss-up,0.6675726050183044
+2022,GOV,AZ,0,False,eve,Fox News,0.27285,Lean R,Toss-up,0.6675726050183044
 2022,GOV,CA,0,False,eve,Fox News,0.99995,Safe D,Safe D,18.362536531248995
-2022,GOV,CO,0,False,eve,Fox News,0.9934,Safe D,Likely D,19.80162519513396
-2022,GOV,CT,0,False,eve,Fox News,0.9928,Safe D,Likely D,12.97734612363641
+2022,GOV,CO,0,False,eve,Fox News,0.9965,Safe D,Likely D,19.80162519513396
+2022,GOV,CT,0,False,eve,Fox News,0.9975,Safe D,Likely D,12.97734612363641
 2022,GOV,FL,0,False,eve,Fox News,0.003,Safe R,Likely R,-19.531010986044727
-2022,GOV,GA,0,False,eve,Fox News,0.0229,Safe R,Lean R,-7.589309711877857
-2022,GOV,HI,0,False,eve,Fox News,0.99575,Safe D,Safe D,26.32422047030697
-2022,GOV,IA,0,False,eve,Fox News,0.0011,Safe R,Safe R,-18.97818056147391
+2022,GOV,GA,0,False,eve,Fox News,0.0195,Safe R,Lean R,-7.589309711877857
+2022,GOV,HI,0,False,eve,Fox News,0.9956,Safe D,Safe D,26.32422047030697
+2022,GOV,IA,0,False,eve,Fox News,0.00105,Safe R,Safe R,-18.97818056147391
 2022,GOV,ID,0,False,eve,Fox News,0.0,Safe R,Safe R,-49.74824441882402
-2022,GOV,IL,0,False,eve,Fox News,0.9888,Safe D,Safe D,12.88938733629146
-2022,GOV,KS,0,False,eve,Fox News,0.45715,Toss-up,Toss-up,2.2772963001991955
+2022,GOV,IL,0,False,eve,Fox News,0.9926,Safe D,Safe D,12.88938733629146
+2022,GOV,KS,0,False,eve,Fox News,0.53695,Toss-up,Toss-up,2.2772963001991955
 2022,GOV,MA,0,False,eve,Fox News,1.0,Safe D,Safe D,29.67002298929594
 2022,GOV,MD,0,False,eve,Fox News,1.0,Safe D,Safe D,33.537811206102965
 2022,GOV,ME,0,False,eve,Fox News,0.9236,Likely D,Lean D,13.321628757629234
-2022,GOV,MI,0,False,eve,Fox News,0.82315,Likely D,Lean D,10.36557496833808
-2022,GOV,MN,0,False,eve,Fox News,0.90945,Likely D,Lean D,7.910569874480428
+2022,GOV,MI,0,False,eve,Fox News,0.90585,Likely D,Lean D,10.36557496833808
+2022,GOV,MN,0,False,eve,Fox News,0.94855,Likely D,Lean D,7.910569874480428
 2022,GOV,NE,0,False,eve,Fox News,0.00015,Safe R,Safe R,-24.41328044476372
-2022,GOV,NH,0,False,eve,Fox News,0.0004,Safe R,Likely R,-15.75628425519908
+2022,GOV,NH,0,False,eve,Fox News,0.0003,Safe R,Likely R,-15.75628425519908
 2022,GOV,NV,0,False,eve,Fox News,0.15375,Likely R,Toss-up,-1.56023529676135
-2022,GOV,NY,0,False,eve,Fox News,0.9921,Safe D,Lean D,6.195824927968434
+2022,GOV,NY,0,False,eve,Fox News,0.9922,Safe D,Lean D,6.195824927968434
 2022,GOV,OH,0,False,eve,Fox News,0.0,Safe R,Likely R,-25.08378145637099
 2022,GOV,OK,0,False,eve,Fox News,0.00785,Safe R,Lean R,-14.052228131565524
-2022,GOV,OR,0,False,eve,Fox News,0.7779,Lean D,Toss-up,3.77321019067196
-2022,GOV,PA,0,False,eve,Fox News,0.98135,Safe D,Likely D,15.043452071775578
-2022,GOV,RI,0,False,eve,Fox News,0.97515,Safe D,Likely D,19.69136283932321
+2022,GOV,OR,0,False,eve,Fox News,0.82895,Likely D,Toss-up,3.77321019067196
+2022,GOV,PA,0,False,eve,Fox News,0.9881,Safe D,Likely D,15.043452071775578
+2022,GOV,RI,0,False,eve,Fox News,0.9833,Safe D,Likely D,19.69136283932321
 2022,GOV,SC,0,False,eve,Fox News,0.00205,Safe R,Safe R,-17.57993601088692
 2022,GOV,SD,0,False,eve,Fox News,0.00065,Safe R,Safe R,-27.59896879032756
 2022,GOV,TN,0,False,eve,Fox News,0.0,Safe R,Safe R,-32.694293882164665
-2022,GOV,TX,0,False,eve,Fox News,0.00285,Safe R,Likely R,-11.040283568211642
-2022,GOV,WI,0,False,eve,Fox News,0.3859,Lean R,Toss-up,3.434655002513979
+2022,GOV,TX,0,False,eve,Fox News,0.00275,Safe R,Likely R,-11.040283568211642
+2022,GOV,WI,0,False,eve,Fox News,0.5372,Toss-up,Toss-up,3.434655002513979
 2024,HOUSE,MI,3,False,eve,Fox News,0.96875,Safe D,Likely D,10.149415574583234
 2024,HOUSE,NE,2,False,eve,Fox News,0.38765,Lean R,Toss-up,-1.853023362272584
 2024,SEN,AZ,0,False,eve,Fox News,0.33655,Lean R,Lean D,2.462458314181491
@@ -15667,38 +15667,38 @@ year,office,state_po,district,special,asof,outlet,p_dem,rating,rating_them,actua
 2018,SEN,WY,0,False,eve,Inside Elections,0.0,Safe R,Safe R,-37.97819051140364
 2018,GOV,AL,0,False,eve,Inside Elections,0.0004,Safe R,Safe R,-18.98366315447201
 2018,GOV,AR,0,False,eve,Inside Elections,0.0,Safe R,Safe R,-34.56327458573237
-2018,GOV,AZ,0,False,eve,Inside Elections,0.0047,Safe R,Likely R,-14.472794645115007
+2018,GOV,AZ,0,False,eve,Inside Elections,0.0012,Safe R,Likely R,-14.472794645115007
 2018,GOV,CA,0,False,eve,Inside Elections,1.0,Safe D,Safe D,23.89705425162475
 2018,GOV,CO,0,False,eve,Inside Elections,0.9372,Likely D,Lean D,11.033798975918318
-2018,GOV,CT,0,False,eve,Inside Elections,0.96985,Safe D,Lean D,3.300286098668716
+2018,GOV,CT,0,False,eve,Inside Elections,0.9711,Safe D,Lean D,3.300286098668716
 2018,GOV,FL,0,False,eve,Inside Elections,0.7621,Lean D,Lean D,-0.3993417738291432
-2018,GOV,GA,0,False,eve,Inside Elections,0.39595,Lean R,Lean R,-1.402401224163545
+2018,GOV,GA,0,False,eve,Inside Elections,0.32595,Lean R,Lean R,-1.402401224163545
 2018,GOV,HI,0,False,eve,Inside Elections,1.0,Safe D,Safe D,30.05817025219499
-2018,GOV,IA,0,False,eve,Inside Elections,0.29155,Lean R,Lean D,-2.7952006568787016
+2018,GOV,IA,0,False,eve,Inside Elections,0.20115,Lean R,Lean D,-2.7952006568787016
 2018,GOV,ID,0,False,eve,Inside Elections,0.0001,Safe R,Safe R,-22.029820731448083
-2018,GOV,IL,0,False,eve,Inside Elections,0.99915,Safe D,Likely D,16.81770120200297
-2018,GOV,KS,0,False,eve,Inside Elections,0.0941,Likely R,Toss-up,5.573405562462808
-2018,GOV,MA,0,False,eve,Inside Elections,0.0807,Likely R,Safe R,-33.57831751284442
-2018,GOV,MD,0,False,eve,Inside Elections,0.95425,Safe D,Likely R,-11.982927494082166
-2018,GOV,ME,0,False,eve,Inside Elections,0.95735,Safe D,Lean D,8.200440606601008
-2018,GOV,MI,0,False,eve,Inside Elections,0.947,Likely D,Lean D,9.856662837846518
-2018,GOV,MN,0,False,eve,Inside Elections,0.952,Safe D,Likely D,11.859277397110407
-2018,GOV,NE,0,False,eve,Inside Elections,0.00115,Safe R,Safe R,-18.00091979581106
-2018,GOV,NH,0,False,eve,Inside Elections,0.23495,Lean R,Lean R,-7.149770934823039
+2018,GOV,IL,0,False,eve,Inside Elections,0.99905,Safe D,Likely D,16.81770120200297
+2018,GOV,KS,0,False,eve,Inside Elections,0.0895,Likely R,Toss-up,5.573405562462808
+2018,GOV,MA,0,False,eve,Inside Elections,0.0805,Likely R,Safe R,-33.57831751284442
+2018,GOV,MD,0,False,eve,Inside Elections,0.95385,Safe D,Likely R,-11.982927494082166
+2018,GOV,ME,0,False,eve,Inside Elections,0.97775,Safe D,Lean D,8.200440606601008
+2018,GOV,MI,0,False,eve,Inside Elections,0.9306,Likely D,Lean D,9.856662837846518
+2018,GOV,MN,0,False,eve,Inside Elections,0.96275,Safe D,Likely D,11.859277397110407
+2018,GOV,NE,0,False,eve,Inside Elections,0.0011,Safe R,Safe R,-18.00091979581106
+2018,GOV,NH,0,False,eve,Inside Elections,0.13095,Likely R,Lean R,-7.149770934823039
 2018,GOV,NM,0,False,eve,Inside Elections,0.9756,Safe D,Lean D,14.398119630875614
-2018,GOV,NV,0,False,eve,Inside Elections,0.6805,Lean D,Lean D,4.312271616501526
+2018,GOV,NV,0,False,eve,Inside Elections,0.63785,Lean D,Lean D,4.312271616501526
 2018,GOV,NY,0,False,eve,Inside Elections,1.0,Safe D,Safe D,27.5631601532228
-2018,GOV,OH,0,False,eve,Inside Elections,0.54965,Toss-up,Toss-up,-3.85006889430733
+2018,GOV,OH,0,False,eve,Inside Elections,0.4827,Toss-up,Toss-up,-3.85006889430733
 2018,GOV,OK,0,False,eve,Inside Elections,0.001,Safe R,Lean R,-12.535965194072377
-2018,GOV,OR,0,False,eve,Inside Elections,0.9823,Safe D,Lean D,9.590332790127784
-2018,GOV,PA,0,False,eve,Inside Elections,0.9938,Safe D,Likely D,17.33541436344324
+2018,GOV,OR,0,False,eve,Inside Elections,0.983,Safe D,Lean D,9.590332790127784
+2018,GOV,PA,0,False,eve,Inside Elections,0.997,Safe D,Likely D,17.33541436344324
 2018,GOV,RI,0,False,eve,Inside Elections,0.99895,Safe D,Lean D,17.21322628929106
-2018,GOV,SC,0,False,eve,Inside Elections,0.00915,Safe R,Safe R,-8.042103189401029
+2018,GOV,SC,0,False,eve,Inside Elections,0.0069,Safe R,Safe R,-8.042103189401029
 2018,GOV,SD,0,False,eve,Inside Elections,0.0402,Safe R,Lean R,-3.454865114997439
-2018,GOV,TN,0,False,eve,Inside Elections,0.00065,Safe R,Safe R,-21.41070592089212
-2018,GOV,TX,0,False,eve,Inside Elections,0.00145,Safe R,Safe R,-13.530895009728672
-2018,GOV,VT,0,False,eve,Inside Elections,0.94835,Likely D,Safe R,-15.644734628969864
-2018,GOV,WI,0,False,eve,Inside Elections,0.59075,Toss-up,Toss-up,1.115678752931978
+2018,GOV,TN,0,False,eve,Inside Elections,0.0007,Safe R,Safe R,-21.41070592089212
+2018,GOV,TX,0,False,eve,Inside Elections,0.0007,Safe R,Safe R,-13.530895009728672
+2018,GOV,VT,0,False,eve,Inside Elections,0.9481,Likely D,Safe R,-15.644734628969864
+2018,GOV,WI,0,False,eve,Inside Elections,0.5101,Toss-up,Toss-up,1.115678752931978
 2018,GOV,WY,0,False,eve,Inside Elections,0.0,Safe R,Safe R,-41.81736902020512
 2020,HOUSE,AK,0,False,eve,Inside Elections,0.02,Safe R,Likely R,-9.168082458762097
 2020,HOUSE,AL,1,False,eve,Inside Elections,0.0,Safe R,Safe R,-28.857513063685083
@@ -16541,36 +16541,36 @@ year,office,state_po,district,special,asof,outlet,p_dem,rating,rating_them,actua
 2022,SEN,WI,0,False,eve,Inside Elections,0.1262,Likely R,Lean R,-1.009120533967455
 2022,GOV,AL,0,False,eve,Inside Elections,0.0,Safe R,Safe R,-39.265662813177215
 2022,GOV,AR,0,False,eve,Inside Elections,0.0,Safe R,Safe R,-28.484718522865784
-2022,GOV,AZ,0,False,eve,Inside Elections,0.21925,Lean R,Toss-up,0.6675726050183044
+2022,GOV,AZ,0,False,eve,Inside Elections,0.27285,Lean R,Toss-up,0.6675726050183044
 2022,GOV,CA,0,False,eve,Inside Elections,0.99995,Safe D,Safe D,18.362536531248995
-2022,GOV,CO,0,False,eve,Inside Elections,0.9934,Safe D,Safe D,19.80162519513396
-2022,GOV,CT,0,False,eve,Inside Elections,0.9928,Safe D,Safe D,12.97734612363641
+2022,GOV,CO,0,False,eve,Inside Elections,0.9965,Safe D,Safe D,19.80162519513396
+2022,GOV,CT,0,False,eve,Inside Elections,0.9975,Safe D,Safe D,12.97734612363641
 2022,GOV,FL,0,False,eve,Inside Elections,0.003,Safe R,Likely R,-19.531010986044727
-2022,GOV,GA,0,False,eve,Inside Elections,0.0229,Safe R,Lean R,-7.589309711877857
-2022,GOV,HI,0,False,eve,Inside Elections,0.99575,Safe D,Safe D,26.32422047030697
-2022,GOV,IA,0,False,eve,Inside Elections,0.0011,Safe R,Safe R,-18.97818056147391
+2022,GOV,GA,0,False,eve,Inside Elections,0.0195,Safe R,Lean R,-7.589309711877857
+2022,GOV,HI,0,False,eve,Inside Elections,0.9956,Safe D,Safe D,26.32422047030697
+2022,GOV,IA,0,False,eve,Inside Elections,0.00105,Safe R,Safe R,-18.97818056147391
 2022,GOV,ID,0,False,eve,Inside Elections,0.0,Safe R,Safe R,-49.74824441882402
-2022,GOV,IL,0,False,eve,Inside Elections,0.9888,Safe D,Safe D,12.88938733629146
-2022,GOV,KS,0,False,eve,Inside Elections,0.45715,Toss-up,Toss-up,2.2772963001991955
+2022,GOV,IL,0,False,eve,Inside Elections,0.9926,Safe D,Safe D,12.88938733629146
+2022,GOV,KS,0,False,eve,Inside Elections,0.53695,Toss-up,Toss-up,2.2772963001991955
 2022,GOV,MA,0,False,eve,Inside Elections,1.0,Safe D,Likely D,29.67002298929594
 2022,GOV,MD,0,False,eve,Inside Elections,1.0,Safe D,Likely D,33.537811206102965
 2022,GOV,ME,0,False,eve,Inside Elections,0.9236,Likely D,Lean D,13.321628757629234
-2022,GOV,MI,0,False,eve,Inside Elections,0.82315,Likely D,Lean D,10.36557496833808
-2022,GOV,MN,0,False,eve,Inside Elections,0.90945,Likely D,Lean D,7.910569874480428
+2022,GOV,MI,0,False,eve,Inside Elections,0.90585,Likely D,Lean D,10.36557496833808
+2022,GOV,MN,0,False,eve,Inside Elections,0.94855,Likely D,Lean D,7.910569874480428
 2022,GOV,NE,0,False,eve,Inside Elections,0.00015,Safe R,Safe R,-24.41328044476372
-2022,GOV,NH,0,False,eve,Inside Elections,0.0004,Safe R,Safe R,-15.75628425519908
+2022,GOV,NH,0,False,eve,Inside Elections,0.0003,Safe R,Safe R,-15.75628425519908
 2022,GOV,NV,0,False,eve,Inside Elections,0.15375,Likely R,Toss-up,-1.56023529676135
-2022,GOV,NY,0,False,eve,Inside Elections,0.9921,Safe D,Likely D,6.195824927968434
+2022,GOV,NY,0,False,eve,Inside Elections,0.9922,Safe D,Likely D,6.195824927968434
 2022,GOV,OH,0,False,eve,Inside Elections,0.0,Safe R,Safe R,-25.08378145637099
 2022,GOV,OK,0,False,eve,Inside Elections,0.00785,Safe R,Likely R,-14.052228131565524
-2022,GOV,OR,0,False,eve,Inside Elections,0.7779,Lean D,Toss-up,3.77321019067196
-2022,GOV,PA,0,False,eve,Inside Elections,0.98135,Safe D,Lean D,15.043452071775578
-2022,GOV,RI,0,False,eve,Inside Elections,0.97515,Safe D,Safe D,19.69136283932321
+2022,GOV,OR,0,False,eve,Inside Elections,0.82895,Likely D,Toss-up,3.77321019067196
+2022,GOV,PA,0,False,eve,Inside Elections,0.9881,Safe D,Lean D,15.043452071775578
+2022,GOV,RI,0,False,eve,Inside Elections,0.9833,Safe D,Safe D,19.69136283932321
 2022,GOV,SC,0,False,eve,Inside Elections,0.00205,Safe R,Safe R,-17.57993601088692
 2022,GOV,SD,0,False,eve,Inside Elections,0.00065,Safe R,Safe R,-27.59896879032756
 2022,GOV,TN,0,False,eve,Inside Elections,0.0,Safe R,Safe R,-32.694293882164665
-2022,GOV,TX,0,False,eve,Inside Elections,0.00285,Safe R,Safe R,-11.040283568211642
-2022,GOV,WI,0,False,eve,Inside Elections,0.3859,Lean R,Toss-up,3.434655002513979
+2022,GOV,TX,0,False,eve,Inside Elections,0.00275,Safe R,Safe R,-11.040283568211642
+2022,GOV,WI,0,False,eve,Inside Elections,0.5372,Toss-up,Toss-up,3.434655002513979
 2024,HOUSE,AR,1,False,eve,Inside Elections,0.0,Safe R,Safe R,-50.45822643958829
 2024,HOUSE,AR,2,False,eve,Inside Elections,0.00015,Safe R,Safe R,-17.869572882861117
 2024,HOUSE,AR,3,False,eve,Inside Elections,0.0,Safe R,Safe R,-33.5179824363256
@@ -17002,38 +17002,38 @@ year,office,state_po,district,special,asof,outlet,p_dem,rating,rating_them,actua
 2018,SEN,WY,0,False,eve,Politico,0.0,Safe R,Safe R,-37.97819051140364
 2018,GOV,AL,0,False,eve,Politico,0.0004,Safe R,Safe R,-18.98366315447201
 2018,GOV,AR,0,False,eve,Politico,0.0,Safe R,Safe R,-34.56327458573237
-2018,GOV,AZ,0,False,eve,Politico,0.0047,Safe R,Lean R,-14.472794645115007
+2018,GOV,AZ,0,False,eve,Politico,0.0012,Safe R,Lean R,-14.472794645115007
 2018,GOV,CA,0,False,eve,Politico,1.0,Safe D,Safe D,23.89705425162475
 2018,GOV,CO,0,False,eve,Politico,0.9372,Likely D,Lean D,11.033798975918318
-2018,GOV,CT,0,False,eve,Politico,0.96985,Safe D,Lean D,3.300286098668716
+2018,GOV,CT,0,False,eve,Politico,0.9711,Safe D,Lean D,3.300286098668716
 2018,GOV,FL,0,False,eve,Politico,0.7621,Lean D,Toss-up,-0.3993417738291432
-2018,GOV,GA,0,False,eve,Politico,0.39595,Lean R,Toss-up,-1.402401224163545
+2018,GOV,GA,0,False,eve,Politico,0.32595,Lean R,Toss-up,-1.402401224163545
 2018,GOV,HI,0,False,eve,Politico,1.0,Safe D,Likely D,30.05817025219499
-2018,GOV,IA,0,False,eve,Politico,0.29155,Lean R,Toss-up,-2.7952006568787016
+2018,GOV,IA,0,False,eve,Politico,0.20115,Lean R,Toss-up,-2.7952006568787016
 2018,GOV,ID,0,False,eve,Politico,0.0001,Safe R,Likely R,-22.029820731448083
-2018,GOV,IL,0,False,eve,Politico,0.99915,Safe D,Likely D,16.81770120200297
-2018,GOV,KS,0,False,eve,Politico,0.0941,Likely R,Lean R,5.573405562462808
-2018,GOV,MA,0,False,eve,Politico,0.0807,Likely R,Safe R,-33.57831751284442
-2018,GOV,MD,0,False,eve,Politico,0.95425,Safe D,Likely R,-11.982927494082166
-2018,GOV,ME,0,False,eve,Politico,0.95735,Safe D,Toss-up,8.200440606601008
-2018,GOV,MI,0,False,eve,Politico,0.947,Likely D,Lean D,9.856662837846518
-2018,GOV,MN,0,False,eve,Politico,0.952,Safe D,Likely D,11.859277397110407
-2018,GOV,NE,0,False,eve,Politico,0.00115,Safe R,Safe R,-18.00091979581106
-2018,GOV,NH,0,False,eve,Politico,0.23495,Lean R,Lean R,-7.149770934823039
+2018,GOV,IL,0,False,eve,Politico,0.99905,Safe D,Likely D,16.81770120200297
+2018,GOV,KS,0,False,eve,Politico,0.0895,Likely R,Lean R,5.573405562462808
+2018,GOV,MA,0,False,eve,Politico,0.0805,Likely R,Safe R,-33.57831751284442
+2018,GOV,MD,0,False,eve,Politico,0.95385,Safe D,Likely R,-11.982927494082166
+2018,GOV,ME,0,False,eve,Politico,0.97775,Safe D,Toss-up,8.200440606601008
+2018,GOV,MI,0,False,eve,Politico,0.9306,Likely D,Lean D,9.856662837846518
+2018,GOV,MN,0,False,eve,Politico,0.96275,Safe D,Likely D,11.859277397110407
+2018,GOV,NE,0,False,eve,Politico,0.0011,Safe R,Safe R,-18.00091979581106
+2018,GOV,NH,0,False,eve,Politico,0.13095,Likely R,Lean R,-7.149770934823039
 2018,GOV,NM,0,False,eve,Politico,0.9756,Safe D,Likely D,14.398119630875614
-2018,GOV,NV,0,False,eve,Politico,0.6805,Lean D,Toss-up,4.312271616501526
+2018,GOV,NV,0,False,eve,Politico,0.63785,Lean D,Toss-up,4.312271616501526
 2018,GOV,NY,0,False,eve,Politico,1.0,Safe D,Safe D,27.5631601532228
-2018,GOV,OH,0,False,eve,Politico,0.54965,Toss-up,Toss-up,-3.85006889430733
+2018,GOV,OH,0,False,eve,Politico,0.4827,Toss-up,Toss-up,-3.85006889430733
 2018,GOV,OK,0,False,eve,Politico,0.001,Safe R,Lean R,-12.535965194072377
-2018,GOV,OR,0,False,eve,Politico,0.9823,Safe D,Lean D,9.590332790127784
-2018,GOV,PA,0,False,eve,Politico,0.9938,Safe D,Likely D,17.33541436344324
+2018,GOV,OR,0,False,eve,Politico,0.983,Safe D,Lean D,9.590332790127784
+2018,GOV,PA,0,False,eve,Politico,0.997,Safe D,Likely D,17.33541436344324
 2018,GOV,RI,0,False,eve,Politico,0.99895,Safe D,Lean D,17.21322628929106
-2018,GOV,SC,0,False,eve,Politico,0.00915,Safe R,Likely R,-8.042103189401029
+2018,GOV,SC,0,False,eve,Politico,0.0069,Safe R,Likely R,-8.042103189401029
 2018,GOV,SD,0,False,eve,Politico,0.0402,Safe R,Likely R,-3.454865114997439
-2018,GOV,TN,0,False,eve,Politico,0.00065,Safe R,Likely R,-21.41070592089212
-2018,GOV,TX,0,False,eve,Politico,0.00145,Safe R,Safe R,-13.530895009728672
-2018,GOV,VT,0,False,eve,Politico,0.94835,Likely D,Lean R,-15.644734628969864
-2018,GOV,WI,0,False,eve,Politico,0.59075,Toss-up,Toss-up,1.115678752931978
+2018,GOV,TN,0,False,eve,Politico,0.0007,Safe R,Likely R,-21.41070592089212
+2018,GOV,TX,0,False,eve,Politico,0.0007,Safe R,Safe R,-13.530895009728672
+2018,GOV,VT,0,False,eve,Politico,0.9481,Likely D,Lean R,-15.644734628969864
+2018,GOV,WI,0,False,eve,Politico,0.5101,Toss-up,Toss-up,1.115678752931978
 2018,GOV,WY,0,False,eve,Politico,0.0,Safe R,Safe R,-41.81736902020512
 2020,HOUSE,AK,0,False,eve,Politico,0.02,Safe R,Lean R,-9.168082458762097
 2020,HOUSE,AL,1,False,eve,Politico,0.0,Safe R,Safe R,-28.857513063685083
@@ -17876,36 +17876,36 @@ year,office,state_po,district,special,asof,outlet,p_dem,rating,rating_them,actua
 2022,SEN,WI,0,False,eve,Politico,0.1262,Likely R,Toss-up,-1.009120533967455
 2022,GOV,AL,0,False,eve,Politico,0.0,Safe R,Safe R,-39.265662813177215
 2022,GOV,AR,0,False,eve,Politico,0.0,Safe R,Safe R,-28.484718522865784
-2022,GOV,AZ,0,False,eve,Politico,0.21925,Lean R,Toss-up,0.6675726050183044
+2022,GOV,AZ,0,False,eve,Politico,0.27285,Lean R,Toss-up,0.6675726050183044
 2022,GOV,CA,0,False,eve,Politico,0.99995,Safe D,Safe D,18.362536531248995
-2022,GOV,CO,0,False,eve,Politico,0.9934,Safe D,Likely D,19.80162519513396
-2022,GOV,CT,0,False,eve,Politico,0.9928,Safe D,Lean D,12.97734612363641
+2022,GOV,CO,0,False,eve,Politico,0.9965,Safe D,Likely D,19.80162519513396
+2022,GOV,CT,0,False,eve,Politico,0.9975,Safe D,Lean D,12.97734612363641
 2022,GOV,FL,0,False,eve,Politico,0.003,Safe R,Likely R,-19.531010986044727
-2022,GOV,GA,0,False,eve,Politico,0.0229,Safe R,Lean R,-7.589309711877857
-2022,GOV,HI,0,False,eve,Politico,0.99575,Safe D,Safe D,26.32422047030697
-2022,GOV,IA,0,False,eve,Politico,0.0011,Safe R,Safe R,-18.97818056147391
+2022,GOV,GA,0,False,eve,Politico,0.0195,Safe R,Lean R,-7.589309711877857
+2022,GOV,HI,0,False,eve,Politico,0.9956,Safe D,Safe D,26.32422047030697
+2022,GOV,IA,0,False,eve,Politico,0.00105,Safe R,Safe R,-18.97818056147391
 2022,GOV,ID,0,False,eve,Politico,0.0,Safe R,Safe R,-49.74824441882402
-2022,GOV,IL,0,False,eve,Politico,0.9888,Safe D,Likely D,12.88938733629146
-2022,GOV,KS,0,False,eve,Politico,0.45715,Toss-up,Toss-up,2.2772963001991955
+2022,GOV,IL,0,False,eve,Politico,0.9926,Safe D,Likely D,12.88938733629146
+2022,GOV,KS,0,False,eve,Politico,0.53695,Toss-up,Toss-up,2.2772963001991955
 2022,GOV,MA,0,False,eve,Politico,1.0,Safe D,Safe D,29.67002298929594
 2022,GOV,MD,0,False,eve,Politico,1.0,Safe D,Safe D,33.537811206102965
 2022,GOV,ME,0,False,eve,Politico,0.9236,Likely D,Lean D,13.321628757629234
-2022,GOV,MI,0,False,eve,Politico,0.82315,Likely D,Lean D,10.36557496833808
-2022,GOV,MN,0,False,eve,Politico,0.90945,Likely D,Lean D,7.910569874480428
+2022,GOV,MI,0,False,eve,Politico,0.90585,Likely D,Lean D,10.36557496833808
+2022,GOV,MN,0,False,eve,Politico,0.94855,Likely D,Lean D,7.910569874480428
 2022,GOV,NE,0,False,eve,Politico,0.00015,Safe R,Safe R,-24.41328044476372
-2022,GOV,NH,0,False,eve,Politico,0.0004,Safe R,Safe R,-15.75628425519908
+2022,GOV,NH,0,False,eve,Politico,0.0003,Safe R,Safe R,-15.75628425519908
 2022,GOV,NV,0,False,eve,Politico,0.15375,Likely R,Toss-up,-1.56023529676135
-2022,GOV,NY,0,False,eve,Politico,0.9921,Safe D,Likely D,6.195824927968434
+2022,GOV,NY,0,False,eve,Politico,0.9922,Safe D,Likely D,6.195824927968434
 2022,GOV,OH,0,False,eve,Politico,0.0,Safe R,Likely R,-25.08378145637099
 2022,GOV,OK,0,False,eve,Politico,0.00785,Safe R,Likely R,-14.052228131565524
-2022,GOV,OR,0,False,eve,Politico,0.7779,Lean D,Toss-up,3.77321019067196
-2022,GOV,PA,0,False,eve,Politico,0.98135,Safe D,Likely D,15.043452071775578
-2022,GOV,RI,0,False,eve,Politico,0.97515,Safe D,Likely D,19.69136283932321
+2022,GOV,OR,0,False,eve,Politico,0.82895,Likely D,Toss-up,3.77321019067196
+2022,GOV,PA,0,False,eve,Politico,0.9881,Safe D,Likely D,15.043452071775578
+2022,GOV,RI,0,False,eve,Politico,0.9833,Safe D,Likely D,19.69136283932321
 2022,GOV,SC,0,False,eve,Politico,0.00205,Safe R,Safe R,-17.57993601088692
 2022,GOV,SD,0,False,eve,Politico,0.00065,Safe R,Likely R,-27.59896879032756
 2022,GOV,TN,0,False,eve,Politico,0.0,Safe R,Safe R,-32.694293882164665
-2022,GOV,TX,0,False,eve,Politico,0.00285,Safe R,Likely R,-11.040283568211642
-2022,GOV,WI,0,False,eve,Politico,0.3859,Lean R,Toss-up,3.434655002513979
+2022,GOV,TX,0,False,eve,Politico,0.00275,Safe R,Likely R,-11.040283568211642
+2022,GOV,WI,0,False,eve,Politico,0.5372,Toss-up,Toss-up,3.434655002513979
 2018,HOUSE,AK,0,False,eve,RealClearPolitics,0.0401,Safe R,Toss-up,-6.612617357942614
 2018,HOUSE,AR,2,False,eve,RealClearPolitics,0.06525,Likely R,Likely R,-6.44082816402159
 2018,HOUSE,AZ,1,False,eve,RealClearPolitics,0.978,Safe D,Toss-up,7.689531771569483
@@ -18069,38 +18069,38 @@ year,office,state_po,district,special,asof,outlet,p_dem,rating,rating_them,actua
 2018,SEN,WY,0,False,eve,RealClearPolitics,0.0,Safe R,Safe R,-37.97819051140364
 2018,GOV,AL,0,False,eve,RealClearPolitics,0.0004,Safe R,Safe R,-18.98366315447201
 2018,GOV,AR,0,False,eve,RealClearPolitics,0.0,Safe R,Safe R,-34.56327458573237
-2018,GOV,AZ,0,False,eve,RealClearPolitics,0.0047,Safe R,Likely R,-14.472794645115007
+2018,GOV,AZ,0,False,eve,RealClearPolitics,0.0012,Safe R,Likely R,-14.472794645115007
 2018,GOV,CA,0,False,eve,RealClearPolitics,1.0,Safe D,Likely D,23.89705425162475
 2018,GOV,CO,0,False,eve,RealClearPolitics,0.9372,Likely D,Lean D,11.033798975918318
-2018,GOV,CT,0,False,eve,RealClearPolitics,0.96985,Safe D,Toss-up,3.300286098668716
+2018,GOV,CT,0,False,eve,RealClearPolitics,0.9711,Safe D,Toss-up,3.300286098668716
 2018,GOV,FL,0,False,eve,RealClearPolitics,0.7621,Lean D,Toss-up,-0.3993417738291432
-2018,GOV,GA,0,False,eve,RealClearPolitics,0.39595,Lean R,Toss-up,-1.402401224163545
+2018,GOV,GA,0,False,eve,RealClearPolitics,0.32595,Lean R,Toss-up,-1.402401224163545
 2018,GOV,HI,0,False,eve,RealClearPolitics,1.0,Safe D,Safe D,30.05817025219499
-2018,GOV,IA,0,False,eve,RealClearPolitics,0.29155,Lean R,Toss-up,-2.7952006568787016
+2018,GOV,IA,0,False,eve,RealClearPolitics,0.20115,Lean R,Toss-up,-2.7952006568787016
 2018,GOV,ID,0,False,eve,RealClearPolitics,0.0001,Safe R,Safe R,-22.029820731448083
-2018,GOV,IL,0,False,eve,RealClearPolitics,0.99915,Safe D,Likely D,16.81770120200297
-2018,GOV,KS,0,False,eve,RealClearPolitics,0.0941,Likely R,Toss-up,5.573405562462808
-2018,GOV,MA,0,False,eve,RealClearPolitics,0.0807,Likely R,Safe R,-33.57831751284442
-2018,GOV,MD,0,False,eve,RealClearPolitics,0.95425,Safe D,Likely R,-11.982927494082166
-2018,GOV,ME,0,False,eve,RealClearPolitics,0.95735,Safe D,Lean D,8.200440606601008
-2018,GOV,MI,0,False,eve,RealClearPolitics,0.947,Likely D,Lean D,9.856662837846518
-2018,GOV,MN,0,False,eve,RealClearPolitics,0.952,Safe D,Lean D,11.859277397110407
-2018,GOV,NE,0,False,eve,RealClearPolitics,0.00115,Safe R,Safe R,-18.00091979581106
-2018,GOV,NH,0,False,eve,RealClearPolitics,0.23495,Lean R,Lean R,-7.149770934823039
+2018,GOV,IL,0,False,eve,RealClearPolitics,0.99905,Safe D,Likely D,16.81770120200297
+2018,GOV,KS,0,False,eve,RealClearPolitics,0.0895,Likely R,Toss-up,5.573405562462808
+2018,GOV,MA,0,False,eve,RealClearPolitics,0.0805,Likely R,Safe R,-33.57831751284442
+2018,GOV,MD,0,False,eve,RealClearPolitics,0.95385,Safe D,Likely R,-11.982927494082166
+2018,GOV,ME,0,False,eve,RealClearPolitics,0.97775,Safe D,Lean D,8.200440606601008
+2018,GOV,MI,0,False,eve,RealClearPolitics,0.9306,Likely D,Lean D,9.856662837846518
+2018,GOV,MN,0,False,eve,RealClearPolitics,0.96275,Safe D,Lean D,11.859277397110407
+2018,GOV,NE,0,False,eve,RealClearPolitics,0.0011,Safe R,Safe R,-18.00091979581106
+2018,GOV,NH,0,False,eve,RealClearPolitics,0.13095,Likely R,Lean R,-7.149770934823039
 2018,GOV,NM,0,False,eve,RealClearPolitics,0.9756,Safe D,Lean D,14.398119630875614
-2018,GOV,NV,0,False,eve,RealClearPolitics,0.6805,Lean D,Toss-up,4.312271616501526
+2018,GOV,NV,0,False,eve,RealClearPolitics,0.63785,Lean D,Toss-up,4.312271616501526
 2018,GOV,NY,0,False,eve,RealClearPolitics,1.0,Safe D,Safe D,27.5631601532228
-2018,GOV,OH,0,False,eve,RealClearPolitics,0.54965,Toss-up,Toss-up,-3.85006889430733
+2018,GOV,OH,0,False,eve,RealClearPolitics,0.4827,Toss-up,Toss-up,-3.85006889430733
 2018,GOV,OK,0,False,eve,RealClearPolitics,0.001,Safe R,Lean R,-12.535965194072377
-2018,GOV,OR,0,False,eve,RealClearPolitics,0.9823,Safe D,Toss-up,9.590332790127784
-2018,GOV,PA,0,False,eve,RealClearPolitics,0.9938,Safe D,Safe D,17.33541436344324
+2018,GOV,OR,0,False,eve,RealClearPolitics,0.983,Safe D,Toss-up,9.590332790127784
+2018,GOV,PA,0,False,eve,RealClearPolitics,0.997,Safe D,Safe D,17.33541436344324
 2018,GOV,RI,0,False,eve,RealClearPolitics,0.99895,Safe D,Likely D,17.21322628929106
-2018,GOV,SC,0,False,eve,RealClearPolitics,0.00915,Safe R,Safe R,-8.042103189401029
+2018,GOV,SC,0,False,eve,RealClearPolitics,0.0069,Safe R,Safe R,-8.042103189401029
 2018,GOV,SD,0,False,eve,RealClearPolitics,0.0402,Safe R,Toss-up,-3.454865114997439
-2018,GOV,TN,0,False,eve,RealClearPolitics,0.00065,Safe R,Likely R,-21.41070592089212
-2018,GOV,TX,0,False,eve,RealClearPolitics,0.00145,Safe R,Safe R,-13.530895009728672
-2018,GOV,VT,0,False,eve,RealClearPolitics,0.94835,Likely D,Likely R,-15.644734628969864
-2018,GOV,WI,0,False,eve,RealClearPolitics,0.59075,Toss-up,Toss-up,1.115678752931978
+2018,GOV,TN,0,False,eve,RealClearPolitics,0.0007,Safe R,Likely R,-21.41070592089212
+2018,GOV,TX,0,False,eve,RealClearPolitics,0.0007,Safe R,Safe R,-13.530895009728672
+2018,GOV,VT,0,False,eve,RealClearPolitics,0.9481,Likely D,Likely R,-15.644734628969864
+2018,GOV,WI,0,False,eve,RealClearPolitics,0.5101,Toss-up,Toss-up,1.115678752931978
 2018,GOV,WY,0,False,eve,RealClearPolitics,0.0,Safe R,Safe R,-41.81736902020512
 2020,HOUSE,AK,0,False,eve,RealClearPolitics,0.02,Safe R,Likely R,-9.168082458762097
 2020,HOUSE,AL,1,False,eve,RealClearPolitics,0.0,Safe R,Safe R,-28.857513063685083
@@ -18943,36 +18943,36 @@ year,office,state_po,district,special,asof,outlet,p_dem,rating,rating_them,actua
 2022,SEN,WI,0,False,eve,RealClearPolitics,0.1262,Likely R,Toss-up,-1.009120533967455
 2022,GOV,AL,0,False,eve,RealClearPolitics,0.0,Safe R,Safe R,-39.265662813177215
 2022,GOV,AR,0,False,eve,RealClearPolitics,0.0,Safe R,Safe R,-28.484718522865784
-2022,GOV,AZ,0,False,eve,RealClearPolitics,0.21925,Lean R,Toss-up,0.6675726050183044
+2022,GOV,AZ,0,False,eve,RealClearPolitics,0.27285,Lean R,Toss-up,0.6675726050183044
 2022,GOV,CA,0,False,eve,RealClearPolitics,0.99995,Safe D,Safe D,18.362536531248995
-2022,GOV,CO,0,False,eve,RealClearPolitics,0.9934,Safe D,Likely D,19.80162519513396
-2022,GOV,CT,0,False,eve,RealClearPolitics,0.9928,Safe D,Lean D,12.97734612363641
+2022,GOV,CO,0,False,eve,RealClearPolitics,0.9965,Safe D,Likely D,19.80162519513396
+2022,GOV,CT,0,False,eve,RealClearPolitics,0.9975,Safe D,Lean D,12.97734612363641
 2022,GOV,FL,0,False,eve,RealClearPolitics,0.003,Safe R,Lean R,-19.531010986044727
-2022,GOV,GA,0,False,eve,RealClearPolitics,0.0229,Safe R,Lean R,-7.589309711877857
-2022,GOV,HI,0,False,eve,RealClearPolitics,0.99575,Safe D,Safe D,26.32422047030697
-2022,GOV,IA,0,False,eve,RealClearPolitics,0.0011,Safe R,Likely R,-18.97818056147391
+2022,GOV,GA,0,False,eve,RealClearPolitics,0.0195,Safe R,Lean R,-7.589309711877857
+2022,GOV,HI,0,False,eve,RealClearPolitics,0.9956,Safe D,Safe D,26.32422047030697
+2022,GOV,IA,0,False,eve,RealClearPolitics,0.00105,Safe R,Likely R,-18.97818056147391
 2022,GOV,ID,0,False,eve,RealClearPolitics,0.0,Safe R,Safe R,-49.74824441882402
-2022,GOV,IL,0,False,eve,RealClearPolitics,0.9888,Safe D,Lean D,12.88938733629146
-2022,GOV,KS,0,False,eve,RealClearPolitics,0.45715,Toss-up,Toss-up,2.2772963001991955
+2022,GOV,IL,0,False,eve,RealClearPolitics,0.9926,Safe D,Lean D,12.88938733629146
+2022,GOV,KS,0,False,eve,RealClearPolitics,0.53695,Toss-up,Toss-up,2.2772963001991955
 2022,GOV,MA,0,False,eve,RealClearPolitics,1.0,Safe D,Safe D,29.67002298929594
 2022,GOV,MD,0,False,eve,RealClearPolitics,1.0,Safe D,Safe D,33.537811206102965
 2022,GOV,ME,0,False,eve,RealClearPolitics,0.9236,Likely D,Toss-up,13.321628757629234
-2022,GOV,MI,0,False,eve,RealClearPolitics,0.82315,Likely D,Toss-up,10.36557496833808
-2022,GOV,MN,0,False,eve,RealClearPolitics,0.90945,Likely D,Toss-up,7.910569874480428
+2022,GOV,MI,0,False,eve,RealClearPolitics,0.90585,Likely D,Toss-up,10.36557496833808
+2022,GOV,MN,0,False,eve,RealClearPolitics,0.94855,Likely D,Toss-up,7.910569874480428
 2022,GOV,NE,0,False,eve,RealClearPolitics,0.00015,Safe R,Safe R,-24.41328044476372
-2022,GOV,NH,0,False,eve,RealClearPolitics,0.0004,Safe R,Safe R,-15.75628425519908
+2022,GOV,NH,0,False,eve,RealClearPolitics,0.0003,Safe R,Safe R,-15.75628425519908
 2022,GOV,NV,0,False,eve,RealClearPolitics,0.15375,Likely R,Toss-up,-1.56023529676135
-2022,GOV,NY,0,False,eve,RealClearPolitics,0.9921,Safe D,Toss-up,6.195824927968434
+2022,GOV,NY,0,False,eve,RealClearPolitics,0.9922,Safe D,Toss-up,6.195824927968434
 2022,GOV,OH,0,False,eve,RealClearPolitics,0.0,Safe R,Safe R,-25.08378145637099
 2022,GOV,OK,0,False,eve,RealClearPolitics,0.00785,Safe R,Toss-up,-14.052228131565524
-2022,GOV,OR,0,False,eve,RealClearPolitics,0.7779,Lean D,Toss-up,3.77321019067196
-2022,GOV,PA,0,False,eve,RealClearPolitics,0.98135,Safe D,Lean D,15.043452071775578
-2022,GOV,RI,0,False,eve,RealClearPolitics,0.97515,Safe D,Likely D,19.69136283932321
+2022,GOV,OR,0,False,eve,RealClearPolitics,0.82895,Likely D,Toss-up,3.77321019067196
+2022,GOV,PA,0,False,eve,RealClearPolitics,0.9881,Safe D,Lean D,15.043452071775578
+2022,GOV,RI,0,False,eve,RealClearPolitics,0.9833,Safe D,Likely D,19.69136283932321
 2022,GOV,SC,0,False,eve,RealClearPolitics,0.00205,Safe R,Safe R,-17.57993601088692
 2022,GOV,SD,0,False,eve,RealClearPolitics,0.00065,Safe R,Likely R,-27.59896879032756
 2022,GOV,TN,0,False,eve,RealClearPolitics,0.0,Safe R,Safe R,-32.694293882164665
-2022,GOV,TX,0,False,eve,RealClearPolitics,0.00285,Safe R,Lean R,-11.040283568211642
-2022,GOV,WI,0,False,eve,RealClearPolitics,0.3859,Lean R,Toss-up,3.434655002513979
+2022,GOV,TX,0,False,eve,RealClearPolitics,0.00275,Safe R,Lean R,-11.040283568211642
+2022,GOV,WI,0,False,eve,RealClearPolitics,0.5372,Toss-up,Toss-up,3.434655002513979
 2024,HOUSE,MI,3,False,eve,RealClearPolitics,0.96875,Safe D,Toss-up,10.149415574583234
 2024,HOUSE,WA,8,False,eve,RealClearPolitics,0.88585,Likely D,Lean D,8.170833313266648
 2024,SEN,AZ,0,False,eve,RealClearPolitics,0.33655,Lean R,Toss-up,2.462458314181491
@@ -19170,38 +19170,38 @@ year,office,state_po,district,special,asof,outlet,p_dem,rating,rating_them,actua
 2018,SEN,WY,0,False,eve,Sabato's Crystal Ball,0.0,Safe R,Safe R,-37.97819051140364
 2018,GOV,AL,0,False,eve,Sabato's Crystal Ball,0.0004,Safe R,Safe R,-18.98366315447201
 2018,GOV,AR,0,False,eve,Sabato's Crystal Ball,0.0,Safe R,Safe R,-34.56327458573237
-2018,GOV,AZ,0,False,eve,Sabato's Crystal Ball,0.0047,Safe R,Likely R,-14.472794645115007
+2018,GOV,AZ,0,False,eve,Sabato's Crystal Ball,0.0012,Safe R,Likely R,-14.472794645115007
 2018,GOV,CA,0,False,eve,Sabato's Crystal Ball,1.0,Safe D,Safe D,23.89705425162475
 2018,GOV,CO,0,False,eve,Sabato's Crystal Ball,0.9372,Likely D,Lean D,11.033798975918318
-2018,GOV,CT,0,False,eve,Sabato's Crystal Ball,0.96985,Safe D,Lean D,3.300286098668716
+2018,GOV,CT,0,False,eve,Sabato's Crystal Ball,0.9711,Safe D,Lean D,3.300286098668716
 2018,GOV,FL,0,False,eve,Sabato's Crystal Ball,0.7621,Lean D,Lean D,-0.3993417738291432
-2018,GOV,GA,0,False,eve,Sabato's Crystal Ball,0.39595,Lean R,Toss-up,-1.402401224163545
+2018,GOV,GA,0,False,eve,Sabato's Crystal Ball,0.32595,Lean R,Toss-up,-1.402401224163545
 2018,GOV,HI,0,False,eve,Sabato's Crystal Ball,1.0,Safe D,Safe D,30.05817025219499
-2018,GOV,IA,0,False,eve,Sabato's Crystal Ball,0.29155,Lean R,Lean D,-2.7952006568787016
+2018,GOV,IA,0,False,eve,Sabato's Crystal Ball,0.20115,Lean R,Lean D,-2.7952006568787016
 2018,GOV,ID,0,False,eve,Sabato's Crystal Ball,0.0001,Safe R,Safe R,-22.029820731448083
-2018,GOV,IL,0,False,eve,Sabato's Crystal Ball,0.99915,Safe D,Likely D,16.81770120200297
-2018,GOV,KS,0,False,eve,Sabato's Crystal Ball,0.0941,Likely R,Lean D,5.573405562462808
-2018,GOV,MA,0,False,eve,Sabato's Crystal Ball,0.0807,Likely R,Safe R,-33.57831751284442
-2018,GOV,MD,0,False,eve,Sabato's Crystal Ball,0.95425,Safe D,Likely R,-11.982927494082166
-2018,GOV,ME,0,False,eve,Sabato's Crystal Ball,0.95735,Safe D,Lean D,8.200440606601008
-2018,GOV,MI,0,False,eve,Sabato's Crystal Ball,0.947,Likely D,Likely D,9.856662837846518
-2018,GOV,MN,0,False,eve,Sabato's Crystal Ball,0.952,Safe D,Lean D,11.859277397110407
-2018,GOV,NE,0,False,eve,Sabato's Crystal Ball,0.00115,Safe R,Safe R,-18.00091979581106
-2018,GOV,NH,0,False,eve,Sabato's Crystal Ball,0.23495,Lean R,Lean R,-7.149770934823039
+2018,GOV,IL,0,False,eve,Sabato's Crystal Ball,0.99905,Safe D,Likely D,16.81770120200297
+2018,GOV,KS,0,False,eve,Sabato's Crystal Ball,0.0895,Likely R,Lean D,5.573405562462808
+2018,GOV,MA,0,False,eve,Sabato's Crystal Ball,0.0805,Likely R,Safe R,-33.57831751284442
+2018,GOV,MD,0,False,eve,Sabato's Crystal Ball,0.95385,Safe D,Likely R,-11.982927494082166
+2018,GOV,ME,0,False,eve,Sabato's Crystal Ball,0.97775,Safe D,Lean D,8.200440606601008
+2018,GOV,MI,0,False,eve,Sabato's Crystal Ball,0.9306,Likely D,Likely D,9.856662837846518
+2018,GOV,MN,0,False,eve,Sabato's Crystal Ball,0.96275,Safe D,Lean D,11.859277397110407
+2018,GOV,NE,0,False,eve,Sabato's Crystal Ball,0.0011,Safe R,Safe R,-18.00091979581106
+2018,GOV,NH,0,False,eve,Sabato's Crystal Ball,0.13095,Likely R,Lean R,-7.149770934823039
 2018,GOV,NM,0,False,eve,Sabato's Crystal Ball,0.9756,Safe D,Lean D,14.398119630875614
-2018,GOV,NV,0,False,eve,Sabato's Crystal Ball,0.6805,Lean D,Lean D,4.312271616501526
+2018,GOV,NV,0,False,eve,Sabato's Crystal Ball,0.63785,Lean D,Lean D,4.312271616501526
 2018,GOV,NY,0,False,eve,Sabato's Crystal Ball,1.0,Safe D,Safe D,27.5631601532228
-2018,GOV,OH,0,False,eve,Sabato's Crystal Ball,0.54965,Toss-up,Lean D,-3.85006889430733
+2018,GOV,OH,0,False,eve,Sabato's Crystal Ball,0.4827,Toss-up,Lean D,-3.85006889430733
 2018,GOV,OK,0,False,eve,Sabato's Crystal Ball,0.001,Safe R,Lean R,-12.535965194072377
-2018,GOV,OR,0,False,eve,Sabato's Crystal Ball,0.9823,Safe D,Lean D,9.590332790127784
-2018,GOV,PA,0,False,eve,Sabato's Crystal Ball,0.9938,Safe D,Safe D,17.33541436344324
+2018,GOV,OR,0,False,eve,Sabato's Crystal Ball,0.983,Safe D,Lean D,9.590332790127784
+2018,GOV,PA,0,False,eve,Sabato's Crystal Ball,0.997,Safe D,Safe D,17.33541436344324
 2018,GOV,RI,0,False,eve,Sabato's Crystal Ball,0.99895,Safe D,Likely D,17.21322628929106
-2018,GOV,SC,0,False,eve,Sabato's Crystal Ball,0.00915,Safe R,Safe R,-8.042103189401029
+2018,GOV,SC,0,False,eve,Sabato's Crystal Ball,0.0069,Safe R,Safe R,-8.042103189401029
 2018,GOV,SD,0,False,eve,Sabato's Crystal Ball,0.0402,Safe R,Lean R,-3.454865114997439
-2018,GOV,TN,0,False,eve,Sabato's Crystal Ball,0.00065,Safe R,Safe R,-21.41070592089212
-2018,GOV,TX,0,False,eve,Sabato's Crystal Ball,0.00145,Safe R,Safe R,-13.530895009728672
-2018,GOV,VT,0,False,eve,Sabato's Crystal Ball,0.94835,Likely D,Safe R,-15.644734628969864
-2018,GOV,WI,0,False,eve,Sabato's Crystal Ball,0.59075,Toss-up,Lean D,1.115678752931978
+2018,GOV,TN,0,False,eve,Sabato's Crystal Ball,0.0007,Safe R,Safe R,-21.41070592089212
+2018,GOV,TX,0,False,eve,Sabato's Crystal Ball,0.0007,Safe R,Safe R,-13.530895009728672
+2018,GOV,VT,0,False,eve,Sabato's Crystal Ball,0.9481,Likely D,Safe R,-15.644734628969864
+2018,GOV,WI,0,False,eve,Sabato's Crystal Ball,0.5101,Toss-up,Lean D,1.115678752931978
 2018,GOV,WY,0,False,eve,Sabato's Crystal Ball,0.0,Safe R,Safe R,-41.81736902020512
 2020,HOUSE,AK,0,False,eve,Sabato's Crystal Ball,0.02,Safe R,Lean R,-9.168082458762097
 2020,HOUSE,AL,1,False,eve,Sabato's Crystal Ball,0.0,Safe R,Safe R,-28.857513063685083
@@ -20044,36 +20044,36 @@ year,office,state_po,district,special,asof,outlet,p_dem,rating,rating_them,actua
 2022,SEN,WI,0,False,eve,Sabato's Crystal Ball,0.1262,Likely R,Lean R,-1.009120533967455
 2022,GOV,AL,0,False,eve,Sabato's Crystal Ball,0.0,Safe R,Safe R,-39.265662813177215
 2022,GOV,AR,0,False,eve,Sabato's Crystal Ball,0.0,Safe R,Safe R,-28.484718522865784
-2022,GOV,AZ,0,False,eve,Sabato's Crystal Ball,0.21925,Lean R,Lean R,0.6675726050183044
+2022,GOV,AZ,0,False,eve,Sabato's Crystal Ball,0.27285,Lean R,Lean R,0.6675726050183044
 2022,GOV,CA,0,False,eve,Sabato's Crystal Ball,0.99995,Safe D,Safe D,18.362536531248995
-2022,GOV,CO,0,False,eve,Sabato's Crystal Ball,0.9934,Safe D,Safe D,19.80162519513396
-2022,GOV,CT,0,False,eve,Sabato's Crystal Ball,0.9928,Safe D,Likely D,12.97734612363641
+2022,GOV,CO,0,False,eve,Sabato's Crystal Ball,0.9965,Safe D,Safe D,19.80162519513396
+2022,GOV,CT,0,False,eve,Sabato's Crystal Ball,0.9975,Safe D,Likely D,12.97734612363641
 2022,GOV,FL,0,False,eve,Sabato's Crystal Ball,0.003,Safe R,Safe R,-19.531010986044727
-2022,GOV,GA,0,False,eve,Sabato's Crystal Ball,0.0229,Safe R,Likely R,-7.589309711877857
-2022,GOV,HI,0,False,eve,Sabato's Crystal Ball,0.99575,Safe D,Safe D,26.32422047030697
-2022,GOV,IA,0,False,eve,Sabato's Crystal Ball,0.0011,Safe R,Safe R,-18.97818056147391
+2022,GOV,GA,0,False,eve,Sabato's Crystal Ball,0.0195,Safe R,Likely R,-7.589309711877857
+2022,GOV,HI,0,False,eve,Sabato's Crystal Ball,0.9956,Safe D,Safe D,26.32422047030697
+2022,GOV,IA,0,False,eve,Sabato's Crystal Ball,0.00105,Safe R,Safe R,-18.97818056147391
 2022,GOV,ID,0,False,eve,Sabato's Crystal Ball,0.0,Safe R,Safe R,-49.74824441882402
-2022,GOV,IL,0,False,eve,Sabato's Crystal Ball,0.9888,Safe D,Safe D,12.88938733629146
-2022,GOV,KS,0,False,eve,Sabato's Crystal Ball,0.45715,Toss-up,Lean R,2.2772963001991955
+2022,GOV,IL,0,False,eve,Sabato's Crystal Ball,0.9926,Safe D,Safe D,12.88938733629146
+2022,GOV,KS,0,False,eve,Sabato's Crystal Ball,0.53695,Toss-up,Lean R,2.2772963001991955
 2022,GOV,MA,0,False,eve,Sabato's Crystal Ball,1.0,Safe D,Safe D,29.67002298929594
 2022,GOV,MD,0,False,eve,Sabato's Crystal Ball,1.0,Safe D,Safe D,33.537811206102965
 2022,GOV,ME,0,False,eve,Sabato's Crystal Ball,0.9236,Likely D,Lean D,13.321628757629234
-2022,GOV,MI,0,False,eve,Sabato's Crystal Ball,0.82315,Likely D,Lean D,10.36557496833808
-2022,GOV,MN,0,False,eve,Sabato's Crystal Ball,0.90945,Likely D,Likely D,7.910569874480428
+2022,GOV,MI,0,False,eve,Sabato's Crystal Ball,0.90585,Likely D,Lean D,10.36557496833808
+2022,GOV,MN,0,False,eve,Sabato's Crystal Ball,0.94855,Likely D,Likely D,7.910569874480428
 2022,GOV,NE,0,False,eve,Sabato's Crystal Ball,0.00015,Safe R,Safe R,-24.41328044476372
-2022,GOV,NH,0,False,eve,Sabato's Crystal Ball,0.0004,Safe R,Safe R,-15.75628425519908
+2022,GOV,NH,0,False,eve,Sabato's Crystal Ball,0.0003,Safe R,Safe R,-15.75628425519908
 2022,GOV,NV,0,False,eve,Sabato's Crystal Ball,0.15375,Likely R,Lean R,-1.56023529676135
-2022,GOV,NY,0,False,eve,Sabato's Crystal Ball,0.9921,Safe D,Likely D,6.195824927968434
+2022,GOV,NY,0,False,eve,Sabato's Crystal Ball,0.9922,Safe D,Likely D,6.195824927968434
 2022,GOV,OH,0,False,eve,Sabato's Crystal Ball,0.0,Safe R,Safe R,-25.08378145637099
 2022,GOV,OK,0,False,eve,Sabato's Crystal Ball,0.00785,Safe R,Likely R,-14.052228131565524
-2022,GOV,OR,0,False,eve,Sabato's Crystal Ball,0.7779,Lean D,Lean D,3.77321019067196
-2022,GOV,PA,0,False,eve,Sabato's Crystal Ball,0.98135,Safe D,Likely D,15.043452071775578
-2022,GOV,RI,0,False,eve,Sabato's Crystal Ball,0.97515,Safe D,Likely D,19.69136283932321
+2022,GOV,OR,0,False,eve,Sabato's Crystal Ball,0.82895,Likely D,Lean D,3.77321019067196
+2022,GOV,PA,0,False,eve,Sabato's Crystal Ball,0.9881,Safe D,Likely D,15.043452071775578
+2022,GOV,RI,0,False,eve,Sabato's Crystal Ball,0.9833,Safe D,Likely D,19.69136283932321
 2022,GOV,SC,0,False,eve,Sabato's Crystal Ball,0.00205,Safe R,Safe R,-17.57993601088692
 2022,GOV,SD,0,False,eve,Sabato's Crystal Ball,0.00065,Safe R,Safe R,-27.59896879032756
 2022,GOV,TN,0,False,eve,Sabato's Crystal Ball,0.0,Safe R,Safe R,-32.694293882164665
-2022,GOV,TX,0,False,eve,Sabato's Crystal Ball,0.00285,Safe R,Likely R,-11.040283568211642
-2022,GOV,WI,0,False,eve,Sabato's Crystal Ball,0.3859,Lean R,Lean R,3.434655002513979
+2022,GOV,TX,0,False,eve,Sabato's Crystal Ball,0.00275,Safe R,Likely R,-11.040283568211642
+2022,GOV,WI,0,False,eve,Sabato's Crystal Ball,0.5372,Toss-up,Lean R,3.434655002513979
 2024,HOUSE,AR,1,False,eve,Sabato's Crystal Ball,0.0,Safe R,Safe R,-50.45822643958829
 2024,HOUSE,AR,2,False,eve,Sabato's Crystal Ball,0.00015,Safe R,Safe R,-17.869572882861117
 2024,HOUSE,AR,3,False,eve,Sabato's Crystal Ball,0.0,Safe R,Safe R,-33.5179824363256

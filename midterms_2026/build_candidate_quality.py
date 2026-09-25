@@ -32,7 +32,9 @@ PROC = ROOT / "data" / "processed"
 TIERS = [  # checked in order; first match wins
     (3, r"incumbent senator"),  # appointed sitting senator (SC's Darline Graham)
     (1, r"(president|speaker|minority leader|majority leader|president pro tem\w*) of the [\w\s]*(senate|house|assembly)|"
-        r"deputy mayor|executive councilor|\bstate delegate|"
+        r"deputy mayor|executive councilor|\bstate delegate|speaker pro tem\w*|"
+        r"(house of representatives|assembly|state senate|house of delegates) (majority|minority) leader|"
+        r"\bstate assembly\b|\bassembly ?(man|woman|member)\b|"
         r"\bstate (senator|representative|assemblym|legislat)|member of the [\w\s]*(house of (representatives|delegates)|senate|assembly|legislature)(?! of the united states)"),
     (3, r"\bu\.?s\.? senator|united states senator|\bgovernor\b(?! of the federal)"),
     (2, r"u\.?s\.? representative|member of the u\.?s\.? house|congress(man|woman)|lieutenant governor|attorney general|"
@@ -40,7 +42,12 @@ TIERS = [  # checked in order; first match wins
         r"commissioner of (insurance|agriculture|labor)|insurance commissioner|agriculture commissioner|\bmayor\b|"
         r"public service commission|railroad commission"),
     (1, r"county (commissioner|executive|judge|supervisor|sheriff|clerk)|city council|councilmember|alderman|"
-        r"school board|state board|district attorney|sheriff|\bjudge\b|justice of"),
+        r"school board|state board|district attorney|sheriff|\bjudge\b|justice of|"
+        # local legislators and executives, described every which way on race pages
+        r"county (legislator|legislature|council|board(?! of elections)|commission)|board of (commissioners|supervisors|aldermen|chosen freeholders)|"
+        r"\bfreeholder|(town|borough|township|village) (council|board|supervisor|commissioner|trustee)|"
+        r"\bcouncil(man|woman|member|or)\b|selectm[ae]n|city commissioner|school district (board|trustee)|"
+        r"college board of (trustees|governors)"),
 ]
 
 
@@ -59,6 +66,10 @@ OVERRIDES = {
 def classify(desc: str) -> int:
     # Running for an office is not holding it: drop "candidate/nominee for ..." phrases.
     d = re.sub(r"(candidate|nominee|runner-up|ran) for [^,;()]*", "", desc.lower())
+    # A relative's office is not the candidate's ("daughter of former U.S. Senator Pete Domenici").
+    d = re.sub(r"\b(son|daughter|wife|husband|widow|widower|brother|sister|father|mother|nephew|niece|"
+               r"grandson|granddaughter|grandfather|grandmother|uncle|aunt|cousin|in-law) of [^,;()]*", "", d)
+    d = re.sub(r"chief of staff to [^,;()]*|(aide|staffer|adviser|advisor) to [^,;()]*", "", d)
     # "lieutenant governor" must not count as governor; strip it before the tier-3 check.
     for tier, pat in TIERS:
         text = d.replace("lieutenant governor", "lt-gov") if tier == 3 else d

@@ -265,7 +265,7 @@ def main() -> None:
     f = races()
     cols = ["race_id", "label", "office", "state_po", "state_name", "district", "special", "race_type", "race_note",
             "incumbent", "incumbent_party", "inc_side", "dem_candidate", "rep_candidate", "pres24", "pres20_margin",
-            "lines_changed", "quality_diff", "prior_edge", "dem_money", "rep_money", "money_adj", "poll_count", "poll_avg", "poll_weight",
+            "lines_changed", "quality_diff", "prior_edge", "dem_money", "rep_money", "money_adj", "quality_adj", "poll_count", "poll_avg", "poll_weight",
             "fundamentals_mean", "margin_median", "margin_p10", "margin_p90", "p_dem", "rating", "control_leverage"]
     write("races.json", f[cols].to_dict("records"))
     write("race_detail.json", race_detail(f))

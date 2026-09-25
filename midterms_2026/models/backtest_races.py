@@ -147,6 +147,8 @@ HOUSE_PERSONAL = True  # House incumbents' personal vote (False = the old flat b
 HOUSE_PAIRS = pd.read_csv(PROC / "house_personal_pairs.csv")
 MONEY = True  # campaign money term (core/money_effect.py), leave-one-year-out coefficients
 MONEY_OFFICES = ("HOUSE", "SEN")
+QUALITY = True  # candidate experience tiers (core/candidate_experience.py); weights are rm.QUALITY_EFFECT
+GOV_QUALITY = rm.QUALITY_EFFECT["GOV"]  # the governor weight is refit leaving each test year out
 
 CUTOFF_DAYS = 42  # polls must end at least this many days before the election (42 ~ Sept 22)
 
@@ -209,7 +211,11 @@ def run_all(bonus_for: dict | None = None) -> tuple[pd.DataFrame, list]:
         D0, R0 = nat_pres_votes(cfg["pres_year"])
         races = pd.concat([house_races(year, cfg), statewide_races(year)], ignore_index=True)
         races["pres24"] = rm.two_party(races["d24"], races["r24"])
-        races["quality_diff"] = 0.0
+        races["quality_diff"] = rm.quality_diff(races, year) if QUALITY else 0.0
+        if QUALITY and (PROC / "experience_effect.csv").exists():
+            ee = pd.read_csv(PROC / "experience_effect.csv")
+            ee = ee[(ee["office"] == "GOV") & (ee["form"] == "x_close") & (ee["left_out"].astype(str) == str(year))]
+            rm.QUALITY_EFFECT["GOV"] = float(ee["b"].iloc[0]) if len(ee) else GOV_QUALITY  # fit without the test year
         races["prior_edge"] = races.get("prior_edge", np.nan)
         races["first_term"] = 0
         if HOUSE_PERSONAL:

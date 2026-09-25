@@ -79,10 +79,14 @@ PARTISAN_WEIGHT = 0.5                  # user decision: corrected partisan polls
 POLL_WINDOW_DAYS = 100  # polls in this window count fully toward the average's reliability
 POLL_HALF_LIFE_DAYS = 14  # best or tied at 42, 21, 14, 7 days out in 538 archive tests (vs 3-60 days, equal)
 POP_WEIGHT = {"lv": 1.0, "rv": 0.8, "v": 0.9, "a": 0.6}
-# Candidate quality: points of margin per tier of prior-office advantage. Not estimated
-# from our data (would need coded candidates for past cycles) -- a literature-based
-# prior, deliberately modest, and swamped by polls wherever polls exist.
-QUALITY_PER_TIER = 1.0
+# Candidate experience: points of margin per tier of prior-office gap (D tier - R tier; tiers from
+# core/candidate_experience.py), by office. QUALITY_FADE[office] = w counts it only near a toss-up,
+# fading as exp(-(fundamentals / w)^2); no entry = counts everywhere. Settled by backtest
+# (core/experience_effect.py): House and Senate none -- the gap never improved margins (the old
+# guess of 1/tier for the Senate raised Brier only by making lopsided races more lopsided, while
+# Senate margin error rose 5.5 -> 6.1); Governor ~2.7/tier near a toss-up (2.4-3.0 leaving a year out).
+QUALITY_EFFECT = {"HOUSE": 0.0, "SEN": 0.0, "GOV": 2.7}
+QUALITY_FADE = {"GOV": 12.0}
 # Campaign money (core/fec_money.py, core/money_effect.py): points of margin per unit of
 # clip(ln((D money + 25k) / (R money + 25k)), -3, 3) * exp(-(fundamentals / 12)^2), money as of
 # the latest FEC report by the forecast date. It only counts near a toss-up. House and Senate
@@ -143,14 +147,17 @@ def incumbency_side(r) -> int:
     return 1 if r["incumbent_party"] == "D" else -1 if r["incumbent_party"] == "R" else 0
 
 
-def quality_diff(races: pd.DataFrame) -> pd.Series:
-    q = pd.read_csv(PROC / "candidate_quality_2026.csv")
-    # Several R candidates on one ballot (Alaska top-four): the bloc's best-known name anchors it.
-    q = q.groupby(["office", "state_po", "special", "side"])["tier"].max().unstack("side")
-    key = list(zip(races["office"], races["state_po"], races["special"]))
-    dem = [q["dem"].get(k, np.nan) if k in q.index else np.nan for k in key]
-    rep = [q["rep"].get(k, np.nan) if k in q.index else np.nan for k in key]
-    return (pd.Series(dem, index=races.index) - pd.Series(rep, index=races.index)).fillna(0)
+def quality_diff(races: pd.DataFrame, year: int = 2026) -> pd.Series:
+    """D tier - R tier from core/candidate_experience.py (0 where either is unknown)."""
+    q = pd.read_csv(PROC / "candidate_experience.csv")
+    q = q[q["year"] == year].rename(columns={"name": "candidate"})
+    q["side"] = q["side"].map({"D": "dem", "R": "rep"})
+    key_cols = ["office", "state_po", "district", "special"]
+    q = q.groupby(key_cols + ["side"])["tier"].max().unstack("side")
+    idx = pd.MultiIndex.from_arrays([races["office"], races["state_po"], races["district"].astype(int),
+                                     races["special"].astype(bool)])
+    diff = q["dem"].reindex(idx).to_numpy() - q["rep"].reindex(idx).to_numpy()
+    return pd.Series(diff, index=races.index).fillna(0)
 
 
 def house_prior_edge(races: pd.DataFrame, year: int = 2026) -> pd.DataFrame:
@@ -274,7 +281,7 @@ def run_simulation(races: pd.DataFrame, env: np.ndarray, nat_d0: float, nat_r0: 
     office = live["office"].to_numpy()
     inc = live["inc_side"].to_numpy() * np.vectorize(INCUMBENCY.get)(office)
     edge = live["prior_edge"].to_numpy(dtype=float)
-    adj = live["quality_diff"].to_numpy(dtype=float) * QUALITY_PER_TIER
+    adj = np.zeros(len(live))
     lean = live["pres24"].to_numpy(dtype=float) - nat_pres
     adj += np.where(office == "HOUSE", close_bonus * np.exp(-(lean / CLOSE_SEAT_WIDTH) ** 2), 0.0)
     fund_sd = np.where(office == "HOUSE", np.where(live["inc_side"] != 0, FUND_SD["HOUSE_inc"], FUND_SD["HOUSE_open"]),
@@ -299,8 +306,13 @@ def run_simulation(races: pd.DataFrame, env: np.ndarray, nat_d0: float, nat_r0: 
                 fund_sd[i] = fund_sd[i] if o == "HOUSE" else p_["sd"]
     # Campaign money: counts near a toss-up (judged by the fundamentals without it), fades in safe seats.
     money_adj = np.zeros(len(live))
+    center = base.mean(axis=1) + inc + adj
+    # Candidate experience (see QUALITY_EFFECT)
+    q = live["quality_diff"].fillna(0).to_numpy(dtype=float) * np.array([QUALITY_EFFECT.get(o, 0.0) for o in office])
+    fade = np.array([(QUALITY_FADE or {}).get(o) or 0.0 for o in office]) if isinstance(QUALITY_FADE, dict)         else np.full(len(live), QUALITY_FADE or 0.0)
+    quality_adj = q * np.where(fade > 0, np.exp(-(center / np.where(fade > 0, fade, 1.0)) ** 2), 1.0)
+    adj = adj + quality_adj
     if "money_log_ratio" in live:
-        center = base.mean(axis=1) + inc + adj
         ratio = np.clip(live["money_log_ratio"].fillna(0).to_numpy(dtype=float), -MONEY_CLIP, MONEY_CLIP)
         coef = np.array([MONEY_EFFECT.get(o, 0.0) for o in office])
         money_adj = coef * ratio * np.exp(-(center / MONEY_WIDTH) ** 2)
@@ -333,6 +345,7 @@ def run_simulation(races: pd.DataFrame, env: np.ndarray, nat_d0: float, nat_r0: 
     live["margin_p10"], live["margin_p90"] = np.percentile(margin, [10, 90], axis=1)
     live["fundamentals_mean"] = fund.mean(axis=1)
     live["money_adj"] = money_adj
+    live["quality_adj"] = quality_adj
     live["poll_weight"] = w_poll
     fixed_r = races[fixed].copy()
     fixed_r["p_dem"] = (fixed_r["race_note"] == "D").astype(float)
@@ -345,7 +358,7 @@ def simulate(forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
     rng = np.random.default_rng(SEED)
     races = poll_summary(load_races(), forecast_date)
     races["inc_side"] = races.apply(incumbency_side, axis=1)
-    races["quality_diff"] = np.where(races["office"] == "HOUSE", 0.0, quality_diff(races))
+    races["quality_diff"] = quality_diff(races)
     races["prior_edge"] = prior_edge(races)
     races["money_log_ratio"] = money_ratio(races)
 
@@ -358,7 +371,7 @@ def simulate(forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
     out = pd.concat([live, fixed_r], ignore_index=True)
     OUT.mkdir(parents=True, exist_ok=True)
     cols = ["office", "state_po", "district", "special", "race_type", "incumbent", "incumbent_party", "inc_side",
-            "dem_candidate", "rep_candidate", "race_note", "pres24", "quality_diff", "prior_edge", "money_log_ratio", "money_adj", "poll_count", "poll_avg",
+            "dem_candidate", "rep_candidate", "race_note", "pres24", "quality_diff", "prior_edge", "money_log_ratio", "money_adj", "quality_adj", "poll_count", "poll_avg",
             "poll_weight", "fundamentals_mean", "margin_median", "margin_p10", "margin_p90", "p_dem"]
     out["race_id"] = out.apply(race_id, axis=1)
     out[["race_id"] + cols].sort_values(["office", "state_po", "district"]).to_csv(OUT / "race_forecasts.csv", index=False)
