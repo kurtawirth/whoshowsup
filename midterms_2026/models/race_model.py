@@ -87,6 +87,12 @@ POP_WEIGHT = {"lv": 1.0, "rv": 0.8, "v": 0.9, "a": 0.6}
 # Senate margin error rose 5.5 -> 6.1); Governor ~2.7/tier near a toss-up (2.4-3.0 leaving a year out).
 QUALITY_EFFECT = {"HOUSE": 0.0, "SEN": 0.0, "GOV": 2.7}
 QUALITY_FADE = {"GOV": 12.0}
+# Candidate ideology (core/candidate_ideology.py, DIME CFscores from earlier cycles): points per
+# unit of ideology_gap = extremity(R) - extremity(D), near a toss-up only (fade width 12).
+# House 3.64 (2.7-4.3 leaving a year out); backtest Brier 0.0306 -> 0.0301 (Sept 22), 0.0317 -> 0.0312
+# (eve). Senate: no reliable effect.
+IDEOLOGY_EFFECT = {"HOUSE": 3.64, "SEN": 0.0}
+IDEOLOGY_FADE = 12.0
 # Campaign money (core/fec_money.py, core/money_effect.py): points of margin per unit of
 # clip(ln((D money + 25k) / (R money + 25k)), -3, 3) * exp(-(fundamentals / 12)^2), money as of
 # the latest FEC report by the forecast date. It only counts near a toss-up. House and Senate
@@ -218,6 +224,18 @@ def money_ratio(races: pd.DataFrame, year: int = 2026) -> pd.Series:
     return pd.Series(m.reindex(idx).to_numpy(), index=races.index)
 
 
+def ideology_gap(races: pd.DataFrame, year: int = 2026) -> pd.Series:
+    """extremity(R) - extremity(D) from core/candidate_ideology.py; 0 where unknown."""
+    path = PROC / "candidate_ideology.csv"
+    if not path.exists():
+        return pd.Series(0.0, index=races.index)
+    g = pd.read_csv(path)
+    g = g[g["year"] == year].set_index(["office", "state_po", "district", "special"])["ideology_gap"]
+    idx = pd.MultiIndex.from_arrays([races["office"], races["state_po"], races["district"].astype(int),
+                                     races["special"].astype(bool)])
+    return pd.Series(g.reindex(idx).to_numpy(), index=races.index).fillna(0.0)
+
+
 def poll_summary(races: pd.DataFrame, forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
     polls = pd.read_csv(PROC / "polls_2026_races.csv", parse_dates=["end_date"])
     polls = polls[polls["end_date"] <= forecast_date]
@@ -312,6 +330,11 @@ def run_simulation(races: pd.DataFrame, env: np.ndarray, nat_d0: float, nat_r0: 
     fade = np.array([(QUALITY_FADE or {}).get(o) or 0.0 for o in office]) if isinstance(QUALITY_FADE, dict)         else np.full(len(live), QUALITY_FADE or 0.0)
     quality_adj = q * np.where(fade > 0, np.exp(-(center / np.where(fade > 0, fade, 1.0)) ** 2), 1.0)
     adj = adj + quality_adj
+    ideology_adj = np.zeros(len(live))
+    if "ideology_gap" in live:
+        coef = np.array([IDEOLOGY_EFFECT.get(o, 0.0) for o in office])
+        ideology_adj = coef * live["ideology_gap"].fillna(0).to_numpy(dtype=float) * np.exp(-(center / IDEOLOGY_FADE) ** 2)
+        adj = adj + ideology_adj
     if "money_log_ratio" in live:
         ratio = np.clip(live["money_log_ratio"].fillna(0).to_numpy(dtype=float), -MONEY_CLIP, MONEY_CLIP)
         coef = np.array([MONEY_EFFECT.get(o, 0.0) for o in office])
@@ -346,6 +369,7 @@ def run_simulation(races: pd.DataFrame, env: np.ndarray, nat_d0: float, nat_r0: 
     live["fundamentals_mean"] = fund.mean(axis=1)
     live["money_adj"] = money_adj
     live["quality_adj"] = quality_adj
+    live["ideology_adj"] = ideology_adj
     live["poll_weight"] = w_poll
     fixed_r = races[fixed].copy()
     fixed_r["p_dem"] = (fixed_r["race_note"] == "D").astype(float)
@@ -361,6 +385,7 @@ def simulate(forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
     races["quality_diff"] = quality_diff(races)
     races["prior_edge"] = prior_edge(races)
     races["money_log_ratio"] = money_ratio(races)
+    races["ideology_gap"] = ideology_gap(races)
 
     env = pd.read_csv(OUT / "national_env_2026_draws.csv")["dem_margin"].to_numpy()
     nat = pd.read_csv(RAW / "medsl" / "president_1976_2024.csv", encoding="latin-1")
@@ -371,7 +396,7 @@ def simulate(forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
     out = pd.concat([live, fixed_r], ignore_index=True)
     OUT.mkdir(parents=True, exist_ok=True)
     cols = ["office", "state_po", "district", "special", "race_type", "incumbent", "incumbent_party", "inc_side",
-            "dem_candidate", "rep_candidate", "race_note", "pres24", "quality_diff", "prior_edge", "money_log_ratio", "money_adj", "quality_adj", "poll_count", "poll_avg",
+            "dem_candidate", "rep_candidate", "race_note", "pres24", "quality_diff", "prior_edge", "money_log_ratio", "money_adj", "quality_adj", "ideology_gap", "ideology_adj", "poll_count", "poll_avg",
             "poll_weight", "fundamentals_mean", "margin_median", "margin_p10", "margin_p90", "p_dem"]
     out["race_id"] = out.apply(race_id, axis=1)
     out[["race_id"] + cols].sort_values(["office", "state_po", "district"]).to_csv(OUT / "race_forecasts.csv", index=False)

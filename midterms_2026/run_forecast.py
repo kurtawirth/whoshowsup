@@ -163,6 +163,8 @@ def main() -> None:
     step("Candidate experience (all 2026 nominees)")(candidate_experience.update_current)
     import fec_money
     step("Campaign money (FEC)")(fec_money.update_current, asof, refresh)
+    import candidate_ideology
+    step("Candidate ideology (DIME)")(candidate_ideology.update_current)
     step("Special elections")(build_special_elections.main)
     step("National history")(build_national_history.main, (asof.month, asof.day))
     step("National environment model")(national_env.main, False)

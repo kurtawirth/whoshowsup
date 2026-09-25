@@ -148,6 +148,7 @@ HOUSE_PAIRS = pd.read_csv(PROC / "house_personal_pairs.csv")
 MONEY = True  # campaign money term (core/money_effect.py), leave-one-year-out coefficients
 MONEY_OFFICES = ("HOUSE", "SEN")
 QUALITY = True  # candidate experience tiers (core/candidate_experience.py); weights are rm.QUALITY_EFFECT
+IDEOLOGY = True  # House ideology term (core/candidate_ideology.py), leave-one-year-out weight
 GOV_QUALITY = rm.QUALITY_EFFECT["GOV"]  # the governor weight is refit leaving each test year out
 
 CUTOFF_DAYS = 42  # polls must end at least this many days before the election (42 ~ Sept 22)
@@ -225,6 +226,13 @@ def run_all(bonus_for: dict | None = None) -> tuple[pd.DataFrame, list]:
             f = hpv.fit(HOUSE_PAIRS[HOUSE_PAIRS["year"] != year])  # leave the test year out
             rm.PERSONAL["HOUSE"] = {k: f[k] for k in ("intercept", "rho", "first_term", "sd")}
         races["money_log_ratio"] = rm.money_ratio(races, year)
+        races["ideology_gap"] = rm.ideology_gap(races, year)
+        if IDEOLOGY and (PROC / "ideology_effect.csv").exists():
+            ie = pd.read_csv(PROC / "ideology_effect.csv")
+            ie = ie[ie["left_out"].astype(str) == str(year)]
+            rm.IDEOLOGY_EFFECT["HOUSE"] = float(ie["b"].iloc[0]) if len(ie) else 0.0  # fit without the test year
+        else:
+            rm.IDEOLOGY_EFFECT["HOUSE"] = 0.0
         if MONEY:
             me = pd.read_csv(PROC / "money_effect.csv")
             me = me[me["left_out"].astype(str) == str(year)].set_index("group")["b"]  # fit without the test year
