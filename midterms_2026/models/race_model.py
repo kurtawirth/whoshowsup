@@ -83,12 +83,19 @@ POP_WEIGHT = {"lv": 1.0, "rv": 0.8, "v": 0.9, "a": 0.6}
 # from our data (would need coded candidates for past cycles) -- a literature-based
 # prior, deliberately modest, and swamped by polls wherever polls exist.
 QUALITY_PER_TIER = 1.0
+# Campaign money (core/fec_money.py, core/money_effect.py): points of margin per unit of
+# clip(ln((D money + 25k) / (R money + 25k)), -3, 3) * exp(-(fundamentals / 12)^2), money as of
+# the latest FEC report by the forecast date. It only counts near a toss-up. House and Senate
+# only (governors aren't in FEC data). All-years fit from core/money_effect.py (leave-one-year-out:
+# House 1.5-1.8, Senate 2.9-5.5). Backtest: Brier 0.0318 -> 0.0309 (Sept 22), 0.0332 -> 0.0320 (eve).
+MONEY_EFFECT = {"HOUSE": 1.68, "SEN": 4.61}
+MONEY_CLIP, MONEY_WIDTH = 3.0, 12.0
 TURNOUT_SHARE_MEAN, TURNOUT_SHARE_CONC = 0.65, 6.0
-# Close-seat effect: in all four backtest cycles (2018-2024) Democrats ran ~2.4 pts ahead of
+# Close-seat effect: in all four backtest cycles (2018-2024) Democrats ran ~1.5 pts ahead of
 # lean + national environment in competitive House districts (not explained by lean
 # compression). Applied as a bump that fades with distance from an even district:
 # bonus * exp(-(lean / width)^2). Estimated by midterms_2026/models/backtest_races.py.
-CLOSE_SEAT_BONUS, CLOSE_SEAT_WIDTH = 2.4, 10.0  # all-years estimate 2.42; leave-one-out 1.8-2.9 (3.0 before the House personal vote)
+CLOSE_SEAT_BONUS, CLOSE_SEAT_WIDTH = 1.5, 10.0  # all-years estimate 1.50; leave-one-out 0.8-2.2 (2.4 before the money term, 3.0 before the House personal vote)
 STATE_SHOCK_SD, REGION_SHOCK_SD = 2.0, 2.0
 # Osborn ran ~15 pts ahead of a generic Democrat's expected margin in NE in 2024;
 # shrink toward zero and widen, since independents' appeal is volatile.
@@ -192,6 +199,18 @@ def prior_edge(races: pd.DataFrame) -> pd.Series:
     return out
 
 
+def money_ratio(races: pd.DataFrame, year: int = 2026) -> pd.Series:
+    """ln((D money + 25k) / (R money + 25k)) for each House/Senate race; NaN where unknown."""
+    path = PROC / "fec_money.csv"
+    if not path.exists():
+        return pd.Series(np.nan, index=races.index)
+    m = pd.read_csv(path)
+    m = m[m["year"] == year].set_index(["office", "state_po", "district", "special"])["money_log_ratio"]
+    idx = pd.MultiIndex.from_arrays([races["office"], races["state_po"], races["district"].astype(int),
+                                     races["special"].astype(bool)])
+    return pd.Series(m.reindex(idx).to_numpy(), index=races.index)
+
+
 def poll_summary(races: pd.DataFrame, forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
     polls = pd.read_csv(PROC / "polls_2026_races.csv", parse_dates=["end_date"])
     polls = polls[polls["end_date"] <= forecast_date]
@@ -278,7 +297,14 @@ def run_simulation(races: pd.DataFrame, env: np.ndarray, nat_d0: float, nat_r0: 
             inc[i] = live.loc[i, "inc_side"] * (p_["intercept"] + p_["rho"] * prev + p_.get("first_term", 0.0) * first[i])
             if not np.isnan(edge[i]):
                 fund_sd[i] = fund_sd[i] if o == "HOUSE" else p_["sd"]
-    fund = base + (inc + adj)[:, None]
+    # Campaign money: counts near a toss-up (judged by the fundamentals without it), fades in safe seats.
+    money_adj = np.zeros(len(live))
+    if "money_log_ratio" in live:
+        center = base.mean(axis=1) + inc + adj
+        ratio = np.clip(live["money_log_ratio"].fillna(0).to_numpy(dtype=float), -MONEY_CLIP, MONEY_CLIP)
+        coef = np.array([MONEY_EFFECT.get(o, 0.0) for o in office])
+        money_adj = coef * ratio * np.exp(-(center / MONEY_WIDTH) ** 2)
+    fund = base + (inc + adj + money_adj)[:, None]
 
     # ---- polls: Bayesian precision weighting against the fundamentals ----
     has_poll = live["poll_avg"].notna().to_numpy()
@@ -306,6 +332,7 @@ def run_simulation(races: pd.DataFrame, env: np.ndarray, nat_d0: float, nat_r0: 
     live["margin_median"] = np.median(margin, axis=1)
     live["margin_p10"], live["margin_p90"] = np.percentile(margin, [10, 90], axis=1)
     live["fundamentals_mean"] = fund.mean(axis=1)
+    live["money_adj"] = money_adj
     live["poll_weight"] = w_poll
     fixed_r = races[fixed].copy()
     fixed_r["p_dem"] = (fixed_r["race_note"] == "D").astype(float)
@@ -320,6 +347,7 @@ def simulate(forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
     races["inc_side"] = races.apply(incumbency_side, axis=1)
     races["quality_diff"] = np.where(races["office"] == "HOUSE", 0.0, quality_diff(races))
     races["prior_edge"] = prior_edge(races)
+    races["money_log_ratio"] = money_ratio(races)
 
     env = pd.read_csv(OUT / "national_env_2026_draws.csv")["dem_margin"].to_numpy()
     nat = pd.read_csv(RAW / "medsl" / "president_1976_2024.csv", encoding="latin-1")
@@ -330,7 +358,7 @@ def simulate(forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
     out = pd.concat([live, fixed_r], ignore_index=True)
     OUT.mkdir(parents=True, exist_ok=True)
     cols = ["office", "state_po", "district", "special", "race_type", "incumbent", "incumbent_party", "inc_side",
-            "dem_candidate", "rep_candidate", "race_note", "pres24", "quality_diff", "prior_edge", "poll_count", "poll_avg",
+            "dem_candidate", "rep_candidate", "race_note", "pres24", "quality_diff", "prior_edge", "money_log_ratio", "money_adj", "poll_count", "poll_avg",
             "poll_weight", "fundamentals_mean", "margin_median", "margin_p10", "margin_p90", "p_dem"]
     out["race_id"] = out.apply(race_id, axis=1)
     out[["race_id"] + cols].sort_values(["office", "state_po", "district"]).to_csv(OUT / "race_forecasts.csv", index=False)

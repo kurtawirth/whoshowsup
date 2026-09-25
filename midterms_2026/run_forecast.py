@@ -159,6 +159,8 @@ def main() -> None:
     step("Wikipedia race polls")(scrape_wikipedia_polls.main, refresh)
     step("VoteHub + DDHQ polls")(build_polls.main, refresh)
     step("Candidate quality")(build_candidate_quality.main)
+    import fec_money
+    step("Campaign money (FEC)")(fec_money.update_current, asof, refresh)
     step("Special elections")(build_special_elections.main)
     step("National history")(build_national_history.main, (asof.month, asof.day))
     step("National environment model")(national_env.main, False)

@@ -85,6 +85,13 @@ def races() -> pd.DataFrame:
     f = f.merge(q[["race_id", "control_leverage"]], on="race_id", how="left")
     house = pd.read_csv(PROC / "races_2026_house.csv")[["state_po", "district", "lines_changed", "pres20_margin", "status_text"]]
     f = f.merge(house.assign(office="HOUSE"), on=["office", "state_po", "district"], how="left")
+    money_path = PROC / "fec_money.csv"
+    if money_path.exists():  # campaign money as of the June 30 FEC reports (House and Senate)
+        m = pd.read_csv(money_path)
+        m = m[m["year"] == 2026][["office", "state_po", "district", "special", "dem_money", "rep_money"]]
+        f = f.merge(m, on=["office", "state_po", "district", "special"], how="left")
+    else:
+        f["dem_money"] = f["rep_money"] = np.nan
     f["state_name"] = f["state_po"].map(STATE_NAMES)
     f["rating"] = f["p_dem"].map(rating)
     f["label"] = np.where(f["office"] == "HOUSE",
@@ -258,7 +265,7 @@ def main() -> None:
     f = races()
     cols = ["race_id", "label", "office", "state_po", "state_name", "district", "special", "race_type", "race_note",
             "incumbent", "incumbent_party", "inc_side", "dem_candidate", "rep_candidate", "pres24", "pres20_margin",
-            "lines_changed", "quality_diff", "prior_edge", "poll_count", "poll_avg", "poll_weight",
+            "lines_changed", "quality_diff", "prior_edge", "dem_money", "rep_money", "money_adj", "poll_count", "poll_avg", "poll_weight",
             "fundamentals_mean", "margin_median", "margin_p10", "margin_p90", "p_dem", "rating", "control_leverage"]
     write("races.json", f[cols].to_dict("records"))
     write("race_detail.json", race_detail(f))

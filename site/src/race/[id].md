@@ -73,12 +73,16 @@ if (!fixed) {
   const sponsorNote = sp.length ? `After correcting ${sp.length} campaign- or party-sponsored poll${sp.length === 1 ? "" : "s"} for ${sp.length === 1 ? "its" : "their"} sponsor's usual lean (see Polls below).` : "";
   const hasPolls = r.poll_count > 0 && r.poll_avg != null && r.poll_weight > 0;
   const row = (label, value, why, cls = "") => html`<div class="row ${cls}"><div>${label}</div><div class="v">${value}</div><div></div>${why ? html`<div class="why">${why}</div>` : ""}</div>`;
+  const usd = (v) => (v >= 1e6 ? `$${(v / 1e6).toFixed(1)} million` : `$${Math.round(v / 1000).toLocaleString()},000`);
+  const moneyNote = r.dem_money != null && r.rep_money != null
+    ? ` Campaign money so far (cash on hand plus spending this year, from FEC reports): ${dName} ${usd(r.dem_money)}, ${rName} ${usd(r.rep_money)}${Math.abs(r.money_adj ?? 0) >= 0.5 ? `, worth about ${Math.abs(r.money_adj).toFixed(1)} points to ${r.money_adj > 0 ? dName : rName} in a race this close` : ""}.`
+    : "";
   const inc = r.inc_side === 1 ? `${dName} is the incumbent` : r.inc_side === -1 ? `${rName} is the incumbent` : "No incumbent on the ballot";
   display(html`<h2>What's driving the forecast</h2>
   <div class="factor-list">
     ${row(r.office === "HOUSE" ? "2024 presidential result in this district" : "2024 presidential result in this state", margin(start), r.office === "HOUSE" && r.lines_changed ? "Recalculated for the district's new 2026 lines." : "")}
     ${row("National environment shift", `${shift >= 0 ? "+" : "–"}${Math.abs(shift).toFixed(1)}`, `The nation is expected to move from ${margin(top.nat_pres24)} in 2024 to about ${margin(top.nat_median)} in the House vote.`)}
-    ${row("Incumbency, candidates and local factors", `${other >= 0 ? "D +" : "R +"}${Math.abs(other).toFixed(1)}`, `${inc}.${r.prior_edge != null ? ` Last time, the incumbent ran ${Math.abs(r.prior_edge).toFixed(0)} points ${r.prior_edge >= 0 ? "ahead of" : "behind"} expectations; part of that carries forward.` : ""}${r.quality_diff ? ` Candidate experience edge: ${r.quality_diff > 0 ? dName : rName}.` : ""}${r.office === "HOUSE" && Math.abs(start - top.nat_pres24) < 15 ? " Includes the close-seat effect found in past elections." : ""}`)}
+    ${row("Incumbency, candidates, money and local factors", `${other >= 0 ? "D +" : "R +"}${Math.abs(other).toFixed(1)}`, `${inc}.${moneyNote}${r.prior_edge != null ? ` Last time, the incumbent ran ${Math.abs(r.prior_edge).toFixed(0)} points ${r.prior_edge >= 0 ? "ahead of" : "behind"} expectations; part of that carries forward.` : ""}${r.quality_diff ? ` Candidate experience edge: ${r.quality_diff > 0 ? dName : rName}.` : ""}${r.office === "HOUSE" && Math.abs(start - top.nat_pres24) < 15 ? " Includes the close-seat effect found in past elections." : ""}`)}
     ${row("Fundamentals estimate", margin(r.fundamentals_mean), "", "total")}
     ${hasPolls ? row(`Poll average (${r.poll_count} poll${r.poll_count === 1 ? "" : "s"})`, margin(r.poll_avg), `${sponsorNote ? `${sponsorNote} ` : ""}Polls get ${Math.round(r.poll_weight * 100)}% of the weight here, based on how many there are and how accurate race polling has been at this point in past elections.`) : row("Polls", "None", "No public polls, so this forecast rests on fundamentals.")}
     ${row("Final forecast (median)", margin(r.margin_median), "", "total")}

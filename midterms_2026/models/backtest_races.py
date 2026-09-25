@@ -145,6 +145,8 @@ def statewide_races(year: int) -> pd.DataFrame:
 import house_personal_vote as hpv  # noqa: E402
 HOUSE_PERSONAL = True  # House incumbents' personal vote (False = the old flat bonus, for comparison)
 HOUSE_PAIRS = pd.read_csv(PROC / "house_personal_pairs.csv")
+MONEY = True  # campaign money term (core/money_effect.py), leave-one-year-out coefficients
+MONEY_OFFICES = ("HOUSE", "SEN")
 
 CUTOFF_DAYS = 42  # polls must end at least this many days before the election (42 ~ Sept 22)
 
@@ -216,6 +218,13 @@ def run_all(bonus_for: dict | None = None) -> tuple[pd.DataFrame, list]:
             races.loc[h, "prior_edge"], races.loc[h, "first_term"] = hp.loc[h, "prior_edge"], hp.loc[h, "first_term"]
             f = hpv.fit(HOUSE_PAIRS[HOUSE_PAIRS["year"] != year])  # leave the test year out
             rm.PERSONAL["HOUSE"] = {k: f[k] for k in ("intercept", "rho", "first_term", "sd")}
+        races["money_log_ratio"] = rm.money_ratio(races, year)
+        if MONEY:
+            me = pd.read_csv(PROC / "money_effect.csv")
+            me = me[me["left_out"].astype(str) == str(year)].set_index("group")["b"]  # fit without the test year
+            rm.MONEY_EFFECT.update({g: float(me.get(g, 0.0)) if g in MONEY_OFFICES else 0.0 for g in rm.MONEY_EFFECT})
+        else:
+            rm.MONEY_EFFECT.update({g: 0.0 for g in rm.MONEY_EFFECT})
         races = poll_summary(races, year)
         bonus = 0.0 if bonus_for is None else bonus_for[year]
         live, fixed_r, margin, E, a = rm.run_simulation(races, env, D0, R0, np.random.default_rng(year),

@@ -5,3 +5,6 @@ __pycache__/
 data/raw/*
 !data/raw/.gitkeep
 logs/
+
+# local API keys, never committed
+secrets/

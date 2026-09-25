@@ -42,7 +42,8 @@ Then come adjustments measured from past races:
 
 - **Personal vote:** incumbents keep part of how far they outran or trailed expectations last time: about half for House members, 43% for senators, 63% for governors. A House member's first re-election gets about 3.6 points more. That is why Vermont's Phil Scott, a Republican, is favored in a very Democratic state, and why a Republican who trailed Trump in their own district in 2024 is more exposed than one who ran ahead of him. Where we can't find the incumbent's last race (for example, they ran unopposed), they get the average House incumbency edge of about 2.3 points.
 - **Candidate experience:** modest, up to 3 points in Senate and governor races.
-- **A close-seat effect:** in all four test elections, Democrats ran about two and a half points ahead of expectations in competitive House districts, so the model now expects that.
+- **Campaign money:** each side's money as of its latest report to the Federal Election Commission: cash in the bank plus everything spent this year. It counts only in close races, where a big fundraising edge is worth up to about five points in the House and more in the Senate (where polls usually outweigh it). In safe seats it counts for nothing, because incumbents there pile up money regardless. Adding it improved our backtest's accuracy, most of all in Senate races. Governors' races are not in FEC data.
+- **A close-seat effect:** in all four test elections, Democrats ran about one and a half points ahead of expectations in competitive House districts, even after accounting for money, so the model expects that.
 
 ## 3. Polls
 
