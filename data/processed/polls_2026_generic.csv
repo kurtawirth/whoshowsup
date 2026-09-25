@@ -10,8 +10,8 @@ Cygnal,,,2025-02-04,2025-02-05,1500.0,lv,46.2,47.2,https://data.ddhq.io/polls/20
 Clarity Campaign Labs,,,2025-01-31,2025-02-06,1102.0,rv,45.0,44.0,https://data.ddhq.io/polls/2025/03/21/Clarity Campaign Labs-National,ddhq
 Quantus Insights / TrendingPolitics,,,2025-02-10,2025-02-12,1000.0,rv,44.2,48.3,https://data.ddhq.io/polls/2025/03/22/Quantus Insights/TrendingPolitics-National,ddhq
 Echelon Insights,,,2025-02-10,2025-02-13,1010.0,lv,46.0,47.0,https://data.ddhq.io/polls/2025/04/03/Echelon Insights-National,ddhq
-McLaughlin & Associates / U.S. Chamber of Commerce,,,2025-02-13,2025-02-17,800.0,lv,43.0,47.0,https://data.ddhq.io/polls/2025/03/24/McLaughlin & Associates/U.S. Chamber of Commerce-National,ddhq
 co/efficient,,,2025-02-15,2025-02-17,2063.0,lv,44.0,46.0,https://data.ddhq.io/polls/2025/03/23/co/efficient-National,ddhq
+McLaughlin & Associates / U.S. Chamber of Commerce,,,2025-02-13,2025-02-17,800.0,lv,43.0,47.0,https://data.ddhq.io/polls/2025/03/24/McLaughlin & Associates/U.S. Chamber of Commerce-National,ddhq
 McLaughlin & Associates,,,2025-02-11,2025-02-18,1000.0,rv,41.0,48.0,https://data.ddhq.io/polls/2025/03/23/McLaughlin & Associates-National,ddhq
 YouGov / The Economist,,,2025-02-16,2025-02-18,1450.0,rv,42.0,41.0,https://data.ddhq.io/polls/2025/04/03/YouGov/The Economist-National-2025-02-16-2025-02-18,ddhq
 YouGov / The Economist,,,2025-02-16,2025-02-18,1602.0,a,35.0,37.0,https://data.ddhq.io/polls/2025/04/03/YouGov/The Economist-National-2025-02-16-2025-02-18,ddhq
@@ -25,15 +25,14 @@ Hart Research Associates/Public Opinion Strategies,,NBC News,2025-03-07,2025-03-
 Echelon Insights,,,2025-03-10,2025-03-13,1009.0,lv,46.0,47.0,https://data.ddhq.io/polls/2025/04/03/Echelon Insights-National,ddhq
 Normington Petts / Third Way,,,2025-03-12,2025-03-19,800.0,rv,40.0,41.0,https://data.ddhq.io/polls/2025/06/18/Normington Petts/Third Way-National-2025-03-12-2025-03-19,ddhq
 Quantus Insights,,,2025-03-25,2025-03-27,1000.0,rv,45.4,46.3,https://data.ddhq.io/polls/2025/03/28/Quantus Insights-National,ddhq
-"Impact Research / Fabrizio, Lee & Associates / The Wall Street Journal",,,2025-03-27,2025-04-01,1500.0,rv,44.0,43.0,"https://data.ddhq.io/polls/2025/06/19/Fabrizio, Lee & Associates/Impact Research/The Wall Street Journal-National-2025-03-27-2025-04-01",ddhq
-"Fabrizio, Lee & Associates/Impact Research",,The Wall Street Journal,2025-03-27,2025-04-01,1500.0,rv,44.0,43.0,https://prod-i.a.dj.com/public/resources/documents/March_2025_WSJPoll.pdf,votehub
-Cygnal,,,2025-04-01,2025-04-03,1500.0,lv,47.5,46.5,https://data.ddhq.io/polls/2025/04/08/Cygnal-National,ddhq
+"Fabrizio, Lee & Associates / Impact Research / The Wall Street Journal",,,2025-03-27,2025-04-01,1500.0,rv,44.0,43.0,"https://data.ddhq.io/polls/2025/06/19/Fabrizio, Lee & Associates/Impact Research/The Wall Street Journal-National-2025-03-27-2025-04-01",ddhq
 Yale University Institution for Social and Policy Studies,,,2025-04-01,2025-04-03,4100.0,rv,43.3,41.7,https://data.ddhq.io/polls/2025/04/16/Yale University Institution for Social and Policy Studies-National,ddhq
-YouGov / The Economist,,,2025-04-05,2025-04-08,1558.0,rv,43.0,42.0,https://data.ddhq.io/polls/2025/04/09/YouGov/The Economist-National-2025-04-05-2025-04-08,ddhq
+Cygnal,,,2025-04-01,2025-04-03,1500.0,lv,47.5,46.5,https://data.ddhq.io/polls/2025/04/08/Cygnal-National,ddhq
 YouGov / The Economist,,,2025-04-05,2025-04-08,1735.0,a,39.0,36.0,https://data.ddhq.io/polls/2025/04/09/YouGov/The Economist-National-2025-04-05-2025-04-08,ddhq
+YouGov / The Economist,,,2025-04-05,2025-04-08,1558.0,rv,43.0,42.0,https://data.ddhq.io/polls/2025/04/09/YouGov/The Economist-National-2025-04-05-2025-04-08,ddhq
 The Winston Group / Winning the Issues,,,2025-04-08,2025-04-10,1000.0,rv,43.0,41.0,https://data.ddhq.io/polls/2025/08/10/The Winston Group/Winning the Issues-National-2025-04-08-2025-04-10,ddhq
-Emerson College / RealClear Opinion Research,,,2025-04-10,2025-04-12,1000.0,rv,39.8,39.2,https://data.ddhq.io/polls/2025/04/22/Emerson College/RealClear Opinion Research-National,ddhq
 RealClear Opinion Research,,,2025-04-10,2025-04-12,1000.0,rv,40.0,39.0,https://www.realclearpolitics.com/articles/2025/04/18/rcp_poll_voters_see_campus_bias_reject_trumps_tariff_pitch_152678.html,votehub
+Emerson College / RealClear Opinion Research,,,2025-04-10,2025-04-12,1000.0,rv,39.8,39.2,https://data.ddhq.io/polls/2025/04/22/Emerson College/RealClear Opinion Research-National,ddhq
 Hart Research Associates/Public Opinion Strategies,,CNBC,2025-04-09,2025-04-13,1000.0,a,48.0,46.0,https://www.cnbc.com/video/2025/04/17/tariffs-weight-on-trump-approval-cnbc-survey-finds.html,votehub
 Echelon Insights,,,2025-04-10,2025-04-14,1014.0,lv,47.0,47.0,https://data.ddhq.io/polls/2025/04/14/Echelon Insights-National,ddhq
 Clarity Campaign Labs,,,2025-04-09,2025-04-14,1008.0,rv,44.0,45.0,https://data.ddhq.io/polls/2025/04/17/Clarity Campaign Labs-National,ddhq
@@ -41,9 +40,10 @@ RMG Research / Napolitan News Service,,,2025-04-16,2025-04-16,1000.0,rv,48.0,44.
 Noble Predictive Insights / The Center Square,,,2025-04-15,2025-04-18,2527.0,rv,45.0,42.0,https://data.ddhq.io/polls/2025/04/24/Noble Predictive Insights/The Center Square-National-2025-04-15-2025-04-18,ddhq
 McLaughlin & Associates / Gingrich 360 / America's New Majority Project,,,2025-04-16,2025-04-19,1638.0,lv,45.7,47.1,https://data.ddhq.io/polls/2025/04/25/McLaughlin & Associates/America's New Majority Project/Gingrich 360-National-2025-04-16-2025-04-19,ddhq
 McLaughlin & Associates / Gingrich 360 / America's New Majority Project,,,2025-04-16,2025-04-19,2000.0,rv,44.5,44.3,https://data.ddhq.io/polls/2025/04/25/McLaughlin & Associates/America's New Majority Project/Gingrich 360-National-2025-04-16-2025-04-19,ddhq
-Beacon Research / Shaw & Company Research / Fox News,,,2025-04-18,2025-04-21,1104.0,rv,49.0,42.0,https://data.ddhq.io/polls/2025/04/26/Beacon Research/Shaw & Company Research/Fox News-National-2025-04-18-2025-04-21,ddhq
-The New York Times/Siena College,,,2025-04-21,2025-04-24,913.0,rv,47.0,44.0,https://www.nytimes.com/interactive/2025/04/25/us/elections/times-siena-poll-crosstabs.html,votehub
+Beacon Research/Shaw & Co. Research,,Fox News,2025-04-18,2025-04-21,1104.0,rv,49.0,42.0,https://static.foxnews.com/foxnews.com/content/uploads/2025/04/fox_april-18-21-2025_complete_national_cross-tabs_april-25-release.pdf,votehub
+Shaw & Company Research / Beacon Research / Fox News,,,2025-04-18,2025-04-21,1104.0,rv,49.0,42.0,https://data.ddhq.io/polls/2025/04/26/Beacon Research/Shaw & Company Research/Fox News-National-2025-04-18-2025-04-21,ddhq
 Siena College / The New York Times,,,2025-04-20,2025-04-24,913.0,rv,44.0,41.0,https://data.ddhq.io/polls/2025/04/25/Siena College/The New York Times-National-2025-04-20-2025-04-24,ddhq
+The New York Times/Siena College,,,2025-04-21,2025-04-24,913.0,rv,47.0,44.0,https://www.nytimes.com/interactive/2025/04/25/us/elections/times-siena-poll-crosstabs.html,votehub
 Decision Desk HQ / NewsNation,,,2025-04-23,2025-04-27,1448.0,rv,45.0,40.0,https://data.ddhq.io/polls/2025/04/30/Decision Desk HQ/NewsNation-National-2025-04-23-2025-04-27,ddhq
 TrueDot.ai,,NewsNation; Decision Desk HQ,2025-04-23,2025-04-27,1448.0,rv,45.0,40.0,https://nexstartv-my.sharepoint.com/:x:/g/personal/mhobe_nexstar_tv/Ed_IQP-AattKq1IhfspZkKUB_j3G-vcd-JiJJksGOx_TLQ?rtime=E1yhGTiJ3Ug,votehub
 McLaughlin & Associates,,,2025-04-22,2025-04-29,1000.0,rv,43.0,45.0,https://data.ddhq.io/polls/2025/05/09/McLaughlin & Associates-National,ddhq
@@ -54,8 +54,8 @@ Quantus Insights / TrendingPolitics,,,2025-05-05,2025-05-07,1000.0,rv,45.2,44.8,
 Cygnal,,,2025-05-06,2025-05-08,1500.0,lv,47.1,46.6,https://data.ddhq.io/polls/2025/05/14/Cygnal-National,ddhq
 co/efficient,,,2025-05-07,2025-05-09,1462.0,lv,45.0,42.0,https://data.ddhq.io/polls/2025/05/14/co/efficient-National,ddhq
 Echelon Insights,,,2025-05-08,2025-05-12,1000.0,lv,47.0,48.0,https://data.ddhq.io/polls/2025/05/12/Echelon Insights-National,ddhq
-YouGov / The Economist,,,2025-05-16,2025-05-19,1251.0,rv,43.0,42.0,https://data.ddhq.io/polls/2025/05/20/YouGov/The Economist-National-2025-05-16-2025-05-19,ddhq
 Fabrizio Ward / Pinpoint Policy Institute,,,2025-05-15,2025-05-19,800.0,rv,42.0,42.0,https://data.ddhq.io/polls/2025/06/18/Fabrizio Ward/Pinpoint Policy Institute-National-2025-05-15-2025-05-19,ddhq
+YouGov / The Economist,,,2025-05-16,2025-05-19,1251.0,rv,43.0,42.0,https://data.ddhq.io/polls/2025/05/20/YouGov/The Economist-National-2025-05-16-2025-05-19,ddhq
 RMG Research / Napolitan News Service,,,2025-05-20,2025-05-21,1000.0,rv,43.0,43.0,https://data.ddhq.io/polls/2025/05/28/RMG Research/Napolitan News Service-National-2025-05-20-2025-05-21,ddhq
 Rasmussen Reports,,,2025-05-19,2025-05-21,1012.0,lv,45.0,44.0,https://data.ddhq.io/polls/2025/05/24/Rasmussen Reports-National,ddhq
 McLaughlin & Associates,,,2025-05-21,2025-05-26,1000.0,rv,43.0,47.0,https://data.ddhq.io/polls/2025/05/29/McLaughlin & Associates-National,ddhq
@@ -63,21 +63,21 @@ YouGov / The Economist,,,2025-05-23,2025-05-26,1208.0,rv,43.0,41.0,https://data.
 AtlasIntel,,,2025-05-21,2025-05-27,3469.0,a,50.9,41.7,https://data.ddhq.io/polls/2025/05/30/AtlasIntel-National,ddhq
 YouGov / The Economist,,,2025-05-30,2025-06-02,1433.0,rv,44.0,42.0,https://data.ddhq.io/polls/2025/06/03/YouGov/The Economist-National-2025-05-30-2025-06-02,ddhq
 YouGov / The Economist,,,2025-05-30,2025-06-02,1606.0,a,39.0,36.0,https://data.ddhq.io/polls/2025/06/03/YouGov/The Economist-National-2025-05-30-2025-06-02,ddhq
-Cygnal,,,2025-06-03,2025-06-04,1500.0,lv,47.2,46.9,https://data.ddhq.io/polls/2025/06/13/Cygnal-National,ddhq
 Quantus Insights / TrendingPolitics,,,2025-06-01,2025-06-04,1000.0,rv,45.6,45.3,https://data.ddhq.io/polls/2025/06/05/Quantus Insights/TrendingPolitics-National-2025-06-01-2025-06-04,ddhq
+Cygnal,,,2025-06-03,2025-06-04,1500.0,lv,47.2,46.9,https://data.ddhq.io/polls/2025/06/13/Cygnal-National,ddhq
 J.L. Partners,,DailyMail.com,2025-06-06,2025-06-06,1006.0,rv,42.0,35.0,https://www.dailymail.co.uk/news/article-14796175/polling-donald-trump-2024-election-elon-musk.html,votehub
 YouGov / The Economist,,,2025-06-06,2025-06-09,1121.0,rv,44.0,43.0,https://data.ddhq.io/polls/2025/06/10/YouGov/The Economist-National-2025-06-06-2025-06-09,ddhq
 RMG Research,,Napolitan Institute,2025-06-09,2025-06-09,1000.0,rv,35.0,35.0,https://napolitannews.org/posts/musk-3rd-party-would-get-8-percent-of-voters,votehub
-Quantus Insights / TrendingPolitics,,,2025-06-09,2025-06-11,1000.0,rv,43.0,43.0,https://data.ddhq.io/polls/2025/06/12/Quantus Insights/TrendingPolitics-National-2025-06-09-2025-06-11,ddhq
 McLaughlin & Associates / Club for Growth,,,2025-06-09,2025-06-11,1000.0,lv,44.0,46.0,https://data.ddhq.io/polls/2025/06/18/McLaughlin & Associates/Club for Growth-National-2025-06-09-2025-06-11,ddhq
+Quantus Insights / TrendingPolitics,,,2025-06-09,2025-06-11,1000.0,rv,43.0,43.0,https://data.ddhq.io/polls/2025/06/12/Quantus Insights/TrendingPolitics-National-2025-06-09-2025-06-11,ddhq
 Verasight / Strength in Numbers,,,2025-06-06,2025-06-12,1500.0,a,45.0,37.0,https://data.ddhq.io/polls/2025/06/16/Verasight/Strength in Numbers-National-2025-06-06-2025-06-12,ddhq
 Clarity Campaign Labs,,,2025-06-05,2025-06-14,1000.0,rv,50.0,45.0,https://data.ddhq.io/polls/2025/06/18/Clarity Campaign Labs-National,ddhq
 The Winston Group / Winning the Issues,,,2025-06-12,2025-06-14,1000.0,rv,44.0,40.0,https://data.ddhq.io/polls/2025/08/11/The Winston Group/Winning the Issues-National-2025-06-12-2025-06-14,ddhq
-McLaughlin & Associates / Gingrich 360 / America's New Majority Project,,,2025-06-12,2025-06-15,2000.0,rv,45.5,44.1,https://data.ddhq.io/polls/2025/06/23/McLaughlin & Associates/America's New Majority Project/Gingrich 360-National-2025-06-12-2025-06-15,ddhq
 McLaughlin & Associates / Gingrich 360 / America's New Majority Project,,,2025-06-12,2025-06-15,1637.0,lv,47.2,46.4,https://data.ddhq.io/polls/2025/06/23/McLaughlin & Associates/America's New Majority Project/Gingrich 360-National-2025-06-12-2025-06-15,ddhq
 McLaughlin & Associates,,,2025-06-10,2025-06-15,1000.0,rv,42.0,47.0,https://data.ddhq.io/polls/2025/06/19/McLaughlin & Associates-National,ddhq
-YouGov / The Economist,,,2025-06-13,2025-06-16,1107.0,rv,44.0,41.0,https://data.ddhq.io/polls/2025/06/17/YouGov/The Economist-National-2025-06-13-2025-06-16,ddhq
+McLaughlin & Associates / Gingrich 360 / America's New Majority Project,,,2025-06-12,2025-06-15,2000.0,rv,45.5,44.1,https://data.ddhq.io/polls/2025/06/23/McLaughlin & Associates/America's New Majority Project/Gingrich 360-National-2025-06-12-2025-06-15,ddhq
 co/efficient,,,2025-06-12,2025-06-16,1035.0,lv,46.0,46.0,https://data.ddhq.io/polls/2025/06/19/co/efficient-National,ddhq
+YouGov / The Economist,,,2025-06-13,2025-06-16,1107.0,rv,44.0,41.0,https://data.ddhq.io/polls/2025/06/17/YouGov/The Economist-National-2025-06-13-2025-06-16,ddhq
 Echelon Insights,,,2025-06-12,2025-06-17,982.0,lv,47.0,48.0,https://data.ddhq.io/polls/2025/06/17/Echelon Insights-National,ddhq
 Echelon Insights,,,2025-06-17,2025-06-18,1002.0,lv,46.0,46.0,https://data.ddhq.io/polls/2025/06/21/Echelon Insights-National,ddhq
 RMG Research / Napolitan News Service,,,2025-06-18,2025-06-19,1000.0,rv,42.0,49.0,https://data.ddhq.io/polls/2025/06/24/RMG Research/Napolitan News Service-National-2025-06-18-2025-06-19,ddhq
@@ -91,10 +91,10 @@ YouGov / The Economist,,,2025-06-27,2025-06-30,1221.0,rv,44.0,40.0,https://data.
 Cygnal,,,2025-07-01,2025-07-02,1500.0,lv,47.1,45.7,https://data.ddhq.io/polls/2025/07/09/Cygnal-National,ddhq
 YouGov / The Economist,,,2025-07-04,2025-07-07,1136.0,rv,43.0,40.0,https://data.ddhq.io/polls/2025/07/08/YouGov/The Economist-National-2025-07-04-2025-07-07,ddhq
 A2 Insights,,,2025-07-07,2025-07-10,862.0,rv,47.7,44.4,https://data.ddhq.io/polls/2025/07/11/A2 Insights-National,ddhq
-Echelon Insights,,,2025-07-10,2025-07-14,1084.0,lv,46.0,47.0,https://data.ddhq.io/polls/2025/07/14/Echelon Insights-National,ddhq
-McLaughlin & Associates,,,2025-07-09,2025-07-14,1000.0,rv,42.0,47.0,https://data.ddhq.io/polls/2025/07/18/McLaughlin & Associates-National,ddhq
 Big Data Poll,,,2025-07-12,2025-07-14,3022.0,rv,42.3,41.1,https://data.ddhq.io/polls/2025/07/16/Big Data Poll-National,ddhq
+Echelon Insights,,,2025-07-10,2025-07-14,1084.0,lv,46.0,47.0,https://data.ddhq.io/polls/2025/07/14/Echelon Insights-National,ddhq
 YouGov / The Economist,,,2025-07-11,2025-07-14,1245.0,rv,43.0,39.0,https://data.ddhq.io/polls/2025/07/15/YouGov/The Economist-National-2025-07-11-2025-07-14,ddhq
+McLaughlin & Associates,,,2025-07-09,2025-07-14,1000.0,rv,42.0,47.0,https://data.ddhq.io/polls/2025/07/18/McLaughlin & Associates-National,ddhq
 Verasight / Strength in Numbers,,,2025-07-14,2025-07-16,1500.0,a,47.0,43.0,https://data.ddhq.io/polls/2025/07/22/Verasight/Strength in Numbers-National-2025-07-14-2025-07-16,ddhq
 RMG Research / Napolitan News Service,,,2025-07-14,2025-07-16,2000.0,rv,42.0,46.0,https://data.ddhq.io/polls/2025/07/21/RMG Research/Napolitan News Service-National-2025-07-14-2025-07-16,ddhq
 Quantus Insights,,,2025-07-14,2025-07-16,1000.0,rv,44.0,42.0,https://data.ddhq.io/polls/2025/07/17/Quantus Insights-National,ddhq
@@ -112,11 +112,11 @@ Clarity Campaign Labs,,,2025-07-24,2025-07-31,1018.0,rv,51.0,43.0,https://data.d
 Hart Research Associates/Public Opinion Strategies,,CNBC,2025-07-29,2025-08-03,1000.0,a,49.0,44.0,https://pos.org/wp-content/uploads/2025/08/250178-CNBC-AAES-Q2-2025-Topline-8-7-2025-Release.pdf,votehub
 YouGov / The Economist,,,2025-08-01,2025-08-04,1258.0,rv,44.0,38.0,https://data.ddhq.io/polls/2025/08/05/YouGov/The Economist-National-2025-08-01-2025-08-04,ddhq
 Cygnal,,,2025-08-07,2025-08-09,1500.0,lv,47.4,46.4,https://data.ddhq.io/polls/2025/08/13/Cygnal-National,ddhq
-YouGov / The Economist,,,2025-08-09,2025-08-11,1473.0,rv,42.0,40.0,https://data.ddhq.io/polls/2025/08/12/YouGov/The Economist-National-2025-08-09-2025-08-11,ddhq
 YouGov / The Economist,,,2025-08-09,2025-08-11,1634.0,a,38.0,35.0,https://data.ddhq.io/polls/2025/08/12/YouGov/The Economist-National-2025-08-09-2025-08-11,ddhq
+YouGov / The Economist,,,2025-08-09,2025-08-11,1473.0,rv,42.0,40.0,https://data.ddhq.io/polls/2025/08/12/YouGov/The Economist-National-2025-08-09-2025-08-11,ddhq
 Quantus Insights,,,2025-08-11,2025-08-13,1000.0,rv,45.0,42.0,https://data.ddhq.io/polls/2025/08/14/Quantus Insights-National,ddhq
-The Argument/Verasight,,,2025-08-08,2025-08-17,1562.0,rv,50.7,49.3,https://www.theargumentmag.com/p/when-americans-bite-their-tongues,votehub
 The Argument,,,2025-08-08,2025-08-17,1562.0,rv,45.0,42.0,https://data.ddhq.io/polls/2025/10/03/Verasight-National,ddhq
+The Argument/Verasight,,,2025-08-08,2025-08-17,1562.0,rv,50.7,49.3,https://www.theargumentmag.com/p/when-americans-bite-their-tongues,votehub
 Ipsos / Reuters,,,2025-08-13,2025-08-18,3516.0,rv,40.0,39.0,https://data.ddhq.io/polls/2025/08/19/Ipsos/Reuters-National-2025-08-13-2025-08-18,ddhq
 SoCal Strategies / Red Eagle Politics / On Point Politics,,,2025-08-18,2025-08-18,700.0,a,42.0,37.0,https://data.ddhq.io/polls/2025/08/19/SoCal Strategies/On Point Politics/Red Eagle Politics-National-2025-08-19-2025-08-19,ddhq
 YouGov / The Economist,,,2025-08-15,2025-08-18,1404.0,rv,44.0,39.0,https://data.ddhq.io/polls/2025/08/19/YouGov/The Economist-National-2025-08-15-2025-08-18,ddhq
@@ -124,8 +124,8 @@ YouGov / The Economist,,,2025-08-15,2025-08-18,1564.0,a,41.0,33.0,https://data.d
 Echelon Insights,,,2025-08-14,2025-08-18,1057.0,lv,45.0,46.0,https://data.ddhq.io/polls/2025/08/18/Echelon Insights-National,ddhq
 RMG Research / Napolitan News Service,,,2025-08-18,2025-08-21,2000.0,rv,44.0,44.0,https://data.ddhq.io/polls/2025/08/23/RMG Research/Napolitan News Service-National-2025-08-18-2025-08-21,ddhq
 Verasight / Strength in Numbers,,,2025-08-18,2025-08-21,1500.0,a,49.0,41.0,https://data.ddhq.io/polls/2025/08/26/Verasight/Strength in Numbers-National-2025-08-18-2025-08-21,ddhq
-Ipsos / Reuters,,,2025-08-22,2025-08-24,895.0,rv,42.0,37.0,https://data.ddhq.io/polls/2025/08/28/Ipsos/Reuters-National-2025-08-22-2025-08-24,ddhq
 Ipsos / Reuters,,,2025-08-22,2025-08-24,1022.0,a,38.0,34.0,https://data.ddhq.io/polls/2025/08/28/Ipsos/Reuters-National-2025-08-22-2025-08-24,ddhq
+Ipsos / Reuters,,,2025-08-22,2025-08-24,895.0,rv,42.0,37.0,https://data.ddhq.io/polls/2025/08/28/Ipsos/Reuters-National-2025-08-22-2025-08-24,ddhq
 YouGov / The Economist,,,2025-08-22,2025-08-25,1374.0,rv,43.0,41.0,https://data.ddhq.io/polls/2025/08/26/YouGov/The Economist-National-2025-08-22-2025-08-25,ddhq
 YouGov / The Economist,,,2025-08-22,2025-08-25,1520.0,a,41.0,36.0,https://data.ddhq.io/polls/2025/08/26/YouGov/The Economist-National-2025-08-22-2025-08-25,ddhq
 McLaughlin & Associates,,,2025-08-21,2025-08-26,1000.0,rv,45.0,47.0,https://data.ddhq.io/polls/2025/09/03/McLaughlin & Associates-National,ddhq
@@ -138,13 +138,13 @@ CNN/SSRS,,,2025-08-21,2025-09-01,1768.0,rv,52.0,48.0,https://s3.documentcloud.or
 The Winston Group / Winning the Issues,,,2025-08-30,2025-09-01,1000.0,rv,45.0,39.0,https://data.ddhq.io/polls/2026/02/27/The-Winston-Group/Winning-the-Issues-National-2025-08-30-2025-09-01,ddhq
 Survey 160,,,2025-08-26,2025-09-01,1437.0,rv,46.0,39.0,https://data.ddhq.io/polls/2025/12/05/Survey-160-National,ddhq
 YouGov / Yahoo News,,,2025-08-29,2025-09-02,1136.0,rv,44.0,40.0,https://data.ddhq.io/polls/2025/09/03/YouGov/Yahoo News-National-2025-08-29-2025-09-02,ddhq
-YouGov / The Economist,,,2025-08-29,2025-09-02,1548.0,rv,43.0,39.0,https://data.ddhq.io/polls/2025/09/03/YouGov/The Economist-National-2025-08-29-2025-09-02,ddhq
 YouGov / The Economist,,,2025-08-29,2025-09-02,1690.0,a,38.0,34.0,https://data.ddhq.io/polls/2025/09/03/YouGov/The Economist-National-2025-08-29-2025-09-02,ddhq
+YouGov / The Economist,,,2025-08-29,2025-09-02,1548.0,rv,43.0,39.0,https://data.ddhq.io/polls/2025/09/03/YouGov/The Economist-National-2025-08-29-2025-09-02,ddhq
 Cygnal,,,2025-09-02,2025-09-03,1500.0,lv,47.6,45.2,https://data.ddhq.io/polls/2025/09/09/Cygnal-National,ddhq
 Echelon Insights / Internet for Growth,,,2025-09-05,2025-09-07,1030.0,lv,45.0,44.0,https://data.ddhq.io/polls/2025/12/17/Echelon-Insights/Internet-for-Growth-National-2025-09-05-2025-09-07,ddhq
-YouGov / The Economist,,,2025-09-05,2025-09-08,1639.0,a,39.0,36.0,https://data.ddhq.io/polls/2025/09/09/YouGov/The Economist-National-2025-09-05-2025-09-08,ddhq
-YouGov / The Economist,,,2025-09-05,2025-09-08,1482.0,rv,44.0,40.0,https://data.ddhq.io/polls/2025/09/09/YouGov/The Economist-National-2025-09-05-2025-09-08,ddhq
 Ipsos / Public Religion Research Institute / The Brookings Institution,,,2025-08-15,2025-09-08,5543.0,a,33.0,30.0,https://data.ddhq.io/polls/2025/10/22/Ipsos-National,ddhq
+YouGov / The Economist,,,2025-09-05,2025-09-08,1482.0,rv,44.0,40.0,https://data.ddhq.io/polls/2025/09/09/YouGov/The Economist-National-2025-09-05-2025-09-08,ddhq
+YouGov / The Economist,,,2025-09-05,2025-09-08,1639.0,a,39.0,36.0,https://data.ddhq.io/polls/2025/09/09/YouGov/The Economist-National-2025-09-05-2025-09-08,ddhq
 Public Religion Research Institute,,Carnegie Corporation of New York,2025-08-15,2025-09-08,5543.0,a,33.0,30.0,https://prri.org/wp-content/uploads/2025/10/2025-PRRI-American-Values-Survey-Topline.pdf,votehub
 Change Research,,,2025-09-05,2025-09-10,2223.0,rv,45.0,43.0,https://data.ddhq.io/polls/2026/05/02/Change-Research-National,ddhq
 Clarity Campaign Labs,,,2025-09-04,2025-09-11,1001.0,rv,50.0,44.0,https://data.ddhq.io/polls/2025/09/19/Clarity Campaign Labs-National,ddhq
@@ -168,9 +168,9 @@ YouGov / The Economist,,,2025-09-26,2025-09-29,1655.0,a,41.0,35.0,https://data.d
 YouGov / The Economist,,,2025-09-26,2025-09-29,1517.0,rv,44.0,41.0,https://data.ddhq.io/polls/2025/09/30/YouGov/The Economist-National-2025-09-26-2025-09-29,ddhq
 YouGov / Yahoo News,,,2025-09-25,2025-09-29,1126.0,rv,44.0,40.0,https://data.ddhq.io/polls/2025/10/01/YouGov/Yahoo News-National-2025-09-25-2025-09-29,ddhq
 Morning Consult,,,2025-10-03,2025-10-05,2200.0,rv,46.0,43.0,https://data.ddhq.io/polls/2025/10/06/Morning Consult-National,ddhq
-YouGov / The Economist,,,2025-10-04,2025-10-06,1486.0,rv,44.0,39.0,https://data.ddhq.io/polls/2025/10/07/YouGov/The Economist-National-2025-10-04-2025-10-06,ddhq
-Change Research,,,2025-09-28,2025-10-06,1596.0,rv,46.0,42.0,https://data.ddhq.io/polls/868_20250505_Change_092025.pdf,ddhq
 YouGov / The Economist,,,2025-10-04,2025-10-06,1643.0,a,39.0,33.0,https://data.ddhq.io/polls/2025/10/07/YouGov/The Economist-National-2025-10-04-2025-10-06,ddhq
+Change Research,,,2025-09-28,2025-10-06,1596.0,rv,46.0,42.0,https://data.ddhq.io/polls/868_20250505_Change_092025.pdf,ddhq
+YouGov / The Economist,,,2025-10-04,2025-10-06,1486.0,rv,44.0,39.0,https://data.ddhq.io/polls/2025/10/07/YouGov/The Economist-National-2025-10-04-2025-10-06,ddhq
 Noble Predictive Insights,,The Center Square,2025-10-02,2025-10-06,2565.0,rv,45.0,43.0,https://www.thecentersquare.com/north_carolina/article_1ca4f129-6cbd-4a04-a83b-4e98ad17c137.html,votehub
 Ipsos / Reuters,,,2025-10-03,2025-10-07,864.0,rv,40.0,38.0,https://data.ddhq.io/polls/2025/10/08/Ipsos/Reuters-National-2025-10-03-2025-10-07,ddhq
 Cygnal,,,2025-10-07,2025-10-08,1500.0,lv,47.5,45.3,https://data.ddhq.io/polls/2025/10/15/Cygnal-National,ddhq
@@ -181,25 +181,25 @@ YouGov / The Economist,,,2025-10-10,2025-10-13,1621.0,a,39.0,34.0,https://data.d
 YouGov / The Economist,,,2025-10-10,2025-10-13,1466.0,rv,43.0,40.0,https://data.ddhq.io/polls/2025/10/14/YouGov/The Economist-National-2025-10-10-2025-10-13,ddhq
 Emerson College,,,2025-10-13,2025-10-14,1000.0,rv,43.9,42.5,https://data.ddhq.io/polls/2025/10/17/Emerson College-National,ddhq
 J.L. Partners / DailyMail.com,,,2025-10-14,2025-10-15,1005.0,rv,43.0,37.0,https://data.ddhq.io/polls/2025/10/27/J.L. Partners/DailyMail.com-National-2025-10-14-2025-10-15,ddhq
-The Argument,,,2025-10-10,2025-10-16,1530.0,rv,44.0,43.0,https://data.ddhq.io/polls/2025/10/27/Verasight/The Argument-National-2025-10-10-2025-10-16,ddhq
-The Winston Group / Winning the Issues,,,2025-10-15,2025-10-16,1000.0,rv,45.0,40.0,https://data.ddhq.io/polls/2025/10/21/The Winston Group-National,ddhq
 The Argument/Verasight,,,2025-10-10,2025-10-16,1530.0,rv,51.0,49.0,https://www.theargumentmag.com/p/the-immigration-problem-is-a-crime,votehub
+The Winston Group / Winning the Issues,,,2025-10-15,2025-10-16,1000.0,rv,45.0,40.0,https://data.ddhq.io/polls/2025/10/21/The Winston Group-National,ddhq
+The Argument,,,2025-10-10,2025-10-16,1530.0,rv,44.0,43.0,https://data.ddhq.io/polls/2025/10/27/Verasight/The Argument-National-2025-10-10-2025-10-16,ddhq
 Morning Consult,,,2025-10-17,2025-10-19,2200.0,rv,46.0,43.0,https://data.ddhq.io/polls/2025/10/20/Morning Consult-National,ddhq
-Echelon Insights,,,2025-10-16,2025-10-20,1010.0,lv,47.0,46.0,https://data.ddhq.io/polls/2025/10/21/Echelon Insights-National,ddhq
-Ipsos / Reuters,,,2025-10-15,2025-10-20,3439.0,rv,41.0,38.0,https://data.ddhq.io/polls/2025/10/21/Ipsos/Reuters-National-2025-10-15-2025-10-20,ddhq
-YouGov / The Economist,,,2025-10-17,2025-10-20,1447.0,rv,45.0,40.0,https://data.ddhq.io/polls/2025/10/21/YouGov/The Economist-National-2025-10-17-2025-10-20,ddhq
-YouGov / The Economist,,,2025-10-17,2025-10-20,1620.0,a,40.0,35.0,https://data.ddhq.io/polls/2025/10/21/YouGov/The Economist-National-2025-10-17-2025-10-20,ddhq
 YouGov / University of Massachusetts Lowell Center for Public Opinion,,,2025-10-16,2025-10-20,1000.0,a,38.0,35.0,https://data.ddhq.io/polls/2025/10/29/University of Massachusetts Lowell Center for Public Opinion-National,ddhq
-University of Massachusetts Department of Political Science/YouGov,,,2025-10-16,2025-10-20,1000.0,a,38.0,35.0,https://www.uml.edu/news/press-releases/2025/national-poll-10292025.aspx,votehub
+YouGov / The Economist,,,2025-10-17,2025-10-20,1620.0,a,40.0,35.0,https://data.ddhq.io/polls/2025/10/21/YouGov/The Economist-National-2025-10-17-2025-10-20,ddhq
+YouGov / The Economist,,,2025-10-17,2025-10-20,1447.0,rv,45.0,40.0,https://data.ddhq.io/polls/2025/10/21/YouGov/The Economist-National-2025-10-17-2025-10-20,ddhq
+Ipsos / Reuters,,,2025-10-15,2025-10-20,3439.0,rv,41.0,38.0,https://data.ddhq.io/polls/2025/10/21/Ipsos/Reuters-National-2025-10-15-2025-10-20,ddhq
+Echelon Insights,,,2025-10-16,2025-10-20,1010.0,lv,47.0,46.0,https://data.ddhq.io/polls/2025/10/21/Echelon Insights-National,ddhq
 Quinnipiac University,,,2025-10-16,2025-10-20,1327.0,rv,50.0,41.0,https://poll.qu.edu/poll-release?releaseid=3938,votehub
+University of Massachusetts Department of Political Science/YouGov,,,2025-10-16,2025-10-20,1000.0,a,38.0,35.0,https://www.uml.edu/news/press-releases/2025/national-poll-10292025.aspx,votehub
 Clarity Campaign Labs,,,2025-10-16,2025-10-23,1047.0,rv,47.0,46.0,https://data.ddhq.io/polls/2025/10/30/Clarity Campaign Labs-National,ddhq
 Ipsos / Reuters,,,2025-10-24,2025-10-26,805.0,rv,39.0,39.0,https://data.ddhq.io/polls/2025/10/28/Ipsos/Reuters-National-2025-10-24-2025-10-26,ddhq
 Morning Consult,,,2025-10-24,2025-10-26,2202.0,rv,45.0,42.0,https://data.ddhq.io/polls/2025/10/27/Morning Consult-National,ddhq
 Manhattan Institute,,,2025-10-15,2025-10-26,434.0,rv,47.0,44.0,https://data.ddhq.io/polls/2025/12/04/Manhattan-Institute-National,ddhq
-YouGov / The Economist,,,2025-10-24,2025-10-27,1618.0,a,39.0,34.0,https://data.ddhq.io/polls/2025/10/28/YouGov/The Economist-National-2025-10-24-2025-10-27,ddhq
-YouGov / Yahoo News,,,2025-10-23,2025-10-27,1197.0,rv,45.0,40.0,https://data.ddhq.io/polls/2025/10/30/YouGov/Yahoo News-National-2025-10-23-2025-10-27,ddhq
-McLaughlin & Associates,,,2025-10-21,2025-10-27,1000.0,rv,44.0,46.0,https://data.ddhq.io/polls/2025/10/30/McLaughlin & Associates-National,ddhq
 YouGov / The Economist,,,2025-10-24,2025-10-27,1472.0,rv,43.0,40.0,https://data.ddhq.io/polls/2025/10/28/YouGov/The Economist-National-2025-10-24-2025-10-27,ddhq
+YouGov / The Economist,,,2025-10-24,2025-10-27,1618.0,a,39.0,34.0,https://data.ddhq.io/polls/2025/10/28/YouGov/The Economist-National-2025-10-24-2025-10-27,ddhq
+McLaughlin & Associates,,,2025-10-21,2025-10-27,1000.0,rv,44.0,46.0,https://data.ddhq.io/polls/2025/10/30/McLaughlin & Associates-National,ddhq
+YouGov / Yahoo News,,,2025-10-23,2025-10-27,1197.0,rv,45.0,40.0,https://data.ddhq.io/polls/2025/10/30/YouGov/Yahoo News-National-2025-10-23-2025-10-27,ddhq
 Big Data Poll,,,2025-10-26,2025-10-28,2984.0,rv,42.6,41.4,https://data.ddhq.io/polls/2025/10/30/Big Data Poll-National,ddhq
 Ipsos / The Washington Post,,,2025-10-24,2025-10-28,2725.0,a,42.0,39.0,https://data.ddhq.io/polls/2025/11/02/Ipsos/The Washington Post-National-2025-10-24-2025-10-28,ddhq
 Ipsos / The Washington Post,,,2025-10-24,2025-10-28,2203.0,rv,46.0,44.0,https://data.ddhq.io/polls/2025/11/02/Ipsos/The Washington Post-National-2025-10-24-2025-10-28,ddhq
@@ -213,16 +213,16 @@ NewsNation/Decision Desk HQ,,,2025-10-27,2025-10-29,1158.0,lv,47.0,47.0,https://
 CNN/SSRS,,,2025-10-27,2025-10-30,954.0,rv,47.0,42.0,https://www.cnn.com/2025/11/03/politics/cnn-poll-democrats-trump-midterms,votehub
 RMG Research / Napolitan News Service,,,2025-10-27,2025-10-30,2000.0,rv,42.0,43.0,https://data.ddhq.io/polls/2025/11/04/RMG Research/Napolitan News Service-National-2025-10-27-2025-10-30,ddhq
 Morning Consult,,,2025-10-31,2025-11-02,2202.0,rv,45.0,42.0,https://data.ddhq.io/polls/2025/11/03/Morning Consult-National,ddhq
-YouGov / The Economist,,,2025-10-31,2025-11-03,1470.0,rv,44.0,41.0,https://data.ddhq.io/polls/2025/11/04/YouGov/The Economist-National-2025-10-31-2025-11-03,ddhq
 RMG Research,,Napolitan Institute,2025-10-31,2025-11-03,2000.0,rv,44.0,46.0,https://napolitannews.org/posts/generic-ballot-gop-43-percent-dem-42,votehub
+YouGov / The Economist,,,2025-10-31,2025-11-03,1470.0,rv,44.0,41.0,https://data.ddhq.io/polls/2025/11/04/YouGov/The Economist-National-2025-10-31-2025-11-03,ddhq
 YouGov / The Economist,,,2025-10-31,2025-11-03,1650.0,a,38.0,35.0,https://data.ddhq.io/polls/2025/11/04/YouGov/The Economist-National-2025-10-31-2025-11-03,ddhq
 Emerson College,,,2025-11-03,2025-11-04,1000.0,rv,43.5,40.1,https://data.ddhq.io/polls/2025/11/07/Emerson College-National,ddhq
 Cygnal,,,2025-11-05,2025-11-06,1500.0,lv,49.7,43.6,https://data.ddhq.io/polls/2025/11/14/Cygnal-National,ddhq
 Morning Consult,,,2025-11-07,2025-11-09,2201.0,rv,48.0,43.0,https://data.ddhq.io/polls/2025/11/10/Morning Consult-National,ddhq
-Change Research,,,2025-11-06,2025-11-10,1572.0,rv,47.0,43.0,https://data.ddhq.io/polls/866_20260505_Change_112025.pdf,ddhq
 Survey 160,,,2025-11-06,2025-11-10,1513.0,rv,46.0,39.0,https://data.ddhq.io/polls/2025/12/05/Survey-160-National,ddhq
-YouGov / The Economist,,,2025-11-07,2025-11-10,1662.0,a,40.0,34.0,https://data.ddhq.io/polls/2025/11/11/YouGov/The Economist-National-2025-11-07-2025-11-10,ddhq
 YouGov / The Economist,,,2025-11-07,2025-11-10,1499.0,rv,46.0,39.0,https://data.ddhq.io/polls/2025/11/11/YouGov/The Economist-National-2025-11-07-2025-11-10,ddhq
+YouGov / The Economist,,,2025-11-07,2025-11-10,1662.0,a,40.0,34.0,https://data.ddhq.io/polls/2025/11/11/YouGov/The Economist-National-2025-11-07-2025-11-10,ddhq
+Change Research,,,2025-11-06,2025-11-10,1572.0,rv,47.0,43.0,https://data.ddhq.io/polls/866_20260505_Change_112025.pdf,ddhq
 Yale University Institution for Social and Policy Studies,,,2025-10-29,2025-11-11,3161.0,rv,45.0,42.5,https://data.ddhq.io/polls/2025/12/08/Yale-University-Institution-for-Social-and-Policy-Studies-National,ddhq
 Ipsos / Reuters,,,2025-11-07,2025-11-12,938.0,rv,41.0,40.0,https://data.ddhq.io/polls/2025/11/13/Ipsos/Reuters-National-2025-11-07-2025-11-12,ddhq
 Marquette University Law School,,,2025-11-05,2025-11-12,903.0,rv,49.0,44.0,https://data.ddhq.io/polls/2025/11/19/Marquette University Law School-National,ddhq
@@ -231,53 +231,53 @@ Marquette University Law School,,,2025-11-05,2025-11-12,1052.0,a,46.0,41.0,https
 Quantus Insights,,,2025-11-11,2025-11-12,1000.0,rv,43.7,39.3,https://data.ddhq.io/polls/2025/11/14/Quantus Insights-National,ddhq
 Marist College / NPR / PBS NewsHour,,,2025-11-10,2025-11-13,1291.0,rv,55.0,41.0,https://data.ddhq.io/polls/2025/11/19/Marist College/NPR/PBS NewsHour-National-2025-11-10-2025-11-13,ddhq
 High Point University Survey Research Center,,,2025-11-10,2025-11-14,837.0,rv,48.0,39.0,https://data.ddhq.io/polls/2025/12/08/High-Point-University-Survey-Research-Center-National,ddhq
-Verasight / Strength in Numbers,,,2025-11-12,2025-11-14,1004.0,a,47.0,42.0,https://data.ddhq.io/polls/2025/11/18/Verasight/Strength in Numbers-National-2025-11-12-2025-11-14,ddhq
 High Point University Survey Research Center,,,2025-11-10,2025-11-14,1004.0,a,46.0,36.0,https://data.ddhq.io/polls/2025/12/08/High-Point-University-Survey-Research-Center-National,ddhq
+Verasight / Strength in Numbers,,,2025-11-12,2025-11-14,1004.0,a,47.0,42.0,https://data.ddhq.io/polls/2025/11/18/Verasight/Strength in Numbers-National-2025-11-12-2025-11-14,ddhq
 Morning Consult,,,2025-11-14,2025-11-16,2201.0,rv,46.0,44.0,https://data.ddhq.io/polls/2025/11/17/Morning Consult-National,ddhq
 Echelon Insights,,,2025-11-13,2025-11-17,1051.0,lv,48.0,45.0,https://data.ddhq.io/polls/2025/11/17/Echelon Insights-National,ddhq
 The Winston Group / Winning the Issues,,,2025-11-15,2025-11-17,1000.0,rv,45.0,39.0,https://data.ddhq.io/polls/2026/02/27/The-Winston-Group/Winning-the-Issues-National-2025-11-15-2025-11-17,ddhq
 Ipsos / Reuters,,,2025-11-14,2025-11-17,818.0,rv,38.0,36.0,https://data.ddhq.io/polls/2025/11/19/Ipsos/Reuters-National-2025-11-14-2025-11-17,ddhq
 YouGov / The Economist,,,2025-11-15,2025-11-17,1380.0,rv,43.0,40.0,https://data.ddhq.io/polls/2025/11/18/YouGov/The Economist-National-2025-11-15-2025-11-17,ddhq
-The Argument/Verasight,,,2025-11-10,2025-11-17,,lv,53.8,46.2,https://www.theargumentmag.com/p/2026-is-looking-terrible-for-republicans,votehub
-The Argument/Verasight,,,2025-11-10,2025-11-17,1508.0,rv,53.0,47.0,https://www.theargumentmag.com/p/2026-is-looking-terrible-for-republicans,votehub
 YouGov / The Economist,,,2025-11-15,2025-11-17,1547.0,a,38.0,35.0,https://data.ddhq.io/polls/2025/11/18/YouGov/The Economist-National-2025-11-15-2025-11-17,ddhq
 The Argument,,,2025-11-10,2025-11-17,1508.0,rv,45.5,41.5,https://data.ddhq.io/polls/2025/11/19/Verasight/The Argument-National-2025-11-10-2025-11-17,ddhq
+The Argument/Verasight,,,2025-11-10,2025-11-17,,lv,53.8,46.2,https://www.theargumentmag.com/p/2026-is-looking-terrible-for-republicans,votehub
+The Argument/Verasight,,,2025-11-10,2025-11-17,1508.0,rv,53.0,47.0,https://www.theargumentmag.com/p/2026-is-looking-terrible-for-republicans,votehub
 J.L. Partners,,DailyMail.com,2025-11-19,2025-11-20,797.0,lv,50.0,46.0,https://jlpartners.com/nov25-rv,votehub
 Rasmussen Reports,,,2025-11-18,2025-11-23,2410.0,lv,45.0,42.0,https://data.ddhq.io/polls/2025/12/03/Rasmussen-Reports-National,ddhq
 Morning Consult,,,2025-11-21,2025-11-23,2200.0,rv,45.0,43.0,https://data.ddhq.io/polls/2025/11/24/Morning Consult-National,ddhq
-McLaughlin & Associates,,,2025-11-17,2025-11-24,1000.0,rv,45.0,44.0,https://data.ddhq.io/polls/2025/11/26/McLaughlin & Associates-National,ddhq
 YouGov / The Economist,,,2025-11-21,2025-11-24,1511.0,rv,44.0,39.0,https://data.ddhq.io/polls/2025/11/25/YouGov/The Economist-National-2025-11-21-2025-11-24,ddhq
+McLaughlin & Associates,,,2025-11-17,2025-11-24,1000.0,rv,45.0,44.0,https://data.ddhq.io/polls/2025/11/26/McLaughlin & Associates-National,ddhq
 YouGov / The Economist,,,2025-11-21,2025-11-24,1674.0,a,39.0,32.0,https://data.ddhq.io/polls/2025/11/25/YouGov/The Economist-National-2025-11-21-2025-11-24,ddhq
 J.L. Partners / DailyMail.com,,,2025-11-19,2025-11-25,797.0,lv,50.0,46.0,https://data.ddhq.io/polls/2025/12/05/J.L.-Partners/DailyMail.com-National-2025-11-19-2025-11-25,ddhq
 The Bullfinch Group,,,2025-11-21,2025-11-25,1000.0,rv,41.0,35.0,https://data.ddhq.io/polls/2025/12/02/The Bullfinch Group-National,ddhq
 The Bullfinch Group,,,2025-11-21,2025-11-25,1200.0,a,37.0,32.0,https://data.ddhq.io/polls/2025/12/02/The Bullfinch Group-National,ddhq
 GBAO / Third Way,,,2025-11-19,2025-11-26,2000.0,rv,44.0,39.0,https://data.ddhq.io/polls/2025/12/26/GBAO/Third-Way-National-2025-11-19-2025-11-26,ddhq
 Morning Consult,,,2025-11-26,2025-11-30,2200.0,rv,45.0,41.0,https://data.ddhq.io/polls/2026/01/31/Morning-Consult-National,ddhq
+YouGov / The Economist,,,2025-11-28,2025-12-01,1452.0,rv,45.0,39.0,https://data.ddhq.io/polls/2025/12/02/YouGov/The Economist-National-2025-11-28-2025-12-01,ddhq
+YouGov / The Economist,,,2025-11-28,2025-12-01,1623.0,a,39.0,33.0,https://data.ddhq.io/polls/2025/12/02/YouGov/The Economist-National-2025-11-28-2025-12-01,ddhq
 Big Data Poll,,Public Polling Project,2025-11-28,2025-12-01,2008.0,rv,44.0,42.0,https://www.bigdatapoll.com/blog/trumps-third-world-immigration-moratorium-widely-popular/,votehub
 Big Data Poll,,Public Polling Project,2025-11-28,2025-12-01,1788.0,lv,46.0,43.0,https://www.bigdatapoll.com/blog/trumps-third-world-immigration-moratorium-widely-popular/,votehub
-YouGov / The Economist,,,2025-11-28,2025-12-01,1623.0,a,39.0,33.0,https://data.ddhq.io/polls/2025/12/02/YouGov/The Economist-National-2025-11-28-2025-12-01,ddhq
-YouGov / The Economist,,,2025-11-28,2025-12-01,1452.0,rv,45.0,39.0,https://data.ddhq.io/polls/2025/12/02/YouGov/The Economist-National-2025-11-28-2025-12-01,ddhq
 RMG Research / Napolitan News Service,,,2025-12-01,2025-12-04,2000.0,rv,41.0,45.0,https://data.ddhq.io/polls/2025/12/06/RMG-Research/Napolitan-News-Service-National-2025-12-01-2025-12-04,ddhq
 Quantus Insights,,,2025-12-04,2025-12-05,1000.0,rv,43.8,40.1,https://data.ddhq.io/polls/2025/12/05/Quantus-Insights-National,ddhq
 Morning Consult,,,2025-12-05,2025-12-07,2201.0,rv,46.0,43.0,https://data.ddhq.io/polls/2025/12/08/Morning-Consult-National,ddhq
 Cygnal,,,2025-12-05,2025-12-07,1500.0,lv,48.0,44.1,https://data.ddhq.io/polls/2025/12/15/Cygnal-National,ddhq
-Hart Research Associates/Public Opinion Strategies,,CNBC,2025-12-04,2025-12-08,800.0,rv,50.0,46.0,https://fm.cnbc.com/applications/cnbc.com/resources/editorialfiles/2025/12/16/TOPLINES_250313_CNBC_AAES_Q4_2025_new.pdf,votehub
 YouGov / The Economist,,,2025-12-05,2025-12-08,1529.0,a,37.0,32.0,https://data.ddhq.io/polls/2025/12/09/YouGov/The-Economist-National-2025-12-05-2025-12-08,ddhq
 YouGov / The Economist,,,2025-12-05,2025-12-08,1379.0,rv,42.0,37.0,https://data.ddhq.io/polls/2025/12/09/YouGov/The-Economist-National-2025-12-05-2025-12-08,ddhq
-GrayHouse / America One Policies,,,2025-12-06,2025-12-08,2058.0,rv,45.0,41.0,https://data.ddhq.io/polls/2026/03/06/GrayHouse/America-One-Policies-National-2025-12-06-2025-12-08,ddhq
 Ipsos / Reuters,,,2025-12-03,2025-12-08,3521.0,rv,40.0,39.0,https://data.ddhq.io/polls/2025/12/09/Ipsos/Reuters-National-2025-12-03-2025-12-08,ddhq
+GrayHouse / America One Policies,,,2025-12-06,2025-12-08,2058.0,rv,45.0,41.0,https://data.ddhq.io/polls/2026/03/06/GrayHouse/America-One-Policies-National-2025-12-06-2025-12-08,ddhq
+Hart Research Associates/Public Opinion Strategies,,CNBC,2025-12-04,2025-12-08,800.0,rv,50.0,46.0,https://fm.cnbc.com/applications/cnbc.com/resources/editorialfiles/2025/12/16/TOPLINES_250313_CNBC_AAES_Q4_2025_new.pdf,votehub
 Change Research,,,2025-12-05,2025-12-10,1520.0,rv,43.0,43.0,https://data.ddhq.io/polls/865_20260502_Change_1225.pdf,ddhq
-The Argument/Verasight,,,2025-12-05,2025-12-11,,lv,52.4,47.6,https://www.theargumentmag.com/p/have-democrats-lost-their-education,votehub
-The Argument/Verasight,,,2025-12-05,2025-12-11,1521.0,rv,50.6,49.4,https://www.theargumentmag.com/p/have-democrats-lost-their-education,votehub
-Clarity Campaign Labs,,,2025-12-04,2025-12-11,1000.0,lv,49.0,44.0,https://data.ddhq.io/polls/2025/12/16/Clarity-Campaign-Labs-National,ddhq
 The Argument,,,2025-12-05,2025-12-11,1521.0,rv,44.0,42.0,https://data.ddhq.io/polls/2025/12/16/The-Argument-National,ddhq
+The Argument/Verasight,,,2025-12-05,2025-12-11,1521.0,rv,50.6,49.4,https://www.theargumentmag.com/p/have-democrats-lost-their-education,votehub
+The Argument/Verasight,,,2025-12-05,2025-12-11,,lv,52.4,47.6,https://www.theargumentmag.com/p/have-democrats-lost-their-education,votehub
+Clarity Campaign Labs,,,2025-12-04,2025-12-11,1000.0,lv,49.0,44.0,https://data.ddhq.io/polls/2025/12/16/Clarity-Campaign-Labs-National,ddhq
 Big Data Poll,,,2025-12-10,2025-12-12,3004.0,rv,44.1,40.6,https://data.ddhq.io/polls/2025/12/15/Big-Data-Poll-National,ddhq
-Quinnipiac University,,,2025-12-11,2025-12-15,1035.0,rv,47.0,43.0,https://poll.qu.edu/images/polling/us/us12172025_ugli25.pdf,votehub
-Ipsos / Reuters,,,2025-12-12,2025-12-15,775.0,rv,40.0,36.0,https://data.ddhq.io/polls/2025/12/16/Ipsos/Reuters-National-2025-12-12-2025-12-15,ddhq
 YouGov / The Economist,,,2025-12-12,2025-12-15,1451.0,rv,43.0,39.0,https://data.ddhq.io/polls/2025/12/16/YouGov/The-Economist-National-2025-12-12-2025-12-15,ddhq
 YouGov / The Economist,,,2025-12-12,2025-12-15,1630.0,a,37.0,33.0,https://data.ddhq.io/polls/2025/12/16/YouGov/The-Economist-National-2025-12-12-2025-12-15,ddhq
 Echelon Insights,,,2025-12-11,2025-12-15,1011.0,lv,48.0,44.0,https://data.ddhq.io/polls/2025/12/16/Echelon-Insights-National,ddhq
+Ipsos / Reuters,,,2025-12-12,2025-12-15,775.0,rv,40.0,36.0,https://data.ddhq.io/polls/2025/12/16/Ipsos/Reuters-National-2025-12-12-2025-12-15,ddhq
 Morning Consult,,,2025-12-12,2025-12-15,2201.0,rv,45.0,44.0,https://data.ddhq.io/polls/2025/12/15/Morning-Consult-National,ddhq
+Quinnipiac University,,,2025-12-11,2025-12-15,1035.0,rv,47.0,43.0,https://poll.qu.edu/images/polling/us/us12172025_ugli25.pdf,votehub
 Emerson College,,,2025-12-14,2025-12-15,1000.0,rv,43.5,41.7,https://data.ddhq.io/polls/2025/12/18/Emerson-College-National,ddhq
 Quantus Insights,,,2025-12-15,2025-12-16,1000.0,rv,43.0,41.0,https://data.ddhq.io/polls/2025/12/18/Quantus-Insights-National,ddhq
 Echelon Insights / AARP,,,2025-12-09,2025-12-16,2023.0,lv,47.0,43.0,https://data.ddhq.io/polls/2026/02/12/Echelon-Insights/AARP-National-2025-12-09-2025-12-16,ddhq
@@ -287,43 +287,43 @@ AtlasIntel,,,2025-12-15,2025-12-19,2315.0,a,54.4,38.4,https://data.ddhq.io/polls
 Morning Consult,,,2025-12-19,2025-12-21,2203.0,rv,47.0,43.0,https://data.ddhq.io/polls/2025/12/22/Morning-Consult-National,ddhq
 YouGov / The Economist,,,2025-12-20,2025-12-22,1591.0,a,38.0,34.0,https://data.ddhq.io/polls/2025/12/23/YouGov/The-Economist-National-2025-12-20-2025-12-22,ddhq
 YouGov / The Economist,,,2025-12-20,2025-12-22,1424.0,rv,43.0,40.0,https://data.ddhq.io/polls/2025/12/23/YouGov/The-Economist-National-2025-12-20-2025-12-22,ddhq
-Big Data Poll,,,2025-12-26,2025-12-28,3412.0,lv,44.9,41.8,https://data.ddhq.io/polls/2025/12/31/Big-Data-Poll-National,ddhq
 Morning Consult,,,2025-12-22,2025-12-28,24000.0,rv,43.8,43.5,https://data.ddhq.io/polls/2026/08/22/Morning-Consult-National,ddhq
+Big Data Poll,,,2025-12-26,2025-12-28,3412.0,lv,44.9,41.8,https://data.ddhq.io/polls/2025/12/31/Big-Data-Poll-National,ddhq
 YouGov / The Economist,,,2025-12-26,2025-12-29,1417.0,rv,42.0,38.0,https://data.ddhq.io/polls/2025/12/30/YouGov/The-Economist-National-2025-12-26-2025-12-29,ddhq
 YouGov / The Economist,,,2025-12-26,2025-12-29,1546.0,a,36.0,31.0,https://data.ddhq.io/polls/2025/12/30/YouGov/The-Economist-National-2025-12-26-2025-12-29,ddhq
-The Bullfinch Group / The Independent Center,,,2025-12-30,2026-01-01,1000.0,rv,44.0,33.0,https://data.ddhq.io/polls/2026/01/02/The-Bullfinch-Group/The-Independent-Center-National-2025-12-30-2026-01-01,ddhq
 The Bullfinch Group / The Independent Center,,,2025-12-30,2026-01-01,1200.0,a,40.0,30.0,https://data.ddhq.io/polls/2026/01/02/The-Bullfinch-Group/The-Independent-Center-National-2025-12-30-2026-01-01,ddhq
+The Bullfinch Group / The Independent Center,,,2025-12-30,2026-01-01,1000.0,rv,44.0,33.0,https://data.ddhq.io/polls/2026/01/02/The-Bullfinch-Group/The-Independent-Center-National-2025-12-30-2026-01-01,ddhq
 Morning Consult,,,2026-01-02,2026-01-04,2201.0,rv,45.0,42.0,https://data.ddhq.io/polls/2026/01/06/Morning-Consult-National,ddhq
-YouGov / The Economist,,,2026-01-02,2026-01-05,1547.0,a,39.0,32.0,https://data.ddhq.io/polls/2026/01/06/YouGov/The-Economist-National-2026-01-02-2026-01-05,ddhq
 YouGov / The Economist,,,2026-01-02,2026-01-05,1386.0,rv,45.0,39.0,https://data.ddhq.io/polls/2026/01/06/YouGov/The-Economist-National-2026-01-02-2026-01-05,ddhq
-Cygnal,,,2026-01-07,2026-01-08,1500.0,lv,48.2,44.6,https://data.ddhq.io/polls/2026/01/15/Cygnal-National,ddhq
+YouGov / The Economist,,,2026-01-02,2026-01-05,1547.0,a,39.0,32.0,https://data.ddhq.io/polls/2026/01/06/YouGov/The-Economist-National-2026-01-02-2026-01-05,ddhq
 RMG Research / Napolitan News Service,,,2026-01-05,2026-01-08,2000.0,rv,44.0,43.0,https://data.ddhq.io/polls/2026/01/12/RMG-Research/Napolitan-News-Service-National-2026-01-05-2026-01-08,ddhq
 Rasmussen Reports,,,2026-01-07,2026-01-08,2273.0,lv,47.0,41.0,https://data.ddhq.io/polls/2026/01/19/Rasmussen-Reports-National,votehub
+Cygnal,,,2026-01-07,2026-01-08,1500.0,lv,48.2,44.6,https://data.ddhq.io/polls/2026/01/15/Cygnal-National,ddhq
 Morning Consult,,,2026-01-05,2026-01-11,17701.0,rv,45.0,43.0,https://data.ddhq.io/polls/2026/01/13/Morning-Consult-National,ddhq
-SSRS / CNN,,,2026-01-09,2026-01-12,968.0,rv,46.0,41.0,https://data.ddhq.io/polls/2026/01/18/SSRS/CNN-National-2026-01-09-2026-01-12,ddhq
+YouGov / The Economist,,,2026-01-09,2026-01-12,1597.0,a,39.0,33.0,https://data.ddhq.io/polls/2026/01/13/YouGov/The-Economist-National-2026-01-09-2026-01-12,ddhq
 Morning Consult,,,2026-01-09,2026-01-12,2201.0,rv,46.0,43.0,https://data.ddhq.io/polls/2026/01/12/Morning-Consult-National,ddhq
 YouGov / The Economist,,,2026-01-09,2026-01-12,1433.0,rv,44.0,40.0,https://data.ddhq.io/polls/2026/01/13/YouGov/The-Economist-National-2026-01-09-2026-01-12,ddhq
-YouGov / The Economist,,,2026-01-09,2026-01-12,1597.0,a,39.0,33.0,https://data.ddhq.io/polls/2026/01/13/YouGov/The-Economist-National-2026-01-09-2026-01-12,ddhq
-YouGov / Yahoo News,,,2026-01-08,2026-01-12,1148.0,rv,45.0,40.0,https://data.ddhq.io/polls/2026/01/15/YouGov/Yahoo-News-National-2026-01-08-2026-01-12,ddhq
-The Winston Group / Winning the Issues,,,2026-01-08,2026-01-12,1000.0,rv,43.0,39.0,https://data.ddhq.io/polls/2026/02/27/The-Winston-Group-National,ddhq
 CNN/SSRS,,,2026-01-09,2026-01-12,968.0,rv,46.0,41.0,https://s3.documentcloud.org/documents/26491962/cnn-poll-conducted-by-ssrs-2026-midterms-congress.pdf,votehub
+YouGov / Yahoo News,,,2026-01-08,2026-01-12,1148.0,rv,45.0,40.0,https://data.ddhq.io/polls/2026/01/15/YouGov/Yahoo-News-National-2026-01-08-2026-01-12,ddhq
+SSRS / CNN,,,2026-01-09,2026-01-12,968.0,rv,46.0,41.0,https://data.ddhq.io/polls/2026/01/18/SSRS/CNN-National-2026-01-09-2026-01-12,ddhq
+The Winston Group / Winning the Issues,,,2026-01-08,2026-01-12,1000.0,rv,43.0,39.0,https://data.ddhq.io/polls/2026/02/27/The-Winston-Group-National,ddhq
+Impact Research / National Research / The Wall Street Journal,,,2026-01-08,2026-01-13,1500.0,rv,47.0,43.0,https://data.ddhq.io/polls/2026/01/17/Impact-Research/The-Wall-Street-Journal-National-2026-01-08-2026-01-13,ddhq
 Ipsos / Reuters,,,2026-01-12,2026-01-13,1217.0,a,35.0,32.0,https://data.ddhq.io/polls/2026/01/14/Ipsos/Reuters-National-2026-01-12-2026-01-13,ddhq
 Ipsos / Reuters,,,2026-01-12,2026-01-13,941.0,rv,40.0,38.0,https://data.ddhq.io/polls/2026/01/14/Ipsos/Reuters-National-2026-01-12-2026-01-13,ddhq
-Impact Research / National Research / The Wall Street Journal,,,2026-01-08,2026-01-13,1500.0,rv,47.0,43.0,https://data.ddhq.io/polls/2026/01/17/Impact-Research/The-Wall-Street-Journal-National-2026-01-08-2026-01-13,ddhq
 Public Policy Polling / Progress Action Fund,,,2026-01-13,2026-01-14,597.0,rv,50.0,42.0,https://data.ddhq.io/polls/2026/02/04/Public-Policy-Polling-National,ddhq
 Rasmussen Reports,,,2026-01-07,2026-01-14,2273.0,lv,47.0,41.0,https://data.ddhq.io/polls/2026/01/19/Rasmussen-Reports-National,ddhq
 Research Co.,,,2026-01-13,2026-01-15,1002.0,a,42.0,36.0,https://data.ddhq.io/polls/2026/01/26/Research-Co.-National,ddhq
 The New York Times/Siena College,,,2026-01-12,2026-01-17,1625.0,rv,48.0,43.0,https://www.nytimes.com/interactive/2026/01/22/polls/times-siena-national-poll-crosstabs.html,votehub
 Siena Research Institute / The New York Times,,,2026-01-12,2026-01-17,1625.0,rv,48.0,43.0,https://data.ddhq.io/polls/2026/01/22/Siena-Research-Institute/The-New-York-Times-National-2026-01-12-2026-01-17,ddhq
-Morning Consult,,,2026-01-12,2026-01-18,12505.0,rv,45.0,43.0,https://data.ddhq.io/polls/2026/01/20/Morning-Consult-National,ddhq
 Morning Consult,,,2026-01-16,2026-01-18,2201.0,rv,45.0,43.0,https://data.ddhq.io/polls/2026/01/20/Morning-Consult-National,ddhq
+Morning Consult,,,2026-01-12,2026-01-18,12505.0,rv,45.0,43.0,https://data.ddhq.io/polls/2026/01/20/Morning-Consult-National,ddhq
 Change Research,,,2026-01-13,2026-01-19,1348.0,rv,46.0,43.0,https://data.ddhq.io/polls/2026/05/04/Change-Research-National,ddhq
-YouGov / The Economist,,,2026-01-16,2026-01-19,1544.0,rv,43.0,39.0,https://data.ddhq.io/polls/2026/01/20/YouGov/The-Economist-National-2026-01-16-2026-01-19,ddhq
 Emerson College,,,2026-01-17,2026-01-19,1000.0,rv,48.1,41.7,https://data.ddhq.io/polls/2026/01/22/Emerson-College-National,ddhq
 YouGov / The Economist,,,2026-01-16,2026-01-19,1717.0,a,39.0,34.0,https://data.ddhq.io/polls/2026/01/20/YouGov/The-Economist-National-2026-01-16-2026-01-19,ddhq
+YouGov / The Economist,,,2026-01-16,2026-01-19,1544.0,rv,43.0,39.0,https://data.ddhq.io/polls/2026/01/20/YouGov/The-Economist-National-2026-01-16-2026-01-19,ddhq
+Verasight / Strength in Numbers,,,2026-01-14,2026-01-20,1532.0,a,50.0,42.0,https://data.ddhq.io/polls/2026/01/21/Verasight/Strength-in-Numbers-National-2026-01-14-2026-01-20,ddhq
 KFF,,,2026-01-13,2026-01-20,1141.0,rv,49.0,42.0,https://data.ddhq.io/polls/2026/01/29/KFF-National,ddhq
 Verasight / Strength in Numbers,,,2026-01-14,2026-01-20,1352.0,rv,51.0,43.0,https://data.ddhq.io/polls/2026/01/21/Verasight/Strength-in-Numbers-National-2026-01-14-2026-01-20,ddhq
-Verasight / Strength in Numbers,,,2026-01-14,2026-01-20,1532.0,a,50.0,42.0,https://data.ddhq.io/polls/2026/01/21/Verasight/Strength-in-Numbers-National-2026-01-14-2026-01-20,ddhq
 Clarity Campaign Labs,,,2026-01-15,2026-01-22,1147.0,lv,51.0,42.0,https://data.ddhq.io/polls/2026/01/28/Clarity-Campaign-Labs-National,ddhq
 Quantus Insights,,,2026-01-20,2026-01-22,1000.0,rv,47.2,40.7,https://data.ddhq.io/polls/2026/01/22/Quantus-Insights-National,ddhq
 Big Data Poll,,,2026-01-22,2026-01-24,2909.0,lv,46.1,42.0,https://data.ddhq.io/polls/2026/01/27/Big-Data-Poll-National,ddhq
@@ -331,36 +331,36 @@ Morning Consult,,,2026-01-20,2026-01-25,24675.0,rv,44.0,43.0,https://data.ddhq.i
 Morning Consult,,,2026-01-23,2026-01-25,2204.0,rv,45.0,43.0,https://data.ddhq.io/polls/2026/01/27/Morning-Consult-National,ddhq
 Ipsos / Reuters,,,2026-01-23,2026-01-25,906.0,rv,41.0,37.0,https://data.ddhq.io/polls/2026/01/27/Ipsos/Reuters-National-2026-01-23-2026-01-25,ddhq
 YouGov / The Economist,,,2026-01-23,2026-01-26,1683.0,a,38.0,35.0,https://data.ddhq.io/polls/2026/01/27/YouGov/The-Economist-National-2026-01-23-2026-01-26,ddhq
-YouGov / The Economist,,,2026-01-23,2026-01-26,1519.0,rv,43.0,38.0,https://data.ddhq.io/polls/2026/01/27/YouGov/The-Economist-National-2026-01-23-2026-01-26,ddhq
 Focaldata,,,2026-01-23,2026-01-26,2037.0,a,39.0,35.0,https://data.ddhq.io/polls/2026/02/13/Focaldata-National,ddhq
 Echelon Insights,,,2026-01-22,2026-01-26,1029.0,lv,48.0,42.0,https://data.ddhq.io/polls/2026/01/26/Echelon-Insights-National,ddhq
 Beacon Research / Shaw & Company Research / Fox News,,,2026-01-23,2026-01-26,1005.0,rv,52.0,46.0,https://data.ddhq.io/polls/2026/01/28/Beacon-Research/Shaw-&-Company-Research/Fox-News-National-2026-01-23-2026-01-26,ddhq
-The Argument,,,2026-01-26,2026-01-27,1515.0,rv,46.0,42.0,https://data.ddhq.io/polls/2026/01/29/The-Argument-National,ddhq
-McLaughlin & Associates,,,2026-01-21,2026-01-27,1000.0,rv,46.0,44.0,https://data.ddhq.io/polls/2026/02/04/McLaughlin-&-Associates-National,ddhq
+YouGov / The Economist,,,2026-01-23,2026-01-26,1519.0,rv,43.0,38.0,https://data.ddhq.io/polls/2026/01/27/YouGov/The-Economist-National-2026-01-23-2026-01-26,ddhq
 The Argument/Verasight,,,2026-01-26,2026-01-27,,lv,55.0,45.0,https://www.theargumentmag.com/p/immigration-is-turning-into-a-disaster,votehub
+The Argument,,,2026-01-26,2026-01-27,1515.0,rv,46.0,42.0,https://data.ddhq.io/polls/2026/01/29/The-Argument-National,ddhq
 The Argument/Verasight,,,2026-01-26,2026-01-27,1515.0,rv,52.0,48.0,https://www.theargumentmag.com/p/immigration-is-turning-into-a-disaster,votehub
-Marquette University Law School,,,2026-01-21,2026-01-28,577.0,lv,52.0,45.0,https://data.ddhq.io/polls/2026/02/04/Marquette-University-Law-School-National,ddhq
-Marquette University Law School,,,2026-01-21,2026-01-28,869.0,rv,48.0,44.0,https://data.ddhq.io/polls/2026/02/04/Marquette-University-Law-School-National,ddhq
+McLaughlin & Associates,,,2026-01-21,2026-01-27,1000.0,rv,46.0,44.0,https://data.ddhq.io/polls/2026/02/04/McLaughlin-&-Associates-National,ddhq
 Marquette University Law School,,,2026-01-21,2026-01-28,1003.0,a,45.0,39.0,https://data.ddhq.io/polls/2026/02/04/Marquette-University-Law-School-National,ddhq
+Marquette University Law School,,,2026-01-21,2026-01-28,869.0,rv,48.0,44.0,https://data.ddhq.io/polls/2026/02/04/Marquette-University-Law-School-National,ddhq
 Cygnal,,,2026-01-27,2026-01-28,1004.0,lv,48.0,44.0,https://data.ddhq.io/polls/2026/02/02/Cygnal-National,ddhq
-TIPP Insights,,Issues & Insights,2026-01-27,2026-01-29,1126.0,rv,45.0,42.0,https://issuesinsights.com/2026/02/16/who-leads-in-2028-presidential-race-and-in-2026-midterm-elections-ii-tipp-poll,votehub
+Marquette University Law School,,,2026-01-21,2026-01-28,577.0,lv,52.0,45.0,https://data.ddhq.io/polls/2026/02/04/Marquette-University-Law-School-National,ddhq
 HarrisX/Harris Poll,,Harvard CAPS,2026-01-28,2026-01-29,2000.0,lv,52.0,48.0,https://harvardharrispoll.com/wp-content/uploads/2026/02/HHP_Jan2026_KeyResults.pdf,votehub
+TIPP Insights,,Issues & Insights,2026-01-27,2026-01-29,1126.0,rv,45.0,42.0,https://issuesinsights.com/2026/02/16/who-leads-in-2028-presidential-race-and-in-2026-midterm-elections-ii-tipp-poll,votehub
 Harris Poll / Harvard University Center for American Political Studies,,,2026-01-28,2026-01-29,1019.0,lv,41.0,41.0,https://data.ddhq.io/polls/2026/02/03/Harris-Poll/Harvard-University-Center-for-American-Political-Studies-National-2026-01-28-2026-01-29,ddhq
 Public Policy Polling,,,2026-01-29,2026-01-30,652.0,rv,48.0,41.0,https://data.ddhq.io/polls/2026/01/31/Public-Policy-Polling-National,ddhq
-Morning Consult,,,2026-01-26,2026-02-01,25492.0,rv,44.0,42.0,https://data.ddhq.io/polls/2026/02/09/Morning-Consult-National,ddhq
 Morning Consult,,,2026-01-30,2026-02-01,2201.0,rv,47.0,42.0,https://data.ddhq.io/polls/2026/02/02/Morning-Consult-National,ddhq
+Morning Consult,,,2026-01-26,2026-02-01,25492.0,rv,44.0,42.0,https://data.ddhq.io/polls/2026/02/09/Morning-Consult-National,ddhq
 YouGov / The Economist,,,2026-01-30,2026-02-02,1501.0,rv,44.0,40.0,https://data.ddhq.io/polls/2026/02/03/YouGov/The-Economist-National-2026-01-30-2026-02-02,ddhq
 YouGov / The Economist,,,2026-01-30,2026-02-02,1668.0,a,36.0,34.0,https://data.ddhq.io/polls/2026/02/03/YouGov/The-Economist-National-2026-01-30-2026-02-02,ddhq
 Cygnal,,,2026-02-03,2026-02-04,1500.0,lv,47.8,44.4,https://data.ddhq.io/polls/2026/02/12/Cygnal-National,ddhq
 John Zogby Strategies,,,2026-02-04,2026-02-05,1000.0,lv,47.0,42.0,https://data.ddhq.io/polls/2026/02/06/John-Zogby-Strategies-National,ddhq
 Morning Consult,,,2026-02-02,2026-02-08,24606.0,rv,45.0,42.0,https://data.ddhq.io/polls/2026/02/09/Morning-Consult-National,ddhq
+YouGov / The Economist,,,2026-02-06,2026-02-09,1509.0,rv,47.0,40.0,https://data.ddhq.io/polls/2026/02/10/YouGov/The-Economist-National-2026-02-06-2026-02-09,ddhq
 YouGov / The Economist,,,2026-02-06,2026-02-09,1728.0,a,39.0,31.0,https://data.ddhq.io/polls/2026/02/10/YouGov/The-Economist-National-2026-02-06-2026-02-09,ddhq
 YouGov / The Economist,,,2026-02-06,2026-02-09,1549.0,rv,44.0,38.0,https://data.ddhq.io/polls/2026/02/10/YouGov/The-Economist-National-2026-02-06-2026-02-09,ddhq
 Morning Consult,,,2026-02-06,2026-02-09,2200.0,rv,45.0,41.0,https://data.ddhq.io/polls/2026/02/09/Morning-Consult-National,ddhq
-YouGov / The Economist,,,2026-02-06,2026-02-09,1509.0,rv,47.0,40.0,https://data.ddhq.io/polls/2026/02/10/YouGov/The-Economist-National-2026-02-06-2026-02-09,ddhq
 YouGov / The Economist,,,2026-02-06,2026-02-09,1678.0,a,39.0,33.0,https://data.ddhq.io/polls/2026/02/10/YouGov/The-Economist-National-2026-02-06-2026-02-09,ddhq
-Focaldata,,,2026-02-10,2026-02-10,1148.0,a,37.0,34.0,https://data.ddhq.io/polls/2026/02/13/Focaldata-National,ddhq
 The Argument/Verasight,,,2026-02-04,2026-02-10,,lv,53.0,47.0,https://www.theargumentmag.com/p/the-trans-rights-backlash-is-real,votehub
+Focaldata,,,2026-02-10,2026-02-10,1148.0,a,37.0,34.0,https://data.ddhq.io/polls/2026/02/13/Focaldata-National,ddhq
 The Argument,,,2026-02-04,2026-02-10,3003.0,rv,46.0,41.0,https://data.ddhq.io/polls/2026/02/17/The-Argument-National,ddhq
 The Argument/Verasight,,,2026-02-04,2026-02-10,3003.0,rv,53.0,47.0,https://www.theargumentmag.com/p/the-trans-rights-backlash-is-real,votehub
 RMG Research / Napolitan News Service,,,2026-02-09,2026-02-12,2000.0,rv,41.0,44.0,https://data.ddhq.io/polls/2026/03/06/RMG-Research/Napolitan-News-Service-National-2026-02-09-2026-02-12,ddhq
@@ -370,59 +370,58 @@ Morning Consult,,,2026-02-09,2026-02-15,24849.0,rv,45.0,42.0,https://data.ddhq.i
 Ipsos / Reuters,,,2026-02-13,2026-02-16,1117.0,a,36.0,32.0,https://data.ddhq.io/polls/2026/02/18/Ipsos/Reuters-National-2026-02-13-2026-02-16,ddhq
 Ipsos / Reuters,,,2026-02-13,2026-02-16,846.0,rv,41.0,37.0,https://data.ddhq.io/polls/2026/02/18/Ipsos/Reuters-National-2026-02-13-2026-02-16,ddhq
 Morning Consult,,,2026-02-13,2026-02-16,2200.0,rv,45.0,43.0,https://data.ddhq.io/polls/2026/02/20/Morning-Consult-National,ddhq
-YouGov,,The Economist,2026-02-13,2026-02-16,1509.0,rv,47.0,40.0,https://d3nkl3psvxxpe9.cloudfront.net/documents/econTabReport_usZL1Jt.pdf,votehub
-YouGov,,The Economist,2026-02-13,2026-02-16,1682.0,a,39.0,33.0,https://d3nkl3psvxxpe9.cloudfront.net/documents/econTabReport_usZL1Jt.pdf,votehub
-Ipsos / ABC News / The Washington Post,,,2026-02-12,2026-02-17,2087.0,rv,47.0,45.0,https://data.ddhq.io/polls/2026/02/22/Ipsos/ABC-News/The-Washington-Post-National-2026-02-12-2026-02-17,ddhq
 Ipsos / ABC News / The Washington Post,,,2026-02-12,2026-02-17,2589.0,a,43.0,39.0,https://data.ddhq.io/polls/2026/02/22/Ipsos/ABC-News/The-Washington-Post-National-2026-02-12-2026-02-17,ddhq
-Bowling Green State University Democracy and Public Policy Research Network / YouGov,,,2026-02-13,2026-02-18,1200.0,rv,49.0,41.0,https://data.ddhq.io/polls/2026/02/24/Bowling-Green-State-University-Democracy-and-Public-Policy-Research-Network/YouGov-National,ddhq
-Big Data Poll / Public Polling Project / 1776 Law Center,,,2026-02-16,2026-02-18,2012.0,rv,45.3,37.3,https://data.ddhq.io/polls/2026/02/20/Big-Data-Poll-National,ddhq
-Big Data Poll / Public Polling Project / 1776 Law Center,,,2026-02-16,2026-02-18,1805.0,lv,47.6,38.9,https://data.ddhq.io/polls/2026/02/20/Big-Data-Poll-National,ddhq
+Ipsos / ABC News / The Washington Post,,,2026-02-12,2026-02-17,2087.0,rv,47.0,45.0,https://data.ddhq.io/polls/2026/02/22/Ipsos/ABC-News/The-Washington-Post-National-2026-02-12-2026-02-17,ddhq
 Change Research,,,2026-02-05,2026-02-18,1741.0,rv,43.0,40.0,https://data.ddhq.io/polls/2026/05/05/Change-Research-National,ddhq
+Big Data Poll / Public Polling Project / 1776 Law Center,,,2026-02-16,2026-02-18,1805.0,lv,47.6,38.9,https://data.ddhq.io/polls/2026/02/20/Big-Data-Poll-National,ddhq
+Big Data Poll / Public Polling Project / 1776 Law Center,,,2026-02-16,2026-02-18,2012.0,rv,45.3,37.3,https://data.ddhq.io/polls/2026/02/20/Big-Data-Poll-National,ddhq
+YouGov / Bowling Green State University Democracy and Public Policy Research Network,,,2026-02-13,2026-02-18,1200.0,rv,49.0,41.0,https://data.ddhq.io/polls/2026/02/24/Bowling-Green-State-University-Democracy-and-Public-Policy-Research-Network/YouGov-National,ddhq
+Bowling Green State University/YouGov,,,2026-02-13,2026-02-18,1200.0,rv,49.0,41.0,https://scholarworks.bgsu.edu/cgi/viewcontent.cgi?article=1017&context=depo,votehub
 Talker Research / Scripps News,,,2026-02-13,2026-02-19,1000.0,a,42.0,36.0,https://data.ddhq.io/polls/2026/02/24/Talker-Research/Scripps-News-National-2026-02-13-2026-02-19,ddhq
 Verasight / Strength in Numbers,,,2026-02-18,2026-02-20,1566.0,a,50.0,40.0,https://data.ddhq.io/polls/2026/02/24/Verasight/Strength-in-Numbers-National-2026-02-18-2026-02-20,ddhq
-Emerson College,,,2026-02-21,2026-02-22,1000.0,lv,50.4,42.4,https://data.ddhq.io/polls/2026/02/26/Emerson-College-National,ddhq
-Morning Consult,,,2026-02-16,2026-02-22,26087.0,rv,45.0,42.0,https://data.ddhq.io/polls/2026/02/27/Morning-Consult-National,ddhq
 Global Strategy Group / Campaign for a Family Friendly Economy,,,2026-02-17,2026-02-22,1051.0,lv,48.0,40.0,https://data.ddhq.io/polls/2026/03/25/Global-Strategy-Group-National,ddhq
 Morning Consult,,,2026-02-20,2026-02-22,2202.0,rv,46.0,42.0,https://data.ddhq.io/polls/2026/02/25/Morning-Consult-National,ddhq
-Pennsylvania State University McCourtney Institute for Democracy/YouGov,,,2026-02-18,2026-02-23,824.0,rv,42.0,37.0,https://democracy.psu.edu/wp-content/uploads/sites/14/2026/03/MOTN-GenericBallotFeb2026.pdf,votehub
+Morning Consult,,,2026-02-16,2026-02-22,26087.0,rv,45.0,42.0,https://data.ddhq.io/polls/2026/02/27/Morning-Consult-National,ddhq
+Emerson College,,,2026-02-21,2026-02-22,1000.0,lv,50.4,42.4,https://data.ddhq.io/polls/2026/02/26/Emerson-College-National,ddhq
+Ipsos / Reuters,,,2026-02-18,2026-02-23,4638.0,a,35.0,32.0,https://data.ddhq.io/polls/2026/03/03/Ipsos/Reuters-National-2026-02-18-2026-02-23,ddhq
 Grayhouse,R,America One Policies,2026-02-20,2026-02-23,1394.0,rv,43.0,40.0,https://cdn.prod.website-files.com/5d02aaade6188137a65c8441/69a9b8dd9009aa1372749a66_Iran%20and%20Affordability%20Deck_0305.pdf,votehub
-Ipsos / Reuters,,,2026-02-18,2026-02-23,3686.0,rv,40.0,38.0,https://data.ddhq.io/polls/2026/03/03/Ipsos/Reuters-National-2026-02-18-2026-02-23,ddhq
+Pennsylvania State University McCourtney Institute for Democracy/YouGov,,,2026-02-18,2026-02-23,824.0,rv,42.0,37.0,https://democracy.psu.edu/wp-content/uploads/sites/14/2026/03/MOTN-GenericBallotFeb2026.pdf,votehub
 YouGov / The Economist,,,2026-02-20,2026-02-23,1401.0,rv,45.0,41.0,https://data.ddhq.io/polls/2026/02/24/YouGov/The-Economist-National-2026-02-20-2026-02-23,ddhq
 YouGov / Pennsylvania State University McCourtney Institute for Democracy,,,2026-02-18,2026-02-23,824.0,lv,42.0,37.0,https://data.ddhq.io/polls/2026/03/11/Pennsylvania-State-University-McCourtney-Institute-for-Democracy/YouGov-National,ddhq
+Ipsos / Reuters,,,2026-02-18,2026-02-23,3686.0,rv,40.0,38.0,https://data.ddhq.io/polls/2026/03/03/Ipsos/Reuters-National-2026-02-18-2026-02-23,ddhq
 Echelon Insights,,,2026-02-19,2026-02-23,1002.0,lv,50.0,44.0,https://data.ddhq.io/polls/2026/02/23/Echelon-Insights-National,ddhq
-Ipsos / Reuters,,,2026-02-18,2026-02-23,4638.0,a,35.0,32.0,https://data.ddhq.io/polls/2026/03/03/Ipsos/Reuters-National-2026-02-18-2026-02-23,ddhq
+Cygnal / American Principles Project,,,2026-02-24,2026-02-26,1048.0,lv,48.3,44.6,https://data.ddhq.io/polls/2026/03/06/Cygnal/American-Principles-Project-National-2026-02-24-2026-02-26,ddhq
+Harris Poll / Harvard University Center for American Political Studies,,,2026-02-25,2026-02-26,1999.0,lv,50.0,50.0,https://data.ddhq.io/polls/2026/03/09/Harris-Poll/Harvard-University-Center-for-American-Political-Studies-National-2026-02-25-2026-02-26,ddhq
 HarrisX/Harris,,Harvard CAPS,2026-02-25,2026-02-26,,lv,50.0,50.0,https://harvardharrispoll.com/wp-content/uploads/2026/03/HHP_Feb2026_KeyResults_Mon.pdf,votehub
 HarrisX/Harris,,Harvard CAPS,2026-02-25,2026-02-26,1999.0,rv,50.0,50.0,https://harvardharrispoll.com/wp-content/uploads/2026/03/HHP_Feb2026_KeyResults_Mon.pdf,votehub
-Harris Poll / Harvard University Center for American Political Studies,,,2026-02-25,2026-02-26,1999.0,lv,50.0,50.0,https://data.ddhq.io/polls/2026/03/09/Harris-Poll/Harvard-University-Center-for-American-Political-Studies-National-2026-02-25-2026-02-26,ddhq
-Cygnal / American Principles Project,,,2026-02-24,2026-02-26,1048.0,lv,48.3,44.6,https://data.ddhq.io/polls/2026/03/06/Cygnal/American-Principles-Project-National-2026-02-24-2026-02-26,ddhq
-YouGov,,CBS News,2026-02-25,2026-02-27,1523.0,rv,45.0,40.0,https://assets1.cbsnewsstatic.com/hub/cms/prod_cms_alt/file/2026/03/02/19e472d6-ce4d-4193-b4cc-0e5086fb97f7/cbsnews_20260301_parties-tues.pdf,votehub
 TIPP Insights,,,2026-02-24,2026-02-27,1264.0,rv,46.0,44.0,https://tippinsights.com/americas-stalemate,votehub
-The Public Sentiment Institute,,,2026-02-28,2026-02-28,249.0,lv,50.0,41.0,https://docs.google.com/spreadsheets/d/1m40rnoHyDTHRmVYF9mYbAjKrriNucbiqzlIO_4nAq_w/edit?gid=1327702577#gid=1327702577,votehub
+YouGov,,CBS News,2026-02-25,2026-02-27,1523.0,rv,45.0,40.0,https://assets1.cbsnewsstatic.com/hub/cms/prod_cms_alt/file/2026/03/02/19e472d6-ce4d-4193-b4cc-0e5086fb97f7/cbsnews_20260301_parties-tues.pdf,votehub
 The Public Sentiment Institute,,,2026-02-28,2026-02-28,316.0,rv,41.0,33.0,https://docs.google.com/spreadsheets/d/1m40rnoHyDTHRmVYF9mYbAjKrriNucbiqzlIO_4nAq_w/edit?gid=1327702577#gid=1327702577,votehub
-Morning Consult,,,2026-02-27,2026-03-01,2201.0,rv,47.0,42.0,https://data.ddhq.io/polls/2026/03/06/Morning-Consult-National,ddhq
+The Public Sentiment Institute,,,2026-02-28,2026-02-28,249.0,lv,50.0,41.0,https://docs.google.com/spreadsheets/d/1m40rnoHyDTHRmVYF9mYbAjKrriNucbiqzlIO_4nAq_w/edit?gid=1327702577#gid=1327702577,votehub
 Morning Consult,,,2026-02-23,2026-03-01,25404.0,rv,45.0,42.0,https://data.ddhq.io/polls/2026/03/06/Morning-Consult-National,ddhq
+Morning Consult,,,2026-02-27,2026-03-01,2201.0,rv,47.0,42.0,https://data.ddhq.io/polls/2026/03/06/Morning-Consult-National,ddhq
 YouGov / The Economist,,,2026-02-27,2026-03-02,1363.0,rv,45.0,41.0,https://data.ddhq.io/polls/2026/03/03/YouGov/The-Economist-National-2026-02-27-2026-03-02,ddhq
 YouGov / The Economist,,,2026-02-27,2026-03-02,1512.0,a,40.0,33.0,https://data.ddhq.io/polls/2026/03/03/YouGov/The-Economist-National-2026-02-27-2026-03-02,ddhq
-Quantus Insights,,,2026-03-02,2026-03-03,1624.0,lv,45.7,40.8,https://data.ddhq.io/polls/2026/03/04/Quantus-Insights-National,ddhq
 Hart Research Associates/Public Opinion Strategies,,NBC News,2026-02-27,2026-03-03,1000.0,rv,50.0,44.0,https://s3.documentcloud.org/documents/27777984/nbc-news-march-2026-poll-03-08-2024-release-final.pdf,votehub
+Quantus Insights,,,2026-03-02,2026-03-03,1624.0,lv,45.7,40.8,https://data.ddhq.io/polls/2026/03/04/Quantus-Insights-National,ddhq
+Cygnal,,,2026-03-03,2026-03-04,1500.0,lv,49.0,44.8,https://data.ddhq.io/polls/2026/03/09/Cygnal-National,ddhq
 RMG Research / Napolitan News Service,,,2026-03-02,2026-03-04,2000.0,rv,44.0,43.0,https://data.ddhq.io/polls/2026/03/06/RMG-Research/Napolitan-News-Service-National-2026-03-02-2026-03-04,ddhq
 Marist College / NPR / PBS NewsHour,,,2026-03-02,2026-03-04,1392.0,rv,53.0,44.0,https://data.ddhq.io/polls/2026/03/11/Marist-College/NPR/PBS-NewsHour-National-2026-03-02-2026-03-04,ddhq
-Cygnal,,,2026-03-03,2026-03-04,1500.0,lv,49.0,44.8,https://data.ddhq.io/polls/2026/03/09/Cygnal-National,ddhq
 Noble Predictive Insights / The Center Square,,,2026-03-02,2026-03-05,2659.0,rv,44.0,43.0,https://data.ddhq.io/polls/2026/03/14/Noble-Predictive-Insights/The-Center-Square-National-2026-03-02-2026-03-05,ddhq
 Clarity Campaign Labs,,,2026-02-26,2026-03-07,1004.0,lv,47.0,43.0,https://data.ddhq.io/polls/2026/03/16/Clarity-Campaign-Labs-National,ddhq
 Morning Consult,,,2026-03-06,2026-03-08,2202.0,rv,47.0,43.0,https://data.ddhq.io/polls/2026/03/11/Morning-Consult-National,ddhq
 Morning Consult,,,2026-03-02,2026-03-08,25948.0,rv,44.0,42.0,https://data.ddhq.io/polls/2026/03/13/Morning-Consult-National,ddhq
-YouGov / The Economist,,,2026-03-06,2026-03-09,1403.0,rv,45.0,42.0,https://data.ddhq.io/polls/2026/03/10/YouGov/The-Economist-National-2026-03-06-2026-03-09,ddhq
 YouGov / The Economist,,,2026-03-06,2026-03-09,1561.0,a,40.0,36.0,https://data.ddhq.io/polls/2026/03/10/YouGov/The-Economist-National-2026-03-06-2026-03-09,ddhq
 McLaughlin & Associates,,,2026-03-04,2026-03-09,1000.0,rv,47.0,43.0,https://data.ddhq.io/polls/2026/03/13/McLaughlin-&-Associates-National,ddhq
+YouGov / The Economist,,,2026-03-06,2026-03-09,1403.0,rv,45.0,42.0,https://data.ddhq.io/polls/2026/03/10/YouGov/The-Economist-National-2026-03-06-2026-03-09,ddhq
 Focaldata,,,2026-03-06,2026-03-10,1782.0,a,40.0,35.0,https://data.ddhq.io/polls/2026/03/13/Focaldata-National,ddhq
 Change Research,,,2026-03-08,2026-03-12,1540.0,rv,47.0,41.0,https://data.ddhq.io/polls/862_20260504_Change_0326.pdf,ddhq
 Morning Consult,,,2026-03-09,2026-03-15,26634.0,rv,45.0,42.0,https://data.ddhq.io/polls/2026/03/16/Morning-Consult-National,ddhq
 Survey 160,,,2026-03-09,2026-03-15,1546.0,rv,48.0,38.0,https://data.ddhq.io/polls/2026/03/26/Survey-160-National,ddhq
+YouGov / The Economist,,,2026-03-13,2026-03-16,1427.0,rv,43.0,41.0,https://data.ddhq.io/polls/2026/03/17/YouGov/The-Economist-National-2026-03-13-2026-03-16,ddhq
 Echelon Insights,,,2026-03-12,2026-03-16,1033.0,lv,49.0,43.0,https://data.ddhq.io/polls/2026/03/16/Echelon-Insights-National,ddhq
 YouGov / Yahoo News,,,2026-03-12,2026-03-16,1147.0,rv,44.0,40.0,https://data.ddhq.io/polls/2026/03/18/YouGov/Yahoo-News-National-2026-03-12-2026-03-16,ddhq
 YouGov / The Economist,,,2026-03-13,2026-03-16,1593.0,a,39.0,35.0,https://data.ddhq.io/polls/2026/03/17/YouGov/The-Economist-National-2026-03-13-2026-03-16,ddhq
-YouGov / The Economist,,,2026-03-13,2026-03-16,1427.0,rv,43.0,41.0,https://data.ddhq.io/polls/2026/03/17/YouGov/The-Economist-National-2026-03-13-2026-03-16,ddhq
 Morning Consult,,,2026-03-13,2026-03-16,2200.0,rv,48.0,40.0,https://data.ddhq.io/polls/2026/03/16/Morning-Consult-National,ddhq
 The Winston Group,,,2026-03-15,2026-03-17,1000.0,rv,45.0,37.0,https://data.ddhq.io/polls/2026/04/09/The-Winston-Group-National,ddhq
 The Argument,,,2026-03-12,2026-03-17,1519.0,rv,46.0,40.0,https://data.ddhq.io/polls/2026/03/23/The-Argument-National,ddhq
@@ -431,31 +430,31 @@ The Argument/Verasight,,,2026-03-12,2026-03-17,1519.0,rv,54.0,46.0,https://subst
 Quantus Insights,,,2026-03-17,2026-03-18,1064.0,lv,46.7,41.7,https://data.ddhq.io/polls/2026/03/20/Quantus-Insights-National,ddhq
 Verasight / Strength in Numbers,,,2026-03-16,2026-03-18,1530.0,a,48.0,41.0,https://data.ddhq.io/polls/2026/03/24/Verasight/Strength-in-Numbers-National-2026-03-16-2026-03-18,ddhq
 John Zogby Strategies,,,2026-03-17,2026-03-18,946.0,lv,46.3,45.8,https://data.ddhq.io/polls/2026/03/20/John-Zogby-Strategies-National,ddhq
-Ipsos / Reuters,,,2026-03-17,2026-03-19,1206.0,rv,40.0,37.0,https://data.ddhq.io/polls/2026/03/21/Ipsos/Reuters-National-2026-03-17-2026-03-19,ddhq
 Ipsos / Reuters,,,2026-03-17,2026-03-19,1545.0,a,35.0,32.0,https://data.ddhq.io/polls/2026/03/21/Ipsos/Reuters-National-2026-03-17-2026-03-19,ddhq
+Ipsos / Reuters,,,2026-03-17,2026-03-19,1206.0,rv,40.0,37.0,https://data.ddhq.io/polls/2026/03/21/Ipsos/Reuters-National-2026-03-17-2026-03-19,ddhq
 Impact Research/BSP Research,,Third Way; UnidosUS,2026-03-10,2026-03-20,1000.0,lv,45.0,41.0,https://www.thirdway.org/memo/president-trumps-immigration-problem,votehub
-Morning Consult,,,2026-03-16,2026-03-22,26406.0,rv,45.0,42.0,https://data.ddhq.io/polls/2026/03/24/Morning-Consult-National,ddhq
 Morning Consult / Gambling is Not Investing,,,2026-03-17,2026-03-22,15029.0,a,47.0,42.0,https://data.ddhq.io/polls/2026/04/01/Morning-Consult/Gambling-is-Not-Investing-National-2026-03-17-2026-03-22,ddhq
-YouGov / The Economist,,,2026-03-20,2026-03-23,1664.0,a,39.0,36.0,https://data.ddhq.io/polls/2026/03/24/YouGov/The-Economist-National-2026-03-20-2026-03-23,ddhq
+Morning Consult,,,2026-03-16,2026-03-22,26406.0,rv,45.0,42.0,https://data.ddhq.io/polls/2026/03/24/Morning-Consult-National,ddhq
 Rasmussen Reports,,,2026-03-16,2026-03-23,2222.0,lv,45.0,42.0,https://data.ddhq.io/polls/2026/03/26/Rasmussen-Reports-National,ddhq
-Ipsos / Reuters,,,2026-03-20,2026-03-23,985.0,rv,40.0,38.0,https://data.ddhq.io/polls/2026/03/24/Ipsos/Reuters-National-2026-03-20-2026-03-23,ddhq
-YouGov / The Economist,,,2026-03-20,2026-03-23,1501.0,rv,45.0,42.0,https://data.ddhq.io/polls/2026/03/24/YouGov/The-Economist-National-2026-03-20-2026-03-23,ddhq
 Yale University Institution for Social and Policy Studies,,,2026-03-09,2026-03-23,3429.0,rv,46.0,43.7,https://data.ddhq.io/polls/2026/04/13/Yale-University-Institution-for-Social-and-Policy-Studies-National,ddhq
+YouGov / The Economist,,,2026-03-20,2026-03-23,1501.0,rv,45.0,42.0,https://data.ddhq.io/polls/2026/03/24/YouGov/The-Economist-National-2026-03-20-2026-03-23,ddhq
+YouGov / The Economist,,,2026-03-20,2026-03-23,1664.0,a,39.0,36.0,https://data.ddhq.io/polls/2026/03/24/YouGov/The-Economist-National-2026-03-20-2026-03-23,ddhq
+Ipsos / Reuters,,,2026-03-20,2026-03-23,985.0,rv,40.0,38.0,https://data.ddhq.io/polls/2026/03/24/Ipsos/Reuters-National-2026-03-20-2026-03-23,ddhq
 Quinnipiac University,,,2026-03-19,2026-03-23,1191.0,rv,51.0,40.0,https://poll.qu.edu/images/polling/us/us03252026_ueek31.pdf,votehub
 Big Data Poll,,,2026-03-22,2026-03-24,2159.0,lv,47.5,41.3,https://data.ddhq.io/polls/2026/03/26/Big-Data-Poll-National,ddhq
 Big Data Poll,,,2026-03-22,2026-03-24,3003.0,rv,45.1,37.1,https://data.ddhq.io/polls/2026/03/26/Big-Data-Poll-National,ddhq
+HarrisX/Harris,,Harvard CAPS,2026-03-25,2026-03-26,,lv,52.0,48.0,https://x.com/IAPolls2022/status/2038696085267394990?s=20,votehub
+Harris Poll / Harvard University Center for American Political Studies,,,2026-03-25,2026-03-26,2009.0,lv,51.0,49.0,https://data.ddhq.io/polls/2026/03/31/Harris-Poll/Harvard-University-Center-for-American-Political-Studies-National-2026-03-25-2026-03-26,ddhq
 Quantus Insights,,,2026-03-25,2026-03-26,1472.0,lv,47.0,41.3,https://data.ddhq.io/polls/2026/03/27/Quantus-Insights-National,ddhq
 HarrisX/Harris,,Harvard CAPS,2026-03-25,2026-03-26,2009.0,rv,51.0,49.0,https://x.com/IAPolls2022/status/2038692771830063336?s=20,votehub
-Harris Poll / Harvard University Center for American Political Studies,,,2026-03-25,2026-03-26,2009.0,lv,51.0,49.0,https://data.ddhq.io/polls/2026/03/31/Harris-Poll/Harvard-University-Center-for-American-Political-Studies-National-2026-03-25-2026-03-26,ddhq
-HarrisX/Harris,,Harvard CAPS,2026-03-25,2026-03-26,,lv,52.0,48.0,https://x.com/IAPolls2022/status/2038696085267394990?s=20,votehub
-Morning Consult,,,2026-03-23,2026-03-29,26725.0,rv,45.0,42.0,https://data.ddhq.io/polls/2026/03/30/Morning-Consult-National,ddhq
 Morning Consult / Cato Institute,,,2026-03-27,2026-03-29,2002.0,rv,47.0,42.0,https://data.ddhq.io/polls/2026/09/19/Morning-Consult/Cato-Institute-National-2026-03-27-2026-03-29,ddhq
+Morning Consult,,,2026-03-23,2026-03-29,26725.0,rv,45.0,42.0,https://data.ddhq.io/polls/2026/03/30/Morning-Consult-National,ddhq
 CNN/SSRS,,,2026-03-26,2026-03-30,951.0,rv,48.0,42.0,https://embed.documentcloud.org/documents/28014525-cnn-poll-conducted-by-ssrs-2026-midterms-parties/?embed=1&responsive=1&title=1&onlyshoworg=1,votehub
-YouGov / The Economist,,,2026-03-27,2026-03-30,1674.0,a,39.0,33.0,https://data.ddhq.io/polls/2026/03/31/YouGov/The-Economist-National-2026-03-27-2026-03-30,ddhq
 SSRS / CNN,,,2026-03-26,2026-03-30,951.0,rv,48.0,42.0,https://data.ddhq.io/polls/2026/04/03/SSRS/CNN-National-2026-03-26-2026-03-30,ddhq
+University of Massachusetts Lowell Center for Public Opinion / YouGov,,,2026-03-26,2026-03-30,1000.0,a,38.0,35.0,https://data.ddhq.io/polls/2026/04/09/University-of-Massachusetts-Lowell-Center-for-Public-Opinion/YouGov-National,ddhq
 SSRS / CNN,,,2026-03-26,2026-03-30,951.0,rv,48.0,42.0,https://data.ddhq.io/polls/2026/04/03/SSRS/CNN-National-2026-03-26-2026-03-30,ddhq
 YouGov / The Economist,,,2026-03-27,2026-03-30,1502.0,rv,45.0,39.0,https://data.ddhq.io/polls/2026/03/31/YouGov/The-Economist-National-2026-03-27-2026-03-30,ddhq
-University of Massachusetts Lowell Center for Public Opinion / YouGov,,,2026-03-26,2026-03-30,1000.0,a,38.0,35.0,https://data.ddhq.io/polls/2026/04/09/University-of-Massachusetts-Lowell-Center-for-Public-Opinion/YouGov-National,ddhq
+YouGov / The Economist,,,2026-03-27,2026-03-30,1674.0,a,39.0,33.0,https://data.ddhq.io/polls/2026/03/31/YouGov/The-Economist-National-2026-03-27-2026-03-30,ddhq
 Cygnal,,,2026-04-02,2026-04-03,1500.0,lv,48.8,43.3,https://data.ddhq.io/polls/2026/04/08/Cygnal-National,ddhq
 Morning Consult,,,2026-03-30,2026-04-05,27594.0,rv,45.0,42.0,https://data.ddhq.io/polls/2026/03/13/Morning-Consult-National,ddhq
 YouGov / The Economist,,,2026-04-03,2026-04-06,1558.0,rv,44.0,42.0,https://data.ddhq.io/polls/2026/04/07/YouGov/The-Economist-National-2026-04-03-2026-04-06,ddhq
@@ -463,47 +462,47 @@ YouGov / The Economist,,,2026-04-03,2026-04-06,1745.0,a,38.0,36.0,https://data.d
 Tavern Research,,,2026-04-07,2026-04-07,538.0,lv,41.0,40.0,https://data.ddhq.io/polls/959_47%20Crosstabs.pdf,ddhq
 Change Research,,,2026-04-03,2026-04-07,2702.0,rv,47.0,42.0,https://data.ddhq.io/polls/2026/05/02/Change-Research-National,ddhq
 Tavern Research,,,2026-04-08,2026-04-08,527.0,lv,44.0,43.0,https://data.ddhq.io/polls/2026/06/15/Tavern-Research-National,ddhq
-Echelon Insights / NetChoice,,,2026-04-03,2026-04-09,2880.0,lv,50.0,44.0,https://data.ddhq.io/polls/2026/04/20/Echelon-Insights/NetChoice-National-2026-04-03-2026-04-09,ddhq
-Tavern Research,,,2026-04-09,2026-04-09,510.0,lv,43.0,43.0,https://data.ddhq.io/polls/1268_49%20Crosstabs.pdf,ddhq
 RMG Research / Napolitan News Service,,,2026-04-06,2026-04-09,2000.0,rv,45.0,42.0,https://data.ddhq.io/polls/2026/04/10/RMG-Research/Napolitan-News-Service-National-2026-04-06-2026-04-09,ddhq
+Tavern Research,,,2026-04-09,2026-04-09,510.0,lv,43.0,43.0,https://data.ddhq.io/polls/1268_49%20Crosstabs.pdf,ddhq
 Morning Consult,,,2026-04-06,2026-04-09,2200.0,rv,46.0,42.0,https://drive.google.com/file/d/1J-vPAS1XXmBtiDUw4rDA4p3G7jHbQ6b7/view,votehub
-Morning Consult,,,2026-04-10,2026-04-12,2201.0,rv,46.0,43.0,https://data.ddhq.io/polls/2026/03/11/Morning-Consult-National,ddhq
+Echelon Insights / NetChoice,,,2026-04-03,2026-04-09,2880.0,lv,50.0,44.0,https://data.ddhq.io/polls/2026/04/20/Echelon-Insights/NetChoice-National-2026-04-03-2026-04-09,ddhq
 Morning Consult,,,2026-04-06,2026-04-12,27410.0,rv,46.0,42.0,https://data.ddhq.io/polls/2026/03/13/Morning-Consult-National,ddhq
-YouGov / The Economist,,,2026-04-10,2026-04-13,1571.0,rv,45.0,40.0,https://data.ddhq.io/polls/2026/04/14/YouGov/The-Economist-National-2026-04-10-2026-04-13,ddhq
+Morning Consult,,,2026-04-10,2026-04-12,2201.0,rv,46.0,43.0,https://data.ddhq.io/polls/2026/03/11/Morning-Consult-National,ddhq
 YouGov / The Economist,,,2026-04-10,2026-04-13,1745.0,a,38.0,35.0,https://data.ddhq.io/polls/2026/04/14/YouGov/The-Economist-National-2026-04-10-2026-04-13,ddhq
+YouGov / The Economist,,,2026-04-10,2026-04-13,1571.0,rv,45.0,40.0,https://data.ddhq.io/polls/2026/04/14/YouGov/The-Economist-National-2026-04-10-2026-04-13,ddhq
 Survey 160,,,2026-04-08,2026-04-13,1546.0,rv,47.0,37.0,https://data.ddhq.io/polls/2026/04/23/Survey-160-National,ddhq
 Verasight / Strength in Numbers,,,2026-04-10,2026-04-14,1514.0,a,49.0,41.0,https://data.ddhq.io/polls/2026/04/21/Verasight/Strength-in-Numbers-National-2026-04-10-2026-04-14,ddhq
-McLaughlin & Associates,,,2026-04-08,2026-04-15,1000.0,rv,47.0,43.0,https://data.ddhq.io/polls/2026/04/17/McLaughlin-&-Associates-National,ddhq
 GBAO / Third Way,,,2026-04-08,2026-04-15,2000.0,rv,45.0,37.0,https://data.ddhq.io/polls/2026/05/12/GBAO/Third-Way-National-2026-04-08-2026-04-15,ddhq
+McLaughlin & Associates,,,2026-04-08,2026-04-15,1000.0,rv,47.0,43.0,https://data.ddhq.io/polls/2026/04/17/McLaughlin-&-Associates-National,ddhq
 Marquette University Law School,,,2026-04-08,2026-04-16,982.0,a,44.0,41.0,https://data.ddhq.io/polls/2026/04/22/Marquette-University-Law-School-National,ddhq
 John Zogby Strategies,,,2026-04-17,2026-04-18,956.0,lv,48.3,44.4,https://data.ddhq.io/polls/2026/04/23/John-Zogby-Strategies-National,ddhq
-KFF,,,2026-04-14,2026-04-19,1107.0,rv,43.0,34.0,https://data.ddhq.io/polls/2026/04/30/KFF-National,ddhq
 Morning Consult,,,2026-04-13,2026-04-19,27869.0,rv,45.0,42.0,https://data.ddhq.io/polls/2026/03/13/Morning-Consult-National,ddhq
+KFF,,,2026-04-14,2026-04-19,1107.0,rv,43.0,34.0,https://data.ddhq.io/polls/2026/04/30/KFF-National,ddhq
 Hart Research Associates/Public Opinion Strategies,,CNBC,2026-04-15,2026-04-19,1000.0,rv,49.0,45.0,https://fm.cnbc.com/applications/cnbc.com/resources/editorialfiles/2026/04/23/Toplines_260142_CNBC_AAES_Q1_2026_Topline.pdf,votehub
-Ipsos / Reuters,,,2026-04-15,2026-04-20,3577.0,rv,41.0,38.0,https://data.ddhq.io/polls/2026/04/22/Ipsos/Reuters-National-2026-04-15-2026-04-20,ddhq
-Morning Consult,,,2026-04-17,2026-04-20,2203.0,rv,45.0,42.0,https://data.ddhq.io/polls/2026/03/11/Morning-Consult-National,ddhq
 Leger,,338Canada; Maintenant Media,2026-04-17,2026-04-20,1004.0,a,52.0,42.0,https://documents.leger360.com/hubfs/%C3%89tudes%20M%C3%A9diatiques/%C3%89tudes%20M%C3%A9diatiques%20-%202026/4.%20%C3%89M%20-%20Avril%202026/20260428%20-%20US%20Poll%20April%202026/US_POL_April_2026_338Canada_VF.pdf,votehub
+Morning Consult,,,2026-04-17,2026-04-20,2203.0,rv,45.0,42.0,https://data.ddhq.io/polls/2026/03/11/Morning-Consult-National,ddhq
 YouGov / The Economist,,,2026-04-17,2026-04-20,1703.0,a,39.0,33.0,https://data.ddhq.io/polls/2026/04/21/YouGov/The-Economist-National-2026-04-17-2026-04-20,ddhq
-Beacon Research / Shaw & Company Research / Fox News,,,2026-04-17,2026-04-20,1001.0,rv,52.0,47.0,https://data.ddhq.io/polls/2026/04/23/Beacon-Research/Shaw-&-Company-Research/Fox-News-National-2026-04-17-2026-04-20,ddhq
-Echelon Insights,,,2026-04-17,2026-04-20,1012.0,lv,49.0,43.0,https://data.ddhq.io/polls/2026/04/21/Echelon-Insights-National,ddhq
-Ipsos / Reuters,,,2026-04-15,2026-04-20,4557.0,a,35.0,31.0,https://data.ddhq.io/polls/2026/04/22/Ipsos/Reuters-National-2026-04-15-2026-04-20,ddhq
 YouGov / The Economist,,,2026-04-17,2026-04-20,1549.0,rv,45.0,40.0,https://data.ddhq.io/polls/2026/04/21/YouGov/The-Economist-National-2026-04-17-2026-04-20,ddhq
+Ipsos / Reuters,,,2026-04-15,2026-04-20,3577.0,rv,41.0,38.0,https://data.ddhq.io/polls/2026/04/22/Ipsos/Reuters-National-2026-04-15-2026-04-20,ddhq
+Ipsos / Reuters,,,2026-04-15,2026-04-20,4557.0,a,35.0,31.0,https://data.ddhq.io/polls/2026/04/22/Ipsos/Reuters-National-2026-04-15-2026-04-20,ddhq
+Echelon Insights,,,2026-04-17,2026-04-20,1012.0,lv,49.0,43.0,https://data.ddhq.io/polls/2026/04/21/Echelon-Insights-National,ddhq
+Beacon Research / Shaw & Company Research / Fox News,,,2026-04-17,2026-04-20,1001.0,rv,52.0,47.0,https://data.ddhq.io/polls/2026/04/23/Beacon-Research/Shaw-&-Company-Research/Fox-News-National-2026-04-17-2026-04-20,ddhq
 The Argument/Verasight,,,2026-04-20,2026-04-23,1000.0,lv,53.0,47.0,https://www.theargumentmag.com/p/why-democrats-cant-win-more-trump,votehub
 The Argument,,,2026-04-20,2026-04-23,1516.0,rv,47.0,40.0,https://data.ddhq.io/polls/2026/04/29/The-Argument-National,ddhq
 Quantus Insights,,,2026-04-21,2026-04-23,1229.0,lv,46.5,42.3,https://data.ddhq.io/polls/2026/04/25/Quantus-Insights-National,ddhq
 Clarity Campaign Labs,,,2026-04-15,2026-04-24,1000.0,lv,50.0,45.0,https://data.ddhq.io/polls/2026/05/05/Clarity-Campaign-Labs-National,ddhq
-HarrisX/Harris,,Harvard CAPS,2026-04-23,2026-04-26,,lv,50.0,50.0,https://harvardharrispoll.com/wp-content/uploads/2026/04/HHP_Apr2026_KeyResults.pdf,votehub
-HarrisX/Harris,,Harvard CAPS,2026-04-23,2026-04-26,2745.0,rv,50.0,50.0,https://harvardharrispoll.com/wp-content/uploads/2026/04/HHP_Apr2026_KeyResults.pdf,votehub
-Emerson College,,,2026-04-24,2026-04-26,1000.0,lv,50.3,40.2,https://data.ddhq.io/polls/2026/04/29/Emerson-College-National,ddhq
-Morning Consult,,,2026-04-20,2026-04-26,28235.0,rv,45.0,42.0,https://data.ddhq.io/polls/2026/04/27/Morning-Consult-National,ddhq
 Harris Poll / Harvard University Center for American Political Studies,,,2026-04-23,2026-04-26,2746.0,lv,50.0,50.0,https://data.ddhq.io/polls/2026/04/28/Harris-Poll/Harvard-University-Center-for-American-Political-Studies-National-2026-04-23-2026-04-26,ddhq
+Morning Consult,,,2026-04-20,2026-04-26,28235.0,rv,45.0,42.0,https://data.ddhq.io/polls/2026/04/27/Morning-Consult-National,ddhq
+Emerson College,,,2026-04-24,2026-04-26,1000.0,lv,50.3,40.2,https://data.ddhq.io/polls/2026/04/29/Emerson-College-National,ddhq
+HarrisX/Harris,,Harvard CAPS,2026-04-23,2026-04-26,2745.0,rv,50.0,50.0,https://harvardharrispoll.com/wp-content/uploads/2026/04/HHP_Apr2026_KeyResults.pdf,votehub
+HarrisX/Harris,,Harvard CAPS,2026-04-23,2026-04-26,,lv,50.0,50.0,https://harvardharrispoll.com/wp-content/uploads/2026/04/HHP_Apr2026_KeyResults.pdf,votehub
 Morning Consult,,,2026-04-24,2026-04-27,2201.0,rv,45.0,43.0,https://data.ddhq.io/polls/2026/04/27/Morning-Consult-National,ddhq
-Ipsos / Reuters,,,2026-04-24,2026-04-27,1014.0,rv,41.0,37.0,https://data.ddhq.io/polls/2026/04/28/Ipsos/Reuters-National-2026-04-24-2026-04-27,ddhq
+YouGov / The Economist,,,2026-04-24,2026-04-27,1834.0,a,39.0,34.0,https://data.ddhq.io/polls/2026/04/28/YouGov/The-Economist-National-2026-04-24-2026-04-27,ddhq
 YouGov / The Economist,,,2026-04-24,2026-04-27,1645.0,rv,46.0,41.0,https://data.ddhq.io/polls/2026/04/28/YouGov/The-Economist-National-2026-04-24-2026-04-27,ddhq
+Ipsos / Reuters,,,2026-04-24,2026-04-27,1269.0,a,36.0,31.0,https://data.ddhq.io/polls/2026/04/28/Ipsos/Reuters-National-2026-04-24-2026-04-27,ddhq
 Tavern Research,,,2026-04-27,2026-04-27,527.0,lv,44.0,38.0,https://data.ddhq.io/polls/2026/06/14/Tavern-Research-National,ddhq
 Public Opinion Strategies / CoinDesk,,,2026-04-21,2026-04-27,1000.0,rv,44.0,41.0,https://data.ddhq.io/polls/2026/05/04/Public-Opinion-Strategies/CoinDesk-National-2026-04-21-2026-04-27,ddhq
-YouGov / The Economist,,,2026-04-24,2026-04-27,1834.0,a,39.0,34.0,https://data.ddhq.io/polls/2026/04/28/YouGov/The-Economist-National-2026-04-24-2026-04-27,ddhq
-Ipsos / Reuters,,,2026-04-24,2026-04-27,1269.0,a,36.0,31.0,https://data.ddhq.io/polls/2026/04/28/Ipsos/Reuters-National-2026-04-24-2026-04-27,ddhq
+Ipsos / Reuters,,,2026-04-24,2026-04-27,1014.0,rv,41.0,37.0,https://data.ddhq.io/polls/2026/04/28/Ipsos/Reuters-National-2026-04-24-2026-04-27,ddhq
 Ipsos / ABC News / The Washington Post,,,2026-04-24,2026-04-28,2059.0,rv,49.0,44.0,https://data.ddhq.io/polls/2026/05/03/Ipsos/ABC-News/The-Washington-Post-National-2026-04-24-2026-04-28,ddhq
 Big Data Poll,,,2026-04-25,2026-04-28,2874.0,lv,47.7,37.1,https://data.ddhq.io/polls/2026/04/30/Big-Data-Poll-National,ddhq
 Big Data Poll,,,2026-04-25,2026-04-28,3176.0,rv,45.2,35.4,https://data.ddhq.io/polls/2026/04/30/Big-Data-Poll-National,ddhq
@@ -512,46 +511,45 @@ Morning Consult,,,2026-04-27,2026-05-03,27846.0,rv,46.0,43.0,https://data.ddhq.i
 Morning Consult,,,2026-05-01,2026-05-03,2200.0,rv,46.0,43.0,https://data.ddhq.io/polls/2026/05/06/Morning-Consult-National,ddhq
 YouGov / The Economist,,,2026-05-01,2026-05-04,1406.0,rv,44.0,41.0,https://data.ddhq.io/polls/2026/05/05/YouGov/The-Economist-National-2026-05-01-2026-05-04,ddhq
 CNN/SSRS,,,2026-04-30,2026-05-04,,rv,45.0,42.0,https://www.documentcloud.org/documents/28114951-cnn-poll-conducted-by-ssrs-affordability,votehub
-YouGov / The Economist,,,2026-05-01,2026-05-04,1570.0,a,38.0,34.0,https://data.ddhq.io/polls/2026/05/05/YouGov/The-Economist-National-2026-05-01-2026-05-04,ddhq
+YouGov / The Economist,,,2026-05-01,2026-05-04,1375.0,rv,46.0,43.0,https://data.ddhq.io/polls/2026/05/19/YouGov/The-Economist-National-2026-05-01-2026-05-04,ddhq
 SSRS / CNN,,,2026-04-30,2026-05-04,1499.0,rv,45.0,42.0,https://data.ddhq.io/polls/2026/05/12/SSRS/CNN-National-2026-04-30-2026-05-04,ddhq
 YouGov / The Economist,,,2026-05-01,2026-05-04,1543.0,a,40.0,35.0,https://data.ddhq.io/polls/2026/05/19/YouGov/The-Economist-National-2026-05-01-2026-05-04,ddhq
-YouGov / The Economist,,,2026-05-01,2026-05-04,1375.0,rv,46.0,43.0,https://data.ddhq.io/polls/2026/05/19/YouGov/The-Economist-National-2026-05-01-2026-05-04,ddhq
+YouGov / The Economist,,,2026-05-01,2026-05-04,1570.0,a,38.0,34.0,https://data.ddhq.io/polls/2026/05/05/YouGov/The-Economist-National-2026-05-01-2026-05-04,ddhq
 HarrisX / Forbes,,,2026-04-29,2026-05-05,2569.0,a,40.0,39.0,https://data.ddhq.io/polls/2026/05/07/HarrisX/Forbes-National-2026-04-29-2026-05-05,ddhq
 HarrisX / Forbes,,,2026-04-29,2026-05-05,1891.0,lv,44.0,42.0,https://data.ddhq.io/polls/2026/05/07/HarrisX/Forbes-National-2026-04-29-2026-05-05,ddhq
 HarrisX / Forbes,,,2026-04-29,2026-05-05,2359.0,rv,41.0,40.0,https://data.ddhq.io/polls/2026/05/07/HarrisX/Forbes-National-2026-04-29-2026-05-05,ddhq
 Focaldata / Financial Times,,,2026-05-01,2026-05-05,3612.0,a,43.0,34.0,https://data.ddhq.io/polls/2026/05/10/Focaldata/Financial-Times-National-2026-05-01-2026-05-05,ddhq
 RMG Research / Napolitan News Service,,,2026-05-04,2026-05-06,2000.0,rv,47.0,38.0,https://data.ddhq.io/polls/2026/05/08/RMG-Research/Napolitan-News-Service-National-2026-05-04-2026-05-06,ddhq
 Cygnal,,,2026-05-05,2026-05-06,1500.0,lv,48.5,42.4,https://data.ddhq.io/polls/2026/05/13/Cygnal-National,ddhq
-AtlasIntel,,,2026-05-04,2026-05-07,2069.0,a,54.6,40.1,https://data.ddhq.io/polls/2026/05/12/AtlasIntel-National,ddhq
 Cygnal / Conservative Energy Network,,,2026-05-04,2026-05-07,1500.0,lv,48.0,41.0,https://data.ddhq.io/polls/2026/05/27/Cygnal/Conservative-Energy-Network-National-2026-05-04-2026-05-07,ddhq
+AtlasIntel,,,2026-05-04,2026-05-07,2069.0,a,54.6,40.1,https://data.ddhq.io/polls/2026/05/12/AtlasIntel-National,ddhq
+Morning Consult,,,2026-05-04,2026-05-10,28573.0,rv,45.0,42.0,https://data.ddhq.io/polls/2026/04/27/Morning-Consult-National,ddhq
 Change Research,,,2026-05-05,2026-05-10,2244.0,rv,45.0,42.0,https://data.ddhq.io/polls/2026/06/01/Change-Research-National,ddhq
 Morning Consult,,,2026-05-08,2026-05-10,2202.0,rv,46.0,43.0,https://data.ddhq.io/polls/2026/05/06/Morning-Consult-National,ddhq
-Morning Consult,,,2026-05-04,2026-05-10,28573.0,rv,45.0,42.0,https://data.ddhq.io/polls/2026/04/27/Morning-Consult-National,ddhq
+Ipsos / Reuters,,,2026-05-08,2026-05-11,1254.0,a,36.0,31.0,https://data.ddhq.io/polls/2026/05/12/Ipsos/Reuters-National-2026-05-08-2026-05-11,ddhq
 Ipsos / Reuters,,,2026-05-08,2026-05-11,993.0,rv,41.0,35.0,https://data.ddhq.io/polls/2026/05/12/Ipsos/Reuters-National-2026-05-08-2026-05-11,ddhq
 YouGov / The Economist,,,2026-05-09,2026-05-11,1408.0,rv,45.0,40.0,https://data.ddhq.io/polls/2026/05/12/YouGov/The-Economist-National-2026-05-09-2026-05-11,ddhq
 YouGov / The Economist,,,2026-05-09,2026-05-11,1547.0,a,37.0,34.0,https://data.ddhq.io/polls/2026/05/12/YouGov/The-Economist-National-2026-05-09-2026-05-11,ddhq
-Ipsos / Reuters,,,2026-05-08,2026-05-11,1254.0,a,36.0,31.0,https://data.ddhq.io/polls/2026/05/12/Ipsos/Reuters-National-2026-05-08-2026-05-11,ddhq
+YouGov,,CBS News,2026-05-13,2026-05-15,1397.0,rv,45.0,40.0,https://assets1.cbsnewsstatic.com/hub/cms/prod_cms_alt/file/2026/05/19/9b11ffab-4f11-440c-aec4-cb02ac525257/cbs_20260517_rv.pdf,votehub
 The New York Times/Siena University,,,2026-05-11,2026-05-15,1507.0,rv,49.5,39.1,https://www.nytimes.com/interactive/2026/05/18/polls/times-siena-national-poll-crosstabs.html,votehub
 Siena Research Institute / The New York Times,,,2026-05-11,2026-05-15,1507.0,rv,47.0,37.0,https://data.ddhq.io/polls/2026/05/18/Siena-Research-Institute/The-New-York-Times-National-2026-05-11-2026-05-15,ddhq
-YouGov,,CBS News,2026-05-13,2026-05-15,1397.0,rv,45.0,40.0,https://assets1.cbsnewsstatic.com/hub/cms/prod_cms_alt/file/2026/05/19/9b11ffab-4f11-440c-aec4-cb02ac525257/cbs_20260517_rv.pdf,votehub
 Morning Consult,,,2026-05-11,2026-05-17,28525.0,rv,45.0,42.0,https://data.ddhq.io/polls/2026/04/27/Morning-Consult-National,ddhq
 Morning Consult,,,2026-05-15,2026-05-17,2203.0,rv,47.0,41.0,https://data.ddhq.io/polls/2026/05/06/Morning-Consult-National,ddhq
-National Research / Impact Research / The Wall Street Journal,,,2026-05-07,2026-05-18,1500.0,rv,48.0,40.0,https://data.ddhq.io/polls/2026/05/26/Impact-Research/National-Research/Wall-Street-Journal-National,ddhq
-National Research / Impact Research / The Wall Street Journal,,,2026-05-07,2026-05-18,1500.0,rv,48.0,40.0,https://data.ddhq.io/polls/2026/06/28/Impact-Research/National-Research/The-Wall-Street-Journal-National-2026-05-07-2026-05-18,ddhq
-National Research / Impact Research / The Wall Street Journal,,,2026-05-07,2026-05-18,2000.0,a,51.0,35.0,https://data.ddhq.io/polls/2026/06/28/Impact-Research/National-Research/The-Wall-Street-Journal-National-2026-05-07-2026-05-18,ddhq
+Impact Research / National Research / The Wall Street Journal,,,2026-05-07,2026-05-18,1500.0,rv,48.0,40.0,https://data.ddhq.io/polls/2026/05/26/Impact-Research/National-Research/Wall-Street-Journal-National,ddhq
+Impact Research / National Research / The Wall Street Journal,,,2026-05-07,2026-05-18,1500.0,rv,48.0,40.0,https://data.ddhq.io/polls/2026/06/28/Impact-Research/National-Research/The-Wall-Street-Journal-National-2026-05-07-2026-05-18,ddhq
+Impact Research / National Research / The Wall Street Journal,,,2026-05-07,2026-05-18,2000.0,a,51.0,35.0,https://data.ddhq.io/polls/2026/06/28/Impact-Research/National-Research/The-Wall-Street-Journal-National-2026-05-07-2026-05-18,ddhq
 McLaughlin & Associates,,,2026-05-12,2026-05-18,1000.0,rv,46.0,42.0,https://data.ddhq.io/polls/2026/05/24/McLaughlin-&-Associates-National,ddhq
 Echelon Insights,,,2026-05-14,2026-05-18,1008.0,lv,50.0,42.0,https://data.ddhq.io/polls/2026/05/19/Echelon-Insights-National,ddhq
-Ipsos / Reuters,,,2026-05-15,2026-05-18,984.0,rv,39.0,38.0,https://data.ddhq.io/polls/2026/05/19/Ipsos/Reuters-National-2026-05-15-2026-05-18,ddhq
+Quinnipiac University,,,2026-05-14,2026-05-18,1106.0,rv,50.0,39.0,https://poll.qu.edu/images/polling/us/us05202026_ugus99.pdf,votehub
 Ipsos / Reuters,,,2026-05-15,2026-05-18,1271.0,a,35.0,31.0,https://data.ddhq.io/polls/2026/05/19/Ipsos/Reuters-National-2026-05-15-2026-05-18,ddhq
 Rainey Center,,,2026-05-17,2026-05-18,1010.0,rv,45.0,43.0,https://data.ddhq.io/polls/2026/06/19/Rainey-Center-National,ddhq
-Bedrock Polling,,Rainey Center,2026-05-17,2026-05-18,1010.0,rv,45.0,43.0,https://cdn.prod.website-files.com/663a60b91deeae06e8ae1d1c/6a317d6b6a131bd58ddfc7b9_Rainey_Center_May_Omnibus_Toplines.pdf,votehub
+Data for Progress,,,2026-05-15,2026-05-18,1149.0,lv,51.0,43.0,https://data.ddhq.io/polls/2026/05/21/Data-for-Progress-National,ddhq
 YouGov,,The Economist,2026-05-15,2026-05-18,1375.0,rv,46.0,43.0,https://d3nkl3psvxxpe9.cloudfront.net/documents/econTabReport_YTE4G2g.pdf#page=49,votehub
 YouGov,,The Economist,2026-05-15,2026-05-18,1543.0,a,40.0,35.0,https://d3nkl3psvxxpe9.cloudfront.net/documents/econTabReport_YTE4G2g.pdf#page=49,votehub
-Quinnipiac University,,,2026-05-14,2026-05-18,1106.0,rv,50.0,39.0,https://poll.qu.edu/images/polling/us/us05202026_ugus99.pdf,votehub
-Impact Research/National Research,,The Wall Street Journal,2026-05-07,2026-05-18,1500.0,rv,48.0,40.0,https://www.wsj.com/politics/policy/trump-republican-congress-control-98a13bd9,votehub
-Data for Progress,,,2026-05-15,2026-05-18,1149.0,lv,51.0,43.0,https://data.ddhq.io/polls/2026/05/21/Data-for-Progress-National,ddhq
-Verasight / Strength in Numbers,,,2026-05-18,2026-05-19,1520.0,a,51.0,41.0,https://data.ddhq.io/polls/2026/05/26/Verasight/Strength-in-Numbers-National-2026-05-18-2026-05-19,ddhq
+Bedrock Polling,,Rainey Center,2026-05-17,2026-05-18,1010.0,rv,45.0,43.0,https://cdn.prod.website-files.com/663a60b91deeae06e8ae1d1c/6a317d6b6a131bd58ddfc7b9_Rainey_Center_May_Omnibus_Toplines.pdf,votehub
+Ipsos / Reuters,,,2026-05-15,2026-05-18,984.0,rv,39.0,38.0,https://data.ddhq.io/polls/2026/05/19/Ipsos/Reuters-National-2026-05-15-2026-05-18,ddhq
 Verasight / Strength in Numbers,,,2026-05-18,2026-05-19,1413.0,rv,51.0,43.0,https://data.ddhq.io/polls/2026/05/26/Verasight/Strength-in-Numbers-National-2026-05-18-2026-05-19,ddhq
+Verasight / Strength in Numbers,,,2026-05-18,2026-05-19,1520.0,a,51.0,41.0,https://data.ddhq.io/polls/2026/05/26/Verasight/Strength-in-Numbers-National-2026-05-18-2026-05-19,ddhq
 Morris Predictive Insights / Verasight,,,2026-05-18,2026-05-20,2000.0,a,52.0,41.0,https://data.ddhq.io/polls/2026/05/27/Verasight/Morris-Predictive-Insights-National,ddhq
 Rasmussen Reports,,,2026-05-13,2026-05-20,2161.0,lv,47.0,41.0,https://data.ddhq.io/polls/2026/05/25/Rasmussen-Reports-National,ddhq
 Verasight/Morris Predictive Insights,,Unite Here,2026-05-18,2026-05-20,2000.0,a,52.0,41.0,https://www.politico.com/newsletters/playbook/2026/05/22/pod-save-nobody-00933436,votehub
@@ -560,55 +558,55 @@ Morning Consult,,,2026-05-22,2026-05-24,2202.0,rv,47.0,43.0,https://data.ddhq.io
 Bedrock Polling / Third Way,,,2026-05-20,2026-05-24,1776.0,rv,46.0,41.0,https://data.ddhq.io/polls/2026/08/06/Bedrock-Polling/Third-Way-National-2026-05-20-2026-05-24,ddhq
 Morning Consult,,,2026-05-18,2026-05-24,29255.0,lv,46.0,42.0,https://data.ddhq.io/polls/2026/06/10/Morning-Consult-National,ddhq
 Emerson College,,,2026-05-24,2026-05-25,1000.0,lv,49.8,41.3,https://data.ddhq.io/polls/2026/05/28/Emerson-College-National,ddhq
-YouGov / The Economist,,,2026-05-22,2026-05-26,1393.0,rv,46.0,41.0,https://data.ddhq.io/polls/2026/06/09/YouGov/The-Economist-National-2026-05-22-2026-05-26,ddhq
-YouGov / The Economist,,,2026-05-22,2026-05-26,1514.0,lv,39.0,33.0,https://data.ddhq.io/polls/2026/06/09/YouGov/The-Economist-National-2026-05-22-2026-05-26,ddhq
 Marquette University Law School,,,2026-05-20,2026-05-26,1001.0,a,45.0,41.0,https://data.ddhq.io/polls/2026/06/06/Marquette-University-Law-School-National,ddhq
 Pennsylvania State University McCourtney Institute for Democracy / YouGov,,,2026-05-19,2026-05-26,862.0,rv,41.0,37.0,https://data.ddhq.io/polls/2026/06/05/Pennsylvania-State-University-McCourtney-Institute-for-Democracy/YouGov-National,ddhq
+YouGov / The Economist,,,2026-05-22,2026-05-26,1514.0,lv,39.0,33.0,https://data.ddhq.io/polls/2026/06/09/YouGov/The-Economist-National-2026-05-22-2026-05-26,ddhq
+YouGov / The Economist,,,2026-05-22,2026-05-26,1393.0,rv,46.0,41.0,https://data.ddhq.io/polls/2026/06/09/YouGov/The-Economist-National-2026-05-22-2026-05-26,ddhq
 Big Data Poll / Public Polling Project,,,2026-05-24,2026-05-27,3121.0,rv,46.8,34.2,https://application.marketsight.com/app/ItemView.aspx?SharedFor=public%40bigdatapoll.com&SharedBy=34090&id=e0547e04-bfa1-40ef-820f-b43c00050578,ddhq
 Big Data Poll / Public Polling Project,,,2026-05-24,2026-05-27,2784.0,lv,49.1,36.1,https://application.marketsight.com/app/ItemView.aspx?SharedFor=public%40bigdatapoll.com&SharedBy=34090&id=e0547e04-bfa1-40ef-820f-b43c00050578,ddhq
 TIPP Insights,,Issues & Insights,2026-05-26,2026-05-28,1332.0,rv,46.0,41.0,https://issuesinsights.com/2026/06/15/does-either-party-have-an-edge-in-2026-midterms-and-2028-presidential-election-ii-tipp-poll,votehub
 Morning Consult,,,2026-05-25,2026-05-31,,rv,45.0,42.0,https://intel.morningconsult.com/mc-content/trackers/2026-midterm-election-generic-ballot-polls#05-31-2026,votehub
-Harris Poll / Harvard University Center for American Political Studies,,,2026-05-29,2026-05-31,1725.0,lv,51.0,49.0,https://data.ddhq.io/polls/2026/06/07/Harris-Poll/Harvard-University-Center-for-American-Political-Studies-National-2026-05-29-2026-05-31,ddhq
 HarrisX/Harris,,Harvard CAPS,2026-05-29,2026-05-31,1725.0,rv,51.0,49.0,https://harvardharrispoll.com/wp-content/uploads/2026/06/HHP_May2026_KeyResults.pdf,votehub
+Harris Poll / Harvard University Center for American Political Studies,,,2026-05-29,2026-05-31,1725.0,lv,51.0,49.0,https://data.ddhq.io/polls/2026/06/07/Harris-Poll/Harvard-University-Center-for-American-Political-Studies-National-2026-05-29-2026-05-31,ddhq
 Focaldata / Financial Times,,,2026-05-29,2026-06-01,1520.0,rv,42.0,38.0,https://data.ddhq.io/polls/2026/06/07/Focaldata/Financial-Times-National-2026-05-29-2026-06-01,ddhq
-Focaldata / Financial Times,,,2026-05-29,2026-06-01,1719.0,a,39.0,36.0,https://data.ddhq.io/polls/2026/06/07/Focaldata/Financial-Times-National-2026-05-29-2026-06-01,ddhq
-YouGov / The Economist,,,2026-05-29,2026-06-01,1452.0,rv,46.0,42.0,https://d3nkl3psvxxpe9.cloudfront.net/documents/econTabReport_AvLU7vY.pdf,ddhq
 YouGov / The Economist,,,2026-05-29,2026-06-01,1603.0,a,41.0,35.0,https://d3nkl3psvxxpe9.cloudfront.net/documents/econTabReport_AvLU7vY.pdf,ddhq
-Quantus Insights,,,2026-06-01,2026-06-02,894.0,lv,47.0,42.3,https://data.ddhq.io/polls/2026/06/05/Quantus-Insights-National,ddhq
+YouGov / The Economist,,,2026-05-29,2026-06-01,1452.0,rv,46.0,42.0,https://d3nkl3psvxxpe9.cloudfront.net/documents/econTabReport_AvLU7vY.pdf,ddhq
+Focaldata / Financial Times,,,2026-05-29,2026-06-01,1719.0,a,39.0,36.0,https://data.ddhq.io/polls/2026/06/07/Focaldata/Financial-Times-National-2026-05-29-2026-06-01,ddhq
 The Winston Group / Winning the Issues,,,2026-05-30,2026-06-02,1000.0,rv,44.0,38.0,https://data.ddhq.io/polls/2026/07/01/The-Winston-Group/Winning-the-Issues-National-2026-05-30-2026-06-02,ddhq
 The Bullfinch Group,,,2026-05-29,2026-06-02,1000.0,rv,42.0,36.0,https://data.ddhq.io/polls/2026/06/04/The-Bullfinch-Group-National,ddhq
 The Bullfinch Group,,,2026-05-29,2026-06-02,1200.0,a,41.0,34.0,https://data.ddhq.io/polls/2026/06/04/The-Bullfinch-Group-National,ddhq
-The Argument/Verasight,,,2026-05-29,2026-06-03,3008.0,rv,53.0,47.0,https://www.theargumentmag.com/p/the-biggest-issue-in-american-politics,votehub
-Cygnal,,,2026-06-02,2026-06-03,1500.0,lv,49.1,43.9,https://data.ddhq.io/polls/2026/06/10/Cygnal-National,ddhq
+Quantus Insights,,,2026-06-01,2026-06-02,894.0,lv,47.0,42.3,https://data.ddhq.io/polls/2026/06/05/Quantus-Insights-National,ddhq
 The Argument,,,2026-05-29,2026-06-03,3008.0,rv,46.0,40.0,https://data.ddhq.io/polls/2026/06/10/The-Argument-National,ddhq
-RMG Research / Napolitan News Service,,,2026-06-01,2026-06-04,2000.0,rv,47.0,42.0,https://data.ddhq.io/polls/2026/06/08/RMG-Research/Napolitan-News-Service-National-2026-06-01-2026-06-04,ddhq
+Cygnal,,,2026-06-02,2026-06-03,1500.0,lv,49.1,43.9,https://data.ddhq.io/polls/2026/06/10/Cygnal-National,ddhq
+The Argument/Verasight,,,2026-05-29,2026-06-03,3008.0,rv,53.0,47.0,https://www.theargumentmag.com/p/the-biggest-issue-in-american-politics,votehub
 Noble Predictive Insights / The Center Square,,,2026-06-01,2026-06-04,2585.0,rv,47.0,41.0,https://data.ddhq.io/polls/2026/06/12/Noble-Predictive-Insights/The-Center-Square-National-2026-06-01-2026-06-04,ddhq
+RMG Research / Napolitan News Service,,,2026-06-01,2026-06-04,2000.0,rv,47.0,42.0,https://data.ddhq.io/polls/2026/06/08/RMG-Research/Napolitan-News-Service-National-2026-06-01-2026-06-04,ddhq
 Clarity Campaign Labs,,,2026-05-28,2026-06-05,1045.0,lv,48.0,45.0,https://data.ddhq.io/polls/2026/06/12/Clarity-Campaign-Labs-National,ddhq
 Research Co.,,,2026-06-04,2026-06-06,1001.0,a,38.0,33.0,https://data.ddhq.io/polls/2026/06/15/Research-Co.-National,ddhq
 HarrisX / Forbes,,,2026-05-20,2026-06-07,1565.0,lv,42.0,42.0,https://data.ddhq.io/polls/2026/06/11/HarrisX/Forbes-National-2026-05-20-2026-06-07,ddhq
-HarrisX / Forbes,,,2026-05-20,2026-06-07,1876.0,rv,40.0,40.0,https://data.ddhq.io/polls/2026/06/11/HarrisX/Forbes-National-2026-05-20-2026-06-07,ddhq
-Morning Consult,,,2026-06-01,2026-06-07,29264.0,lv,46.0,42.0,https://data.ddhq.io/polls/2026/06/11/Morning-Consult-National,ddhq
-Hart Research Associates/Public Opinion Strategies,,NBC News; More Perfect,2026-05-29,2026-06-07,2400.0,rv,49.0,44.0,https://www.documentcloud.org/documents/28246606-260216-nbc-june-2026-poll-61426-release,votehub
 HarrisX / Forbes,,,2026-05-20,2026-06-07,2010.0,a,39.0,39.0,https://data.ddhq.io/polls/2026/06/11/HarrisX/Forbes-National-2026-05-20-2026-06-07,ddhq
+HarrisX / Forbes,,,2026-05-20,2026-06-07,1876.0,rv,40.0,40.0,https://data.ddhq.io/polls/2026/06/11/HarrisX/Forbes-National-2026-05-20-2026-06-07,ddhq
+Hart Research Associates/Public Opinion Strategies,,NBC News; More Perfect,2026-05-29,2026-06-07,2400.0,rv,49.0,44.0,https://www.documentcloud.org/documents/28246606-260216-nbc-june-2026-poll-61426-release,votehub
+Morning Consult,,,2026-06-01,2026-06-07,29264.0,lv,46.0,42.0,https://data.ddhq.io/polls/2026/06/11/Morning-Consult-National,ddhq
+Emerson College,,,2026-06-07,2026-06-08,1200.0,lv,50.3,39.5,https://data.ddhq.io/polls/2026/06/11/Emerson-College-National,ddhq
 YouGov / The Economist,,,2026-06-05,2026-06-08,1437.0,rv,45.0,41.0,https://data.ddhq.io/polls/2026/06/09/YouGov/The-Economist-National-2026-06-05-2026-06-08,ddhq
 YouGov / The Economist,,,2026-06-05,2026-06-08,1567.0,a,37.0,33.0,https://data.ddhq.io/polls/2026/06/09/YouGov/The-Economist-National-2026-06-05-2026-06-08,ddhq
 Ipsos / Reuters,,,2026-06-03,2026-06-08,4531.0,a,35.0,31.0,https://data.ddhq.io/polls/2026/06/09/Ipsos/Reuters-National-2026-06-03-2026-06-08,ddhq
 Ipsos / Reuters,,,2026-06-03,2026-06-08,3578.0,rv,41.0,37.0,https://data.ddhq.io/polls/2026/06/09/Ipsos/Reuters-National-2026-06-03-2026-06-08,ddhq
-Emerson College,,,2026-06-07,2026-06-08,1200.0,lv,50.3,39.5,https://data.ddhq.io/polls/2026/06/11/Emerson-College-National,ddhq
 The Public Sentiment Institute,,,2026-06-12,2026-06-13,1023.0,lv,50.0,41.0,https://tpsiofficial.substack.com/p/tpsi-junes-national-benchmark-poll,votehub
 The Public Sentiment Institute,,,2026-06-12,2026-06-13,1042.0,rv,43.0,34.0,https://tpsiofficial.substack.com/p/tpsi-junes-national-benchmark-poll,votehub
+Echelon Insights,,,2026-06-11,2026-06-14,1012.0,lv,49.0,43.0,https://data.ddhq.io/polls/2026/06/16/Echelon-Insights-National,ddhq
 Morning Consult,,,2026-06-08,2026-06-14,29000.0,rv,46.0,42.0,https://data.ddhq.io/polls/2026/06/15/Morning-Consult-National,ddhq
 Morning Consult,,,2026-06-08,2026-06-14,24000.0,rv,46.0,42.0,https://data.ddhq.io/polls/2026/06/29/Morning-Consult-National,ddhq
-Echelon Insights,,,2026-06-11,2026-06-14,1012.0,lv,49.0,43.0,https://data.ddhq.io/polls/2026/06/16/Echelon-Insights-National,ddhq
-Ipsos / Reuters,,,2026-06-12,2026-06-15,1195.0,rv,41.0,38.0,https://data.ddhq.io/polls/2026/06/16/Ipsos/Reuters-National-2026-06-12-2026-06-15,ddhq
-Ipsos / Reuters,,,2026-06-12,2026-06-15,1537.0,a,35.0,31.0,https://data.ddhq.io/polls/2026/06/16/Ipsos/Reuters-National-2026-06-12-2026-06-15,ddhq
-Marquette University Law School,,,2026-06-09,2026-06-15,1513.0,a,44.0,41.0,https://data.ddhq.io/polls/2026/06/24/Marquette-University-Law-School-National,ddhq
-YouGov / The Economist,,,2026-06-13,2026-06-15,1402.0,rv,46.0,44.0,https://data.ddhq.io/polls/2026/06/16/YouGov/The-Economist-National-2026-06-13-2026-06-15,ddhq
 YouGov / The Economist,,,2026-06-13,2026-06-15,1547.0,a,39.0,36.0,https://data.ddhq.io/polls/2026/06/16/YouGov/The-Economist-National-2026-06-13-2026-06-15,ddhq
+YouGov / The Economist,,,2026-06-13,2026-06-15,1402.0,rv,46.0,44.0,https://data.ddhq.io/polls/2026/06/16/YouGov/The-Economist-National-2026-06-13-2026-06-15,ddhq
+Marquette University Law School,,,2026-06-09,2026-06-15,1513.0,a,44.0,41.0,https://data.ddhq.io/polls/2026/06/24/Marquette-University-Law-School-National,ddhq
+Ipsos / Reuters,,,2026-06-12,2026-06-15,1537.0,a,35.0,31.0,https://data.ddhq.io/polls/2026/06/16/Ipsos/Reuters-National-2026-06-12-2026-06-15,ddhq
+Ipsos / Reuters,,,2026-06-12,2026-06-15,1195.0,rv,41.0,38.0,https://data.ddhq.io/polls/2026/06/16/Ipsos/Reuters-National-2026-06-12-2026-06-15,ddhq
 The Bullfinch Group / Independent Center Voice,,,2026-06-12,2026-06-16,1000.0,rv,44.0,36.0,https://data.ddhq.io/polls/2026/06/19/The-Bullfinch-Group-National,ddhq
 The Bullfinch Group / Independent Center Voice,,,2026-06-12,2026-06-16,1200.0,a,43.0,34.0,https://data.ddhq.io/polls/2026/06/19/The-Bullfinch-Group-National,ddhq
-Quantus Insights,,,2026-06-16,2026-06-17,1000.0,lv,47.0,43.0,https://data.ddhq.io/polls/2026/06/18/Quantus-Insights-National,ddhq
 Change Research,,,2026-06-10,2026-06-17,1714.0,rv,43.0,38.0,https://changeresearch.com/political-fatigue-is-high-yet-people-report-being-more-politically-engaged/,ddhq
+Quantus Insights,,,2026-06-16,2026-06-17,1000.0,lv,47.0,43.0,https://data.ddhq.io/polls/2026/06/18/Quantus-Insights-National,ddhq
 Data for Progress,,,2026-05-15,2026-06-21,5809.0,lv,51.0,44.0,https://data.ddhq.io/polls/2026/07/09/Data-for-Progress-National,ddhq
 Morning Consult,,,2026-06-19,2026-06-22,,rv,46.0,42.0,https://pro-assets.morningconsult.com/wp-uploads/2026/06/MCPI-PI-Weekly_260622.html,votehub
 Verasight / Strength in Numbers,,,2026-06-17,2026-06-22,1896.0,rv,50.0,43.0,https://data.ddhq.io/polls/2026/06/24/Verasight/Strength-in-Numbers-National-2026-06-17-2026-06-22,ddhq
@@ -656,7 +654,7 @@ Verasight / Strength in Numbers,,,2026-07-14,2026-07-17,1364.0,rv,50.0,43.0,http
 Morning Consult,,,2026-07-17,2026-07-19,2200.0,rv,46.0,43.0,https://data.ddhq.io/polls/2026/07/20/Morning-Consult-National,ddhq
 Morning Consult,,,2026-07-13,2026-07-19,24000.0,rv,45.7,42.7,https://data.ddhq.io/polls/2026/08/22/Morning-Consult-National,ddhq
 Emerson College,,,2026-07-19,2026-07-20,1100.0,lv,52.9,41.5,https://data.ddhq.io/polls/2026/07/23/Emerson-College-National,ddhq
-Shaw & Company Research / Beacon Research / Fox News,,,2026-07-17,2026-07-20,1003.0,rv,53.0,46.0,https://data.ddhq.io/polls/2026/07/22/Beacon-Research/Shaw-&-Company-Research/Fox-News-National-2026-07-17-2026-07-20,ddhq
+Beacon Research / Shaw & Company Research / Fox News,,,2026-07-17,2026-07-20,1003.0,rv,53.0,46.0,https://data.ddhq.io/polls/2026/07/22/Beacon-Research/Shaw-&-Company-Research/Fox-News-National-2026-07-17-2026-07-20,ddhq
 Survey 160,,,2026-07-14,2026-07-20,1518.0,rv,48.0,38.0,https://data.ddhq.io/polls/2026/08/12/Survey-160-National,ddhq
 YouGov / The Economist,,,2026-07-17,2026-07-20,1602.0,a,39.0,33.0,https://data.ddhq.io/polls/2026/07/21/YouGov/The-Economist-National-2026-07-17-2026-07-20,ddhq
 YouGov / The Economist,,,2026-07-17,2026-07-20,1432.0,rv,46.0,41.0,https://data.ddhq.io/polls/2026/07/21/YouGov/The-Economist-National-2026-07-17-2026-07-20,ddhq
