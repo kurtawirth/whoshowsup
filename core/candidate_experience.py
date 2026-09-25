@@ -188,6 +188,15 @@ def build(year: int) -> pd.DataFrame:
     return pd.concat([out, senate_governor_2026()], ignore_index=True) if year == 2026 else out
 
 
+def update_current() -> None:
+    """Daily run: recode 2026 nominees (after build_candidate_quality.py), keep past years."""
+    path = PROC / "candidate_experience.csv"
+    cur = build(2026)
+    old = pd.read_csv(path) if path.exists() else pd.DataFrame(columns=cur.columns)
+    pd.concat([old[old["year"] != 2026], cur], ignore_index=True).to_csv(path, index=False)
+    print(f"2026: {len(cur)} nominees, tier found for {cur['tier'].notna().mean():.0%}")
+
+
 def main() -> None:
     frames = []
     for y in YEARS:
