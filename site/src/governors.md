@@ -32,6 +32,8 @@ display(ratingLegend({noRace: "No governor's race in 2026"}));
 display(stateMap(races, topo, states, {office: "GOV", width: Math.min(width, 1000)}));
 ```
 
+<p class="caption">On a phone, pinch or tap + to zoom in, then tap a state to preview it.</p>
+
 ```js
 const list = (rs) => rs.sort((a, b) => Math.abs(b.p_dem - 0.5) - Math.abs(a.p_dem - 0.5)).map((r) => `${r.label} (${favoriteText(r)})`).join(", ");
 display(html`<p><strong>Seats favored to change parties.</strong> ${flipsD.length ? `Toward Democrats: ${list(flipsD)}.` : "No Republican-held seats currently lean Democratic."} ${flipsR.length ? `Toward Republicans: ${list(flipsR)}.` : "No Democratic-held seats currently lean Republican."}</p>`);

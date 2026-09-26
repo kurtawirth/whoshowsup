@@ -149,8 +149,8 @@ display(hist.length < 3
 ## What makes this forecast different
 
 - **Turnout first.** Special-election overperformance is one of the two biggest inputs to the national picture. Every simulation also randomizes how much of the national swing comes from turnout versus voters changing sides.
-- **Independent.** No pundit ratings and no other forecasts go into the model. Prediction markets will appear alongside it for comparison, never inside it.
-- **Tested, not assumed.** The full model was rerun on 2018, 2020, 2022 and 2024 as those years looked in late September. It called 96% of 1,691 races, and its 80% ranges held 84% of the time. Ideas that failed those tests were dropped.
+- **Independent.** The model uses no pundit ratings and no other forecasts. Prediction markets will be shown next to it for comparison but will have no effect on its numbers.
+- **Checked against past elections.** We reran the full model on 2018, 2020, 2022 and 2024, using only what was known in late September of each year. It picked the winner in 96% of 1,691 races, and the results landed inside its 80% ranges 84% of the time. Each new ingredient had to make those past forecasts more accurate to be included; ideas that didn't were left out ([see what we tried](./methodology#ideas-we-tested-and-dropped)).
 - **Honest about polls.** September generic-ballot polls have overstated Democrats in 14 of the last 15 elections, campaign-sponsored polls lean toward their sponsor by about four points, and fresh polls count more than stale ones. The model corrects for all three using measured numbers.
 
 <p><a href="./methodology">How the model works, and its track record →</a></p>

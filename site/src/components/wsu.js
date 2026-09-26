@@ -207,10 +207,18 @@ export function hexMap(races, layout, {width = 960} = {}) {
     .style("display", (d) => (R >= 9 || d.n >= 6 ? null : "none"))
     .text((d) => d.state);
 
-  // Zoom: pinch or the buttons on phones; buttons, double-click or ctrl+scroll on desktop.
-  // At full view a one-finger swipe scrolls the page as usual; once zoomed in it pans the map.
+  // keep labels readable (and show the small states' names) as you zoom in
+  return zoomable(svg, layer, width, height, (zk) =>
+    labelG.selectAll("text").attr("font-size", labelSize / Math.sqrt(zk))
+      .style("display", (d) => (R * zk >= 9 || d.n >= 6 ? null : "none")));
+}
+
+// Zoom for a map: pinch or the buttons on phones; buttons, double-click or ctrl+scroll on desktop.
+// At full view a one-finger swipe scrolls the page as usual; once zoomed in it pans the map.
+// `layer` holds everything that zooms; w and h are the svg's viewBox size.
+function zoomable(svg, layer, w, h, onZoom = () => {}) {
   let zk = 1;
-  const zoom = d3.zoom().scaleExtent([1, 8]).translateExtent([[0, 0], [width, height]]).extent([[0, 0], [width, height]])
+  const zoom = d3.zoom().scaleExtent([1, 8]).translateExtent([[0, 0], [w, h]]).extent([[0, 0], [w, h]])
     .filter((event) => {
       if (event.type === "wheel") return event.ctrlKey || event.metaKey;
       if (event.type.startsWith("touch")) return event.touches.length > 1 || zk > 1;
@@ -220,13 +228,11 @@ export function hexMap(races, layout, {width = 960} = {}) {
     .on("zoom", (event) => {
       zk = event.transform.k;
       layer.attr("transform", event.transform);
-      // keep labels readable (and show the small states' names) as you zoom in
-      labelG.selectAll("text").attr("font-size", labelSize / Math.sqrt(zk))
-        .style("display", (d) => (R * zk >= 9 || d.n >= 6 ? null : "none"));
+      onZoom(zk);
       svg.style("touch-action", zk > 1.01 ? "none" : "pan-y").style("cursor", zk > 1.01 ? "grab" : null);
       reset.disabled = zk <= 1.01;
     });
-  svg.call(zoom);
+  svg.style("touch-action", "pan-y").call(zoom);
   const wrap = document.createElement("div");
   wrap.className = "zoom-wrap";
   const bar = document.createElement("div");
@@ -266,12 +272,14 @@ export function stateMap(races, topo, states, {office, width = 960} = {}) {
     if (main.race_type === "independent") return t.ind;
     return t[main.rating];
   };
-  svg.append("g").selectAll("a").data(feats).join("a")
+  const layer = svg.append("g");                 // everything that zooms
+  layer.append("g").selectAll("a").data(feats).join("a")
     .attr("href", (f) => { const rs = byState.get(fipsToPo[f.id]); return rs ? raceHref((rs.find((r) => !r.special) ?? rs[0]).race_id) : null; })
     .append("path").attr("d", path)
     .attr("fill", (f) => fill(fipsToPo[f.id]))
     .attr("stroke", (f) => (byState.get(fipsToPo[f.id]) ? t.surface : t.axis))
     .attr("stroke-width", (f) => (byState.get(fipsToPo[f.id]) ? 1.2 : 0.8)).attr("stroke-linejoin", "round")
+    .attr("vector-effect", "non-scaling-stroke")   // borders stay thin when zoomed in
     .attr("tabindex", (f) => (byState.get(fipsToPo[f.id]) ? 0 : null))
     .on("pointerenter focus", function (event, f) {
       const rs = byState.get(fipsToPo[f.id]);
@@ -305,11 +313,13 @@ export function stateMap(races, topo, states, {office, width = 960} = {}) {
     const f = feats.find((f) => fipsToPo[f.id] === r.state_po);
     if (!f) continue;
     const [cx, cy] = path.centroid(f);
-    svg.append("a").attr("href", raceHref(r.race_id)).append("circle").attr("cx", cx + 14).attr("cy", cy + 10).attr("r", 7)
-      .attr("fill", t[r.rating]).attr("stroke", t.surface).attr("stroke-width", 2)
+    layer.append("a").attr("href", raceHref(r.race_id)).append("circle").attr("class", "special-dot")
+      .attr("cx", cx + 14).attr("cy", cy + 10).attr("r", 7)
+      .attr("fill", t[r.rating]).attr("stroke", t.surface).attr("stroke-width", 2).attr("vector-effect", "non-scaling-stroke")
       .on("pointerenter", (event) => t_.show(event, raceTipRows(r))).on("pointermove", (e) => t_.move(e)).on("pointerleave", () => t_.hide());
   }
-  return svg.node();
+  // special-election dots grow more slowly than the map so they don't swallow the state
+  return zoomable(svg, layer, 975, 610, (zk) => layer.selectAll("circle.special-dot").attr("r", 7 / Math.sqrt(zk)));
 }
 
 // ---------- legend ----------

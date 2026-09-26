@@ -33,7 +33,7 @@ display(ratingLegend({independent: true, noRace: "No Senate race in 2026"}));
 display(stateMap(races, topo, states, {office: "SEN", width: Math.min(width, 1000)}));
 ```
 
-<p class="caption">Florida and Ohio hold special elections to fill the rest of Marco Rubio's and JD Vance's terms. Nebraska's race pits Republican Pete Ricketts against independent Dan Osborn, with no Democrat on the ballot.</p>
+<p class="caption">Florida and Ohio hold special elections to fill the rest of Marco Rubio's and JD Vance's terms. Nebraska's race pits Republican Pete Ricketts against independent Dan Osborn, with no Democrat on the ballot. On a phone, pinch or tap + to zoom in, then tap a state to preview it.</p>
 
 ## The path to 51
 
