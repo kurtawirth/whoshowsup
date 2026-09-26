@@ -40,7 +40,7 @@ const clip = (v) => Math.max(xlo, Math.min(xhi, v));
 const narrow = width < 640;
 display(Plot.plot({
   width, height: 62 * readRows.length + 40, marginLeft: narrow ? 110 : 150, marginRight: narrow ? 64 : 120, marginTop: 10,
-  x: {domain: [xlo, xhi], label: null, grid: true, tickFormat: (d) => (d === 0 ? "Even" : margin(d).replace(".0", "")), ticks: narrow ? 5 : 10},
+  x: {domain: [xlo, xhi], reverse: true, label: null, grid: true, tickFormat: (d) => (d === 0 ? "Even" : margin(d).replace(".0", "")), ticks: narrow ? 5 : 10},
   y: {domain: readRows.map((d) => d.name), label: null},
   style,
   marks: [
@@ -49,14 +49,14 @@ display(Plot.plot({
     Plot.barX(readRows, {x1: (d) => clip(d.lo), x2: (d) => clip(d.hi), y: "name", insetTop: 21, insetBottom: 21, rx: 6,
       fill: (d) => (d.combined ? t.ink : t.dem), fillOpacity: (d) => (d.combined ? 0.22 : 0.1 + 0.5 * d.weight)}),
     // a band that runs past the chart edge gets a fade-out arrow so it doesn't look like a hard end
-    Plot.text(readRows.filter((d) => d.lo < xlo), {x: xlo, y: "name", text: () => "‹", dx: 6, fill: t["ink-3"], fontSize: 16}),
-    Plot.text(readRows.filter((d) => d.hi > xhi), {x: xhi, y: "name", text: () => "›", dx: -6, fill: t["ink-3"], fontSize: 16}),
+    Plot.text(readRows.filter((d) => d.lo < xlo), {x: xlo, y: "name", text: () => "›", dx: -6, fill: t["ink-3"], fontSize: 16}),
+    Plot.text(readRows.filter((d) => d.hi > xhi), {x: xhi, y: "name", text: () => "‹", dx: 6, fill: t["ink-3"], fontSize: 16}),
     Plot.dot(readRows.filter((d) => !d.combined), {x: "dem_margin", y: "name", r: 6, fill: t.dem, stroke: t.surface, strokeWidth: 2}),
     Plot.dot(readRows.filter((d) => d.combined), {x: "dem_margin", y: "name", r: 8, fill: t.ink, stroke: t.surface, strokeWidth: 2}),
     Plot.text(readRows.filter((d) => d.lo < xlo && d.hi > xhi), {x: (xlo + xhi) / 2, y: "name", dy: 17, fill: t["ink-3"], fontSize: 11,
       text: (d) => `Range runs off the chart (${margin(d.lo)} to ${margin(d.hi)}): too uncertain to count for much`}),
     Plot.text(readRows, {x: "dem_margin", y: "name", dy: -17, text: (d) => margin(d.dem_margin), fill: t.ink, fontWeight: 700}),
-    Plot.text(readRows, {x: xhi, y: "name", dx: 12, textAnchor: "start", fill: (d) => (d.combined ? t.ink : t["ink-2"]), fontWeight: 600,
+    Plot.text(readRows, {x: xlo, y: "name", dx: 12, textAnchor: "start", fill: (d) => (d.combined ? t.ink : t["ink-2"]), fontWeight: 600,
       text: (d) => (d.combined ? "Forecast" : `${Math.round(d.weight * 100)}% weight`)}),
     Plot.tip(readRows, Plot.pointerY({x: "dem_margin", y: "name", title: (d) => `${d.name}: ${margin(d.dem_margin)}${d.combined ? "" : ` (${Math.round(d.weight * 100)}% of the weight)`}\n80% range: ${margin(d.lo)} to ${margin(d.hi)}`}))
   ]

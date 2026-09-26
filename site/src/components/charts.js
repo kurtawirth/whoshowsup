@@ -48,7 +48,7 @@ export function seatChart(dist, need, {width, label, total, height = 230,
 
   const plot = Plot.plot({
     width, height, marginLeft: 8, marginRight: 8, marginBottom: 40, marginTop: labelPct ? 38 : 24,
-    x: {axis: null, domain: [x0, x1]},
+    x: {axis: null, domain: [x0, x1], reverse: true},  // Democrats on the left, as everywhere on the site
     y: {axis: null},
     style: base(t),
     marks: [
@@ -57,9 +57,9 @@ export function seatChart(dist, need, {width, label, total, height = 230,
       labelPct ? Plot.text(shown.filter((d) => d.p >= 0.01), {x: "seats", y: "p", dy: -8, text: (d) => fmtP(d.p),
         fill: t["ink-2"], fontSize: 11}) : null,
       Plot.ruleX([need - 0.5], {stroke: t.ink, strokeWidth: 1}),
-      Plot.text([need - 0.5], {x: (d) => d, frameAnchor: "top", dy: labelPct ? -30 : -16, dx: -8, textAnchor: "end",
-        text: () => sides[0], fill: t.rep, fontSize: 12, fontWeight: 650}),
       Plot.text([need - 0.5], {x: (d) => d, frameAnchor: "top", dy: labelPct ? -30 : -16, dx: 8, textAnchor: "start",
+        text: () => sides[0], fill: t.rep, fontSize: 12, fontWeight: 650}),
+      Plot.text([need - 0.5], {x: (d) => d, frameAnchor: "top", dy: labelPct ? -30 : -16, dx: -8, textAnchor: "end",
         text: () => sides[1], fill: t.dem, fontSize: 12, fontWeight: 650}),
       Plot.ruleY([0], {stroke: t.axis}),
       Plot.text(ticks, {x: (d) => d, y: 0, dy: 13, text: (d) => `${d} D`, fill: t.dem, fontSize: 11, fontWeight: 600}),
@@ -93,8 +93,8 @@ export function marginRange(q, {width, height = 110, actual = null}) {
   });
   return Plot.plot({
     width, height, marginLeft: 14, marginRight: 14, marginTop: 28, marginBottom: 34,
-    x: {domain: [lo - pad, hi + pad], label: "Forecast margin", labelAnchor: "center", labelOffset: 30,
-      tickFormat: (d) => (d === 0 ? "Even" : margin(d).replace(".0", ""))},
+    x: {domain: [lo - pad, hi + pad], reverse: true, label: "Forecast margin", labelArrow: "none", labelAnchor: "center",
+      labelOffset: 30, tickFormat: (d) => (d === 0 ? "Even" : margin(d).replace(".0", ""))},
     y: {axis: null, domain: [0, 1]},
     style: base(t),
     marks: [
@@ -104,8 +104,8 @@ export function marginRange(q, {width, height = 110, actual = null}) {
       ...bands.map((b) => Plot.rectX([b], {x1: "a", x2: "b", y1: 0.3, y2: 0.7, fill: col, fillOpacity: b.o, rx: 4})),
       Plot.ruleX([med], {y1: 0.2, y2: 0.8, stroke: col, strokeWidth: 3}),
       Plot.text([med], {x: (d) => d, y: 0.9, text: (d) => `Median ${margin(d)}`, fill: t.ink, fontWeight: 700, fontSize: 13}),
-      Plot.text([bands[0]], {x: "a", y: 0.12, text: () => margin(at(5)), fill: t["ink-3"], textAnchor: "start"}),
-      Plot.text([bands[0]], {x: "b", y: 0.12, text: () => margin(at(95)), fill: t["ink-3"], textAnchor: "end"}),
+      Plot.text([bands[0]], {x: "a", y: 0.12, text: () => margin(at(5)), fill: t["ink-3"], textAnchor: "end"}),
+      Plot.text([bands[0]], {x: "b", y: 0.12, text: () => margin(at(95)), fill: t["ink-3"], textAnchor: "start"}),
       // Hover zones follow the bands: the dark middle reports the 50% range, the light ends the 90% range.
       Plot.tip(zones, Plot.pointerX({x: "x", y: 0.5, maxRadius: 12, title: "tip"}))
     ]
@@ -209,15 +209,15 @@ export function pastResults(rows, {width}) {
   const ext = (Math.max(10, ...data.map((d) => Math.abs(d.margin))) + 1) / Math.max(0.35, 1 - 46 / half);
   return Plot.plot({
     width, height: 26 * data.length + 40, marginLeft, marginRight: 20,
-    x: {domain: [-ext, ext], label: null, tickFormat: (d) => (d === 0 ? "Even" : margin(d).replace(".0", ""))},
+    x: {domain: [-ext, ext], reverse: true, label: null, tickFormat: (d) => (d === 0 ? "Even" : margin(d).replace(".0", ""))},
     y: {label: null, domain: data.map((d) => d.key)},
     style: base(t),
     marks: [
       Plot.barX(data, {x: "margin", y: "key", fill: (d) => (d.margin >= 0 ? t.dem : t.rep), rx: 3, insetTop: 5, insetBottom: 5}),
       Plot.ruleX([0], {stroke: t.axis}),
-      Plot.text(data, {x: "margin", y: "key", text: (d) => margin(d.margin), dx: 6, textAnchor: "start",
-        filter: (d) => d.margin >= 0, fill: t["ink-2"]}),
       Plot.text(data, {x: "margin", y: "key", text: (d) => margin(d.margin), dx: -6, textAnchor: "end",
+        filter: (d) => d.margin >= 0, fill: t["ink-2"]}),
+      Plot.text(data, {x: "margin", y: "key", text: (d) => margin(d.margin), dx: 6, textAnchor: "start",
         filter: (d) => d.margin < 0, fill: t["ink-2"]})
     ]
   });
