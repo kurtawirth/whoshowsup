@@ -1,7 +1,8 @@
 /* Who Shows Up -- design language.
    Editorial serif for headlines and prose; a neutral sans for data and UI.
    Colors are defined once as tokens and swapped for dark mode. The partisan
-   scale (Safe/Likely/Lean/Toss-up) was checked for colorblind separation. */
+   scale (Safe/Likely/Lean/Toss-up) was checked for colorblind separation. The strongest
+   color marks Lean, the palest Safe, so the competitive races stand out on the maps. */
 @import url("observablehq:default.css");
 @import url("observablehq:theme-air.css");
 
@@ -18,13 +19,13 @@
   --card-ring: rgba(11, 11, 11, 0.08);
   --accent: #184f95;
 
-  --safe-d: #184f95;
+  --safe-d: #6da7ec;
   --likely-d: #2a78d6;
-  --lean-d: #6da7ec;
+  --lean-d: #184f95;
   --tossup: #e3e1db;
-  --lean-r: #ec8277;
+  --lean-r: #a3232a;
   --likely-r: #d6403a;
-  --safe-r: #a3232a;
+  --safe-r: #ec8277;
   --ind: #6b4fbb;
   --dem: #2a78d6;
   --rep: #d6403a;
@@ -53,13 +54,13 @@
     --card: #222220;
     --card-ring: rgba(255, 255, 255, 0.08);
     --accent: #86b6ef;
-    --safe-d: #86b6ef;
+    --safe-d: #1c5cab;
     --likely-d: #3987e5;
-    --lean-d: #1c5cab;
+    --lean-d: #86b6ef;
     --tossup: #4a4a46;
-    --lean-r: #a3232a;
+    --lean-r: #f09a90;
     --likely-r: #e0463f;
-    --safe-r: #f09a90;
+    --safe-r: #a3232a;
     --ind: #9085e9;
     --dem: #3987e5;
     --rep: #e0463f;
@@ -131,7 +132,7 @@ a.hero-card:hover { box-shadow: 0 0 0 1px var(--card-ring), 0 6px 22px rgba(0,0,
 .prob-legend b { color: var(--ink); font-weight: 700; }
 
 .party-chip { display: inline-block; font-family: var(--sans); font-size: 11px; font-weight: 700; color: #fff; border-radius: 4px; padding: 1px 5px; line-height: 1.5; vertical-align: 1px; }
-.party-chip.d { background: var(--safe-d); } .party-chip.r { background: var(--safe-r); } .party-chip.i { background: var(--ind); }
+.party-chip.d { background: var(--lean-d); } .party-chip.r { background: var(--lean-r); } .party-chip.i { background: var(--ind); }
 @media (prefers-color-scheme: dark) { :root:where(:not([data-theme="light"])) .party-chip { color: #0b0b0b; } }
 
 /* ---------- grids ---------- */

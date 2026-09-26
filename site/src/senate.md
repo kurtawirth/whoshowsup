@@ -56,7 +56,7 @@ function pathTo51(w) {
   const tp = tip();
   seatsArr.forEach((s, i) => {
     const x = (i % cols) * (cw + gap), y = top + Math.floor(i / cols) * (ch + gap);
-    const fill = s.kind === "D" ? t["Safe D"] : s.kind === "R" ? t["Safe R"] : s.r.race_type === "independent" ? t.ind : t[s.r.rating];
+    const fill = s.kind === "D" ? t["Lean D"] : s.kind === "R" ? t["Lean R"] : s.r.race_type === "independent" ? t.ind : t[s.r.rating];
     const parent = s.kind === "race" ? svg.append("a").attr("href", raceHref(s.r.race_id)) : svg;
     parent.append("rect").attr("x", x).attr("y", y).attr("width", cw).attr("height", ch).attr("rx", 2).attr("fill", fill)
       .attr("fill-opacity", s.kind === "race" ? 1 : 0.3)
