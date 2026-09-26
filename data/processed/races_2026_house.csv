@@ -1,5 +1,5 @@
 state_po,district,incumbent,incumbent_party,status_text,dem_candidate,rep_candidate,other_candidates,n_dem,n_rep,incumbent_running,paired_incumbents,harris24,trump24,total24,biden20,trump20,total20,pres24_margin,pres20_margin,lines_changed,race_type,race_note
-AK,0,Nick Begich III,R,Incumbent advanced to general,Eric Hafner,Nick Begich III,Bill Hill (Independent); Jim McDermott (Libertarian),1,1,True,1,140026,184458,338177,153778.0,189951.0,357569.0,-13.69312508474994,-10.523697447698623,False,rcv_bloc,
+AK,0,Nick Begich III,R,Incumbent advanced to general,Eric Hafner,Nick Begich III,Bill Hill (Independent); Jim McDermott (Libertarian),1,1,True,1,140026,184458,338177,153778.0,189951.0,357569.0,-13.69312508474994,-10.523697447698623,False,independent,Bill Hill
 AL,1,None (new seat),,New representative to be elected,Clyde Jones Jr.,Jerry Carl,,1,1,False,1,103117,220873,326952,,,,-36.345566221179666,,True,standard,
 AL,2,Shomari Figures,D,Incumbent renominated,Shomari Figures,Rhett Marques,,1,1,True,2,123966,165891,292303,,,,-14.464028814208385,,True,standard,
 AL,3,Mike Rogers,R,Incumbent renominated,Lee McInnis,Mike Rogers,,1,1,True,1,82654,229676,314869,,,,-47.07264752025102,,True,standard,

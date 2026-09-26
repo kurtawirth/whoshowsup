@@ -3,7 +3,7 @@ title: Race forecast
 ---
 
 ```js
-import {tokens, pct, pctPair, margin, date, probBar, ratingPill, favoriteText, raceLink, link} from "../components/wsu.js";
+import {tokens, pct, pctPair, margin, date, probBar, ratingPill, favoriteText, raceLink, link, sides} from "../components/wsu.js";
 import {marginRange, pollChart, probHistory, pastResults} from "../components/charts.js";
 const races = FileAttachment("../data/races.json").json();
 const details = FileAttachment("../data/race_detail.json").json();
@@ -19,9 +19,7 @@ const officeName = {HOUSE: "House", SEN: "Senate", GOV: "Governor"}[r.office];
 const place = r.office === "HOUSE" ? `${r.state_name}'s ${r.district === 0 ? "at-large district" : `${ordinal(r.district)} District`}` : r.state_name;
 function ordinal(n) { const s = ["th", "st", "nd", "rd"], v = n % 100; return n + (s[(v - 20) % 10] || s[v] || s[0]); }
 const first = (s) => String(s ?? "").split(";")[0].trim();
-const dName = r.race_type === "independent" ? r.race_note : first(r.dem_candidate) || "Democrat";
-const rName = first(r.rep_candidate) || "Republican";
-const dTag = r.race_type === "independent" ? "I" : "D";
+const {d: dName, r: rName, dTag, rTag} = sides(r);
 const fixed = r.race_type === "same_party";
 const heading = fixed ? `${place} ${officeName === "House" ? "House" : officeName} race`
   : `${place}${r.office === "HOUSE" ? "" : ` ${officeName}${r.special ? " special election" : ""}`}`;
@@ -46,11 +44,11 @@ if (fixed) {
       <div class="pct" style="color:${dTag === "I" ? t.ind : t.dem}">${pctPair(pD)[0]}</div>
       <div class="role">${r.inc_side === 1 ? "Incumbent" : ""}</div></div>
     <div class="race-vs">chance of winning</div>
-    <div class="race-cand right"><div class="name"><span class="party-chip r">R</span> ${rName}</div>
-      <div class="pct" style="color:${t.rep}">${pctPair(pD)[1]}</div>
+    <div class="race-cand right"><div class="name"><span class="party-chip ${rTag === "I" ? "i" : "r"}">${rTag}</span> ${rName}</div>
+      <div class="pct" style="color:${rTag === "I" ? t.ind : t.rep}">${pctPair(pD)[1]}</div>
       <div class="role">${r.inc_side === -1 ? "Incumbent" : ""}</div></div>
   </div>`);
-  display(probBar(pD, {dLabel: dName, rLabel: rName, dColor: dTag === "I" ? t.ind : t.dem}));
+  display(probBar(pD, {dLabel: dName, rLabel: rName, dColor: dTag === "I" ? t.ind : t.dem, rColor: rTag === "I" ? t.ind : t.rep}));
   display(html`<p class="dek" style="margin-top:18px">${lead ? dName : rName} wins in ${pct(Math.max(pD, 1 - pD))} of our simulations, ${oddsText(Math.max(pD, 1 - pD))}. The most likely result is ${margin(r.margin_median).replace("D+", `${dTag}+`)}. ${ratingSentence(r)}</p>`);
 }
 function oddsText(p) { return p >= 0.95 ? "a near-certain win" : p >= 0.8 ? "a clear favorite" : p >= 0.6 ? "a modest favorite" : "close to a coin flip"; }
@@ -77,7 +75,8 @@ if (!fixed) {
   const moneyNote = r.dem_money != null && r.rep_money != null
     ? ` Campaign money so far (cash on hand plus spending this year, from FEC reports): ${dName} ${usd(r.dem_money)}, ${rName} ${usd(r.rep_money)}${Math.abs(r.money_adj ?? 0) >= 0.5 ? `, worth about ${Math.abs(r.money_adj).toFixed(1)} points to ${r.money_adj > 0 ? dName : rName} in a race this close` : ""}.`
     : "";
-  const inc = r.inc_side === 1 ? `${dName} is the incumbent` : r.inc_side === -1 ? `${rName} is the incumbent` : "No incumbent on the ballot";
+  const inc = r.inc_side === 1 ? `${dName} is the incumbent` : r.inc_side === -1 ? `${rName} is the incumbent`
+    : r.incumbent && [dName, rName].includes(r.incumbent) ? `${r.incumbent} is the incumbent` : "No incumbent on the ballot";
   display(html`<h2>What's driving the forecast</h2>
   <div class="factor-list">
     ${row(r.office === "HOUSE" ? "2024 presidential result in this district" : "2024 presidential result in this state", margin(start), r.office === "HOUSE" && r.lines_changed ? "Recalculated for the district's new 2026 lines." : "")}
@@ -107,7 +106,7 @@ if (polls.length) {
       <td>${p.start && p.start !== p.end ? `${date(p.start).replace(/, \d{4}/, "")}–` : ""}${date(p.end)}</td>
       <td class="num hide-sm">${p.n ? `${Math.round(p.n).toLocaleString()} ${String(p.pop ?? "").toUpperCase()}` : "–"}</td>
       <td class="num">${p.d}%</td><td class="num">${p.r}%</td>
-      <td class="num">${margin(p.margin).replace("D+", `${dTag}+`)}${p.partisan ? html`<div class="adj">counted as ${margin(p.adj).replace("D+", `${dTag}+`)}</div>` : ""}</td>
+      <td class="num">${margin(p.margin).replace("D+", `${dTag}+`).replace("R+", `${rTag}+`)}${p.partisan ? html`<div class="adj">counted as ${margin(p.adj).replace("D+", `${dTag}+`).replace("R+", `${rTag}+`)}</div>` : ""}</td>
       <td class="hide-sm">${p.url ? html`<a href="${p.url}" target="_blank" rel="noopener">${p.url.includes("wikipedia.org") ? "List" : "Source"}</a>` : ""}</td>
     </tr>`)}</tbody></table></div>`;
   display(tbl);

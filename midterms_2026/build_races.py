@@ -71,6 +71,10 @@ def party_code(p) -> str:
 INDEPENDENT_OPPONENTS = {
     ("SEN", "NE", None): "Dan Osborn",       # runs against Ricketts; no Democrat on the ballot
     ("HOUSE", "CA", 6): "Kevin Kiley",       # ex-Republican, now running as independent vs a Democrat
+    # Alaska's top-four ballot: Begich's real opponent is independent Bill Hill (DCCC "Red to Blue";
+    # 33% in the primary to Begich's 44%), not Democrat Eric Hafner (~10% in polls). Hill won't say
+    # which party he'd caucus with, so, like Osborn, a Hill win counts for neither party.
+    ("HOUSE", "AK", 0): "Bill Hill",
 }
 
 

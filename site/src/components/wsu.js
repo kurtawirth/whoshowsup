@@ -50,7 +50,20 @@ export function oddsPhrase(p) {
   for (const f of fracs) if (Math.abs(f[0] / f[1] - p) < Math.abs(best[0] / best[1] - p)) best = f;
   return `about ${best[0]} in ${best[1]}`;
 }
-export const partyName = (r) => (r.race_type === "independent" ? "Osborn (I)" : "Democrats");
+/** The two sides of a race. An independent takes the slot of the party they replace: the Democratic
+ *  slot when a Republican is on the ballot (Osborn in NE, Hill in AK), else the Republican slot (Kiley, CA-6). */
+export function sides(r) {
+  const first = (s) => String(s ?? "").split(";")[0].trim();
+  const ind = r.race_type === "independent";
+  const indD = ind && Boolean(r.rep_candidate);
+  return {
+    d: indD ? r.race_note : first(r.dem_candidate) || "Democrat", dTag: indD ? "I" : "D",
+    r: ind && !indD ? r.race_note : first(r.rep_candidate) || "Republican", rTag: ind && !indD ? "I" : "R",
+    indD
+  };
+}
+const lastName = (s) => String(s).trim().split(/\s+/).filter((w) => !/^(Jr\.?|Sr\.?|I{2,3})$/.test(w)).pop();
+export const partyName = (r) => (sides(r).indD ? `${r.race_note} (I)` : "Democrats");
 
 /** Relative link to a page from the current page (race pages sit one folder deeper). */
 export function link(path) {
@@ -136,10 +149,9 @@ function raceTipRows(r) {
     rows.push(["t-sub", `Only ${r.race_note === "D" ? "Democrats" : "Republicans"} on the November ballot`]);
     return rows;
   }
-  const d = r.race_type === "independent" ? `${r.dem_candidate ?? "Osborn"} (I)` : r.dem_candidate ? `${r.dem_candidate} (D)` : "Democrat";
-  const rp = r.rep_candidate ? `${String(r.rep_candidate).split(";")[0]} (R)` : "Republican";
-  rows.push(["t-sub", `${d} vs. ${rp}`]);
-  rows.push(["t-val", r.p_dem >= 0.5 ? `${pct(r.p_dem)} ${r.race_type === "independent" ? "Osborn" : "D"}` : `${pct(1 - r.p_dem)} R`]);
+  const s = sides(r);
+  rows.push(["t-sub", `${s.d} (${s.dTag}) vs. ${s.r} (${s.rTag})`]);
+  rows.push(["t-val", favoriteText(r)]);
   rows.push(["t-sub", `Forecast margin ${margin(r.margin_median)} · ${r.rating}`]);
   if (r.office === "HOUSE") rows.push(["t-sub", `2024: ${margin(r.pres24)} Trump/Harris${r.lines_changed ? " (new lines)" : ""}`]);
   return rows;
@@ -503,8 +515,9 @@ export function miniBar(p) {
 
 export function favoriteText(r) {
   if (r.race_type === "same_party") return r.race_note === "D" ? "D (unopposed)" : "R (unopposed)";
-  const who = r.race_type === "independent" ? "Osborn" : "D";
-  return r.p_dem >= 0.5 ? `${pct(r.p_dem)} ${who}` : `${pct(1 - r.p_dem)} R`;
+  const s = sides(r);
+  return r.p_dem >= 0.5 ? `${pct(r.p_dem)} ${s.dTag === "I" ? lastName(s.d) : "D"}`
+    : `${pct(1 - r.p_dem)} ${s.rTag === "I" ? lastName(s.r) : "R"}`;
 }
 
 export function withSearch(races) {

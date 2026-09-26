@@ -109,7 +109,7 @@ CLOSE_SEAT_BONUS, CLOSE_SEAT_WIDTH = 1.5, 10.0  # all-years estimate 1.50; leave
 STATE_SHOCK_SD, REGION_SHOCK_SD = 2.0, 2.0
 # Osborn ran ~15 pts ahead of a generic Democrat's expected margin in NE in 2024;
 # shrink toward zero and widen, since independents' appeal is volatile.
-INDEPENDENT_ADJ = {("SEN", "NE", 0): (10.0, 6.0), ("HOUSE", "CA", 6): (0.0, 4.0)}
+INDEPENDENT_ADJ = {("SEN", "NE", 0): (10.0, 6.0), ("HOUSE", "CA", 6): (0.0, 4.0), ("HOUSE", "AK", 0): (0.0, 4.0)}
 REGION = {**dict.fromkeys(["CT", "ME", "MA", "NH", "RI", "VT", "NJ", "NY", "PA"], "NE"),
           **dict.fromkeys(["IL", "IN", "MI", "OH", "WI", "IA", "KS", "MN", "MO", "NE", "ND", "SD"], "MW"),
           **dict.fromkeys(["DE", "FL", "GA", "MD", "NC", "SC", "VA", "DC", "WV", "AL", "KY", "MS", "TN",
@@ -148,7 +148,12 @@ def load_races() -> pd.DataFrame:
 
 
 def incumbency_side(r) -> int:
-    if r["race_type"] == "independent" or not bool(r.get("incumbent_running", False)):
+    if not bool(r.get("incumbent_running", False)):
+        return 0
+    # Independent races: the incumbent's edge is dropped when the incumbent IS the independent
+    # (Kiley, CA-6). A party incumbent facing an independent keeps it in House races (Begich, AK).
+    # Nebraska's Senate race keeps the old rule: Osborn's adjustment was measured under it.
+    if r["race_type"] == "independent" and (r["office"] != "HOUSE" or r.get("incumbent") == r.get("race_note")):
         return 0
     return 1 if r["incumbent_party"] == "D" else -1 if r["incumbent_party"] == "R" else 0
 
@@ -385,6 +390,11 @@ def simulate(forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
     races["prior_edge"] = prior_edge(races)
     races["money_log_ratio"] = money_ratio(races)
     races["ideology_gap"] = ideology_gap(races)
+    # FEC money and DIME scores are matched to the party nominees; in independent races the
+    # nominee they describe (Hafner in AK) is not the one running against the other party.
+    ind = races["race_type"] == "independent"
+    races.loc[ind, "money_log_ratio"] = np.nan
+    races.loc[ind, "ideology_gap"] = 0.0
 
     env = pd.read_csv(OUT / "national_env_2026_draws.csv")["dem_margin"].to_numpy()
     nat = pd.read_csv(RAW / "medsl" / "president_1976_2024.csv", encoding="latin-1")
@@ -407,12 +417,14 @@ def simulate(forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
         m = (office == off)
         fixed_d = int(((fixed_r["office"] == off) & (fixed_r["race_note"] == "D")).sum())
         dem_wins = win[m].sum(axis=0) + fixed_d
-        # A win in Nebraska's Senate race goes to Osborn (independent), not a Democrat.
-        if off == "SEN":
-            ne = ((live["office"] == "SEN") & (live["race_type"] == "independent")).to_numpy()
-            osborn = win[ne].sum(axis=0)
-            dem_wins = dem_wins - osborn
-            summ["SEN_osborn_win"] = osborn.mean()
+        # An independent in the Democratic slot (Osborn in NE, Hill in AK) has not said which party
+        # they'd side with: their win counts for neither party. (Kiley, CA-6, is in the Republican
+        # slot, so a Democratic win there is a Democratic seat.)
+        ind = ((live["office"] == off) & (live["race_type"] == "independent")
+               & live["rep_candidate"].notna()).to_numpy()
+        ind_wins = win[ind].sum(axis=0)
+        dem_wins = dem_wins - ind_wins
+        summ[f"{off}_ind_win"] = ind_wins.mean()
         summ[off] = dem_wins
     house_d = summ["HOUSE"]
     sen_d = 34 + summ["SEN"]                    # 32 D + 2 D-caucusing independents not up
@@ -439,7 +451,8 @@ def simulate(forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
         ("House: P(Democratic majority, 218+)", f"{(house_d >= 218).mean():.0%}", ""),
         ("Senate: Democratic caucus seats", f"{np.median(sen_d):.0f}", f"{np.percentile(sen_d, 10):.0f}-{np.percentile(sen_d, 90):.0f}"),
         ("Senate: P(Democratic majority, 51+)", f"{(sen_d >= 51).mean():.0%}", ""),
-        ("Senate: P(Osborn wins NE)", f"{summ['SEN_osborn_win']:.0%}", ""),
+        ("Senate: P(Osborn wins NE)", f"{summ['SEN_ind_win']:.0%}", ""),
+        ("House: P(Hill wins AK, counted for neither party)", f"{summ['HOUSE_ind_win']:.0%}", ""),
         ("Governors: Democratic wins of 36", f"{np.median(summ['GOV']):.0f}",
          f"{np.percentile(summ['GOV'], 10):.0f}-{np.percentile(summ['GOV'], 90):.0f}"),
     ]
@@ -451,7 +464,7 @@ def simulate(forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
         "nat_p90": np.percentile(E, 90), "house_median": np.median(house_d), "house_p10": np.percentile(house_d, 10),
         "house_p90": np.percentile(house_d, 90), "p_house_d": (house_d >= 218).mean(),
         "senate_median": np.median(sen_d), "senate_p10": np.percentile(sen_d, 10), "senate_p90": np.percentile(sen_d, 90),
-        "p_senate_d": (sen_d >= 51).mean(), "p_osborn": summ["SEN_osborn_win"],
+        "p_senate_d": (sen_d >= 51).mean(), "p_osborn": summ["SEN_ind_win"], "p_house_ind": summ["HOUSE_ind_win"],
         "gov_median": np.median(summ["GOV"]), "gov_p10": np.percentile(summ["GOV"], 10), "gov_p90": np.percentile(summ["GOV"], 90),
     }]).to_csv(OUT / "topline.csv", index=False)
     return summary

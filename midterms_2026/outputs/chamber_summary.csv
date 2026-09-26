@@ -5,4 +5,5 @@ House: Democratic seats,230,221-242
 Senate: Democratic caucus seats,51,49-54
 "Senate: P(Democratic majority, 51+)",66%,
 Senate: P(Osborn wins NE),43%,
+"House: P(Hill wins AK, counted for neither party)",8%,
 Governors: Democratic wins of 36,21,19-23

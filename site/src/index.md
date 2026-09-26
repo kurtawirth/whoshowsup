@@ -3,7 +3,7 @@ title: 2026 Midterm Forecast
 ---
 
 ```js
-import {tokens, pct, margin, date, oddsPhrase, probBar, raceLink, favoriteText, miniBar, ratingPill, link} from "./components/wsu.js";
+import {tokens, pct, margin, date, oddsPhrase, probBar, raceLink, favoriteText, miniBar, ratingPill, link, sides} from "./components/wsu.js";
 import {seatChart} from "./components/charts.js";
 const top = FileAttachment("data/topline.json").json();
 const seats = FileAttachment("data/seats.json").json();
@@ -98,7 +98,7 @@ display(html`<div class="table-wrap"><table class="wsu-table">
   <thead><tr><th>Race</th><th>Matchup</th><th class="num">Forecast</th><th class="hide-sm"></th><th class="num">Swing in control</th></tr></thead>
   <tbody>${pivotal.map((r) => html`<tr>
     <td>${raceLink(r)}</td>
-    <td>${r.race_type === "independent" ? `${r.race_note} (I)` : r.dem_candidate} vs. ${String(r.rep_candidate).split(";")[0]}</td>
+    <td>${sides(r).d} vs. ${sides(r).r}</td>
     <td class="num">${favoriteText(r)}</td>
     <td class="hide-sm">${miniBar(r.p_dem)}</td>
     <td class="num">${Math.round(r.control_leverage * 100)} pts</td>

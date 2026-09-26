@@ -24,7 +24,7 @@ const verb = q >= 0.95 ? "are overwhelming favorites" : q >= 0.8 ? "are clear fa
 
 # ${lead} ${verb} to win the House
 
-<p class="dek">Democrats win a majority in ${pct(top.p_house_d)} of our simulations. The most likely outcome is about ${Math.round(top.house_median)} Democratic seats, with an 80% chance of landing between ${Math.round(top.house_p10)} and ${Math.round(top.house_p90)}. It takes 218 for a majority.</p>
+<p class="dek">Democrats win a majority in ${pct(top.p_house_d)} of our simulations. The most likely outcome is about ${Math.round(top.house_median)} Democratic seats, with an 80% chance of landing between ${Math.round(top.house_p10)} and ${Math.round(top.house_p90)}. It takes 218 for a majority.${top.p_house_ind != null ? ` Independent Bill Hill wins Alaska's seat in ${pct(top.p_house_ind)} of simulations; he hasn't said which party he would side with, so those wins count for neither party.` : ""}</p>
 
 ```js
 display(html`<div class="stat-row">${RATINGS.map((r) => html`<div class="s"><div class="k">${r}</div><div class="v">${byRating.get(r) ?? 0}</div></div>`)}</div>`);
