@@ -33,7 +33,7 @@ jobs:
       - run: npm ci
       - run: npm run build
         env:
-          SITE_BASE: /whoshowsup/
+          SITE_BASE: /
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site/dist

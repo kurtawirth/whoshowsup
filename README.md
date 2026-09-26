@@ -1,6 +1,6 @@
 # Who Shows Up
 
-**Live forecast: https://kurtawirth.github.io/whoshowsup/**
+**Live forecast: https://whoshowsup.net/**
 
 An independent, turnout-first forecast of the **November 3, 2026 U.S. midterms**: every House,
 Senate and governor race, updated every morning. By Kurt Wirth, Ph.D.
