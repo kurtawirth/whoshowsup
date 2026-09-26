@@ -48,7 +48,7 @@ Then come adjustments measured from past races:
 
 ## 3. Polls
 
-Each race's polls are averaged in two-party terms. A poll's weight halves every 14 days (the best-performing half-life when we tested 3 to 60 days on past elections). Larger samples and likely-voter polls count a little more. Polls sponsored by a campaign or party are corrected for their measured lean toward the sponsor, about three to five points, and count half as much.
+Polls are collected every morning from three sources (VoteHub, Wikipedia and Decision Desk HQ), and a poll listed in more than one counts once. When a pollster releases several versions of the same poll, such as likely voters and registered voters, only one counts, preferring likely voters. Each race's polls are averaged in two-party terms. A poll's weight halves every 14 days (the best-performing half-life when we tested 3 to 60 days on past elections). Larger samples and likely-voter polls count a little more. Polls sponsored by a campaign or party are corrected for their measured lean toward the sponsor, about three to five points, and count half as much.
 
 How much a race's polls move it away from its fundamentals depends on how accurate poll averages have historically been at this point in the race. That depends on how many polls there are, and it improves as Election Day nears. A Senate race with 40 polls leans mostly on them. A House district with none runs on fundamentals alone.
 

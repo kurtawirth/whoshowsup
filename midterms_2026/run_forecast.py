@@ -84,6 +84,15 @@ def check_freshness(asof: pd.Timestamp) -> None:
             warnings.append(f"{name}: {got} races (expected {n}) -- a race page may have changed format")
 
 
+def poll_check() -> None:
+    """Surface what the poll steps could not do: a source that failed to download (its last saved
+    copy was used) and fresh polls of a race we forecast that did not match both nominees."""
+    import scrape_wikipedia_polls as swp
+    import build_polls as bp
+    warnings.extend(f"Download failed: {f}" for f in swp.FAILED + bp.FAILED)
+    warnings.extend(f"Poll check: {i}" for i in swp.ISSUES + bp.ISSUES)
+
+
 def record(asof: pd.Timestamp) -> pd.DataFrame:
     """Snapshot this run and append its topline to the running history."""
     top = pd.read_csv(OUT / "topline.csv")
@@ -157,7 +166,8 @@ def main() -> None:
         step("Refresh overview pages + specials")(refresh_sources)
     step("Race list")(build_races.main)
     step("Wikipedia race polls")(scrape_wikipedia_polls.main, refresh)
-    step("VoteHub + DDHQ polls")(build_polls.main, refresh)
+    step("VoteHub + Wikipedia + DDHQ polls")(build_polls.main, refresh)
+    step("Poll check")(poll_check)
     step("Candidate quality")(build_candidate_quality.main)
     import candidate_experience
     step("Candidate experience (all 2026 nominees)")(candidate_experience.update_current)

@@ -53,7 +53,7 @@ export default {
 <div class="wsu-footer">
   <p><strong>Who Shows Up</strong> is an independent, turnout-first forecast of the 2026 midterms by <a href="https://github.com/kurtawirth">Kurt Wirth, Ph.D.</a>
   It uses no pundit ratings and no other forecasters' models.</p>
-  <p>Poll data from <a href="https://votehub.com">VoteHub</a> (CC BY 4.0), <a href="https://polls.decisiondeskhq.com">Decision Desk HQ</a>, and Wikipedia;
+  <p>Poll data from <a href="https://votehub.com">VoteHub</a> (CC BY 4.0), <a href="https://votes.decisiondeskhq.com/polls">Decision Desk HQ</a>, and Wikipedia;
   results from the <a href="https://electionlab.mit.edu">MIT Election Data + Science Lab</a>; district presidential results and special elections from
   <a href="https://www.the-downballot.com">The Downballot</a>; historical polls from FiveThirtyEight's public archive; campaign finance from the
   <a href="https://www.fec.gov/data/">Federal Election Commission</a>; candidate ideology scores from Adam Bonica's

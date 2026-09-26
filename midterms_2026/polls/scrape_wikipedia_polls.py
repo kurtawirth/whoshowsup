@@ -1,7 +1,7 @@
 """Collect 2026 general-election polls from Wikipedia race pages.
 
-For every Senate and Governor race (and House races whose state page has
-district polls), read each poll table and keep only polls that include BOTH
+For every Senate and Governor race, and every House district (the state's House
+page, plus the district's own article where one exists), read each poll table and keep only polls that include BOTH
 of the actual nominees -- hypothetical matchups with candidates who lost a
 primary are dropped.
 
@@ -34,15 +34,55 @@ HEADERS = {"User-Agent": "politics-forecast-research/0.1 (personal project; kurt
 PO_STATE = {v: k for k, v in STATE_PO.items()}
 
 
+FAILED: list[str] = []  # pages that could not be downloaded this run (their cached copy was used, if any)
+ISSUES: list[str] = []  # recent poll tables that yielded no polls of the nominees (read by the daily run)
+
+
 def fetch(title: str, refresh: bool = False) -> str | None:
     path = RAW / f"{title}.html"
     if refresh or not path.exists():
-        r = requests.get(f"https://en.wikipedia.org/wiki/{title}", headers=HEADERS)
-        if r.status_code != 200:
-            return None
-        path.write_text(r.text, encoding="utf-8")
+        try:
+            r = requests.get(f"https://en.wikipedia.org/wiki/{title}", headers=HEADERS, timeout=60)
+            ok = r.status_code == 200
+        except requests.RequestException:
+            ok = False
+        if ok:
+            path.write_text(r.text, encoding="utf-8")
+        else:
+            FAILED.append(title)  # a failed download must not silently drop the page's polls
         time.sleep(0.3)  # be polite to Wikipedia
-    return path.read_text(encoding="utf-8")
+    return path.read_text(encoding="utf-8") if path.exists() else None
+
+
+ORD = lambda n: f"{n}{'th' if 10 <= n % 100 <= 20 else {1: 'st', 2: 'nd', 3: 'rd'}.get(n % 10, 'th')}"
+
+
+def district_title(state_po: str, district: int) -> str:
+    st = PO_STATE[state_po].replace(" ", "_")
+    return f"2026_{st}'s_{'at-large' if district == 0 else ORD(district)}_congressional_district_election"
+
+
+def district_articles(races: pd.DataFrame, refresh: bool = False) -> set[str]:
+    """Titles of the House races that have their own Wikipedia article (competitive districts
+    often do, and their polls may be listed only there). Checked 50 titles per API call."""
+    path = RAW / "district_articles.txt"
+    if not refresh and path.exists():
+        return set(path.read_text(encoding="utf-8").split())
+    titles = [district_title(r.state_po, int(r.district)) for r in races[races["office"] == "HOUSE"].itertuples()]
+    found = set()
+    try:
+        for i in range(0, len(titles), 50):
+            r = requests.get("https://en.wikipedia.org/w/api.php", headers=HEADERS, timeout=60, params={
+                "action": "query", "format": "json", "prop": "info", "titles": "|".join(t.replace("_", " ") for t in titles[i:i + 50])})
+            r.raise_for_status()
+            # a redirect usually points at the state page, whose tables cover every district: skip those
+            found |= {p["title"].replace(" ", "_") for p in r.json()["query"]["pages"].values()
+                      if "missing" not in p and "redirect" not in p}
+    except (requests.RequestException, KeyError, ValueError):
+        FAILED.append("district article list")
+        return set(path.read_text(encoding="utf-8").split()) if path.exists() else set()
+    path.write_text("\n".join(sorted(found)), encoding="utf-8")
+    return found
 
 
 def page_refs(html: str) -> dict[str, str]:
@@ -90,9 +130,19 @@ def last_name(full: str) -> str:
     return parts[-1].lower() if parts else ""
 
 
-def find_col(cols, name: str):
+def name_hits(options, name: str) -> list:
+    """Options (column headers, answer labels) naming this candidate. Matched on last name; when
+    two share it (Alaska 2026 has Dan S. Sullivan and Dan J. Sullivan), on the full name."""
     ln = last_name(name)
-    hits = [c for c in cols if ln and ln in str(c).lower()]
+    hits = [o for o in options if ln and ln in str(o).lower()]
+    if len(hits) > 1:
+        full = re.sub(r"\s+", " ", name.lower()).strip()
+        hits = [o for o in hits if full in re.sub(r"\s+", " ", str(o).lower())]
+    return hits
+
+
+def find_col(cols, name: str):
+    hits = name_hits(cols, name)
     return hits[0] if len(hits) == 1 else None
 
 
@@ -120,12 +170,18 @@ def pct(v) -> float:
     return float(m.group(1)) if m else float("nan")
 
 
-def parse_table(tb: pd.DataFrame, dem: str, rep: str, refs: dict | None = None) -> list[dict]:
+def parse_table(tb: pd.DataFrame, dem: str, rep: str, refs: dict | None = None,
+                dem_bloc=(), rep_bloc=()) -> list[dict]:
+    """Polls in one table that include both slot candidates. In Alaska's bloc races the other
+    candidates of each side (dem_bloc / rep_bloc) are added to that side's share."""
     cols = list(tb.columns)
     src = next((c for c in cols if str(c).startswith("Poll source")), None)
     dcol, rcol = find_col(cols, dem), find_col(cols, rep)
     if src is None or dcol is None or rcol is None or dcol == rcol:
         return []
+    extra = lambda names: list(dict.fromkeys(c for c in (find_col(cols, n) for n in names) if c is not None and c not in (dcol, rcol)))
+    dextra, rextra = extra(dem_bloc), extra(rep_bloc)
+    share = lambda r, c, more: pct(r[c]) + sum(0.0 if pct(r[x]) != pct(r[x]) else pct(r[x]) for x in more)
     date_col = next(c for c in cols if str(c).startswith("Date"))
     size_col = next((c for c in cols if str(c).startswith("Sample")), None)
     other_col = next((c for c in cols if str(c).startswith("Other")), None)
@@ -133,7 +189,7 @@ def parse_table(tb: pd.DataFrame, dem: str, rep: str, refs: dict | None = None) 
     rows = []
     for _, r in tb.iterrows():
         raw_src = str(r[src])
-        if raw_src == "nan" or pct(r[dcol]) != pct(r[dcol]):  # skip separator/event rows
+        if raw_src == "nan" or pct(r[dcol]) != pct(r[dcol]) or pct(r[rcol]) != pct(r[rcol]):  # separator/event rows
             continue
         pollster = re.sub(r"\[.*?\]|\((R|D)\)", "", raw_src).strip()
         party = re.search(r"\((R|D)\)", raw_src)
@@ -152,22 +208,46 @@ def parse_table(tb: pd.DataFrame, dem: str, rep: str, refs: dict | None = None) 
             "start_date": start, "end_date": end,
             "sample_size": int(n.group(1).replace(",", "")) if n else None,
             "population": pop.group(1) if pop else "",
-            "dem_pct": pct(r[dcol]), "rep_pct": pct(r[rcol]),
+            "dem_pct": share(r, dcol, dextra), "rep_pct": share(r, rcol, rextra),
             "other_pct": pct(r[other_col]) if other_col else float("nan"),
             "undecided_pct": pct(r[und_col]) if und_col else float("nan"),
             "dem_col": str(dcol), "rep_col": str(rcol),
         })
+    if any(str(c).startswith("RCV round") for c in cols):
+        # Ranked-choice tables list each round: keep a poll's final round (the head-to-head).
+        # Rounds can carry different sample sizes (ballots exhausted), so match on pollster and dates.
+        last = {}
+        for row in rows:
+            last[(row["pollster"], row["start_date"], row["end_date"])] = row
+        rows = list(last.values())
     return rows
 
 
-def race_pages(office: str, state_po: str, special: bool) -> list[str]:
+def race_pages(office: str, state_po: str, special: bool, district: int = 1) -> list[str]:
     st = PO_STATE[state_po].replace(" ", "_")
     if office == "SEN":
         return [f"2026_United_States_Senate_special_election_in_{st}" if special
                 else f"2026_United_States_Senate_election_in_{st}"]
     if office == "GOV":
         return [f"2026_{st}_gubernatorial_election"]
+    if district == 0:  # one-district states: "...House of Representatives election in Alaska" (singular)
+        return [f"2026_United_States_House_of_Representatives_election_in_{st}"]
     return [f"2026_United_States_House_of_Representatives_elections_in_{st}"]
+
+
+# The Republican who anchors an Alaska bloc race, where the rule below (the incumbent, else the first
+# listed) picks the wrong one. Senate: the incumbent is Dan S. Sullivan; Dan J. Sullivan is a different
+# Republican. Governor (open seat): Bernadette Wilson leads the Republicans in every general-election
+# poll (Sept 2026) and is the one polls test head to head; the rule would pick Dave Bronson.
+BLOC_ANCHOR = {("SEN", "AK"): "Dan S. Sullivan", ("GOV", "AK"): "Bernadette Wilson"}
+
+
+def bloc_names(r) -> tuple[list[str], list[str]]:
+    """Every candidate on each side of an Alaska bloc race (empty for other races)."""
+    if r["race_type"] != "rcv_bloc":
+        return [], []
+    split = lambda v: [x for x in str(v).split("; ") if x and x != "nan"]
+    return split(r["dem_candidate"]), split(r["rep_candidate"])
 
 
 def slot_candidates(r) -> tuple[str, str]:
@@ -180,7 +260,8 @@ def slot_candidates(r) -> tuple[str, str]:
     if r["race_type"] == "rcv_bloc":
         # Several Republicans on the ballot: the incumbent (or first listed) anchors the bloc.
         reps = rep.split("; ")
-        rep = next((x for x in reps if last_name(x) == last_name(str(r["incumbent"]))), reps[0])
+        rep = BLOC_ANCHOR.get((r["office"], r["state_po"])) or next(
+            (x for x in reps if last_name(x) == last_name(str(r["incumbent"]))), reps[0])
     return dem.split("; ")[0], rep
 
 
@@ -202,12 +283,18 @@ def main(refresh: bool = False) -> None:
     races = pd.concat(races, ignore_index=True)
     races = races[races["race_type"].isin(["standard", "independent", "rcv_bloc"])]
 
+    FAILED.clear(); ISSUES.clear()
+    districts = district_articles(races, refresh)
+    recent = pd.Timestamp.today().normalize() - pd.Timedelta(days=21)
     out = []
     house_pages_done = {}
     for _, r in races.iterrows():
         dem, rep = slot_candidates(r)
-        for page in race_pages(r["office"], r["state_po"], r["special"]):
-            if r["office"] == "HOUSE":
+        pages = race_pages(r["office"], r["state_po"], r["special"], 0 if pd.isna(r.get("district")) else int(r["district"]))
+        if r["office"] == "HOUSE" and district_title(r["state_po"], int(r["district"])) in districts:
+            pages.append(district_title(r["state_po"], int(r["district"])))  # the district's own article
+        for page in pages:
+            if r["office"] == "HOUSE" and "_elections_in_" in page:  # a multi-district state page: this district's tables
                 if page not in house_pages_done:
                     html = fetch(page, refresh)
                     house_pages_done[page] = (list(poll_tables(html)) if html else [], page_refs(html) if html else {})
@@ -218,7 +305,17 @@ def main(refresh: bool = False) -> None:
                 tables = list(poll_tables(html)) if html else []
                 refs = page_refs(html) if html else {}
             for heading, tb in tables:
-                for row in parse_table(tb, dem, rep, refs):
+                rows = parse_table(tb, dem, rep, refs, *bloc_names(r))
+                named = [c for c in tb.columns if not re.match(r"(Poll source|Date|Sample|Margin|Other|Undecided|Unnamed|RCV)", str(c))]
+                if not rows and "primar" not in heading.lower() and not all(str(c).startswith("Generic") for c in named):
+                    # A general-election table with fresh polls but none of the nominees' matchup: usually a
+                    # hypothetical, but it may be a layout or name the parser can't read. Flag it for a look.
+                    ends = [parse_dates(str(v))[1] for v in tb.get(next((c for c in tb.columns if str(c).startswith("Date")), ""), [])]
+                    if any(pd.notna(e) and e >= recent for e in ends):
+                        cols = [str(c) for c in named]
+                        ISSUES.append(f"{r['office']} {r['state_po']}{'' if r['office'] != 'HOUSE' else '-' + str(int(r['district']))}: "
+                                      f"recent Wikipedia poll table without {dem} vs {rep} (columns: {', '.join(cols)[:120]}) on {page}")
+                for row in rows:
                     out.append({"office": r["office"], "state_po": r["state_po"],
                                 "district": r.get("district"), "special": r["special"],
                                 "dem_candidate": dem, "rep_candidate": rep,
@@ -227,8 +324,13 @@ def main(refresh: bool = False) -> None:
     polls = polls.drop_duplicates(["office", "state_po", "district", "special", "pollster",
                                    "start_date", "end_date", "sample_size"], keep="first")
     polls.to_csv(PROC / "polls_2026_wikipedia.csv", index=False)
-    print(f"{len(polls)} polls")
+    print(f"{len(polls)} polls ({len(districts)} House districts have their own article, "
+          f"{(polls['source_page'].isin(districts)).sum()} polls read from those)")
     print(polls.groupby("office").agg(polls=("pollster", "size"), races=("state_po", lambda s: s.nunique())))
+    for t in FAILED:
+        print("  download failed (older saved copy used if there is one):", t)
+    for i in ISSUES:
+        print("  check:", i)
 
 
 if __name__ == "__main__":

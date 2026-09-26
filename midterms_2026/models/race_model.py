@@ -242,9 +242,8 @@ def poll_summary(races: pd.DataFrame, forecast_date: pd.Timestamp = FORECAST_DAT
     # Multi-candidate primary polls (e.g. California's all-party primary) can list both
     # nominees; if the pair holds under 60% it was not a head-to-head general poll.
     polls = polls[(polls["dem_pct"] + polls["rep_pct"]) >= 60]
-    # Alaska governor: ranked-choice with three Republicans splitting first-round polls,
-    # so a head-to-head reading of those polls is meaningless.
-    polls = polls[~((polls["office"] == "GOV") & (polls["state_po"] == "AK"))]
+    # (Alaska's bloc races: the poll builders add up each side's candidates -- three Republicans
+    # splitting a first-round poll count together -- so those polls read as bloc vs bloc.)
     polls["partisan"] = polls["partisan"].fillna("")
     polls["margin"] = two_party(polls["dem_pct"], polls["rep_pct"])
     bias = polls.apply(lambda p: PARTISAN_BIAS[p["office"]].get(p["partisan"], 0.0), axis=1)
