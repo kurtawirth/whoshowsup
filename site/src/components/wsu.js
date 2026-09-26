@@ -14,7 +14,7 @@ export function tokens() {
   const get = (v) => cs.getPropertyValue(v).trim();
   const t = {};
   for (const r of RATINGS) t[r] = get(RATING_TOKEN[r]);
-  for (const k of ["surface", "page", "ink", "ink-2", "ink-3", "hair", "axis", "dem", "rep", "ind", "card"]) t[k] = get(`--${k}`);
+  for (const k of ["surface", "page", "ink", "ink-2", "ink-3", "hair", "axis", "dem", "rep", "ind", "card", "party-d", "party-r"]) t[k] = get(`--${k}`);
   return t;
 }
 
