@@ -176,8 +176,9 @@ def poll_summary(races: pd.DataFrame, year: int) -> pd.DataFrame:
     d["margin"] = rm.two_party(d.dem_pct, d.rep_pct)
     d["undecided"] = rm.undecided_share(d.dem_pct, d.rep_pct)
     bias = [rm.PARTISAN_BIAS[o].get(p, 0.0) for o, p in zip(d.office, d.partisan)]
-    d["adj"] = d.margin - bias + rm.undecided_shift(d.margin, d.undecided, UNDECIDED_KIND[year],
-                                                    typical=rm.typical_share(d.race_id, d.undecided))
+    d["adj"] = (d.margin - bias + rm.undecided_shift(d.margin, d.undecided, UNDECIDED_KIND[year],
+                                                     typical=rm.typical_share(d.race_id, d.undecided))
+                + d.undecided * rm.undecided_composition(d.office, d.state_po, year))
     age = (d.time_to_election - CUTOFF_DAYS).clip(lower=0)
     n = d.samplesize.fillna(600).clip(200, 3000)
     d["w"] = 0.5 ** (age / rm.POLL_HALF_LIFE_DAYS) * np.sqrt(n / 600) * np.where(d.partisan != "", rm.PARTISAN_WEIGHT, 1.0)
@@ -254,6 +255,10 @@ def run_all(bonus_for: dict | None = None) -> tuple[pd.DataFrame, list]:
             if len(ub):  # fitted without the test year (2024 isn't in the archive: all-years fit)
                 rm.UNDECIDED_PULL = float(ub["w*m"].iloc[0])
                 rm.UNDECIDED_LEAN = {k: float(ub[f"w*{k}"].iloc[0]) for k in rm.UNDECIDED_LEAN}
+            uc = pd.read_csv(PROC / "undecided_composition.csv")
+            uc = uc[uc["left_out"].astype(str) == str(year)]
+            if len(uc):
+                rm.UNDECIDED_COMPOSITION.update({k: float(uc[k].iloc[0]) for k in ("hisp", "black")})
         races = poll_summary(races, year)
         bonus = 0.0 if bonus_for is None else bonus_for[year]
         live, fixed_r, margin, E, a = rm.run_simulation(races, env, D0, R0, np.random.default_rng(year),

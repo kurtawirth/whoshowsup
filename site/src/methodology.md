@@ -160,6 +160,8 @@ Good models are defined as much by what they leave out. We built a county-level 
 
 We also tested whether kitchen-table conditions (consumer sentiment, how people rate their own finances, gas prices, inflation and unemployment) change how undecided voters break. They added nothing beyond the pattern above: hard economic times are already visible in the polls and special elections that set the national mood. Nor did turnout surges make polls miss by more; the biggest recent misses, in 2016 and 2020, hit every race alike rather than the ones with many undecided voters.
 
+A large voter survey (the Cooperative Election Study, which checks official records to see who actually voted) showed that undecided voters turn out at about half the rate of decided ones, and that young and Hispanic undecided voters lean much more Democratic than others. So we tested whether undecided voters in states with more Hispanic or Black voters break more Democratic. In past polls they did, but adding it made the full model's forecasts of 2018 through 2022 slightly worse, so it is not in the model.
+
 ## Sources
 
 Polls from VoteHub (CC BY 4.0), Decision Desk HQ and Wikipedia. Election results from the MIT Election Data + Science Lab. District-level presidential results and special elections from The Downballot. Historical polls from FiveThirtyEight's public archive. Presidential approval history from the American Presidency Project. Eligible-voter counts from the Census Bureau. The code is public on [GitHub](https://github.com/kurtawirth/whoshowsup).

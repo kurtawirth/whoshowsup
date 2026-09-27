@@ -117,11 +117,45 @@ STATE_SHOCK_SD, REGION_SHOCK_SD = 2.0, 2.0
 # how "undecided" is reported drifts (many 2026 releases fold leaners in: median share 0.10 vs 0.13
 # in the archive), which would otherwise read as every race being unusually certain.
 UNDECIDED = True  # backtest (2026-09-27): Brier 0.0302 -> 0.0303 (Sept 22), 0.0312 -> 0.0311 (eve); competitive races 0.147 -> 0.146, 0.150 -> 0.146
-UNDECIDED_PARTS = {"pull", "lean", "spread"}  # which pieces are on (the backtest tests each)
+UNDECIDED_PARTS = {"pull", "lean", "spread"}  # which pieces are on (the backtest tests each; "composition" failed it, 2026-09-27)
 UNDECIDED_PULL = -1.01
 UNDECIDED_LEAN = {"mid_Dpres": -22.58, "mid_Rpres": 2.11, "pres_Dpres": 4.47, "pres_Rpres": -6.57}
 UNDECIDED_KIND = "mid_Rpres"  # 2026: a midterm with a Republican president
 UNDECIDED_SPREAD = (38.2, 263.6)  # s0, s1
+
+
+# Who the undecideds are (core/undecided_hypotheses.py, H4): in Senate and governor races, undecideds
+# lean more Democratic where more voters are Hispanic or Black (Cooperative Election Study: Hispanic
+# undecideds broke D+25, others about even). Points of lean per 10 points of the state's share of
+# citizens of voting age, centered on the average statewide race; x the poll's undecided share.
+# OFF (not in UNDECIDED_PARTS): it improved the within-year fit of 538's archive polls (1998-2022) but
+# made the full backtest slightly worse (Brier 0.0303 -> 0.0304 Sept 22, 0.0311 -> 0.0312 eve; 2018's
+# FL, GA and MD governor races went Republican).
+import json  # noqa: E402  (state FIPS codes for state_shares)
+UNDECIDED_COMPOSITION = {"hisp": 8.35, "black": 7.71, "center_hisp": 0.0846, "center_black": 0.1082}
+CVAP_WINDOW = {2018: "2016_2020", 2020: "2018_2022", 2022: "2020_2024", 2024: "2020_2024", 2026: "2020_2024"}
+
+
+def state_shares(year: int = 2026) -> pd.DataFrame:
+    """Hispanic and Black shares of citizens of voting age by state (Census ACS special tabulation)."""
+    c = pd.read_csv(RAW / "cvap" / f"county_cvap_{CVAP_WINDOW[year]}.csv", encoding="latin-1")
+    c.columns = c.columns.str.lower()
+    fips = {v: k for k, v in json.loads((ROOT / "site" / "src" / "data" / "states.json").read_text())["fips"].items()}
+    c["state_po"] = c.geoid.astype(str).str.split("US").str[-1].str[:2].map(fips)
+    t = c.pivot_table(index="state_po", columns="lntitle", values="cvap_est", aggfunc="sum")
+    return pd.DataFrame({"hisp": t["Hispanic or Latino"] / t["Total"],
+                         "black": t["Black or African American Alone"] / t["Total"]})
+
+
+def undecided_composition(office, state_po, year: int = 2026):
+    """Lean (D-R points among undecideds) from who a statewide race's voters are; 0 for House races."""
+    if not UNDECIDED or "composition" not in UNDECIDED_PARTS:
+        return 0.0 * pd.Series(1.0, index=office.index)
+    sh = state_shares(year)
+    c = UNDECIDED_COMPOSITION
+    lean = (c["hisp"] * (state_po.map(sh["hisp"]) - c["center_hisp"]) * 10
+            + c["black"] * (state_po.map(sh["black"]) - c["center_black"]) * 10)
+    return lean.where(office.isin(["SEN", "GOV"]), 0.0).fillna(0.0)
 
 
 def undecided_share(dem_pct, rep_pct):
@@ -292,8 +326,9 @@ def poll_summary(races: pd.DataFrame, forecast_date: pd.Timestamp = FORECAST_DAT
     polls["undecided"] = undecided_share(polls["dem_pct"], polls["rep_pct"])
     bias = polls.apply(lambda p: PARTISAN_BIAS[p["office"]].get(p["partisan"], 0.0), axis=1)
     race_key = polls["office"] + polls["state_po"] + polls["district"].astype(str) + polls["special"].astype(str)
-    polls["adj"] = polls["margin"] - bias + undecided_shift(polls["margin"], polls["undecided"],
-                                                             typical=typical_share(race_key, polls["undecided"]))
+    polls["adj"] = (polls["margin"] - bias
+                    + undecided_shift(polls["margin"], polls["undecided"], typical=typical_share(race_key, polls["undecided"]))
+                    + polls["undecided"] * undecided_composition(polls["office"], polls["state_po"]))
     age = (forecast_date - polls["end_date"]).dt.days.clip(lower=0)
     n = polls["sample_size"].fillna(600).clip(200, 3000)
     quality = (np.sqrt(n / 600)
