@@ -149,6 +149,11 @@ MONEY = True  # campaign money term (core/money_effect.py), leave-one-year-out c
 MONEY_OFFICES = ("HOUSE", "SEN")
 QUALITY = True  # candidate experience tiers (core/candidate_experience.py); weights are rm.QUALITY_EFFECT
 IDEOLOGY = True  # House ideology term (core/candidate_ideology.py), leave-one-year-out weight
+UNDECIDED = "--no-undecided" not in sys.argv  # undecided voters (core/undecided_break.py), leave-one-cycle-out
+# --und=pull,spread turns on only those pieces (pull toward even, lean by kind of year, spread by share)
+PARTS = next((a.split("=", 1)[1].split(",") for a in sys.argv if a.startswith("--und=")), ["pull", "lean", "spread"])
+TAG = "" if not UNDECIDED else ("" if len(PARTS) == 3 else "_und-" + "-".join(PARTS))
+UNDECIDED_KIND = {2018: "mid_Rpres", 2020: "pres_Rpres", 2022: "mid_Dpres", 2024: "pres_Dpres"}
 GOV_QUALITY = rm.QUALITY_EFFECT["GOV"]  # the governor weight is refit leaving each test year out
 
 CUTOFF_DAYS = 42  # polls must end at least this many days before the election (42 ~ Sept 22)
@@ -169,8 +174,10 @@ def poll_summary(races: pd.DataFrame, year: int) -> pd.DataFrame:
     d["district"] = pd.to_numeric(d["district"], errors="coerce").fillna(0).astype(int)
     d["partisan"] = d.partisan.map({"DEM": "D", "REP": "R"}).fillna("")
     d["margin"] = rm.two_party(d.dem_pct, d.rep_pct)
+    d["undecided"] = rm.undecided_share(d.dem_pct, d.rep_pct)
     bias = [rm.PARTISAN_BIAS[o].get(p, 0.0) for o, p in zip(d.office, d.partisan)]
-    d["adj"] = d.margin - bias
+    d["adj"] = d.margin - bias + rm.undecided_shift(d.margin, d.undecided, UNDECIDED_KIND[year],
+                                                    typical=rm.typical_share(d.race_id, d.undecided))
     age = (d.time_to_election - CUTOFF_DAYS).clip(lower=0)
     n = d.samplesize.fillna(600).clip(200, 3000)
     d["w"] = 0.5 ** (age / rm.POLL_HALF_LIFE_DAYS) * np.sqrt(n / 600) * np.where(d.partisan != "", rm.PARTISAN_WEIGHT, 1.0)
@@ -182,7 +189,8 @@ def poll_summary(races: pd.DataFrame, year: int) -> pd.DataFrame:
         if r.office == "SEN" and "dem_key" in r and isinstance(r.dem_key, str):
             x = x[x.dem_key == r.dem_key]
         rows.append({"poll_avg": np.average(x.adj, weights=x.w) if len(x) else np.nan,
-                     "poll_n_eff": x.w.sum(), "poll_count": len(x)})
+                     "poll_n_eff": x.w.sum(), "poll_count": len(x),
+                     "poll_undecided": np.average(x.undecided, weights=x.w) if len(x) else np.nan})
     return pd.concat([races.reset_index(drop=True), pd.DataFrame(rows)], axis=1)
 
 
@@ -239,6 +247,13 @@ def run_all(bonus_for: dict | None = None) -> tuple[pd.DataFrame, list]:
             rm.MONEY_EFFECT.update({g: float(me.get(g, 0.0)) if g in MONEY_OFFICES else 0.0 for g in rm.MONEY_EFFECT})
         else:
             rm.MONEY_EFFECT.update({g: 0.0 for g in rm.MONEY_EFFECT})
+        rm.UNDECIDED, rm.UNDECIDED_PARTS = UNDECIDED, set(PARTS)
+        if UNDECIDED:
+            ub = pd.read_csv(PROC / "undecided_break.csv")
+            ub = ub[(ub["form"] == "model") & (ub["left_out"].astype(str) == str(year))]
+            if len(ub):  # fitted without the test year (2024 isn't in the archive: all-years fit)
+                rm.UNDECIDED_PULL = float(ub["w*m"].iloc[0])
+                rm.UNDECIDED_LEAN = {k: float(ub[f"w*{k}"].iloc[0]) for k in rm.UNDECIDED_LEAN}
         races = poll_summary(races, year)
         bonus = 0.0 if bonus_for is None else bonus_for[year]
         live, fixed_r, margin, E, a = rm.run_simulation(races, env, D0, R0, np.random.default_rng(year),
@@ -314,7 +329,7 @@ def main_eve() -> None:
         poll_average_error.main(1)
         rm.load_poll_error()
         CUTOFF_DAYS = 1
-        main("_eve")
+        main("_eve" + ("" if UNDECIDED else "_nound") + TAG)
     finally:
         for f, b in saved.items():
             shutil.move(b, f)
@@ -322,4 +337,4 @@ def main_eve() -> None:
 
 
 if __name__ == "__main__":
-    main_eve() if "--eve" in sys.argv else main()
+    main_eve() if "--eve" in sys.argv else main(("" if UNDECIDED else "_nound") + TAG)

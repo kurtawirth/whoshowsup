@@ -202,7 +202,7 @@ YouGov / Elon University,,,2025-04-10,2025-04-17,1000.0,a,41.0,47.0,https://data
 Rasmussen Reports,,,2025-04-13,2025-04-17,1500.0,lv,51.0,47.0,https://data.ddhq.io/polls/2025/04/18/Rasmussen Reports-National,ddhq
 Civiqs,D,Daily Kos,2025-04-18,2025-04-18,1124.0,rv,46.0,53.0,https://civiqs.com/reports/2025/04/17/report-americans-say-trumps-tariffs-will-raise-prices,votehub
 Noble Predictive Insights / The Center Square,,,2025-04-15,2025-04-18,2527.0,rv,44.0,53.0,https://data.ddhq.io/polls/2025/04/24/Noble Predictive Insights/The Center Square-National-2025-04-15-2025-04-18,ddhq
-McLaughlin & Associates / Gingrich 360 / America's New Majority Project,,,2025-04-16,2025-04-19,2000.0,rv,47.6,52.4,https://data.ddhq.io/polls/2025/04/25/McLaughlin & Associates/America's New Majority Project/Gingrich 360-National-2025-04-16-2025-04-19,ddhq
+McLaughlin & Associates / America's New Majority Project / Gingrich 360,,,2025-04-16,2025-04-19,2000.0,rv,47.6,52.4,https://data.ddhq.io/polls/2025/04/25/McLaughlin & Associates/America's New Majority Project/Gingrich 360-National-2025-04-16-2025-04-19,ddhq
 Morning Consult,,,2025-04-18,2025-04-20,2207.0,rv,46.0,52.0,https://data.ddhq.io/polls/2025/04/21/Morning Consult-National,ddhq
 American Research Group,,,2025-04-17,2025-04-20,1100.0,a,43.0,53.0,https://data.ddhq.io/polls/2025/04/21/American Research Group-National,ddhq
 SurveyMonkey / NBC News,,,2025-04-11,2025-04-20,19682.0,a,45.0,55.0,https://data.ddhq.io/polls/2025/04/27/SurveyMonkey/NBC News-National-2025-04-11-2025-04-20,ddhq
@@ -211,7 +211,7 @@ Ipsos / Reuters,,,2025-04-16,2025-04-21,4306.0,a,42.0,53.0,https://data.ddhq.io/
 Shaw & Company Research / Beacon Research / Fox News,,,2025-04-18,2025-04-21,1104.0,rv,44.0,55.0,https://data.ddhq.io/polls/2025/04/26/Beacon Research/Shaw & Company Research/Fox News-National-2025-04-18-2025-04-21,ddhq
 AP-NORC,,,2025-04-17,2025-04-21,1260.0,a,39.0,59.0,https://data.ddhq.io/polls/2025/04/27/AP-NORC-National,ddhq
 YouGov / The Economist,,,2025-04-19,2025-04-22,1625.0,a,41.0,54.0,https://data.ddhq.io/polls/2025/04/23/YouGov/The Economist-National-2025-04-19-2025-04-22,ddhq
-Ipsos / ABC News / The Washington Post,,,2025-04-18,2025-04-22,2464.0,a,39.0,55.0,https://data.ddhq.io/polls/2025/04/27/Ipsos/ABC News/The Washington Post-National-2025-04-18-2025-04-22,ddhq
+Ipsos / The Washington Post / ABC News,,,2025-04-18,2025-04-22,2464.0,a,39.0,55.0,https://data.ddhq.io/polls/2025/04/27/Ipsos/ABC News/The Washington Post-National-2025-04-18-2025-04-22,ddhq
 Quantus Insights / TrendingPolitics,,,2025-04-21,2025-04-23,1000.0,rv,47.7,49.8,https://data.ddhq.io/polls/2025/04/24/Quantus Insights/TrendingPolitics-National-2025-04-21-2025-04-23,ddhq
 Marist College / NPR / PBS NewsHour,,,2025-04-21,2025-04-23,1439.0,a,42.0,53.0,https://data.ddhq.io/polls/2025/04/29/Marist College/NPR/PBS NewsHour-National-2025-04-21-2025-04-23,ddhq
 YouGov / The Times of London,,,2025-04-21,2025-04-23,1295.0,a,42.0,53.0,https://data.ddhq.io/polls/2025/04/28/YouGov/The Times of London-National-2025-04-21-2025-04-23,ddhq
@@ -342,7 +342,7 @@ American Pulse Research & Polling,,,2025-06-23,2025-06-25,633.0,lv,49.7,48.9,htt
 Quantus Insights / TrendingPolitics,,,2025-06-23,2025-06-25,1000.0,rv,47.2,49.9,https://data.ddhq.io/polls/2025/06/26/Quantus Insights/TrendingPolitics-National-2025-06-23-2025-06-25,ddhq
 American Pulse Research & Polling,,,2025-06-23,2025-06-25,633.0,rv,49.7,48.9,https://data.ddhq.io/polls/2025/06/26/American Pulse Research & Polling-National,ddhq
 John Zogby Strategies,,,2025-06-24,2025-06-25,1006.0,lv,45.4,52.7,https://data.ddhq.io/polls/2025/06/28/John Zogby Strategies-National,ddhq
-Marist College / NPR / PBS NewsHour,,,2025-06-23,2025-06-25,1381.0,a,43.0,52.0,https://data.ddhq.io/polls/2025/07/01/Marist College/NPR/PBS NewsHour-National-2025-07-23-2025-07-25,ddhq
+Marist College / PBS NewsHour / NPR,,,2025-06-23,2025-06-25,1381.0,a,43.0,52.0,https://data.ddhq.io/polls/2025/07/01/Marist College/NPR/PBS NewsHour-National-2025-07-23-2025-07-25,ddhq
 Emerson College,,,2025-06-24,2025-06-25,1000.0,rv,44.9,46.3,https://data.ddhq.io/polls/2025/06/27/Emerson College-National,ddhq
 The Tyson Group,,,2025-06-25,2025-06-26,1027.0,a,45.0,51.0,https://data.ddhq.io/polls/2025/06/28/The Tyson Group-National,ddhq
 Targoz Market Research / Overton Insights,,,2025-06-23,2025-06-26,1200.0,rv,43.0,54.0,https://data.ddhq.io/polls/2025/07/01/Targoz Market Research-National,ddhq
@@ -403,7 +403,7 @@ InsiderAdvantage / Trafalgar Group,,,2025-07-22,2025-07-23,1200.0,lv,50.0,48.0,h
 Trafalgar Group/InsiderAdvantage,,,2025-07-22,2025-07-23,1200.0,lv,50.0,48.0,https://insideradvantage.com/joint-insideradvantage-trafalgar-group-national-survey-majority-of-voters-approve-of-trumps-job-performance-at-six-month-mark-awareness-of-criminal-referral-starting-to-increase/,votehub
 Rasmussen Reports,,,2025-07-20,2025-07-24,1709.0,lv,48.0,51.0,https://data.ddhq.io/polls/2025/07/28/Rasmussen Reports-National,ddhq
 RMG Research / Napolitan News Service,,,2025-07-16,2025-07-24,3000.0,rv,50.0,48.0,https://data.ddhq.io/polls/2025/07/25/RMG Research/Napolitan News Service-National-2025-07-16-2025-07-24,ddhq
-McLaughlin & Associates / Gingrich 360 / America's New Majority Project,,,2025-07-21,2025-07-24,2000.0,rv,46.5,53.5,https://data.ddhq.io/polls/2025/07/29/McLaughlin & Associates/America's New Majority Project/Gingrich 360-National-2025-07-21-2025-07-24,ddhq
+McLaughlin & Associates / America's New Majority Project / Gingrich 360,,,2025-07-21,2025-07-24,2000.0,rv,46.5,53.5,https://data.ddhq.io/polls/2025/07/29/McLaughlin & Associates/America's New Majority Project/Gingrich 360-National-2025-07-21-2025-07-24,ddhq
 Leger,,,2025-07-25,2025-07-27,1007.0,a,37.0,51.0,https://data.ddhq.io/polls/2025/08/04/Leger-National,ddhq
 Ipsos / Reuters,,,2025-07-25,2025-07-27,1023.0,a,40.0,56.0,https://data.ddhq.io/polls/2025/07/29/Ipsos/Reuters-National-2025-07-25-2025-07-27,ddhq
 Morning Consult,,,2025-07-25,2025-07-27,2203.0,rv,47.0,50.0,https://data.ddhq.io/polls/2025/07/28/Morning Consult-National,ddhq
@@ -510,7 +510,7 @@ YouGov / The Economist,,,2025-09-19,2025-09-22,1551.0,a,39.0,56.0,https://data.d
 Marquette University Law School,,,2025-09-15,2025-09-24,1043.0,a,43.0,57.0,https://data.ddhq.io/polls/2025/10/01/Marquette University Law School-National,ddhq
 RMG Research / Napolitan News Service,,,2025-09-16,2025-09-24,3000.0,rv,50.0,49.0,https://data.ddhq.io/polls/2025/10/01/RMG Research/Napolitan News Service-National-2025-09-16-2025-09-24,ddhq
 Rasmussen Reports,,,2025-09-21,2025-09-25,1951.0,lv,49.0,49.0,https://data.ddhq.io/polls/2025/09/27/Rasmussen Reports-National,ddhq
-Marist College / PBS NewsHour / NPR,,,2025-09-22,2025-09-26,1477.0,a,41.0,53.0,https://data.ddhq.io/polls/2025/09/30/Marist College/NPR/PBS NewsHour-National-2025-09-22-2025-09-26,ddhq
+Marist College / NPR / PBS NewsHour,,,2025-09-22,2025-09-26,1477.0,a,41.0,53.0,https://data.ddhq.io/polls/2025/09/30/Marist College/NPR/PBS NewsHour-National-2025-09-22-2025-09-26,ddhq
 Siena Research Institute / The New York Times,,,2025-09-22,2025-09-27,1313.0,rv,43.0,54.0,https://data.ddhq.io/polls/2025/09/30/Siena Research Institute/The New York Times-National-2025-09-22-2025-09-27,ddhq
 Pew Research Center,,,2025-09-22,2025-09-28,3445.0,a,40.0,58.0,https://data.ddhq.io/polls/2025/09/30/Pew Research Center-National,ddhq
 Morning Consult,,,2025-09-26,2025-09-28,2202.0,rv,46.0,52.0,https://data.ddhq.io/polls/2025/09/29/Morning Consult-National,ddhq
@@ -617,7 +617,7 @@ Marquette University Law School,,,2025-11-05,2025-11-12,1052.0,a,43.0,57.0,https
 Marist College / PBS NewsHour / NPR,,,2025-11-10,2025-11-13,1443.0,a,39.0,56.0,https://data.ddhq.io/polls/2025/11/19/Marist College/NPR/PBS NewsHour-National-2025-11-10-2025-11-13,ddhq
 Rasmussen Reports,,,2025-11-09,2025-11-13,1925.0,lv,44.0,54.0,https://data.ddhq.io/polls/2025/11/14/Rasmussen Reports-National,ddhq
 RMG Research / Napolitan News Service,,,2025-11-05,2025-11-13,3000.0,rv,49.0,50.0,https://data.ddhq.io/polls/2025/11/14/RMG Research/Napolitan News Service-National-2025-11-05-2025-11-13,ddhq
-Morning Consult / Deseret News / University of Utah Hinckley Institute of Politics,,,2025-11-07,2025-11-13,1745.0,rv,43.0,52.0,https://data.ddhq.io/polls/2025/11/20/Morning Consult/Deseret News/University of Utah Hinckley Institute of Politics-National-2025-11-08-2025-11-12,ddhq
+Morning Consult / University of Utah Hinckley Institute of Politics / Deseret News,,,2025-11-07,2025-11-13,1745.0,rv,43.0,52.0,https://data.ddhq.io/polls/2025/11/20/Morning Consult/Deseret News/University of Utah Hinckley Institute of Politics-National-2025-11-08-2025-11-12,ddhq
 High Point University Survey Research Center,,,2025-11-10,2025-11-14,1004.0,a,35.0,56.0,https://data.ddhq.io/polls/2025/12/08/High-Point-University-Survey-Research-Center-National,ddhq
 Verasight / Strength in Numbers,,,2025-11-12,2025-11-14,2038.0,a,41.0,57.0,https://data.ddhq.io/polls/2025/11/18/Verasight/Strength in Numbers-National-2025-11-12-2025-11-14,ddhq
 Morning Consult,,,2025-11-14,2025-11-16,2201.0,rv,46.0,52.0,https://data.ddhq.io/polls/2025/11/17/Morning Consult-National,ddhq
@@ -664,7 +664,7 @@ Tavern Research / Searchlight Institute,,,2025-12-05,2025-12-08,2017.0,lv,45.0,5
 Ipsos / Reuters,,,2025-12-03,2025-12-08,4434.0,a,41.0,57.0,https://data.ddhq.io/polls/2025/12/09/Ipsos/Reuters-National-2025-12-03-2025-12-08,ddhq
 Change Research,,,2025-12-05,2025-12-10,1520.0,rv,45.0,53.0,https://data.ddhq.io/polls/865_20260502_Change_1225.pdf,ddhq
 Tavern Research / Searchlight Institute,,,2025-12-09,2025-12-10,1567.0,lv,45.0,53.0,https://data.ddhq.io/polls/2025/12/12/Tavern-Research/Searchlight-Institute-National-2025-12-09-2025-12-10,ddhq
-Marist College / NPR / PBS NewsHour,,,2025-12-08,2025-12-11,1440.0,a,38.0,54.0,https://data.ddhq.io/polls/2025/12/17/Marist-College-National,ddhq
+Marist College / PBS NewsHour / NPR,,,2025-12-08,2025-12-11,1440.0,a,38.0,54.0,https://data.ddhq.io/polls/2025/12/17/Marist-College-National,ddhq
 The Argument,,,2025-12-05,2025-12-11,1521.0,rv,43.0,55.0,https://data.ddhq.io/polls/2025/12/16/The-Argument-National,ddhq
 Rasmussen Reports,,,2025-12-07,2025-12-11,1933.0,lv,47.0,51.0,https://data.ddhq.io/polls/2025/12/12/Rasmussen-Reports-National,ddhq
 RMG Research / Napolitan News Service,,,2025-12-03,2025-12-11,3000.0,rv,47.0,51.0,https://data.ddhq.io/polls/2025/12/12/RMG-Research/Napolitan-News-Service-National-2025-12-03-2025-12-11,ddhq
@@ -933,7 +933,7 @@ YouGov / The Economist,,,2026-04-17,2026-04-20,1707.0,a,38.0,54.0,https://data.d
 Morning Consult,,,2026-04-17,2026-04-20,2203.0,rv,44.0,53.0,https://data.ddhq.io/polls/2026/03/11/Morning-Consult-National,ddhq
 American Research Group,,,2026-04-16,2026-04-20,1100.0,a,32.0,63.0,https://data.ddhq.io/polls/2026/04/21/American-Research-Group-National,ddhq
 Ipsos / Reuters,,,2026-04-15,2026-04-20,4557.0,a,36.0,62.0,https://data.ddhq.io/polls/2026/04/22/Ipsos/Reuters-National-2026-04-15-2026-04-20,ddhq
-Leger / Maintenant Media / 338Canada,,,2026-04-17,2026-04-20,1004.0,a,36.0,53.0,https://data.ddhq.io/polls/2026/04/30/Leger-National,ddhq
+Leger / 338Canada / Maintenant Media,,,2026-04-17,2026-04-20,1004.0,a,36.0,53.0,https://data.ddhq.io/polls/2026/04/30/Leger-National,ddhq
 AP-NORC,,,2026-04-16,2026-04-20,2596.0,a,33.0,67.0,https://data.ddhq.io/polls/2026/04/22/AP-NORC-National,ddhq
 Beacon Research / Shaw & Company Research / Fox News,,,2026-04-17,2026-04-20,1001.0,rv,42.0,58.0,https://data.ddhq.io/polls/2026/04/23/Beacon-Research/Shaw-&-Company-Research/Fox-News-National-2026-04-17-2026-04-20,ddhq
 Angus Reid Institute,,,2026-04-15,2026-04-20,1490.0,a,35.0,59.0,https://data.ddhq.io/polls/2026/04/21/Angus-Reid-Institute-National,ddhq
@@ -956,7 +956,7 @@ Global Strategy Group / Navigator Research,,,2026-04-23,2026-04-27,1000.0,rv,40.
 InsiderAdvantage,,,2026-04-26,2026-04-27,800.0,lv,44.1,49.0,https://data.ddhq.io/polls/2026/04/29/InsiderAdvantage-National,ddhq
 Ipsos / Reuters,,,2026-04-24,2026-04-27,1269.0,a,34.0,64.0,https://data.ddhq.io/polls/2026/04/28/Ipsos/Reuters-National-2026-04-24-2026-04-27,ddhq
 Big Data Poll,,,2026-04-25,2026-04-28,3176.0,rv,39.6,56.9,https://data.ddhq.io/polls/2026/04/30/Big-Data-Poll-National,ddhq
-Ipsos / The Washington Post / ABC News,,,2026-04-24,2026-04-28,2560.0,a,37.0,62.0,https://data.ddhq.io/polls/2026/05/03/Ipsos/ABC-News/The-Washington-Post-National-2026-04-24-2026-04-28,ddhq
+Ipsos / ABC News / The Washington Post,,,2026-04-24,2026-04-28,2560.0,a,37.0,62.0,https://data.ddhq.io/polls/2026/05/03/Ipsos/ABC-News/The-Washington-Post-National-2026-04-24-2026-04-28,ddhq
 Rasmussen Reports,,,2026-04-26,2026-04-30,1827.0,lv,43.0,56.0,https://data.ddhq.io/polls/2026/05/01/Rasmussen-Reports-National,ddhq
 Marist College / PBS NewsHour / NPR,,,2026-04-27,2026-04-30,1322.0,a,37.0,59.0,https://data.ddhq.io/polls/2026/05/06/Marist-College-National,ddhq
 RMG Research / Napolitan News Service,,,2026-04-22,2026-04-30,3000.0,rv,42.0,57.0,https://data.ddhq.io/polls/2026/05/01/RMG-Research/Napolitan-News-Service-National-2026-04-22-2026-04-30,ddhq
@@ -1192,7 +1192,7 @@ Shaw & Company Research / Beacon Research / Fox News,,,2026-09-11,2026-09-14,121
 Bedrock Polling / Rainey Center,,,2026-09-10,2026-09-14,1004.0,rv,41.0,59.0,https://data.ddhq.io/polls/2026/09/17/Rainey-Center-National,ddhq
 Navigator Research / Global Strategy Group,,,2026-09-10,2026-09-14,1000.0,rv,38.0,61.0,https://data.ddhq.io/polls/2026/09/17/Global-Strategy-Group/Navigator-Research-National,ddhq
 Big Data Poll / Public Polling Project,,,2026-09-13,2026-09-15,2947.0,rv,38.8,58.5,https://data.ddhq.io/polls/2026/09/16/Big-Data-Poll/Public-Polling-Project-National-2026-09-13-2026-09-15,ddhq
-Marist College / NPR / PBS NewsHour,,,2026-09-14,2026-09-15,1280.0,rv,39.0,59.0,https://data.ddhq.io/polls/2026/09/23/Marist-College/NPR/PBS-NewsHour-National-2026-09-14-2026-09-15,ddhq
+Marist College / PBS NewsHour / NPR,,,2026-09-14,2026-09-15,1280.0,rv,39.0,59.0,https://data.ddhq.io/polls/2026/09/23/Marist-College/NPR/PBS-NewsHour-National-2026-09-14-2026-09-15,ddhq
 Public Opinion Strategies / Hart Research Associates / NBC News,,,2026-09-11,2026-09-15,1000.0,rv,41.0,56.0,https://data.ddhq.io/polls/2026/09/20/Hart-Research-Associates/Public-Opinion-Strategies/NBC-News-National-2026-09-11-2026-09-15,ddhq
 RMG Research / Napolitan News Service,,,2026-09-08,2026-09-15,2000.0,rv,44.0,54.0,https://data.ddhq.io/polls/2026/09/18/RMG-Research/Napolitan-News-Service-National-2026-09-08-2026-09-15,ddhq
 Tavern Research,,,2026-09-15,2026-09-16,1007.0,lv,37.0,61.0,https://data.ddhq.io/polls/2026/09/18/Tavern-Research-National,ddhq

@@ -107,6 +107,44 @@ TURNOUT_SHARE_MEAN, TURNOUT_SHARE_CONC = 0.65, 6.0
 # bonus * exp(-(lean / width)^2). Estimated by midterms_2026/models/backtest_races.py.
 CLOSE_SEAT_BONUS, CLOSE_SEAT_WIDTH = 1.5, 10.0  # all-years estimate 1.50; leave-one-out 0.8-2.2 (2.4 before the money term, 3.0 before the House personal vote)
 STATE_SHOCK_SD, REGION_SHOCK_SD = 2.0, 2.0
+# Undecided voters (core/undecided_break.py; 538's archive, 10,632 polls in the final two months,
+# 1998-2022). A poll's undecided share u doesn't split like its decided voters: they split close to
+# evenly (the pull), with a lean (D-R points among them) that depends on the kind of year. Each
+# poll's two-party margin m moves by  u * (PULL * m + LEAN[kind]).  The poll average's uncertainty
+# also scales with the race's undecided share, squared miss ~ s0 + s1 * u, RELATIVE to this cycle's
+# typical race (the median share among polled races): overall poll uncertainty stays as calibrated,
+# and races with more undecideds than usual get wider ranges, fewer get narrower. Relative because
+# how "undecided" is reported drifts (many 2026 releases fold leaners in: median share 0.10 vs 0.13
+# in the archive), which would otherwise read as every race being unusually certain.
+UNDECIDED = True  # backtest (2026-09-27): Brier 0.0302 -> 0.0303 (Sept 22), 0.0312 -> 0.0311 (eve); competitive races 0.147 -> 0.146, 0.150 -> 0.146
+UNDECIDED_PARTS = {"pull", "lean", "spread"}  # which pieces are on (the backtest tests each)
+UNDECIDED_PULL = -1.01
+UNDECIDED_LEAN = {"mid_Dpres": -22.58, "mid_Rpres": 2.11, "pres_Dpres": 4.47, "pres_Rpres": -6.57}
+UNDECIDED_KIND = "mid_Rpres"  # 2026: a midterm with a Republican president
+UNDECIDED_SPREAD = (38.2, 263.6)  # s0, s1
+
+
+def undecided_share(dem_pct, rep_pct):
+    """Undecided (and minor-party) share of a poll, 0-0.4."""
+    return ((100 - dem_pct - rep_pct).clip(0, 40) / 100).fillna(0.0)
+
+
+def undecided_shift(margin, share, kind: str | None = None, typical: float | None = None):
+    """Points to add to a poll's two-party margin for how its undecideds are expected to break.
+    The lean applies to the share above or below the cycle's typical share (`typical`): it was measured
+    within years, and the year-wide swing is the national model's to set."""
+    if not UNDECIDED:
+        return 0.0 * margin
+    pull = share * UNDECIDED_PULL * margin if "pull" in UNDECIDED_PARTS else 0.0 * margin
+    base = share.mean() if typical is None else typical
+    lean = (share - base) * UNDECIDED_LEAN[kind or UNDECIDED_KIND] if "lean" in UNDECIDED_PARTS else 0.0
+    return pull + lean
+
+
+def typical_share(races_of_polls: pd.Series, share: pd.Series) -> float:
+    """The cycle's typical undecided share, each race counted once (as in the fit)."""
+    wt = 1.0 / races_of_polls.map(races_of_polls.value_counts())
+    return float(np.average(share, weights=wt)) if len(share) else 0.0
 # Osborn ran ~15 pts ahead of a generic Democrat's expected margin in NE in 2024;
 # shrink toward zero and widen, since independents' appeal is volatile.
 INDEPENDENT_ADJ = {("SEN", "NE", 0): (10.0, 6.0), ("HOUSE", "CA", 6): (0.0, 4.0), ("HOUSE", "AK", 0): (0.0, 4.0)}
@@ -251,8 +289,11 @@ def poll_summary(races: pd.DataFrame, forecast_date: pd.Timestamp = FORECAST_DAT
     # splitting a first-round poll count together -- so those polls read as bloc vs bloc.)
     polls["partisan"] = polls["partisan"].fillna("")
     polls["margin"] = two_party(polls["dem_pct"], polls["rep_pct"])
+    polls["undecided"] = undecided_share(polls["dem_pct"], polls["rep_pct"])
     bias = polls.apply(lambda p: PARTISAN_BIAS[p["office"]].get(p["partisan"], 0.0), axis=1)
-    polls["adj"] = polls["margin"] - bias
+    race_key = polls["office"] + polls["state_po"] + polls["district"].astype(str) + polls["special"].astype(str)
+    polls["adj"] = polls["margin"] - bias + undecided_shift(polls["margin"], polls["undecided"],
+                                                             typical=typical_share(race_key, polls["undecided"]))
     age = (forecast_date - polls["end_date"]).dt.days.clip(lower=0)
     n = polls["sample_size"].fillna(600).clip(200, 3000)
     quality = (np.sqrt(n / 600)
@@ -270,6 +311,7 @@ def poll_summary(races: pd.DataFrame, forecast_date: pd.Timestamp = FORECAST_DAT
     summ = pd.DataFrame({
         "poll_avg": g.apply(lambda x: np.average(x["adj"], weights=x["w"]), include_groups=False),
         "poll_n_eff": g["q"].sum(), "poll_count": g.size(),
+        "poll_undecided": g.apply(lambda x: np.average(x["undecided"], weights=x["w"]), include_groups=False),
         "poll_last": g["end_date"].max(),
     }).reset_index()
     return races.merge(summ, on=["office", "state_po", "district", "special"], how="left")
@@ -352,6 +394,11 @@ def run_simulation(races: pd.DataFrame, env: np.ndarray, nat_d0: float, nat_r0: 
     spread = np.vectorize(POLL_SPREAD.get)(office)
     env_sd = env.std()
     poll_sd = np.sqrt(np.maximum(floor ** 2 - env_sd ** 2, 1.0) + spread ** 2 / np.maximum(n_eff, 1e-9))
+    if UNDECIDED and "spread" in UNDECIDED_PARTS and "poll_undecided" in live:
+        s0, s1 = UNDECIDED_SPREAD
+        u_ref = float(np.nanmedian(live["poll_undecided"])) if live["poll_undecided"].notna().any() else 0.0
+        u = live["poll_undecided"].fillna(u_ref).to_numpy(dtype=float)
+        poll_sd = poll_sd * np.sqrt((s0 + s1 * u) / (s0 + s1 * u_ref))  # more undecided -> less certain
     w_poll = np.where(has_poll, fund_sd ** 2 / (fund_sd ** 2 + poll_sd ** 2), 0.0)
     poll_now = live["poll_avg"].fillna(0).to_numpy(dtype=float)[:, None] + (E - E_bar)[None, :]
     mean = w_poll[:, None] * poll_now + (1 - w_poll[:, None]) * fund
@@ -405,7 +452,7 @@ def simulate(forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
     out = pd.concat([live, fixed_r], ignore_index=True)
     OUT.mkdir(parents=True, exist_ok=True)
     cols = ["office", "state_po", "district", "special", "race_type", "incumbent", "incumbent_party", "inc_side",
-            "dem_candidate", "rep_candidate", "race_note", "pres24", "quality_diff", "prior_edge", "money_log_ratio", "money_adj", "quality_adj", "ideology_gap", "ideology_adj", "poll_count", "poll_avg",
+            "dem_candidate", "rep_candidate", "race_note", "pres24", "quality_diff", "prior_edge", "money_log_ratio", "money_adj", "quality_adj", "ideology_gap", "ideology_adj", "poll_count", "poll_avg", "poll_undecided",
             "poll_weight", "fundamentals_mean", "margin_median", "margin_p10", "margin_p90", "p_dem"]
     out["race_id"] = out.apply(race_id, axis=1)
     out[["race_id"] + cols].sort_values(["office", "state_po", "district"]).to_csv(OUT / "race_forecasts.csv", index=False)

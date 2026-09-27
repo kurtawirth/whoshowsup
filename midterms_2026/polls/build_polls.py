@@ -168,6 +168,11 @@ def combine(*sources: pd.DataFrame) -> pd.DataFrame:
         if not out.empty:
             m = src.reset_index().merge(out[race + ["k", "end_date"]], on=race + ["k"], how="left", suffixes=("", "_x"))
             dup = set(m.loc[(m["end_date"] - m["end_date_x"]).abs() <= pd.Timedelta(days=2), "index"])
+            # same pollster and same first day of fieldwork: one poll even if a listing's end date is a
+            # typo (Wikipedia's Nevada governor page lists a July 8-16 poll as "July 8-6")
+            s = src.reset_index().merge(out[race + ["k", "start_date"]].dropna(subset=["start_date"]),
+                                        on=race + ["k", "start_date"])
+            dup |= set(s["index"])
             n = src[src["sample_size"].notna()].reset_index().merge(
                 out.loc[out["sample_size"].notna(), race + ["end_date", "sample_size"]], on=race + ["end_date", "sample_size"])
             src = src.drop(index=list(dup | set(n["index"])))

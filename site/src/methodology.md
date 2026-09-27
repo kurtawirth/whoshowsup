@@ -24,7 +24,7 @@ const style = {background: "transparent", color: t["ink-3"], fontSize: "12px"};
 The model first estimates the national House popular vote from three independent readings, each corrected for how it has historically missed and weighted by how accurate it has been:
 
 - **Special elections.** Our main turnout signal. In low-turnout specials, the party whose voters are more motivated beats the district's usual lean. We add the cycle's average overperformance to the last presidential margin. Historically this overstates Democrats by about three points, so the model subtracts that.
-- **The generic ballot.** Polls of which party voters want in Congress, read in two-party terms (undecided voters don't vote). In late September these polls have overstated Democrats in 14 of the last 15 elections, by 3.4 points on average, and the model corrects for it.
+- **The generic ballot.** Polls of which party voters want in Congress, read in two-party terms. In late September these polls have overstated Democrats in 14 of the last 15 elections, by 3.4 points on average, and the model corrects for it.
 - **Fundamentals.** The president's approval rating and the midterm penalty, fit on every election since 1978.
 
 Each reading is a small Bayesian model: it learns from history not just a best estimate of its bias but a range of plausible values, so its uncertainty flows into the forecast.
@@ -49,6 +49,8 @@ Then come adjustments measured from past races:
 ## 3. Polls
 
 Polls are collected every morning from three sources (VoteHub, Wikipedia and Decision Desk HQ), and a poll listed in more than one counts once. When a pollster releases several versions of the same poll, such as likely voters and registered voters, only one counts, preferring likely voters. Each race's polls are averaged in two-party terms. A poll's weight halves every 14 days (the best-performing half-life when we tested 3 to 60 days on past elections). Larger samples and likely-voter polls count a little more. Polls sponsored by a campaign or party are corrected for their measured lean toward the sponsor, about three to five points, and count half as much.
+
+**Undecided voters.** Reading a poll in two-party terms quietly assumes the undecided voters will split the same way as everyone else. In more than 10,000 race polls from 1998 to 2022, they didn't. Undecided voters split much closer to evenly than the decided voters around them, so a race polling 46-40 is less safe than one polling 53-47, and the model treats it that way. They also move with the national mood: races with more undecided voters than usual swung toward the party out of the White House in midterms, hard when a Democrat was president (1998, 2010, 2014 and 2022) and only slightly when a Republican was (2002, 2006; 2018 leaned slightly Republican). The model applies that pattern, and it widens the range for races with many undecided voters, since those have been harder to call.
 
 How much a race's polls move it away from its fundamentals depends on how accurate poll averages have historically been at this point in the race. That depends on how many polls there are, and it improves as Election Day nears. A Senate race with 40 polls leans mostly on them. A House district with none runs on fundamentals alone.
 
@@ -155,6 +157,8 @@ display(Plot.plot({
 ## Ideas we tested and dropped
 
 Good models are defined as much by what they leave out. We built a county-level measure of how strongly each place's turnout amplifies national waves, a natural fit for a turnout-first model. On 2018 and 2022 results it did not predict how statewide swings distributed across counties any better than simpler methods, so it is not in the model. The broader turnout idea, shifting each party's vote in proportion rather than moving every margin equally, did pass, and it is.
+
+We also tested whether kitchen-table conditions (consumer sentiment, how people rate their own finances, gas prices, inflation and unemployment) change how undecided voters break. They added nothing beyond the pattern above: hard economic times are already visible in the polls and special elections that set the national mood. Nor did turnout surges make polls miss by more; the biggest recent misses, in 2016 and 2020, hit every race alike rather than the ones with many undecided voters.
 
 ## Sources
 
