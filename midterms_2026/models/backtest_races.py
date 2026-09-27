@@ -153,6 +153,11 @@ UNDECIDED = "--no-undecided" not in sys.argv  # undecided voters (core/undecided
 # --und=pull,spread turns on only those pieces (pull toward even, lean by kind of year, spread by share)
 PARTS = next((a.split("=", 1)[1].split(",") for a in sys.argv if a.startswith("--und=")), ["pull", "lean", "spread"])
 TAG = "" if not UNDECIDED else ("" if len(PARTS) == 3 else "_und-" + "-".join(PARTS))
+# --df=N: each race's own error drawn from Student's t with N degrees of freedom (same spread)
+DF = next((int(a.split("=", 1)[1]) for a in sys.argv if a.startswith("--df=")), None)
+if DF:
+    rm.RACE_ERROR_DF = DF
+    TAG += f"_df{DF}"
 UNDECIDED_KIND = {2018: "mid_Rpres", 2020: "pres_Rpres", 2022: "mid_Dpres", 2024: "pres_Dpres"}
 GOV_QUALITY = rm.QUALITY_EFFECT["GOV"]  # the governor weight is refit leaving each test year out
 

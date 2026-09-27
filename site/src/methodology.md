@@ -56,7 +56,7 @@ How much a race's polls move it away from its fundamentals depends on how accura
 
 ## 4. Simulation
 
-Each of the 20,000 simulated elections draws a national environment, a turnout/persuasion mix, a shared error for each state (a polling miss in Wisconsin hits every Wisconsin race), a shared error for each region, and each race's own error. That correlation is why the seat ranges are realistic rather than falsely narrow.
+Each of the 20,000 simulated elections draws a national environment, a turnout/persuasion mix, a shared error for each state (a polling miss in Wisconsin hits every Wisconsin race), a shared error for each region, and each race's own error. That correlation is why the seat ranges are realistic rather than falsely narrow. Each race's own error has "fat tails": in past elections most races landed closer to the forecast than a bell curve would suggest, and a few missed by much more, so the model draws its errors that way too. That made the backtest's ranges more honest (its 80% ranges held 85% of results instead of 88%) and its probabilities slightly more accurate.
 
 ## What the model does not use
 

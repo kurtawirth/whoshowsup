@@ -107,6 +107,11 @@ TURNOUT_SHARE_MEAN, TURNOUT_SHARE_CONC = 0.65, 6.0
 # bonus * exp(-(lean / width)^2). Estimated by midterms_2026/models/backtest_races.py.
 CLOSE_SEAT_BONUS, CLOSE_SEAT_WIDTH = 1.5, 10.0  # all-years estimate 1.50; leave-one-out 0.8-2.2 (2.4 before the money term, 3.0 before the House personal vote)
 STATE_SHOCK_SD, REGION_SHOCK_SD = 2.0, 2.0
+# Shape of each race's own error: Student's t with this many degrees of freedom, scaled to the same
+# standard deviation (None = a bell curve). Backtest misses have the right spread (sd of standardized
+# misses 0.99) but fat tails: most races land closer than a bell curve expects and a few much farther,
+# so 88% of results fell inside the "80%" ranges.
+RACE_ERROR_DF = 4  # backtest (2026-09-27): Brier 0.0303 -> 0.0302 (Sept 22), 0.0311 -> 0.0310 (eve); 80% ranges held 88% -> 85%
 # Undecided voters (core/undecided_break.py; 538's archive, 10,632 polls in the final two months,
 # 1998-2022). A poll's undecided share u doesn't split like its decided voters: they split close to
 # evenly (the pull), with a lean (D-R points among them) that depends on the kind of year. Each
@@ -447,7 +452,11 @@ def run_simulation(races: pd.DataFrame, env: np.ndarray, nat_d0: float, nat_r0: 
     si = live["state_po"].map({s_: i for i, s_ in enumerate(states)}).to_numpy()
     ri = live["state_po"].map(lambda s_: regions.index(REGION[s_])).to_numpy()
     own_sd = np.sqrt(np.maximum(post_sd ** 2 - STATE_SHOCK_SD ** 2 - REGION_SHOCK_SD ** 2, 2.0 ** 2))
-    margin = mean + st_shock[si] + rg_shock[ri] + rng.normal(0, 1, mean.shape) * own_sd[:, None]
+    if RACE_ERROR_DF:
+        own = rng.standard_t(RACE_ERROR_DF, mean.shape) * np.sqrt((RACE_ERROR_DF - 2) / RACE_ERROR_DF)
+    else:
+        own = rng.normal(0, 1, mean.shape)
+    margin = mean + st_shock[si] + rg_shock[ri] + own * own_sd[:, None]
 
     live["p_dem"] = (margin > 0).mean(axis=1)
     live["margin_median"] = np.median(margin, axis=1)
