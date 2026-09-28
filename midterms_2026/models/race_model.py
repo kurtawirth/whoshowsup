@@ -57,8 +57,6 @@ PERSONAL = {"SEN": {"intercept": 3.0, "rho": 0.43, "sd": 9.1},
 # also shrinking that spread (by 5.78/7.32, the fit's residual vs. flat-bonus sd) hurt the
 # backtest's Brier score and calls at both Sept 22 and Election Eve, because it weakened the
 # polls' pull in close races.
-# Governors whose previous race was not their own (first elected 2024, or took office mid-term).
-GOV_NO_PRIOR = {"NH", "SD"}
 FUND_SD = {"HOUSE_inc": 6.0, "HOUSE_open": 7.0, "SEN": 11.0, "GOV": 8.5}
 # Poll-average accuracy depends on how far out we are; core/poll_average_error.py writes
 # the values for the current forecast date. These defaults are the Sept 22 (42 days) fit.
@@ -305,14 +303,10 @@ def prior_edge(races: pd.DataFrame) -> pd.Series:
         if r["office"] not in ("SEN", "GOV") or r["inc_side"] == 0:
             continue
         side = r["inc_side"]
-        if r["office"] == "SEN":
-            ln = str(r["incumbent"]).split()[-1].upper()
-            prev = cal[(cal.office == "SEN") & (cal.state_po == r["state_po"]) & (cal.year >= 2018)]
-            prev = prev[prev["winner"].astype(str).str.upper().str.contains(ln, regex=False)]
-        else:
-            if r["state_po"] in GOV_NO_PRIOR:
-                continue
-            prev = cal[(cal.office == "GOV") & (cal.state_po == r["state_po"])]
+        # the incumbent's own previous race (by name: a governor who took office mid-term has none)
+        ln = str(r["incumbent"]).split()[-1].upper()
+        prev = cal[(cal.office == r["office"]) & (cal.state_po == r["state_po"]) & (cal.year >= 2018)]
+        prev = prev[prev["winner"].astype(str).str.upper().str.contains(ln, regex=False)]
         if len(prev):
             out[i] = side * prev.sort_values("year").iloc[-1]["resid"]
     return out

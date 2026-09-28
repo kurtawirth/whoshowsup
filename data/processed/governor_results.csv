@@ -1,0 +1,143 @@
+year,state_po,incumbent,incumbent_party,incumbent_ran,incumbent_side,dem,dem_pct,rep,rep_pct,margin
+2014,AL,Robert J. Bentley,Republican,True,-1,Parker Griffith,36.2,Robert J. Bentley,63.6,-27.454909819639276
+2014,AK,Sean Parnell,Republican,True,-1,,,Sean Parnell,45.9,
+2014,AZ,Jan Brewer,Republican,False,0,Fred DuVal,41.6,Doug Ducey,53.4,-12.421052631578945
+2014,AR,Mike Beebe,Democratic,False,0,Mike Ross,41.5,Asa Hutchinson,55.4,-14.344685242518057
+2014,CA,Jerry Brown,Democratic,True,1,Jerry Brown,60.0,Neel Kashkari,40.0,20.0
+2014,CO,John Hickenlooper,Democratic,True,1,John Hickenlooper,49.3,Bob Beauprez,46.0,3.4627492130115396
+2014,CT,Dannel Malloy,Democratic,True,1,Dannel Malloy,50.7,Thomas C. Foley,48.2,2.5278058645096055
+2014,FL,Rick Scott,Republican,True,-1,Charlie Crist,47.1,Rick Scott,48.1,-1.050420168067227
+2014,GA,Nathan Deal,Republican,True,-1,Jason Carter,44.9,Nathan Deal,52.7,-7.99180327868853
+2014,HI,Neil Abercrombie,Democratic,False,0,David Ige,49.5,Duke Aiona,37.1,14.318706697459582
+2014,ID,Butch Otter,Republican,True,-1,A. J. Balukoff,38.6,Butch Otter,53.5,-16.178067318132463
+2014,IL,Pat Quinn,Democratic,True,1,Pat Quinn,46.4,Bruce Rauner,50.3,-4.033092037228541
+2014,IA,Terry Branstad,Republican,True,-1,Jack Hatch,37.3,Terry Branstad,59.0,-22.533748701973007
+2014,KS,Sam Brownback,Republican,True,-1,Paul Davis,46.1,Sam Brownback,49.8,-3.8581856100104224
+2014,ME,Paul LePage,Republican,True,-1,Mike Michaud,43.4,Paul LePage,48.2,-5.240174672489088
+2014,MD,Martin O'Malley,Democratic,False,0,Anthony Brown,47.3,Larry Hogan,51.0,-3.7639877924720273
+2014,MA,Deval Patrick,Democratic,False,0,Martha Coakley,46.5,Charlie Baker,48.4,-2.0021074815595346
+2014,MI,Rick Snyder,Republican,True,-1,Mark Schauer,46.9,Rick Snyder,50.9,-4.08997955010225
+2014,MN,Mark Dayton,DFL,True,1,Mark Dayton,50.1,Jeff Johnson,44.5,5.919661733615223
+2014,NE,Dave Heineman,Republican,False,0,Chuck Hassebrook,39.2,Pete Ricketts,57.2,-18.67219917012448
+2014,NV,Brian Sandoval,Republican,True,-1,Bob Goodman,23.9,Brian Sandoval,70.6,-49.41798941798942
+2014,NH,Maggie Hassan,Democratic,True,1,Maggie Hassan,52.4,Walt Havenstein,47.4,5.01002004008016
+2014,NM,Susana Martinez,Republican,True,-1,Gary King,42.8,Susana Martinez,57.2,-14.400000000000004
+2014,NY,Andrew Cuomo,Democratic,True,1,Andrew Cuomo,54.3,Rob Astorino,40.3,14.799154334038056
+2014,OH,John Kasich,Republican,True,-1,Ed FitzGerald,33.0,John Kasich,63.6,-31.677018633540374
+2014,OK,Mary Fallin,Republican,True,-1,Joe Dorman,41.0,Mary Fallin,55.8,-15.289256198347106
+2014,OR,John Kitzhaber,Democratic,True,1,John Kitzhaber,49.9,Dennis Richardson,44.1,6.170212765957444
+2014,PA,Tom Corbett,Republican,True,-1,Tom Wolf,54.9,Tom Corbett,45.1,9.799999999999997
+2014,RI,Lincoln Chafee,Democratic,False,0,Gina Raimondo,40.7,Allan Fung,36.2,5.851755526657997
+2014,SC,Nikki Haley,Republican,True,-1,Vincent Sheheen,41.4,Nikki Haley,55.9,-14.902363823227134
+2014,SD,Dennis Daugaard,Republican,True,-1,Susan Wismer,25.4,Dennis Daugaard,70.5,-47.028154327424396
+2014,TN,Bill Haslam,Republican,True,-1,Charles Brown,22.8,Bill Haslam,70.3,-51.02040816326531
+2014,TX,Rick Perry,Republican,False,0,Wendy Davis,38.9,Greg Abbott,59.3,-20.773930753564155
+2014,VT,Peter Shumlin,Democratic,True,1,Peter Shumlin,46.4,Scott Milne,45.1,1.4207650273224013
+2014,WI,Scott Walker,Republican,True,-1,Mary Burke,46.6,Scott Walker,52.3,-5.763397371081896
+2014,WY,Matt Mead,Republican,True,-1,Pete Gosar,27.3,Matt Mead,59.4,-37.02422145328719
+2016,DE,Jack Markell,Democratic,False,0,John Carney,58.3,Colin Bonini,39.2,19.589743589743584
+2016,IN,Mike Pence,Republican,False,0,John R. Gregg,45.4,Eric Holcomb,51.4,-6.198347107438017
+2016,MO,Jay Nixon,Democratic,False,0,Chris Koster,45.6,Eric Greitens,51.1,-5.687693898655636
+2016,MT,Steve Bullock,Democratic,True,1,Steve Bullock,50.3,Greg Gianforte,46.4,4.033092037228541
+2016,NH,Maggie Hassan,Democratic,False,0,Colin Van Ostern,46.6,Chris Sununu,48.8,-2.306079664570226
+2016,NC,Pat McCrory,Republican,True,-1,Roy Cooper,49.0,Pat McCrory,48.8,0.2044989775051154
+2016,ND,Jack Dalrymple,Republican,False,0,Marvin Nelson,19.4,Doug Burgum,76.5,-59.54118873826903
+2016,OR,Kate Brown,Democratic,True,1,Kate Brown,50.6,Bud Pierce,43.6,7.43099787685775
+2016,UT,Gary Herbert,Republican,True,-1,Mike Weinholtz,28.7,Gary Herbert,66.7,-39.83228511530398
+2016,VT,Peter Shumlin,Democratic,False,0,Sue Minter,44.2,Phil Scott,52.9,-8.95983522142121
+2016,WA,Jay Inslee,Democratic,True,1,Jay Inslee,54.2,Bill Bryant,45.5,8.726178535606822
+2016,WV,Earl Ray Tomblin,Democratic,False,0,Jim Justice,49.1,Bill Cole,42.3,7.43982494529541
+2018,AL,Kay Ivey,Republican,True,-1,Walt Maddox,40.4,Kay Ivey,59.5,-19.11911911911912
+2018,AK,Bill Walker,Independent,False,0,Mark Begich,44.4,Mike Dunleavy,51.4,-7.306889352818372
+2018,AZ,Doug Ducey,Republican,True,-1,David Garcia,41.8,Doug Ducey,56.0,-14.519427402862988
+2018,AR,Asa Hutchinson,Republican,True,-1,Jared Henderson,31.8,Asa Hutchinson,65.3,-34.5005149330587
+2018,CA,Jerry Brown,Democratic,False,0,Gavin Newsom,61.9,John H. Cox,38.1,23.799999999999997
+2018,CO,John Hickenlooper,Democratic,False,0,Jared Polis,53.4,Walker Stapleton,42.8,11.018711018711022
+2018,CT,Dannel Malloy,Democratic,False,0,Ned Lamont,49.4,Bob Stefanowski,46.2,3.347280334728029
+2018,FL,Rick Scott,Republican,False,0,Andrew Gillum,49.2,Ron DeSantis,49.6,-0.4048582995951402
+2018,GA,Nathan Deal,Republican,False,0,Stacey Abrams,48.8,Brian Kemp,50.2,-1.41414141414142
+2018,HI,David Ige,Democratic,True,1,David Ige,62.7,Andria Tupola,33.7,30.08298755186722
+2018,ID,Butch Otter,Republican,False,0,Paulette Jordan,38.2,Brad Little,59.8,-22.040816326530607
+2018,IL,Bruce Rauner,Republican,True,-1,J. B. Pritzker,54.5,Bruce Rauner,38.8,16.827438370846735
+2018,IA,Kim Reynolds,Republican,True,-1,Fred Hubbell,47.5,Kim Reynolds,50.3,-2.862985685071572
+2018,KS,Jeff Colyer,Republican,False,0,Laura Kelly,48.0,Kris Kobach,43.0,5.4945054945054945
+2018,ME,Paul LePage,Republican,False,0,Janet Mills,50.9,Shawn Moody,43.2,8.182784272051006
+2018,MD,Larry Hogan,Republican,True,-1,Ben Jealous,43.5,Larry Hogan,55.3,-11.943319838056679
+2018,MA,Charlie Baker,Republican,True,-1,Jay Gonzalez,33.1,Charlie Baker,66.6,-33.60080240722166
+2018,MI,Rick Snyder,Republican,False,0,Gretchen Whitmer,53.3,Bill Schuette,43.7,9.896907216494839
+2018,MN,Mark Dayton,DFL,False,0,Tim Walz,53.8,Jeff Johnson,42.4,11.850311850311849
+2018,NE,Pete Ricketts,Republican,True,-1,Bob Krist,41.0,Pete Ricketts,59.0,-18.0
+2018,NV,Brian Sandoval,Republican,False,0,Steve Sisolak,49.4,Adam Laxalt,45.3,4.3294614572333705
+2018,NH,Chris Sununu,Republican,True,-1,Molly Kelly,45.7,Chris Sununu,52.8,-7.208121827411162
+2018,NM,Susana Martinez,Republican,False,0,Michelle Lujan Grisham,57.2,Steve Pearce,42.8,14.400000000000004
+2018,NY,Andrew Cuomo,Democratic,True,1,Andrew Cuomo,59.6,Marc Molinaro,36.2,24.425887265135696
+2018,OH,John Kasich,Republican,False,0,Richard Cordray,46.7,Mike DeWine,50.4,-3.8105046343975237
+2018,OK,Mary Fallin,Republican,False,0,Drew Edmondson,42.2,Kevin Stitt,54.3,-12.538860103626938
+2018,OR,Kate Brown,Democratic,True,1,Kate Brown,50.0,Knute Buehler,43.6,6.837606837606836
+2018,PA,Tom Wolf,Democratic,True,1,Tom Wolf,57.8,Scott Wagner,40.7,17.360406091370553
+2018,RI,Gina Raimondo,Democratic,True,1,Gina Raimondo,52.6,Allan Fung,37.2,17.149220489977722
+2018,SC,Henry McMaster,Republican,True,-1,James E. Smith Jr.,45.9,Henry McMaster,54.0,-8.108108108108109
+2018,SD,Dennis Daugaard,Republican,False,0,Billie Sutton,47.6,Kristi Noem,51.0,-3.4482758620689644
+2018,TN,Bill Haslam,Republican,False,0,Karl Dean,38.5,Bill Lee,59.6,-21.508664627930685
+2018,TX,Greg Abbott,Republican,True,-1,Lupe Valdez,42.5,Greg Abbott,55.8,-13.530010172939978
+2018,VT,Phil Scott,Republican,True,-1,Christine Hallquist,40.2,Phil Scott,55.2,-15.723270440251572
+2018,WI,Scott Walker,Republican,True,-1,Tony Evers,49.5,Scott Walker,48.4,1.123595505617979
+2018,WY,Matt Mead,Republican,False,0,Mary Throne,27.5,Mark Gordon,67.1,-41.860465116279066
+2020,DE,John Carney,Democratic,True,1,John Carney,59.5,Julianne Murray,38.6,21.304791029561674
+2020,IN,Eric Holcomb,Republican,True,-1,Woody Myers,32.1,Eric Holcomb,56.5,-27.539503386004515
+2020,MO,Mike Parson,Republican,True,-1,Nicole Galloway,40.7,Mike Parson,57.1,-16.76891615541922
+2020,MT,Steve Bullock,Democratic,False,0,Mike Cooney,41.6,Greg Gianforte,54.4,-13.33333333333333
+2020,NH,Chris Sununu,Republican,True,-1,Dan Feltes,33.4,Chris Sununu,65.1,-32.18274111675127
+2020,NC,Roy Cooper,Democratic,True,1,Roy Cooper,51.5,Dan Forest,47.0,4.568527918781726
+2020,ND,Doug Burgum,Republican,True,-1,Shelley Lenz,25.4,Doug Burgum,65.8,-44.298245614035096
+2020,UT,Gary Herbert,Republican,False,0,Christopher Peterson,30.3,Spencer Cox,63.0,-35.04823151125402
+2020,VT,Phil Scott,Republican,True,-1,David Zuckerman,27.3,Phil Scott,68.5,-43.006263048016706
+2020,WA,Jay Inslee,Democratic,True,1,Jay Inslee,56.6,Loren Culp,43.1,13.54062186559679
+2020,WV,Jim Justice,Republican[e],True,-1,Ben Salango,30.2,Jim Justice,63.5,-35.53895410885805
+2022,AL,Kay Ivey,Republican,True,-1,Yolanda Flowers,29.2,Kay Ivey,66.9,-39.22996878251821
+2022,AK,Mike Dunleavy,Republican,True,-1,Les Gara,24.2,Mike Dunleavy,50.3,-35.033557046979865
+2022,AZ,Doug Ducey,Republican,False,0,Katie Hobbs,50.3,Kari Lake,49.7,0.5999999999999943
+2022,AR,Asa Hutchinson,Republican,False,0,Chris Jones,35.2,Sarah Huckabee Sanders,63.0,-28.309572301425657
+2022,CA,Gavin Newsom,Democratic,True,1,Gavin Newsom,59.2,Brian Dahle,40.8,18.400000000000006
+2022,CO,Jared Polis,Democratic,True,1,Jared Polis,58.5,Heidi Ganahl,39.2,19.75435005117707
+2022,CT,Ned Lamont,Democratic,True,1,Ned Lamont,56.0,Bob Stefanowski,43.1,13.01715438950555
+2022,FL,Ron DeSantis,Republican,True,-1,Charlie Crist,40.0,Ron DeSantis,59.4,-19.51710261569416
+2022,GA,Brian Kemp,Republican,True,-1,Stacey Abrams,45.9,Brian Kemp,53.4,-7.552870090634442
+2022,HI,David Ige,Democratic,False,0,Josh Green,63.2,Duke Aiona,36.8,26.400000000000006
+2022,ID,Brad Little,Republican,True,-1,Stephen Heidt,20.3,Brad Little,60.5,-49.75247524752476
+2022,IL,J. B. Pritzker,Democratic,True,1,J. B. Pritzker,54.9,Darren Bailey,42.4,12.846865364850977
+2022,IA,Kim Reynolds,Republican,True,-1,Deidre DeJear,39.5,Kim Reynolds,58.0,-18.974358974358974
+2022,KS,Laura Kelly,Democratic,True,1,Laura Kelly,49.5,Derek Schmidt,47.3,2.2727272727272756
+2022,ME,Janet Mills,Democratic,True,1,Janet Mills,55.7,Paul LePage,42.4,13.557594291539251
+2022,MD,Larry Hogan,Republican,False,0,Wes Moore,64.5,Dan Cox,32.1,33.54037267080746
+2022,MA,Charlie Baker,Republican,False,0,Maura Healey,63.7,Geoff Diehl,34.6,29.603255340793485
+2022,MI,Gretchen Whitmer,Democratic,True,1,Gretchen Whitmer,54.5,Tudor Dixon,43.9,10.772357723577237
+2022,MN,Tim Walz,DFL,True,1,Tim Walz,52.3,Scott Jensen,44.6,7.946336429308561
+2022,NE,Pete Ricketts,Republican,False,0,Carol Blood,36.3,Jim Pillen,59.7,-24.375000000000004
+2022,NV,Steve Sisolak,Democratic,True,1,Steve Sisolak,47.3,Joe Lombardo,48.8,-1.5608740894901145
+2022,NH,Chris Sununu,Republican,True,-1,Tom Sherman,41.6,Chris Sununu,57.1,-15.704154002026343
+2022,NM,Michelle Lujan Grisham,Democratic,True,1,Michelle Lujan Grisham,52.0,Mark Ronchetti,45.6,6.557377049180327
+2022,NY,Kathy Hochul,Democratic,True,1,Kathy Hochul,53.2,Lee Zeldin,46.8,6.400000000000006
+2022,OH,Mike DeWine,Republican,True,-1,Nan Whaley,37.4,Mike DeWine,62.4,-25.050100200400802
+2022,OK,Kevin Stitt,Republican,True,-1,Joy Hofmeister,41.8,Kevin Stitt,55.4,-13.991769547325108
+2022,OR,Kate Brown,Democratic,False,0,Tina Kotek,47.0,Christine Drazan,43.6,3.752759381898454
+2022,PA,Tom Wolf,Democratic,False,0,Josh Shapiro,56.5,Doug Mastriano,41.7,15.071283095723011
+2022,RI,Dan McKee,Democratic,True,1,Dan McKee,57.9,Ashley Kalus,38.9,19.62809917355372
+2022,SC,Henry McMaster,Republican,True,-1,Joe Cunningham,40.7,Henry McMaster,58.1,-17.61133603238866
+2022,SD,Kristi Noem,Republican,True,-1,Jamie Smith,35.2,Kristi Noem,62.0,-27.572016460905346
+2022,TN,Bill Lee,Republican,True,-1,Jason Martin,32.9,Bill Lee,64.9,-32.719836400818004
+2022,TX,Greg Abbott,Republican,True,-1,Beto O'Rourke,43.9,Greg Abbott,54.8,-11.043566362715298
+2022,VT,Phil Scott,Republican,True,-1,Brenda Siegel,23.9,Phil Scott,70.9,-49.57805907172996
+2022,WI,Tony Evers,Democratic,True,1,Tony Evers,51.2,Tim Michels,47.8,3.43434343434344
+2022,WY,Mark Gordon,Republican,True,-1,Theresa Livingston,15.8,Mark Gordon,74.1,-64.84983314794216
+2024,DE,John Carney,Democratic,False,0,Matt Meyer,56.1,Michael Ramone,43.9,12.200000000000003
+2024,IN,Eric Holcomb,Republican,False,0,Jennifer McCormick,41.1,Mike Braun,54.4,-13.926701570680626
+2024,MO,Mike Parson,Republican,False,0,Crystal Quade,38.7,Mike Kehoe,59.2,-20.939734422880488
+2024,MT,Greg Gianforte,Republican,True,-1,Ryan Busse,38.6,Greg Gianforte,58.9,-20.820512820512818
+2024,NH,Chris Sununu,Republican,False,0,Joyce Craig,44.3,Kelly Ayotte,53.6,-9.499489274770177
+2024,NC,Roy Cooper,Democratic,False,0,Josh Stein,54.9,Mark Robinson,40.1,15.57894736842105
+2024,ND,Doug Burgum,Republican,False,0,Merrill Piepkorn,26.0,Kelly Armstrong,68.4,-44.915254237288146
+2024,UT,Spencer Cox,Republican,True,-1,Brian King,28.5,Spencer Cox,52.9,-29.97542997542997
+2024,VT,Phil Scott,Republican,True,-1,Esther Charlestin,21.8,Phil Scott,73.4,-54.201680672268914
+2024,WA,Jay Inslee,Democratic,False,0,Bob Ferguson,55.7,Dave Reichert,44.3,11.400000000000004
+2024,WV,Jim Justice,Republican,False,0,Steve Williams,31.6,Patrick Morrisey,62.0,-32.478632478632484

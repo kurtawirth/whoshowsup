@@ -116,6 +116,11 @@ def poll_tables(html: str):
         text = el.get_text(" ", strip=True)[:300]
         if "Poll source" not in text:
             continue
+        # Stray characters in a span attribute ('colspan="2;"') make the whole table unreadable.
+        for cell in el.find_all(attrs={"colspan": True}) + el.find_all(attrs={"rowspan": True}):
+            for a in ("colspan", "rowspan"):
+                if cell.has_attr(a):
+                    cell[a] = re.sub(r"\D", "", str(cell[a])) or "1"
         try:
             tb = pd.read_html(io.StringIO(str(el)))[0]
         except ValueError:
@@ -134,7 +139,8 @@ def name_hits(options, name: str) -> list:
     """Options (column headers, answer labels) naming this candidate. Matched on last name; when
     two share it (Alaska 2026 has Dan S. Sullivan and Dan J. Sullivan), on the full name."""
     ln = last_name(name)
-    hits = [o for o in options if ln and ln in str(o).lower()]
+    # a hyphenated name wrapped across lines reads "Mucarsel- Powell"
+    hits = [o for o in options if ln and ln in re.sub(r"-\s+", "-", str(o).lower())]
     if len(hits) > 1:
         full = re.sub(r"\s+", " ", name.lower()).strip()
         hits = [o for o in hits if full in re.sub(r"\s+", " ", str(o).lower())]

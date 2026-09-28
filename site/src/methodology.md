@@ -66,7 +66,7 @@ No pundit ratings (Cook, Sabato, Inside Elections), no other forecasters' models
 
 ## Track record
 
-We rebuilt 2018, 2020, 2022 and 2024 exactly as they looked on September 22 of each year, using only what was known then, and ran the same model. Each year's national estimate was fit without that year, and the close-seat effect was estimated only from the other three years.
+We rebuilt 2018, 2020, 2022 and 2024 exactly as they looked on September 22 of each year, using only what was known then, and ran the same model on every House, Senate and governor race. Each year's national estimate was fit without that year, and the close-seat effect was estimated only from the other three years. Race polls for 2018 through 2022 come from FiveThirtyEight's public archive; for 2024, which the archive doesn't cover, from Wikipedia's race pages, counting only polls finished by that date.
 
 ```js
 const scores = Object.fromEntries((track.backtest_scores ?? []).map((d) => [d.set, d]));
@@ -170,4 +170,4 @@ Special elections set the national mood in this model, so we asked whether they 
 
 ## Sources
 
-Polls from VoteHub (CC BY 4.0), Decision Desk HQ and Wikipedia. Election results from the MIT Election Data + Science Lab. District-level presidential results and special elections from The Downballot. Historical polls from FiveThirtyEight's public archive. Presidential approval history from the American Presidency Project. Eligible-voter counts from the Census Bureau. The code is public on [GitHub](https://github.com/kurtawirth/whoshowsup).
+Polls from VoteHub (CC BY 4.0), Decision Desk HQ and Wikipedia. Election results from the MIT Election Data + Science Lab. District-level presidential results and special elections from The Downballot. Historical polls from FiveThirtyEight's public archive and Wikipedia. Past governor results from Wikipedia. Primary results from the Federal Election Commission. Presidential approval history from the American Presidency Project. Eligible-voter counts from the Census Bureau. The code is public on [GitHub](https://github.com/kurtawirth/whoshowsup).

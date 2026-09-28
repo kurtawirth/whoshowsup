@@ -8,9 +8,8 @@ Nov 1 (1-7 days before every election since 1976), all polls through the day bef
 poll-accuracy fit for 1 day out. It writes *_eve.csv outputs and restores the live forecast's
 processed files afterwards.
 
-Midterms (2018, 2022) are the main test; presidential years (2020, 2024; House
-and Senate only -- no governor data) add evidence on systematic biases. No
-538 poll archive exists for 2024, so 2024 runs on fundamentals only.
+Midterms (2018, 2022) are the main test; presidential years (2020, 2024) add
+evidence on systematic biases. Governor results come from core/governor_results.py.
 
 For each test year we rebuild exactly what the model would have known on
 Sept 22 of that year, then run the SAME simulation engine used for 2026
@@ -20,9 +19,10 @@ Sept 22 of that year, then run the SAME simulation engine used for 2026
   House lean            presidential results on that year's district lines
                         (2016 pres for 2018; 2020 pres on the new 2022 lines)
   incumbency            previous winner found on the ballot by name
-  personal vote         Senate: the incumbent's previous race; Governor 2022: 2018
+  personal vote         Senate / Governor: the incumbent's own previous race (matched by name)
                         House: the incumbent's previous race (core/house_personal_vote.py), fit without the test year
-  polls                 538's archive, only polls taken 42+ days before the election
+  polls                 538's archive (2018-2022; its last ~60 days) and Wikipedia's race pages
+                        (2024, core/polls_2024.py), only polls ending 42+ days before the election
   candidate quality     not coded for past years -> 0 (a known handicap here)
 
 Scored against actual results:
@@ -55,12 +55,6 @@ YEARS = {2018: {"pres_year": 2016, "house_pres": ("1VfkHtzB_0.csv", 3, 4, 2), "e
                "skip_states": set()},
          2024: {"pres_year": 2020, "house_pres": ("1CKngqOp_1871835782.csv", 3, 4, 1), "election": "2024-11-05",
                "skip_states": {"AL", "GA", "LA", "NY", "NC"}}}  # redrawn between 2022 and 2024
-# Governors seeking re-election (hand list; verified against results pages).
-GOV_INC = {2018: {"D": ["HI", "NY", "OR", "PA", "RI"],
-                  "R": ["AL", "AZ", "AR", "IL", "IA", "MD", "MA", "NE", "NH", "SC", "TX", "VT", "WI"]},
-           2022: {"D": ["CA", "CO", "CT", "IL", "KS", "ME", "MI", "MN", "NM", "NY", "OR", "PA", "RI", "WI"],
-                  "R": ["AL", "AR", "FL", "GA", "IA", "ID", "NE", "NH", "NV", "OH", "OK", "SC", "SD", "TN", "TX", "VT", "WY"]}}
-GOV_NOT_OWN_PRIOR = {2022: {"NY"}}  # Hochul took office mid-term: 2018 was Cuomo's race
 
 
 def national_draws(year: int) -> np.ndarray:
@@ -114,28 +108,24 @@ def house_races(year: int, cfg: dict) -> pd.DataFrame:
 def statewide_races(year: int) -> pd.DataFrame:
     cal = pd.read_csv(PROC / "statewide_calibration.csv")
     sp = state_pres(YEARS[year]["pres_year"])
-    sen = cal[(cal.office == "SEN") & (cal.year == year)].copy()
-    # personal vote: incumbent's previous race edge (any Senate race they won in the prior 6 years)
-    prior = cal[(cal.office == "SEN") & (cal.year < year) & (cal.year >= year - 6)]
-    edges = []
-    for _, r in sen.iterrows():
-        e = np.nan
-        if r.incumbent_side != 0:
-            k = r.dem_key if r.incumbent_side == 1 else r.rep_key
-            hit = prior[(prior.state_po == r.state_po) & ((prior.dem_key == k) | (prior.rep_key == k))]
-            if len(hit):
-                # previous race's D-R residual, turned toward the incumbent's party (as in 2026)
-                e = r.incumbent_side * hit.sort_values("year").iloc[-1].resid
-        edges.append(e)
-    sen["prior_edge"] = edges
-    gov = cal[(cal.office == "GOV") & (cal.year == year)].copy()
-    gov["incumbent_side"] = 0
-    for side, states in GOV_INC.get(year, {}).items():
-        gov.loc[gov.state_po.isin(states), "incumbent_side"] = 1 if side == "D" else -1
-    prev_gov = cal[(cal.office == "GOV") & (cal.year == year - 4)].set_index("state_po")["resid"]
-    gov["prior_edge"] = [s_ * prev_gov[st] if s_ != 0 and st in prev_gov.index and st not in GOV_NOT_OWN_PRIOR.get(year, set())
-                         else np.nan for st, s_ in zip(gov.state_po, gov.incumbent_side)]
-    out = pd.concat([sen, gov], ignore_index=True).merge(sp, on="state_po")
+    parts = []
+    for office, window in (("SEN", 6), ("GOV", 4)):
+        cur = cal[(cal.office == office) & (cal.year == year)].copy()
+        # personal vote: the incumbent's own previous race for this office (by name) in the prior term
+        prior = cal[(cal.office == office) & (cal.year < year) & (cal.year >= year - window)]
+        edges = []
+        for _, r in cur.iterrows():
+            e = np.nan
+            if r.incumbent_side != 0:
+                k = r.dem_key if r.incumbent_side == 1 else r.rep_key
+                hit = prior[(prior.state_po == r.state_po) & ((prior.dem_key == k) | (prior.rep_key == k))]
+                if len(hit):
+                    # previous race's D-R residual, turned toward the incumbent's party (as in 2026)
+                    e = r.incumbent_side * hit.sort_values("year").iloc[-1].resid
+            edges.append(e)
+        cur["prior_edge"] = edges
+        parts.append(cur)
+    out = pd.concat(parts, ignore_index=True).merge(sp, on="state_po")
     out = out.rename(columns={"incumbent_side": "inc_side", "margin": "actual"})
     out["district"] = 0
     out["race_type"], out["race_note"] = "standard", ""
@@ -170,20 +160,33 @@ GOV_QUALITY = rm.QUALITY_EFFECT["GOV"]  # the governor weight is refit leaving e
 CUTOFF_DAYS = 42  # polls must end at least this many days before the election (42 ~ Sept 22)
 
 
+def polls_2024() -> pd.DataFrame:
+    """Wikipedia's 2024 race polls (core/polls_2024.py) in the archive's shape."""
+    d = pd.read_csv(PROC / "polls_2024_backtest.csv")
+    d["time_to_election"] = (pd.Timestamp(YEARS[2024]["election"]) - pd.to_datetime(d.end_date)).dt.days
+    d["race_id"] = d.office + d.state_po + d.district.astype(str) + d.special.astype(str)
+    return d.rename(columns={"sample_size": "samplesize"}).assign(
+        partisan=d.pollster_party.fillna(""), dem_name=d.dem_name.fillna(""))
+
+
 def poll_summary(races: pd.DataFrame, year: int) -> pd.DataFrame:
-    d = pd.read_csv(RAW / "fte" / "raw_polls.csv", low_memory=False)
-    d = d[(d.cycle == year) & (d.electiondate == YEARS[year]["election"]) & (d.time_to_election >= CUTOFF_DAYS)
-          & d.type_simple.isin(["Sen-G", "Gov-G", "House-G"])]
-    d = d[d.cand1_party.isin(["DEM", "REP"]) & d.cand2_party.isin(["DEM", "REP"]) & (d.cand1_party != d.cand2_party)]
-    dem_first = d.cand1_party == "DEM"
-    d["dem_pct"] = np.where(dem_first, d.cand1_pct, d.cand2_pct)
-    d["rep_pct"] = np.where(dem_first, d.cand2_pct, d.cand1_pct)
-    d["dem_name"] = np.where(dem_first, d.cand1_name, d.cand2_name)
-    d["office"] = d.type_simple.map({"Sen-G": "SEN", "Gov-G": "GOV", "House-G": "HOUSE"})
-    d["state_po"] = d.location.str[:2]
-    d["district"] = np.where(d.office == "HOUSE", d.location.str.split("-").str[-1], "0")
-    d["district"] = pd.to_numeric(d["district"], errors="coerce").fillna(0).astype(int)
-    d["partisan"] = d.partisan.map({"DEM": "D", "REP": "R"}).fillna("")
+    if year == 2024:  # 538's archive stops at 2022
+        d = polls_2024()
+        d = d[d.time_to_election >= CUTOFF_DAYS].copy()
+    else:
+        d = pd.read_csv(RAW / "fte" / "raw_polls.csv", low_memory=False)
+        d = d[(d.cycle == year) & (d.electiondate == YEARS[year]["election"]) & (d.time_to_election >= CUTOFF_DAYS)
+              & d.type_simple.isin(["Sen-G", "Gov-G", "House-G"])]
+        d = d[d.cand1_party.isin(["DEM", "REP"]) & d.cand2_party.isin(["DEM", "REP"]) & (d.cand1_party != d.cand2_party)]
+        dem_first = d.cand1_party == "DEM"
+        d["dem_pct"] = np.where(dem_first, d.cand1_pct, d.cand2_pct)
+        d["rep_pct"] = np.where(dem_first, d.cand2_pct, d.cand1_pct)
+        d["dem_name"] = np.where(dem_first, d.cand1_name, d.cand2_name)
+        d["office"] = d.type_simple.map({"Sen-G": "SEN", "Gov-G": "GOV", "House-G": "HOUSE"})
+        d["state_po"] = d.location.str[:2]
+        d["district"] = np.where(d.office == "HOUSE", d.location.str.split("-").str[-1], "0")
+        d["district"] = pd.to_numeric(d["district"], errors="coerce").fillna(0).astype(int)
+        d["partisan"] = d.partisan.map({"DEM": "D", "REP": "R"}).fillna("")
     d["margin"] = rm.two_party(d.dem_pct, d.rep_pct)
     d["undecided"] = rm.undecided_share(d.dem_pct, d.rep_pct)
     bias = [rm.PARTISAN_BIAS[o].get(p, 0.0) for o, p in zip(d.office, d.partisan)]

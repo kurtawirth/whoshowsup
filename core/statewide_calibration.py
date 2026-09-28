@@ -6,9 +6,9 @@ For each D-vs-R race:
     resid = actual margin - expected
     resid = inc_effect * incumbent_side + noise
 
-Senate: 2000-2024 (MEDSL state results). Governor: 2018 and 2022 (our county
-data summed to state; incumbency only for 2022, from 2018 winners).
-Incumbent = a candidate matching a previous winner of that office in the
+Senate: 2000-2024 (MEDSL state results). Governor: 2014-2024 (Wikipedia's yearly
+summary pages, core/governor_results.py; incumbent = the sitting governor is a nominee).
+Senate incumbent = a candidate matching a previous winner of that office in the
 state within the prior term.
 """
 from pathlib import Path
@@ -74,19 +74,13 @@ def senate() -> pd.DataFrame:
 
 
 def governor() -> pd.DataFrame:
-    c = pd.read_parquet(PROC / "county_results.parquet")
-    g = c[c["office"] == "GOV"].groupby(["year", "state_po"])[["dem", "rep"]].sum().reset_index()
-    g = g[(g[["dem", "rep"]].min(axis=1) / (g["dem"] + g["rep"])) > 0.15]
-    g["margin"] = 100 * (g["dem"] - g["rep"]) / (g["dem"] + g["rep"])
-    # 2022 incumbency: did the 2018 winner's party hold... we only know party, not names, from county
-    # data, so incumbents come from a short hand list of 2022 governors who ran for re-election.
-    inc22 = {"D": ["CA", "CO", "CT", "IL", "KS", "ME", "MI", "MN", "NM", "NY", "OR", "PA", "RI", "WI"],
-             "R": ["AL", "AR", "FL", "GA", "IA", "ID", "NE", "NH", "NV", "OH", "OK", "SC", "SD", "TN", "TX", "VT", "WY"]}
-    g["incumbent_side"] = np.nan
-    for side, states in inc22.items():
-        g.loc[(g.year == 2022) & g.state_po.isin(states), "incumbent_side"] = 1 if side == "D" else -1
-    g.loc[(g.year == 2022) & g.incumbent_side.isna(), "incumbent_side"] = 0
-    return g.assign(office="GOV", special=False)[["year", "state_po", "special", "margin", "incumbent_side", "office"]]
+    g = pd.read_csv(PROC / "governor_results.csv").dropna(subset=["margin"])
+    g = g[(g[["dem_pct", "rep_pct"]].min(axis=1) / (g["dem_pct"] + g["rep_pct"])) > 0.15].copy()
+    g["winner_side"] = np.where(g["margin"] > 0, "D", "R")
+    g["winner"] = np.where(g["margin"] > 0, g["dem"], g["rep"])
+    g["dem_key"], g["rep_key"] = g["dem"].map(_key), g["rep"].map(_key)
+    return g.assign(office="GOV", special=False)[["year", "state_po", "special", "margin", "winner", "winner_side",
+                                                  "dem_key", "rep_key", "incumbent_side", "office"]]
 
 
 def main() -> None:
