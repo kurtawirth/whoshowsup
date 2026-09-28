@@ -66,10 +66,15 @@ No pundit ratings (Cook, Sabato, Inside Elections), no other forecasters' models
 
 ## Track record
 
-We rebuilt 2018, 2020, 2022 and 2024 exactly as they looked on September 22 of each year, using only what was known then, and ran the same model on every House, Senate and governor race. Each year's national estimate was fit without that year, and the close-seat effect was estimated only from the other three years. Race polls come from FiveThirtyEight's complete poll lists for each season, counting only polls finished by that date and weighing them exactly as the live forecast does.
-
 ```js
 const scores = Object.fromEntries((track.backtest_scores ?? []).map((d) => [d.set, d]));
+```
+
+We rebuilt every election from 2010 to 2024 exactly as it looked on September 22 of that year, using only what was known then, and ran the same model on every House, Senate and governor race. Each year's national estimate and other fitted pieces were learned without that year. The headline numbers below are 2018 through 2024, the years the model can run with every ingredient; race polls for those years come from FiveThirtyEight's complete poll lists, counting only polls finished by that date and weighing them exactly as the live forecast does.
+
+For 2010 through 2016 the model runs without campaign money, candidate records, ideology scores or special elections (none are coded that far back), and with only the last two months of polls. It still called ${pct(scores["older years (2010-2016)"]?.correct_calls ?? NaN)} of ${(scores["older years (2010-2016)"]?.races ?? 0).toLocaleString()} races right, against ${pct(scores["all"].correct_calls)} since 2018, but only ${pct(scores["older years (2010-2016)"]?.inside_80 ?? NaN)} of results fell inside its 80% ranges. With ingredients missing its ranges are too narrow, one more sign that each ingredient is doing real work. Those years also showed that incumbents' advantage has shrunk: a House member ran about three points ahead of their district's lean in 2010 to 2014, under one point since, so the model learns incumbency and the close-seat effect from recent elections.
+
+```js
 const all = scores["all"];
 display(html`<div class="stat-row">
   <div class="s"><div class="k">Races tested</div><div class="v">${all.races.toLocaleString()}</div></div>

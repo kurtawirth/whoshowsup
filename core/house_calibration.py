@@ -33,7 +33,7 @@ DB = RAW / "downballot"
 
 def house_results() -> pd.DataFrame:
     h = pd.read_csv(RAW / "medsl" / "house_1976_2024.tab", sep=None, engine="python", encoding="latin-1")
-    h = h[(h["stage"].str.upper() == "GEN") & ~h["special"].astype(str).str.upper().eq("TRUE") & (h["year"] >= 2014)]
+    h = h[(h["stage"].str.upper() == "GEN") & ~h["special"].astype(str).str.upper().eq("TRUE") & (h["year"] >= 2006)]
     h["party"] = h["party"].astype(str).str.upper()
     h["side"] = np.where(h["party"].str.contains("DEMOCRAT"), "D", np.where(h["party"].eq("REPUBLICAN"), "R", "O"))
     h["district"] = pd.to_numeric(h["district"], errors="coerce").fillna(0).astype(int)
@@ -53,6 +53,18 @@ def house_results() -> pd.DataFrame:
     out["house_margin"] = 100 * (out["dem"] - out["rep"]) / (out["dem"] + out["rep"])
     out["contested"] = (out["dem"] > 0) & (out["rep"] > 0)
     return out
+
+
+def same_person(key: str, keys) -> bool:
+    """`key` ('COURTNEY J') is among `keys`, allowing a typo in the last name (the official 2010 results
+    spell Joe Courtney 'CORTNEY'): same first initial and last names at least 85% alike."""
+    from difflib import SequenceMatcher
+    keys = list(keys)
+    if key in keys:
+        return True
+    last, _, ini = str(key).rpartition(" ")
+    return bool(last) and any(str(o).endswith(" " + ini) and SequenceMatcher(None, last, str(o).rpartition(" ")[0]).ratio() >= 0.85
+                              for o in keys)
 
 
 def _key(name: str) -> str:

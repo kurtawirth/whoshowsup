@@ -5,7 +5,7 @@ run far ahead of their district's presidential lean, like Collin Peterson (D, Tr
 John Katko (R, Biden+9), and do it again and again. Senate and Governor incumbents already get
 this "personal vote" (race_model.PERSONAL). This script measures it for the House.
 
-For every contested House race 2014-2024:
+For every contested House race 2008-2024:
 
     edge = side * (house_margin - pres_margin - year_effect)
 
@@ -31,13 +31,16 @@ import statsmodels.formula.api as smf
 ROOT = Path(__file__).resolve().parents[1]
 import sys
 sys.path.insert(0, str(ROOT / "core"))
-from house_calibration import house_results, _pres, _key  # noqa: E402
+from house_calibration import house_results, _pres, _key, same_person  # noqa: E402
 
 PROC = ROOT / "data" / "processed"
 
 # Presidential margin by district on the lines each House election used.
 # (file, D col, R col, header rows to skip, states whose lines differ from the file's)
 PRES = {
+    2008: [("1l7W130t_429358610.csv", 3, 4, 2, set())],                  # 2008 pres, 2006-2010 lines
+    2010: [("1l7W130t_429358610.csv", 3, 4, 2, set())],                  # 2008 pres (latest on these lines)
+    2012: [("1VfkHtzB_0.csv", 5, 6, 2, {"FL", "VA", "NC"})],              # 2012 pres; FL/VA/NC redrawn for 2016
     2014: [("1VfkHtzB_0.csv", 5, 6, 2, {"FL", "VA", "NC", "PA"})],        # 2012 pres; FL/VA/NC redrawn for 2016, PA 2018
     2016: [("1VfkHtzB_0.csv", 3, 4, 2, {"PA"})],                          # 2016 pres
     2018: [("1XbUXnI9_0.csv", 3, 4, 2, {"NC"}), ("1XbUXnI9_0.csv", 5, 6, 2, {"NC"})],  # avg of 2016 & 2020 pres
@@ -52,6 +55,9 @@ PRES = {
 # is fit against it -- a district still moving away from its last presidential result (2018's
 # suburbs after 2016) then shows up as a smaller carryover instead of fooling the model.
 KNOWN = {
+    2010: [("1l7W130t_429358610.csv", 3, 4, 2, set())],                  # 2008 pres on 2010 lines
+    2012: [("1VfkHtzB_0.csv", 7, 8, 2, {"FL", "VA", "NC"})],              # 2008 pres on 2012 lines
+    2014: [("1VfkHtzB_0.csv", 5, 6, 2, {"FL", "VA", "NC", "PA"})],        # 2012 pres on 2014 lines
     2016: [("1VfkHtzB_0.csv", 5, 6, 2, set())],                           # 2012 pres on 2016 lines
     2018: [("1XbUXnI9_0.csv", 5, 6, 2, {"NC"})],                          # 2016 pres on 2018 lines
     2020: [("1XbUXnI9_0.csv", 5, 6, 2, set())],                           # 2016 pres on 2020 lines
@@ -111,16 +117,19 @@ def edges() -> pd.DataFrame:
         # incumbent on the ballot: any previous winner from this state (handles renumbering)
         inc = []
         for s_, keys in zip(cur["state_po"], cur["cand_keys"]):
-            hit = prev[(prev["state_po"] == s_) & prev["winner"].map(_key).isin(keys)]
+            hit = prev[(prev["state_po"] == s_) & prev["winner"].map(lambda w: same_person(_key(w), keys))]
             inc.append(0 if hit.empty else (1 if hit.iloc[0]["winner_side"] == "D" else -1))
         cur["incumbent_side"] = inc
         rows.append(cur)
     df = pd.concat(rows, ignore_index=True)
     # Token opposition (a write-in or paper candidate under 15% of the two-party vote) says
     # nothing about the winner's appeal; neither does Utah against Romney's 2012 home-state vote.
-    df = df[(df["house_margin"].abs() <= 70) & ~((df["year"] == 2014) & (df["state_po"] == "UT"))].copy()
+    df = df[(df["house_margin"].abs() <= 70) & ~(df["year"].isin([2012, 2014]) & (df["state_po"] == "UT"))].copy()
     df["resid_raw"] = df["house_margin"] - df["pres_margin"]
-    fit = smf.ols("resid_raw ~ C(year) + incumbent_side", data=df).fit()
+    # Incumbency's worth has shrunk (2008-2012 far above 2014-2024), so each era gets its own incumbency
+    # term; with year effects in the model the eras are then fit independently (2014-2024 as before).
+    df["era"] = np.where(df["year"] >= 2014, "recent", "early")
+    fit = smf.ols("resid_raw ~ C(year) + incumbent_side:C(era)", data=df).fit()
     fe = {y: fit.params["Intercept"] + fit.params.get(f"C(year)[T.{y}]", 0.0) for y in PRES}
     df["year_effect"] = df["year"].map(fe)
     df["winner_sign"] = np.where(df["winner_side"] == "D", 1, -1)
@@ -132,7 +141,8 @@ def edges() -> pd.DataFrame:
     df = df.merge(known, on=["year", "state_po", "district"], how="left")
     k = df[df["known_pres"].notna()].copy()
     k["resid_known"] = k["house_margin"] - k["known_pres"]
-    fit_k = smf.ols("resid_known ~ C(year) + incumbent_side", data=k).fit()
+    k["era"] = np.where(k["year"] >= 2016, "recent", "early")
+    fit_k = smf.ols("resid_known ~ C(year) + incumbent_side:C(era)", data=k).fit()
     fe_k = {y: fit_k.params["Intercept"] + fit_k.params.get(f"C(year)[T.{y}]", 0.0) for y in KNOWN}
     df["resid_known"] = df["house_margin"] - df["known_pres"] - df["year"].map(fe_k)
     return df
@@ -142,7 +152,8 @@ def pairs(df: pd.DataFrame) -> pd.DataFrame:
     """Incumbents running again: this race's edge (toward them) vs. their previous race's edge."""
     out = []
     for _, r in df[df["incumbent_side"] != 0].iterrows():
-        prev = df[(df["year"] == r["year"] - 2) & (df["state_po"] == r["state_po"]) & df["winner_key"].isin(r["cand_keys"])]
+        prev = df[(df["year"] == r["year"] - 2) & (df["state_po"] == r["state_po"])
+                  & df["winner_key"].map(lambda k: same_person(k, r["cand_keys"]))]
         if prev.empty:
             continue
         p = prev.iloc[0]

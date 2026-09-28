@@ -1,4 +1,4 @@
-"""Race-level backtest: run the full 2026 race model on 2018-2024 as of Sept 22.
+"""Race-level backtest: run the full 2026 race model on 2010-2024 as of Sept 22.
 
     .venv/Scripts/python.exe midterms_2026/models/backtest_races.py          # as of Sept 22 (the standard test)
     .venv/Scripts/python.exe midterms_2026/models/backtest_races.py --eve    # as of Election Eve (outlet comparison)
@@ -8,8 +8,9 @@ Nov 1 (1-7 days before every election since 1976), all polls through the day bef
 poll-accuracy fit for 1 day out. It writes *_eve.csv outputs and restores the live forecast's
 processed files afterwards.
 
-Midterms (2018, 2022) are the main test; presidential years (2020, 2024) add
-evidence on systematic biases. Governor results come from core/governor_results.py.
+2018-2024 run with every ingredient and are the headline test; 2010-2016 run without campaign
+money, candidate experience, ideology and special elections, and with 538's last-~60-day poll
+archive, and are scored separately. Governor results come from core/governor_results.py.
 
 For each test year we rebuild exactly what the model would have known on
 Sept 22 of that year, then run the SAME simulation engine used for 2026
@@ -44,13 +45,24 @@ sys.path.insert(0, str(ROOT / "midterms_2026" / "models"))
 sys.path.insert(0, str(ROOT / "core"))
 import race_model as rm  # noqa: E402
 import national_env as ne  # noqa: E402
-from house_calibration import house_results, _pres, _key  # noqa: E402
+from house_calibration import house_results, _pres, _key, same_person  # noqa: E402
 
 PROC, RAW, OUT = ROOT / "data" / "processed", ROOT / "data" / "raw", ROOT / "midterms_2026" / "outputs"
-YEARS = {2018: {"pres_year": 2016, "house_pres": ("1VfkHtzB_0.csv", 3, 4, 2), "election": "2018-11-06",
-               "skip_states": {"PA"}},          # court-ordered new map in 2018
-         2020: {"pres_year": 2016, "house_pres": ("1VfkHtzB_0.csv", 3, 4, 2), "election": "2020-11-03",
-               "skip_states": {"PA", "NC"}},    # both redrawn after 2016
+# House lean: the latest presidential result on each year's lines (The Downballot / Daily Kos Elections).
+# 1l7W130t: 2008 pres on 2006-2010 lines; 1VfkHtzB: 2008/2012/2016 pres on 2016 lines (= 2012 lines
+# except FL, NC, VA, redrawn for 2016); 1zLNAuRq: 2016 pres on 2018 lines (PA's court map; NC redrawn 2020).
+YEARS = {2010: {"pres_year": 2008, "house_pres": ("1l7W130t_429358610.csv", 3, 4, 2), "election": "2010-11-02",
+               "skip_states": set()},
+         2012: {"pres_year": 2008, "house_pres": ("1VfkHtzB_0.csv", 7, 8, 2), "election": "2012-11-06",
+               "skip_states": {"FL", "NC", "VA", "CA"}},  # CA: no 2008 results computed on its 2012 map
+         2014: {"pres_year": 2012, "house_pres": ("1VfkHtzB_0.csv", 5, 6, 2), "election": "2014-11-04",
+               "skip_states": {"FL", "NC", "VA"}},
+         2016: {"pres_year": 2012, "house_pres": ("1VfkHtzB_0.csv", 5, 6, 2), "election": "2016-11-08",
+               "skip_states": set()},
+         2018: {"pres_year": 2016, "house_pres": ("1zLNAuRq_0.csv", 3, 4, 2), "election": "2018-11-06",
+               "skip_states": set()},
+         2020: {"pres_year": 2016, "house_pres": ("1zLNAuRq_0.csv", 3, 4, 2), "election": "2020-11-03",
+               "skip_states": {"NC"}},          # redrawn for 2020
          2022: {"pres_year": 2020, "house_pres": ("1CKngqOp_1871835782.csv", 3, 4, 1), "election": "2022-11-08",
                "skip_states": set()},
          2024: {"pres_year": 2020, "house_pres": ("1CKngqOp_1871835782.csv", 3, 4, 1), "election": "2024-11-05",
@@ -76,6 +88,14 @@ def state_pres(year: int) -> pd.DataFrame:
     return st.rename(columns={"DEMOCRAT": "d24", "REPUBLICAN": "r24"}).reset_index()
 
 
+# Era-sensitive pieces (the close-seat bonus, the House personal vote) are learned from the recent era
+# for tests from 2018 on, as the live model is; older test years learn from all the other years.
+RECENT_ERA = 2018
+
+# Years (or states) whose House lines changed from two years earlier: incumbents found by name statewide.
+NEW_LINES = {2012: "all", 2016: {"FL", "NC", "VA"}, 2018: {"PA"}, 2022: "all"}
+
+
 def house_races(year: int, cfg: dict) -> pd.DataFrame:
     f, cd_, cr_, skip = cfg["house_pres"]
     raw = pd.read_csv(ROOT / "data" / "raw" / "downballot" / f, header=None, skiprows=skip, dtype=str)
@@ -87,16 +107,20 @@ def house_races(year: int, cfg: dict) -> pd.DataFrame:
     cur = hr[hr["year"] == year].merge(pres.drop(columns="cd"), on=["state_po", "district"])
     cur = cur[~cur["state_po"].isin(cfg["skip_states"])]
     prev = hr[hr["year"] == year - 2]
-    if year != 2022:  # same lines as two years earlier: previous winner of this district
+    new_lines = NEW_LINES.get(year, set())
+    if new_lines != "all":  # same lines as two years earlier: previous winner of this district
         pw = prev.set_index(["state_po", "district"])[["winner", "winner_side"]]
         inc = [pw.loc[(s, d)] if (s, d) in pw.index else None for s, d in zip(cur.state_po, cur.district)]
-        cur["inc_side"] = [0 if w is None or _key(w["winner"]) not in keys else (1 if w["winner_side"] == "D" else -1)
+        cur["inc_side"] = [0 if w is None or not same_person(_key(w["winner"]), keys) else (1 if w["winner_side"] == "D" else -1)
                            for w, keys in zip(inc, cur["cand_keys"])]
+        for i, r in cur[cur.state_po.isin(new_lines)].iterrows():  # this state redrew: match by name
+            hit = prev[(prev.state_po == r.state_po) & prev.winner.map(lambda w: same_person(_key(w), r.cand_keys))]
+            cur.at[i, "inc_side"] = 0 if hit.empty else (1 if hit.iloc[0].winner_side == "D" else -1)
     else:             # new lines: any previous winner from the state on this district's ballot
         cur["inc_side"] = 0
         for i, r in cur.iterrows():
             pw = prev[(prev.state_po == r.state_po)]
-            hit = pw[[_key(w) in r.cand_keys for w in pw.winner]]
+            hit = pw[[same_person(_key(w), r.cand_keys) for w in pw.winner]]
             if len(hit):
                 cur.at[i, "inc_side"] = 1 if hit.iloc[0].winner_side == "D" else -1
     cur["race_type"] = np.where(cur["contested"], "standard", "same_party")
@@ -154,7 +178,8 @@ if "--house" in sys.argv:  # pollster house effects (core/pollster_house_effects
 if "--house-centered" in sys.argv:  # ... relative to the cycle's poll mix (no net shift)
     rm.POLLSTER_HOUSE, rm.POLLSTER_HOUSE_CENTERED = True, True
     TAG += "_housec"
-UNDECIDED_KIND = {2018: "mid_Rpres", 2020: "pres_Rpres", 2022: "mid_Dpres", 2024: "pres_Dpres"}
+UNDECIDED_KIND = {2010: "mid_Dpres", 2012: "pres_Dpres", 2014: "mid_Dpres", 2016: "pres_Dpres",
+                  2018: "mid_Rpres", 2020: "pres_Rpres", 2022: "mid_Dpres", 2024: "pres_Dpres"}
 GOV_QUALITY = rm.QUALITY_EFFECT["GOV"]  # the governor weight is refit leaving each test year out
 
 CUTOFF_DAYS = 42  # polls must end at least this many days before the election (42 ~ Sept 22)
@@ -264,6 +289,8 @@ def close_seat_bonus(errors: pd.DataFrame, exclude_year: int) -> float:
     """Estimate the close-seat bonus from OTHER years' no-bonus backtest errors:
     regress env-adjusted House errors on the bump shape (least squares, no intercept)."""
     x = errors[(errors.office == "HOUSE") & (errors.year != exclude_year)]
+    if exclude_year >= RECENT_ERA or exclude_year == -1:  # recent tests (and the live model) learn from the recent era
+        x = x[x.year >= RECENT_ERA]
     bump = np.exp(-(x["lean"] / rm.CLOSE_SEAT_WIDTH) ** 2)
     err = x["actual"] - x["margin_median"] - x["env_miss"]
     return float((bump * err).sum() / (bump ** 2).sum())
@@ -287,7 +314,10 @@ def run_all(bonus_for: dict | None = None) -> tuple[pd.DataFrame, list]:
             hp = rm.house_prior_edge(races.assign(incumbent=None), year)
             h = races["office"] == "HOUSE"
             races.loc[h, "prior_edge"], races.loc[h, "first_term"] = hp.loc[h, "prior_edge"], hp.loc[h, "first_term"]
-            f = hpv.fit(HOUSE_PAIRS[HOUSE_PAIRS["year"] != year])  # leave the test year out
+            # leave the test year out; since 2018 only the recent era (2016 on), as the live model is fit,
+            # because incumbency has become worth less (core/house_personal_vote.py)
+            pr = HOUSE_PAIRS[(HOUSE_PAIRS["year"] != year) & ((HOUSE_PAIRS["year"] >= 2016) | (year <= 2016))]
+            f = hpv.fit(pr)
             rm.PERSONAL["HOUSE"] = {k: f[k] for k in ("intercept", "rho", "first_term", "sd")}
         races["money_log_ratio"] = rm.money_ratio(races, year)
         races["ideology_gap"] = rm.ideology_gap(races, year)
@@ -348,7 +378,7 @@ def main(tag: str = "") -> None:
     bonus_for = {y: close_seat_bonus(first, y) for y in YEARS}
     print("Leave-one-year-out close-seat bonus:", {y: round(b, 2) for y, b in bonus_for.items()},
           "| all years:", round(close_seat_bonus(first, -1), 2))
-    first_scores = score(first[first.office == "HOUSE"], "HOUSE, no bonus")
+    first_scores = score(first[(first.office == "HOUSE") & (first.year >= RECENT_ERA)], "HOUSE, no bonus")
     res, chambers = run_all(bonus_for)
     res.to_csv(OUT / f"backtest_race_forecasts{tag}.csv", index=False)
     pd.set_option("display.width", 220)
@@ -356,18 +386,24 @@ def main(tag: str = "") -> None:
     ch = pd.DataFrame(chambers)
     print(ch.round(1).to_string(index=False))
 
-    print("\n=== Race-level scores ===")
-    scores = [first_scores, score(res, "all")]
+    # The headline sets are 2018-2024, the years with every ingredient (campaign money, candidate
+    # experience and ideology are coded from 2018; special elections read from 2017). 2010-2016 run
+    # without them and are scored as their own set.
+    print("\n=== Race-level scores (2018-2024; older years scored separately) ===")
+    full = res[res.year >= RECENT_ERA]
+    scores = [first_scores, score(full, "all")]
     for off in ("HOUSE", "SEN", "GOV"):
-        scores.append(score(res[res.office == off], off))
-    comp = res[(res.p_dem > 0.05) & (res.p_dem < 0.95)]
+        scores.append(score(full[full.office == off], off))
+    comp = full[(full.p_dem > 0.05) & (full.p_dem < 0.95)]
     scores.append(score(comp, "competitive (5-95%)"))
+    if (res.year < RECENT_ERA).any():
+        scores.append(score(res[res.year < RECENT_ERA], "older years (2010-2016)"))
     sc = pd.DataFrame(scores)
     print(sc.round(3).to_string(index=False))
 
     print("\n=== Calibration: predicted D win probability vs. how often D actually won ===")
     res["bin"] = pd.cut(res.p_dem, [0, .1, .3, .5, .7, .9, 1.0], include_lowest=True)
-    cal = res.groupby("bin", observed=True).agg(races=("p_dem", "size"), predicted=("p_dem", "mean"),
+    cal = res[res.year >= RECENT_ERA].groupby("bin", observed=True).agg(races=("p_dem", "size"), predicted=("p_dem", "mean"),
                                                  actual=("actual", lambda s: (s > 0).mean()))
     print(cal.round(2).to_string())
     sc.to_csv(OUT / f"backtest_scores{tag}.csv", index=False)

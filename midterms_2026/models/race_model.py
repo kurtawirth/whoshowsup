@@ -49,10 +49,11 @@ INCUMBENCY = {"HOUSE": 2.3, "SEN": 5.4, "GOV": 4.5}
 # (Senate 2012-2024, n=159; Governor 2018->2022, n=26).
 PERSONAL = {"SEN": {"intercept": 3.0, "rho": 0.43, "sd": 9.1},
             "GOV": {"intercept": 5.1, "rho": 0.63, "sd": 8.2},
-            # House (core/house_personal_vote.py, 1,269 re-running incumbents 2016-2024): the
+            # House (core/house_personal_vote.py, 1,271 re-running incumbents 2016-2024; 2014's
+            # incumbents now known, so 2016's first re-elections are counted right): the
             # previous race's edge over lean + year, plus a bump for a member's first re-election.
             # Used only when the previous race is found; otherwise the flat INCUMBENCY bonus.
-            "HOUSE": {"intercept": -0.13, "rho": 0.53, "first_term": 3.63, "sd": 5.78}}
+            "HOUSE": {"intercept": 0.74, "rho": 0.55, "first_term": 1.96, "sd": 5.98}}
 # The House personal vote moves each incumbent's expected margin but keeps FUND_SD["HOUSE_inc"]:
 # also shrinking that spread (by 5.78/7.32, the fit's residual vs. flat-bonus sd) hurt the
 # backtest's Brier score and calls at both Sept 22 and Election Eve, because it weakened the
@@ -288,6 +289,8 @@ def quality_diff(races: pd.DataFrame, year: int = 2026) -> pd.Series:
     """D tier - R tier from core/candidate_experience.py (0 where either is unknown)."""
     q = pd.read_csv(PROC / "candidate_experience.csv")
     q = q[q["year"] == year].rename(columns={"name": "candidate"})
+    if q.empty:  # a year not coded (the backtest's 2010-2016)
+        return pd.Series(0.0, index=races.index)
     q["side"] = q["side"].map({"D": "dem", "R": "rep"})
     key_cols = ["office", "state_po", "district", "special"]
     q = q.groupby(key_cols + ["side"])["tier"].max().unstack("side")
