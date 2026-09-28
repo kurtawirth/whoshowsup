@@ -189,7 +189,7 @@ def pollster_house_adj(pollsters: pd.Series, col: str = "h_all", races: pd.Serie
 # firms' track records were measured on 538's archive, which marked a poll partisan when a party or
 # campaign was behind it. Wikipedia instead labels some firms (R) or (D) on every poll. So a firm with a
 # record in the archive is treated the way the archive treated it (Trafalgar: always Republican-side;
-# Rasmussen, InsiderAdvantage: not, their lean is in their track record), unless this poll names a
+# InsiderAdvantage: not, its lean is in its track record), unless this poll names a
 # campaign or party client. Firms without a record keep the source's label.
 PARTISAN_MIN_POLLS = 10
 

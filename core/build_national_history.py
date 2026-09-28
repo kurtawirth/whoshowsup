@@ -76,6 +76,13 @@ def gallup_approval() -> pd.DataFrame:
     return d.assign(pollster="Gallup")[["pollster", "end_date", "approve", "disapprove"]]
 
 
+def _drop_excluded(d: pd.DataFrame) -> pd.DataFrame:
+    """The pollsters the 2026 poll sets leave out (midterms_2026/polls/build_polls.py), left out of past
+    years too, so history and 2026 are read the same way."""
+    name = d["pollster"].astype(str).str.lower()
+    return d[~name.str.contains("rasmussen", regex=False)]
+
+
 def modern_approval() -> pd.DataFrame:
     frames = []
     for f in ["president_approval_polls_historical.csv", "president_approval_polls.csv"]:
@@ -85,7 +92,7 @@ def modern_approval() -> pd.DataFrame:
         frames.append(d.rename(columns={"yes": "approve", "no": "disapprove"}))
     v = pd.read_csv(PROC / "polls_2026_approval.csv", parse_dates=["end_date"])
     frames.append(v)
-    return pd.concat(frames)[["pollster", "end_date", "approve", "disapprove"]]
+    return _drop_excluded(pd.concat(frames)[["pollster", "end_date", "approve", "disapprove"]])
 
 
 def generic_polls() -> pd.DataFrame:
@@ -95,7 +102,7 @@ def generic_polls() -> pd.DataFrame:
     g = g.rename(columns={"dem": "dem_pct", "rep": "rep_pct"})[["pollster", "end_date", "population", "dem_pct", "rep_pct"]]
     v = pd.read_csv(PROC / "polls_2026_generic.csv", parse_dates=["end_date"])
     v = v[v["partisan"].isna()][["pollster", "end_date", "population", "dem_pct", "rep_pct"]]
-    out = pd.concat([g, v])
+    out = _drop_excluded(pd.concat([g, v]))
     # Two-party margin: elections have no undecideds, so a 43-35 poll is read as
     # 55.1-44.9 (D+10.3), not D+8. Comparing raw poll margins to two-party
     # results would understate the leader whenever many voters are undecided.

@@ -37,6 +37,21 @@ API = "https://api.votehub.com/polls"
 PO_STATE = {v: k for k, v in STATE_PO.items()}
 DDHQ = "https://votes.decisiondeskhq.com"
 RECENT = pd.Timestamp.today().normalize() - pd.Timedelta(days=21)
+# Pollsters left out of every poll set (race, generic ballot, approval), with the reason.
+# Rasmussen Reports (user decision 2026-09-28): 538 dropped it in March 2024 for not meeting its
+# standards of objectivity and methodology, and leaked emails later showed it privately sharing results
+# with the Trump campaign. Every correction we apply assumes we know whose side a poll is on.
+EXCLUDED_POLLSTERS = {"rasmussen": "independence in question (dropped by 538, 2024)"}
+
+
+def drop_excluded(df: pd.DataFrame, label: str) -> pd.DataFrame:
+    name = df["pollster"].astype(str).str.lower()
+    out = pd.Series(False, index=df.index)
+    for k in EXCLUDED_POLLSTERS:
+        out |= name.str.contains(k, regex=False)
+    if out.any():
+        print(f"  left out {int(out.sum())} {label} poll(s) from excluded pollsters ({', '.join(EXCLUDED_POLLSTERS)})")
+    return df[~out]
 FAILED: list[str] = []  # sources that could not be downloaded this run (saved copy used)
 ISSUES: list[str] = []  # recent polls of a race we forecast that did not match both nominees
 
@@ -389,7 +404,7 @@ def main(refresh: bool = False) -> None:
         dd = pd.DataFrame()
     path = PROC / "polls_2026_races.csv"
     before = pd.read_csv(path, parse_dates=["start_date", "end_date"]) if path.exists() else None
-    polls = combine(votehub_race_polls(vh, races), wikipedia_race_polls(), dd)
+    polls = drop_excluded(combine(votehub_race_polls(vh, races), wikipedia_race_polls(), dd), "race")
     n_dd = len(dd)
     polls.to_csv(path, index=False)
     new_polls_report(before, polls)
@@ -402,6 +417,7 @@ def main(refresh: bool = False) -> None:
     m = gen.reset_index().merge(dd_keys, on="k", how="left", suffixes=("", "_dd"))
     dup = m.loc[(m["end_date"] - m["end_date_dd"]).abs() <= pd.Timedelta(days=2), "index"].unique()
     gen = pd.concat([dd, gen.drop(index=dup).drop(columns="k")], ignore_index=True).sort_values("end_date")
+    gen = drop_excluded(gen, "generic-ballot")
     gen.to_csv(PROC / "polls_2026_generic.csv", index=False)
     # Approval: DDHQ first, VoteHub fills in polls DDHQ lacks (same duplicate rule as above).
     da = ddhq_approval(refresh)
@@ -410,7 +426,7 @@ def main(refresh: bool = False) -> None:
     m = app.reset_index().merge(da_keys, on="k", how="left", suffixes=("", "_dd"))
     dup = m.loc[(m["end_date"] - m["end_date_dd"]).abs() <= pd.Timedelta(days=2), "index"].unique()
     app = pd.concat([da, app.drop(index=dup).drop(columns="k")], ignore_index=True).sort_values("end_date")
-    app = app[app["end_date"] >= "2025-01-20"]
+    app = drop_excluded(app[app["end_date"] >= "2025-01-20"], "approval")
     app.to_csv(PROC / "polls_2026_approval.csv", index=False)
 
     print(f"Race polls: {len(polls)}  (by source: {polls['source'].value_counts().to_dict()}; "
