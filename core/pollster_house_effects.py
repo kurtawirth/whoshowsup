@@ -136,7 +136,10 @@ def evaluate(d: pd.DataFrame, form: str, kA: float = 20, kB: float = 5) -> dict:
 def build(k: float = 10) -> pd.DataFrame:
     """The model's table: each firm's track-record lean (all cycles, and leaving out each cycle)."""
     d = data()
-    t = pd.DataFrame({"n_polls": d.groupby("house").size(), "h_all": track_record(d, k)})
+    t = pd.DataFrame({"n_polls": d.groupby("house").size(), "h_all": track_record(d, k),
+                      # how often 538 marked the firm's polls as Democratic- or Republican-side
+                      "flag_d": d.groupby("house").partisan.apply(lambda s: (s == "D").mean()),
+                      "flag_r": d.groupby("house").partisan.apply(lambda s: (s == "R").mean())})
     for c in sorted(d.cycle.unique()):
         t[f"h_loo_{c}"] = track_record(d[d.cycle != c], k)
     t = t.fillna(0.0).rename_axis("house").reset_index()

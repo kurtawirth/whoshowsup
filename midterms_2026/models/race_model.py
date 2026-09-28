@@ -185,6 +185,33 @@ def pollster_house_adj(pollsters: pd.Series, col: str = "h_all", races: pd.Serie
     return h
 
 
+# Which polls count as a party's side (corrected by PARTISAN_BIAS, half weight). That correction and the
+# firms' track records were measured on 538's archive, which marked a poll partisan when a party or
+# campaign was behind it. Wikipedia instead labels some firms (R) or (D) on every poll. So a firm with a
+# record in the archive is treated the way the archive treated it (Trafalgar: always Republican-side;
+# Rasmussen, InsiderAdvantage: not, their lean is in their track record), unless this poll names a
+# campaign or party client. Firms without a record keep the source's label.
+PARTISAN_MIN_POLLS = 10
+
+
+def partisan_side(polls: pd.DataFrame) -> pd.Series:
+    import sys
+    sys.path.insert(0, str(ROOT / "core"))
+    from pollster_house_effects import house_key
+    t = pd.read_csv(PROC / "pollster_track_record.csv").set_index("house")
+    if "flag_d" not in t:
+        return polls["partisan"].fillna("")
+    t = t[t["n_polls"] >= PARTISAN_MIN_POLLS]
+    key = polls["pollster"].map(house_key)
+    usual = np.where(key.map(t["flag_r"]) >= 0.5, "R", np.where(key.map(t["flag_d"]) >= 0.5, "D", ""))
+    source = polls["partisan"].fillna("")
+    # a client named on this poll: VoteHub's and Decision Desk's flags are about the sponsor already;
+    # Wikipedia marks partisan clients with a footnote (sponsors column)
+    client = (polls["source"] != "wikipedia") | polls["sponsors"].fillna("").ne("")
+    has_record = key.isin(t.index)
+    return pd.Series(np.where(has_record, np.where(client & (source != ""), source, usual), source), index=polls.index)
+
+
 def undecided_share(dem_pct, rep_pct):
     """Undecided (and minor-party) share of a poll, 0-0.4."""
     return ((100 - dem_pct - rep_pct).clip(0, 40) / 100).fillna(0.0)
@@ -344,7 +371,7 @@ def poll_summary(races: pd.DataFrame, forecast_date: pd.Timestamp = FORECAST_DAT
     polls = polls[(polls["dem_pct"] + polls["rep_pct"]) >= 60]
     # (Alaska's bloc races: the poll builders add up each side's candidates -- three Republicans
     # splitting a first-round poll count together -- so those polls read as bloc vs bloc.)
-    polls["partisan"] = polls["partisan"].fillna("")
+    polls["partisan"] = partisan_side(polls)
     polls["margin"] = two_party(polls["dem_pct"], polls["rep_pct"])
     polls["undecided"] = undecided_share(polls["dem_pct"], polls["rep_pct"])
     bias = polls.apply(lambda p: PARTISAN_BIAS[p["office"]].get(p["partisan"], 0.0), axis=1)
