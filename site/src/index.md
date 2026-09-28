@@ -59,14 +59,34 @@ function heroCard(title, p, body, href) {
   return a;
 }
 const govs = races.filter((r) => r.office === "GOV");
+// Governors card: the most likely split, and one tile per race from most Democratic to most Republican,
+// with a line at today's split so the seats changing hands stand out.
+function govCard() {
+  const n = govs.length, dMed = Math.round(top.gov_median), rMed = n - dMed;
+  const dNow = govs.filter((r) => r.incumbent_party === "D").length, rNow = n - dNow;
+  const net = dMed - dNow;
+  const change = net === 0 ? "no net change" : `a net gain of ${Math.abs(net)} for ${net > 0 ? "Democrats" : "Republicans"}`;
+  const sorted = [...govs].sort((a, b) => b.p_dem - a.p_dem);
+  const tiles = sorted.map((r, i) => {
+    const s = document.createElement("span");
+    s.className = "gov-tile" + (i === dNow ? " gov-now" : "");
+    s.style.background = t[r.rating];
+    s.title = `${r.state_name}: ${r.rating} (${favoriteText(r)})`;
+    return s;
+  });
+  return html`<a class="hero-card" href="${link("governors")}">
+    <div class="label">Governors</div>
+    <div class="big gov-split"><span style="color:${t.dem}">${dMed}</span><small>D</small><span class="gov-dash">–</span><span style="color:${t.rep}">${rMed}</span><small>R</small></div>
+    <div class="sub">most likely split of the ${n} governorships on the ballot</div>
+    <div class="gov-strip">${tiles}</div>
+    <div class="gov-ends"><span>Most Democratic</span><span class="gov-today" style="left:${(100 * dNow) / n}%">today ${dNow}–${rNow}</span><span>Most Republican</span></div>
+    <div class="sub" style="margin-top:10px">That would be ${change}. Democrats win ${Math.round(top.gov_p10)}–${Math.round(top.gov_p90)} and Republicans ${n - Math.round(top.gov_p90)}–${n - Math.round(top.gov_p10)} in 80% of simulations.</div>
+  </a>`;
+}
 display(html`<div class="hero-grid">
   ${heroCard("House", top.p_house_d, `Most likely: ${Math.round(top.house_median)} Democratic seats (80% range ${Math.round(top.house_p10)}–${Math.round(top.house_p90)}). 218 needed.`, "house")}
   ${heroCard("Senate", top.p_senate_d, `Most likely: ${Math.round(top.senate_median)} Democratic seats (80% range ${Math.round(top.senate_p10)}–${Math.round(top.senate_p90)}). Democrats need 51; the vice president breaks ties.`, "senate")}
-  <a class="hero-card" href="${link("governors")}">
-    <div class="label">Governors</div>
-    <div class="big" style="color:${t.ink}">${Math.round(top.gov_median)}<span style="font-size:24px;color:${t["ink-3"]};font-weight:600;margin-left:8px">of 36</span></div>
-    <div class="sub">governorships up this year that Democrats are most likely to win (80% range ${Math.round(top.gov_p10)}–${Math.round(top.gov_p90)})</div>
-  </a>
+  ${govCard()}
 </div>`);
 ```
 
