@@ -1,11 +1,10 @@
-"""Governor results 2014-2024 from Wikipedia's yearly summary pages ("YYYY United States gubernatorial
+"""Governor results 2006-2024 from Wikipedia's yearly summary pages ("YYYY United States gubernatorial
 elections", the table listing each state's incumbent, result and candidates with vote shares).
 
     .venv/Scripts/python.exe core/governor_results.py
 
-Fills the years our county data lacks (2014, 2016, 2020, 2024), so the backtest can see each governor's
-previous race (their personal vote) in 2018 and run the 2020 and 2024 governor races. 2018 and 2022 are
-parsed too, to check against the county data.
+Gives the backtest each governor's previous race (their personal vote) and the governor races of every
+test year, 2010-2024. 2018 and 2022 are checked against our county data (median gap 0.04 points).
 
 Output: data/processed/governor_results.csv, one row per regular election: year, state_po, the leading
 Democrat and Republican with their shares, margin (D-R, two-party), incumbent, whether the incumbent
@@ -26,7 +25,7 @@ sys.path.insert(0, str(ROOT / "midterms_2026"))
 from build_races import STATE_PO  # noqa: E402
 
 HEADERS = {"User-Agent": "politics-forecast-research/0.1 (personal project; kurtawirth)"}
-YEARS = (2014, 2016, 2018, 2020, 2022, 2024)
+YEARS = (2006, 2008, 2010, 2012, 2014, 2016, 2018, 2020, 2022, 2024)
 CAND = re.compile(r"([^▌]+?)\s*\(([^)]+)\)\s*([\d.]+)%")
 
 

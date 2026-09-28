@@ -1,4 +1,100 @@
 year,state_po,incumbent,incumbent_party,incumbent_ran,incumbent_side,dem,dem_pct,rep,rep_pct,margin
+2006,AL,Bob Riley,Republican,True,-1,Lucy Baxley,41.6,Bob Riley,57.5,-16.044399596367306
+2006,AK,Frank Murkowski,Republican,False,0,Tony Knowles,41.0,Sarah Palin,48.3,-8.174692049272114
+2006,AZ,Janet Napolitano,Democratic,True,1,Janet Napolitano,62.6,Len Munsil,35.4,27.755102040816332
+2006,AR,Mike Huckabee,Republican,False,0,Mike Beebe,55.6,Asa Hutchinson,40.7,15.47248182762201
+2006,CA,Arnold Schwarzenegger,Republican,True,-1,Phil Angelides,38.9,Arnold Schwarzenegger,55.9,-17.932489451476794
+2006,CO,Bill Owens,Republican,False,0,Bill Ritter,57.0,Bob Beauprez,40.2,17.28395061728395
+2006,CT,Jodi Rell,Republican,True,-1,John DeStefano Jr.,35.5,Jodi Rell,63.2,-28.064842958459984
+2006,FL,Jeb Bush,Republican,False,0,Jim Davis,45.1,Charlie Crist,52.2,-7.297019527235355
+2006,GA,Sonny Perdue,Republican,True,-1,Mark Taylor,38.2,Sonny Perdue,58.0,-20.58212058212058
+2006,HI,Linda Lingle,Republican,True,-1,Randy Iwase,35.4,Linda Lingle,62.5,-27.681307456588353
+2006,ID,Jim Risch,Republican,False,0,Jerry Brady,44.1,Butch Otter,52.7,-8.884297520661157
+2006,IL,Rod Blagojevich,Democratic,True,1,Rod Blagojevich,49.8,Judy Baar Topinka,39.3,11.784511784511785
+2006,IA,Tom Vilsack,Democratic,False,0,Chet Culver,54.0,Jim Nussle,44.4,9.75609756097561
+2006,KS,Kathleen Sebelius,Democratic,True,1,Kathleen Sebelius,57.9,Jim Barnett,40.4,17.80264496439471
+2006,ME,John Baldacci,Democratic,True,1,John Baldacci,38.1,Chandler Woodcock,30.2,11.566617862371892
+2006,MD,Bob Ehrlich,Republican,True,-1,Martin O'Malley,52.7,Bob Ehrlich,46.2,6.572295247724974
+2006,MA,Mitt Romney,Republican,False,0,Deval Patrick,55.6,Kerry Healey,35.3,22.332233223322337
+2006,MI,Jennifer Granholm,Democratic,True,1,Jennifer Granholm,56.4,Dick DeVos,42.3,14.28571428571429
+2006,MN,Tim Pawlenty,Republican,True,-1,Mike Hatch,45.7,Tim Pawlenty,46.7,-1.0822510822510822
+2006,NE,Dave Heineman,Republican,True,-1,David Hahn,24.5,Dave Heineman,73.4,-49.94892747701737
+2006,NV,Kenny Guinn,Republican,False,0,Dina Titus,43.9,Jim Gibbons,47.9,-4.357298474945534
+2006,NH,John Lynch,Democratic,True,1,John Lynch,74.0,Jim Coburn,25.8,48.296593186372746
+2006,NM,Bill Richardson,Democratic,True,1,Bill Richardson,68.8,John Dendahl,31.2,37.599999999999994
+2006,NY,George Pataki,Republican,False,0,Eliot Spitzer,65.7,John Faso,27.1,41.59482758620689
+2006,OH,Bob Taft,Republican,False,0,Ted Strickland,60.5,Ken Blackwell,36.7,24.485596707818925
+2006,OK,Brad Henry,Democratic,True,1,Brad Henry,66.5,Ernest Istook,33.5,33.0
+2006,OR,Ted Kulongoski,Democratic,True,1,Ted Kulongoski,50.7,Ron Saxton,42.7,8.565310492505352
+2006,PA,Ed Rendell,Democratic,True,1,Ed Rendell,60.3,Lynn Swann,39.6,20.720720720720713
+2006,RI,Donald Carcieri,Republican,True,-1,Charles Fogarty,49.0,Donald Carcieri,51.0,-2.0
+2006,SC,Mark Sanford,Republican,True,-1,Tommy Moore,44.8,Mark Sanford,55.1,-10.310310310310314
+2006,SD,Mike Rounds,Republican,True,-1,Jack Billion,36.1,Mike Rounds,61.7,-26.175869120654394
+2006,TN,Phil Bredesen,Democratic,True,1,Phil Bredesen,68.6,Jim Bryson,29.7,39.57273652085452
+2006,TX,Rick Perry,Republican,True,-1,Chris Bell,29.8,Rick Perry,39.0,-13.372093023255813
+2006,VT,Jim Douglas,Republican,True,-1,Scudder Parker,41.1,Jim Douglas,56.3,-15.605749486652972
+2006,WI,Jim Doyle,Democratic,True,1,Jim Doyle,52.8,Mark Green,45.4,7.535641547861506
+2006,WY,Dave Freudenthal,Democratic,True,1,Dave Freudenthal,70.0,Ray Hunkins,30.0,40.0
+2008,DE,Ruth Ann Minner,Democratic,False,0,Jack Markell,67.5,Bill Lee,32.1,35.5421686746988
+2008,IN,Mitch Daniels,Republican,True,-1,Jill Long Thompson,40.1,Mitch Daniels,57.8,-18.079673135852904
+2008,MO,Matt Blunt,Republican,False,0,Jay Nixon,58.4,Kenny Hulshof,39.5,19.305413687436157
+2008,MT,Brian Schweitzer,Democratic,True,1,Brian Schweitzer,65.5,Roy Brown,32.5,33.673469387755105
+2008,NH,John Lynch,Democratic,True,1,John Lynch,70.2,Joseph Kenney,27.6,43.55828220858895
+2008,NC,Mike Easley,Democratic,False,0,Bev Perdue,50.3,Pat McCrory,46.9,3.497942386831275
+2008,ND,John Hoeven,Republican,True,-1,Tim Mathern,23.5,John Hoeven,74.4,-51.99182839632279
+2008,UT,Jon Huntsman Jr.,Republican,True,-1,Bob Springmeyer,19.7,Jon Huntsman Jr.,77.6,-59.506680369989716
+2008,VT,Jim Douglas,Republican,True,-1,Gaye Symington,21.7,Jim Douglas,53.4,-42.21038615179761
+2008,WA,Christine Gregoire,Democratic,True,1,Christine Gregoire,53.2,Dino Rossi,46.8,6.400000000000006
+2008,WV,Joe Manchin,Democratic,True,1,Joe Manchin,69.8,Russ Weeks,25.7,46.17801047120418
+2010,AL,Bob Riley,Republican,False,0,Ron Sparks,42.1,Robert J. Bentley,57.9,-15.799999999999997
+2010,AK,Sean Parnell,Republican,True,-1,Ethan Berkowitz,37.7,Sean Parnell,59.1,-22.107438016528924
+2010,AZ,Jan Brewer,Republican,True,-1,Terry Goddard,42.4,Jan Brewer,54.3,-12.306101344364011
+2010,AR,Mike Beebe,Democratic,True,1,Mike Beebe,64.4,Jim Keet,33.6,31.428571428571434
+2010,CA,Arnold Schwarzenegger,Republican,False,0,Jerry Brown,53.8,Meg Whitman,40.9,13.62196409714889
+2010,CO,Bill Ritter,Democratic,False,0,John Hickenlooper,51.1,Dan Maes,11.1,64.30868167202573
+2010,CT,Jodi Rell,Republican,False,0,Dannel Malloy,49.5,Thomas C. Foley,49.0,0.5076142131979695
+2010,FL,Charlie Crist,Independent,False,0,Alex Sink,47.7,Rick Scott,48.9,-1.2422360248447162
+2010,GA,Sonny Perdue,Republican,False,0,Roy Barnes,43.0,Nathan Deal,53.0,-10.416666666666666
+2010,HI,Linda Lingle,Republican,False,0,Neil Abercrombie,57.8,Duke Aiona,40.8,17.24137931034483
+2010,ID,Butch Otter,Republican,True,-1,Keith G. Allred,32.9,Butch Otter,59.1,-28.478260869565222
+2010,IL,Pat Quinn,Democratic,True,1,Pat Quinn,46.8,Bill Brady,45.9,0.9708737864077656
+2010,IA,Chet Culver,Democratic,True,1,Chet Culver,43.2,Terry Branstad,52.8,-9.999999999999995
+2010,KS,Mark Parkinson,Democratic,False,0,Tom Holland,32.2,Sam Brownback,63.3,-32.565445026178004
+2010,ME,John Baldacci,Democratic,False,0,Libby Mitchell,18.8,Paul LePage,37.6,-33.33333333333333
+2010,MD,Martin O'Malley,Democratic,True,1,Martin O'Malley,56.2,Bob Ehrlich,41.8,14.693877551020412
+2010,MA,Deval Patrick,Democratic,True,1,Deval Patrick,48.4,Charlie Baker,42.0,7.079646017699114
+2010,MI,Jennifer Granholm,Democratic,False,0,Virg Bernero,39.9,Rick Snyder,58.1,-18.571428571428573
+2010,MN,Tim Pawlenty,Republican,False,0,Mark Dayton,43.6,Tom Emmer,43.2,0.4608294930875559
+2010,NE,Dave Heineman,Republican,True,-1,Mike Meister,26.1,Dave Heineman,73.9,-47.8
+2010,NV,Jim Gibbons,Republican,False,0,Rory Reid,41.6,Brian Sandoval,53.4,-12.421052631578945
+2010,NH,John Lynch,Democratic,True,1,John Lynch,52.6,John Stephen,45.0,7.786885245901641
+2010,NM,Bill Richardson,Democratic,False,0,Diane Denish,46.6,Susana Martinez,53.3,-6.706706706706702
+2010,NY,David Paterson,Democratic,False,0,Andrew Cuomo,63.1,Carl Paladino,33.5,30.641821946169774
+2010,OH,Ted Strickland,Democratic,True,1,Ted Strickland,47.0,John Kasich,49.0,-2.0833333333333335
+2010,OK,Brad Henry,Democratic,False,0,Jari Askins,39.5,Mary Fallin,60.5,-21.0
+2010,OR,Ted Kulongoski,Democratic,False,0,John Kitzhaber,49.3,Chris Dudley,47.8,1.5447991761071063
+2010,PA,Ed Rendell,Democratic,False,0,Dan Onorato,45.5,Tom Corbett,54.5,-9.0
+2010,RI,Donald Carcieri,Republican,False,0,Frank T. Caprio,23.1,John Robitaille,33.6,-18.51851851851852
+2010,SC,Mark Sanford,Republican,False,0,Vincent Sheheen,46.9,Nikki Haley,51.4,-4.577822990844354
+2010,SD,Mike Rounds,Republican,False,0,Scott Heidepriem,38.5,Dennis Daugaard,61.5,-23.0
+2010,TN,Phil Bredesen,Democratic,False,0,Mike McWherter,33.1,Bill Haslam,65.0,-32.51783893985729
+2010,TX,Rick Perry,Republican,True,-1,Bill White,42.3,Rick Perry,55.0,-13.052415210688595
+2010,UT,Gary Herbert,Republican,True,-1,Peter Corroon,31.9,Gary Herbert,64.1,-33.541666666666664
+2010,VT,Jim Douglas,Republican,False,0,Peter Shumlin,49.4,Brian Dubie,47.7,1.7507723995880493
+2010,WI,Jim Doyle,Democratic,False,0,Tom Barrett,46.5,Scott Walker,52.3,-5.8704453441295525
+2010,WY,Dave Freudenthal,Democratic,False,0,Leslie Petersen,22.9,Matt Mead,65.7,-48.30699774266366
+2012,DE,Jack Markell,Democratic,True,1,Jack Markell,69.3,Jeff Cragg,28.6,41.573033707865164
+2012,IN,Mitch Daniels,Republican,False,0,John R. Gregg,46.6,Mike Pence,49.5,-3.0176899063475537
+2012,MO,Jay Nixon,Democratic,True,1,Jay Nixon,54.8,Dave Spence,42.5,12.641315519013359
+2012,MT,Brian Schweitzer,Democratic,False,0,Steve Bullock,48.9,Rick Hill,47.3,1.6632016632016648
+2012,NH,John Lynch,Democratic,False,0,Maggie Hassan,54.6,Ovide Lamontagne,42.5,12.461380020597325
+2012,NC,Bev Perdue,Democratic,False,0,Walter Dalton,43.2,Pat McCrory,54.6,-11.656441717791408
+2012,ND,Jack Dalrymple,Republican,True,-1,Ryan Taylor,34.3,Jack Dalrymple,63.1,-29.568788501026695
+2012,UT,Gary Herbert,Republican,True,-1,Peter Cooke,27.6,Gary Herbert,68.4,-42.50000000000001
+2012,VT,Peter Shumlin,Democratic,True,1,Peter Shumlin,57.8,Randy Brock,37.6,21.17400419287211
+2012,WA,Christine Gregoire,Democratic,False,0,Jay Inslee,51.5,Rob McKenna,48.5,3.0
+2012,WV,Earl Ray Tomblin,Democratic,True,1,Earl Ray Tomblin,50.5,Bill Maloney,45.7,4.989604989604986
+2012,WI,Scott Walker,Republican,True,-1,Tom Barrett,46.3,Scott Walker,53.1,-6.841046277666
 2014,AL,Robert J. Bentley,Republican,True,-1,Parker Griffith,36.2,Robert J. Bentley,63.6,-27.454909819639276
 2014,AK,Sean Parnell,Republican,True,-1,,,Sean Parnell,45.9,
 2014,AZ,Jan Brewer,Republican,False,0,Fred DuVal,41.6,Doug Ducey,53.4,-12.421052631578945

@@ -6,7 +6,7 @@ For each D-vs-R race:
     resid = actual margin - expected
     resid = inc_effect * incumbent_side + noise
 
-Senate: 2000-2024 (MEDSL state results). Governor: 2014-2024 (Wikipedia's yearly
+Senate: 2000-2024 (MEDSL state results). Governor: 2006-2024 (Wikipedia's yearly
 summary pages, core/governor_results.py; incumbent = the sitting governor is a nominee).
 Senate incumbent = a candidate matching a previous winner of that office in the
 state within the prior term.
@@ -76,6 +76,9 @@ def senate() -> pd.DataFrame:
 def governor() -> pd.DataFrame:
     g = pd.read_csv(PROC / "governor_results.csv").dropna(subset=["margin"])
     g = g[(g[["dem_pct", "rep_pct"]].min(axis=1) / (g["dem_pct"] + g["rep_pct"])) > 0.15].copy()
+    # three-way races (a third candidate took 30%+: Maine and Texas 2006; Colorado, Maine and Rhode Island
+    # 2010) aren't described by a D-R margin
+    g = g[g["dem_pct"] + g["rep_pct"] >= 70]
     g["winner_side"] = np.where(g["margin"] > 0, "D", "R")
     g["winner"] = np.where(g["margin"] > 0, g["dem"], g["rep"])
     g["dem_key"], g["rep_key"] = g["dem"].map(_key), g["rep"].map(_key)
