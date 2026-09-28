@@ -25,13 +25,17 @@ import numpy as np
 import pandas as pd
 import statsmodels.formula.api as smf
 
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import poll_archive as pa  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "data" / "processed" / "poll_bias_history.csv"
 MAX_DAYS = 90  # polls taken within 90 days of the election (the forecast window we care about)
 
 
 def load() -> pd.DataFrame:
-    d = pd.read_csv(ROOT / "data" / "raw" / "fte" / "raw_polls.csv", low_memory=False)
+    d = pa.raw_polls()
     d = d[d["type_simple"].isin(["Sen-G", "Gov-G", "House-G"])]
     d = d[(d["cand1_party"].isin(["DEM", "REP"])) & (d["cand2_party"].isin(["DEM", "REP"]))
           & (d["cand1_party"] != d["cand2_party"])]
@@ -60,9 +64,9 @@ def fit(d: pd.DataFrame) -> dict:
 
 def main() -> None:
     d = load()
-    rows = [{"period": "all 1998-2022", **fit(d)}]
+    rows = [{"period": "all 1998-2024", **fit(d)}]
     for label, yrs in [("1998-2010", range(1998, 2011)), ("2012-2016", range(2012, 2017)),
-                       ("2018-2022", range(2018, 2023))]:
+                       ("2018-2024", range(2018, 2025))]:
         rows.append({"period": label, **fit(d[d["cycle"].isin(yrs)])})
     for office in ["Sen-G", "Gov-G", "House-G"]:
         rows.append({"period": f"all, {office}", **fit(d[d["type_simple"] == office])})

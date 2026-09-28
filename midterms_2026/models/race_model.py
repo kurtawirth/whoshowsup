@@ -72,7 +72,7 @@ def load_poll_error() -> None:
         e = pd.read_csv(path).set_index("office")
         for ours, theirs in [("HOUSE", "House-G"), ("SEN", "Sen-G"), ("GOV", "Gov-G")]:
             POLL_FLOOR[ours], POLL_SPREAD[ours] = float(e.loc[theirs, "floor"]), float(e.loc[theirs, "spread"])
-PARTISAN_BIAS = {"HOUSE": {"D": 5.4, "R": -5.6}, "SEN": {"D": 3.4, "R": -3.9}, "GOV": {"D": 4.1, "R": -3.5}}
+PARTISAN_BIAS = {"HOUSE": {"D": 5.2, "R": -5.6}, "SEN": {"D": 3.4, "R": -3.6}, "GOV": {"D": 4.2, "R": -3.4}}  # 1998-2024 (core/poll_bias_history.py)
 PARTISAN_WEIGHT = 0.5                  # user decision: corrected partisan polls count half
 POLL_WINDOW_DAYS = 100  # polls in this window count fully toward the average's reliability
 POLL_HALF_LIFE_DAYS = 14  # best or tied at 42, 21, 14, 7 days out in 538 archive tests (vs 3-60 days, equal)
@@ -122,9 +122,9 @@ RACE_ERROR_DF = 4  # backtest (2026-09-27): Brier 0.0303 -> 0.0302 (Sept 22), 0.
 UNDECIDED = True  # backtest (2026-09-27): Brier 0.0302 -> 0.0303 (Sept 22), 0.0312 -> 0.0311 (eve); competitive races 0.147 -> 0.146, 0.150 -> 0.146
 UNDECIDED_PARTS = {"pull", "lean", "spread"}  # which pieces are on (the backtest tests each; "composition" failed it, 2026-09-27)
 UNDECIDED_PULL = -1.01
-UNDECIDED_LEAN = {"mid_Dpres": -22.58, "mid_Rpres": 2.11, "pres_Dpres": 4.47, "pres_Rpres": -6.57}
+UNDECIDED_LEAN = {"mid_Dpres": -22.58, "mid_Rpres": 2.11, "pres_Dpres": 1.90, "pres_Rpres": -6.50}
 UNDECIDED_KIND = "mid_Rpres"  # 2026: a midterm with a Republican president
-UNDECIDED_SPREAD = (38.2, 263.6)  # s0, s1
+UNDECIDED_SPREAD = (36.0, 267.9)  # s0, s1
 
 
 # Who the undecideds are (core/undecided_hypotheses.py, H4): in Senate and governor races, undecideds

@@ -169,8 +169,26 @@ def polls_2024() -> pd.DataFrame:
         partisan=d.pollster_party.fillna(""), dem_name=d.dem_name.fillna(""))
 
 
+# --polls=538: every year's polls from 538's full-season lists (core/poll_archive.py) instead of
+# raw_polls.csv (last ~60 days, 2018-2022) + Wikipedia (2024)
+POLLS_538 = "--polls=538" in sys.argv
+if POLLS_538:
+    TAG += "_p538"
+
+
+def polls_538(year: int) -> pd.DataFrame:
+    d = pd.read_csv(PROC / "poll_archive_538.csv")
+    d = d[d.cycle == year].copy()
+    d["race_id"] = d.office + d.state_po + d.district.astype(str) + d.special.astype(str)
+    d["partisan"] = d.partisan.map({"DEM": "D", "REP": "R"}).fillna("")
+    return d.rename(columns={"days": "time_to_election", "sample_size": "samplesize"})
+
+
 def poll_summary(races: pd.DataFrame, year: int) -> pd.DataFrame:
-    if year == 2024:  # 538's archive stops at 2022
+    if POLLS_538:
+        d = polls_538(year)
+        d = d[d.time_to_election >= CUTOFF_DAYS].copy()
+    elif year == 2024:  # 538's archive stops at 2022
         d = polls_2024()
         d = d[d.time_to_election >= CUTOFF_DAYS].copy()
     else:

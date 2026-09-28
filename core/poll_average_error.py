@@ -22,13 +22,14 @@ from scipy.optimize import minimize
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "core"))
 from poll_bias_history import load as load_polls  # noqa: E402  (same D-R filtering)
+import poll_archive as pa  # noqa: E402
 
-PARTISAN_BIAS = {"D": 3.4, "R": -4.4}   # 2018-2022 estimates from poll_bias_history.py
+PARTISAN_BIAS = {"D": 3.3, "R": -4.1}   # 2018-2024 estimates from poll_bias_history.py
 PARTISAN_WEIGHT = 0.5
 
 
 def race_averages(days_out: int = 42, window: int = 58) -> pd.DataFrame:
-    d = pd.read_csv(ROOT / "data" / "raw" / "fte" / "raw_polls.csv", low_memory=False)
+    d = pa.raw_polls()
     d = d[d["type_simple"].isin(["Sen-G", "Gov-G", "House-G"])]
     d = d[d["cand1_party"].isin(["DEM", "REP"]) & d["cand2_party"].isin(["DEM", "REP"]) & (d["cand1_party"] != d["cand2_party"])]
     sign = np.where(d["cand1_party"] == "DEM", 1, -1)

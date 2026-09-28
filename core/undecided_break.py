@@ -2,7 +2,8 @@
 
     .venv/Scripts/python.exe core/undecided_break.py
 
-For each general-election poll (Senate, governor, House; Democrat vs Republican; 1998-2022):
+For each general-election poll (Senate, governor, House; Democrat vs Republican; 1998-2024; 2024 from
+538's full poll lists, core/poll_archive.py):
 
   u      = 100 - D% - R%                      the undecided (and minor-party) share, in points
   m      = two-party poll margin              what the model reads today: 100 * (D - R) / (D + R)
@@ -41,18 +42,22 @@ Writes data/processed/undecided_break.csv (coefficients, all years and leaving e
 data/processed/undecided_spread.csv (the spread fit and the typical share of polls 28+ days out).
 """
 from pathlib import Path
+import sys
 
 import numpy as np
 import pandas as pd
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import poll_archive as pa  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[1]
 PROC = ROOT / "data" / "processed"
 PRES_PARTY = {1998: "D", 2000: "D", 2002: "R", 2004: "R", 2006: "R", 2008: "R", 2010: "D", 2012: "D",
-              2014: "D", 2016: "D", 2018: "R", 2020: "R", 2022: "D"}  # White House before the election
+              2014: "D", 2016: "D", 2018: "R", 2020: "R", 2022: "D", 2024: "D"}  # White House before the election
 
 
 def polls(min_days: int = 0, max_days: int = 61) -> pd.DataFrame:
-    d = pd.read_csv(ROOT / "data" / "raw" / "fte" / "raw_polls.csv", low_memory=False)
+    d = pa.raw_polls()
     d = d[d.type_simple.isin(["Sen-G", "Gov-G", "House-G"]) & d.cycle.isin(PRES_PARTY)
           & d.time_to_election.between(min_days, max_days)]
     d = d[d.cand1_party.isin(["DEM", "REP"]) & d.cand2_party.isin(["DEM", "REP"]) & (d.cand1_party != d.cand2_party)]

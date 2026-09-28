@@ -2,7 +2,7 @@
 
     .venv/Scripts/python.exe core/pollster_house_effects.py
 
-538's archive of race polls in the final two months (1998-2022). Each poll's two-party margin is first
+538's archive of race polls in the final two months (1998-2022; 2024 from its full poll lists). Each poll's two-party margin is first
 put on the model's footing (the undecided shift and the campaign-sponsor correction the model already
 applies), then two kinds of house effect are tested:
 
@@ -34,6 +34,7 @@ sys.path.insert(0, str(ROOT / "midterms_2026" / "models"))
 sys.path.insert(0, str(ROOT / "core"))
 import race_model as rm  # noqa: E402
 import undecided_break as ub  # noqa: E402
+import poll_archive as pa  # noqa: E402
 
 PROC = ROOT / "data" / "processed"
 STOP = {"the", "inc", "llc", "group", "research", "polling", "poll", "polls", "associates", "and", "of", "for", "at",
@@ -63,7 +64,7 @@ KIND = {c: ("mid_" if c % 4 == 2 else "pres_") + ("Dpres" if p == "D" else "Rpre
 
 
 def data() -> pd.DataFrame:
-    raw = pd.read_csv(ROOT / "data" / "raw" / "fte" / "raw_polls.csv", low_memory=False)
+    raw = pa.raw_polls()
     d = ub.polls()
     keep = raw[raw.type_simple.isin(["Sen-G", "Gov-G", "House-G"]) & raw.cycle.isin(ub.PRES_PARTY)
                & raw.time_to_election.between(0, 61)]
