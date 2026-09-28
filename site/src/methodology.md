@@ -166,6 +166,8 @@ A large voter survey (the Cooperative Election Study, which checks official reco
 
 Primary turnout seemed like a natural enthusiasm gauge: if one party's voters flood its primaries, maybe they show up in November too. Using the Federal Election Commission's official results for every House primary from 2006 to 2022, states where Democrats' share of primary votes rose did tend to swing toward Democrats in the fall, but weakly, and the model already catches those swings through polls and special elections. Adding primary turnout didn't sharpen its calls in close races in any year, so it is not in the model.
 
+Special elections set the national mood in this model, so we asked whether they also carry local news: if Democrats keep overperforming in one state's legislative specials, will that state's House races lean their way too? Averaged across a state's districts, sometimes. But in the close races that decide the House, using each state's specials made the forecasts worse in 2018 and 2020 and better only in 2022, so specials stay a national signal.
+
 ## Sources
 
 Polls from VoteHub (CC BY 4.0), Decision Desk HQ and Wikipedia. Election results from the MIT Election Data + Science Lab. District-level presidential results and special elections from The Downballot. Historical polls from FiveThirtyEight's public archive. Presidential approval history from the American Presidency Project. Eligible-voter counts from the Census Bureau. The code is public on [GitHub](https://github.com/kurtawirth/whoshowsup).
