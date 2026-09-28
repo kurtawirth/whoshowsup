@@ -79,7 +79,11 @@ let tipEl;
 let cardEl = null;
 let lastPointer = "mouse";
 if (typeof window !== "undefined") {
-  window.addEventListener("pointerdown", (e) => { lastPointer = e.pointerType || "mouse"; }, true);
+  window.addEventListener("pointerdown", (e) => {
+    lastPointer = e.pointerType || "mouse";
+    // a tap outside the preview card closes it (a tap on another map area reopens it with that race)
+    if (cardEl?.classList.contains("open") && !cardEl.contains(e.target)) cardEl.classList.remove("open");
+  }, true);
 }
 /** True when the current tap/click came from a finger (or pen) rather than a mouse. */
 export const isTouch = (event) => (event?.pointerType || lastPointer) !== "mouse";

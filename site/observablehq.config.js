@@ -42,7 +42,37 @@ export default {
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">`,
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+<script>
+// A tab left open across a site update still asks for the previous build's files (their names carry a
+// fingerprint, and each update replaces them), so it breaks. When the tab comes back into view, or a
+// file fails to load, check whether the site changed since this page loaded; if it did, reload.
+(() => {
+  const RE = /(?:_file|_import|_npm|_observablehq)\\/[^"'\\s)]+\\.[0-9a-f]{8}\\.[a-z]+/g;
+  let ours = null, busy = false, last = 0;
+  const snapshot = () => { ours ??= new Set(document.documentElement.outerHTML.match(RE) ?? []); };
+  document.addEventListener("DOMContentLoaded", snapshot);
+  async function check() {
+    if (busy || Date.now() - last < 30000) return;
+    busy = true; last = Date.now(); snapshot();
+    try {
+      const html = await (await fetch(location.pathname, {cache: "no-store"})).text();
+      if ((html.match(RE) ?? []).some((f) => !ours.has(f))) location.reload();
+    } catch {} finally { busy = false; }
+  }
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") check(); });
+  addEventListener("pageshow", (e) => { if (e.persisted) check(); });
+  addEventListener("error", (e) => { if (e.target !== window) check(); }, true);
+  addEventListener("unhandledrejection", check);
+  // Phones: a chart's info box stays up after a tap (charts only clear it when a mouse leaves), so a
+  // tap anywhere outside a chart closes its box.
+  addEventListener("pointerdown", (e) => {
+    if (e.pointerType === "mouse") return;
+    for (const svg of document.querySelectorAll('svg[class^="plot"]'))
+      if (!svg.contains(e.target)) svg.dispatchEvent(new PointerEvent("pointerleave", {pointerType: "mouse"}));
+  }, true);
+})();
+</script>`,
   header: ({path}) => `
 <a class="wsu-brand" href="/">
   <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 28 9v14L16 30 4 23V9z" fill="var(--safe-d)"/><path d="M16 2 28 9v14L16 30z" fill="var(--safe-r)"/><path d="m10.5 16.5 4 4 7.5-9" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
