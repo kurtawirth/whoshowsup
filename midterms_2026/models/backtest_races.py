@@ -158,6 +158,12 @@ DF = next((int(a.split("=", 1)[1]) for a in sys.argv if a.startswith("--df=")), 
 if DF:
     rm.RACE_ERROR_DF = DF
     TAG += f"_df{DF}"
+if "--house" in sys.argv:  # pollster house effects (core/pollster_house_effects.py)
+    rm.POLLSTER_HOUSE = True
+    TAG += "_house"
+if "--house-centered" in sys.argv:  # ... relative to the cycle's poll mix (no net shift)
+    rm.POLLSTER_HOUSE, rm.POLLSTER_HOUSE_CENTERED = True, True
+    TAG += "_housec"
 UNDECIDED_KIND = {2018: "mid_Rpres", 2020: "pres_Rpres", 2022: "mid_Dpres", 2024: "pres_Dpres"}
 GOV_QUALITY = rm.QUALITY_EFFECT["GOV"]  # the governor weight is refit leaving each test year out
 
@@ -183,7 +189,8 @@ def poll_summary(races: pd.DataFrame, year: int) -> pd.DataFrame:
     bias = [rm.PARTISAN_BIAS[o].get(p, 0.0) for o, p in zip(d.office, d.partisan)]
     d["adj"] = (d.margin - bias + rm.undecided_shift(d.margin, d.undecided, UNDECIDED_KIND[year],
                                                      typical=rm.typical_share(d.race_id, d.undecided))
-                + d.undecided * rm.undecided_composition(d.office, d.state_po, year))
+                + d.undecided * rm.undecided_composition(d.office, d.state_po, year)
+                + rm.pollster_house_adj(d.pollster, f"h_loo_{year}", races=d.race_id))  # track records from other cycles
     age = (d.time_to_election - CUTOFF_DAYS).clip(lower=0)
     n = d.samplesize.fillna(600).clip(200, 3000)
     d["w"] = 0.5 ** (age / rm.POLL_HALF_LIFE_DAYS) * np.sqrt(n / 600) * np.where(d.partisan != "", rm.PARTISAN_WEIGHT, 1.0)

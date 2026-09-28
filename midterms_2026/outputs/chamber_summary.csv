@@ -1,9 +1,9 @@
 measure,median,80% range
 National House vote (D-R),D+6.9,D+4.7 to D+9.1
-House: Democratic seats,230,220-241
-"House: P(Democratic majority, 218+)",95%,
-Senate: Democratic caucus seats,51,49-54
-"Senate: P(Democratic majority, 51+)",69%,
-Senate: P(Osborn wins NE),40%,
-"House: P(Hill wins AK, counted for neither party)",6%,
+House: Democratic seats,230,221-242
+"House: P(Democratic majority, 218+)",96%,
+Senate: Democratic caucus seats,52,49-54
+"Senate: P(Democratic majority, 51+)",70%,
+Senate: P(Osborn wins NE),38%,
+"House: P(Hill wins AK, counted for neither party)",5%,
 Governors: Democratic wins of 36,21,18-24

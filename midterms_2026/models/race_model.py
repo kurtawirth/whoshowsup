@@ -163,6 +163,30 @@ def undecided_composition(office, state_po, year: int = 2026):
     return lean.where(office.isin(["SEN", "GOV"]), 0.0).fillna(0.0)
 
 
+# Pollster house effects (core/pollster_house_effects.py): each firm's average miss against results in
+# 538's archive (1998-2022, each cycle's overall miss removed), shrunk toward zero by 10 polls' worth:
+# added to the firm's polls. Positive = the firm's polls have run too Republican.
+POLLSTER_HOUSE = True  # backtest (2026-09-27), centered: Brier 0.0302 -> 0.0301 (Sept 22), 0.0310 -> 0.0307 (eve)
+
+
+POLLSTER_HOUSE_CENTERED = True  # (user decision 2026-09-27) remove the corrections' average over the cycle's polls (each race once)
+
+
+def pollster_house_adj(pollsters: pd.Series, col: str = "h_all", races: pd.Series | None = None) -> pd.Series:
+    if not POLLSTER_HOUSE:
+        return pd.Series(0.0, index=pollsters.index)
+    import sys
+    sys.path.insert(0, str(ROOT / "core"))
+    from pollster_house_effects import house_key
+    t = pd.read_csv(PROC / "pollster_track_record.csv").set_index("house")
+    t = t[col] if col in t else t["h_all"]  # (a cycle outside the archive, e.g. 2024, has no held-out column)
+    h = pollsters.map(house_key).map(t).fillna(0.0)
+    if POLLSTER_HOUSE_CENTERED and races is not None and len(h):
+        wt = 1.0 / races.map(races.value_counts())
+        h = h - float(np.average(h, weights=wt))
+    return h
+
+
 def undecided_share(dem_pct, rep_pct):
     """Undecided (and minor-party) share of a poll, 0-0.4."""
     return ((100 - dem_pct - rep_pct).clip(0, 40) / 100).fillna(0.0)
@@ -333,7 +357,8 @@ def poll_summary(races: pd.DataFrame, forecast_date: pd.Timestamp = FORECAST_DAT
     race_key = polls["office"] + polls["state_po"] + polls["district"].astype(str) + polls["special"].astype(str)
     polls["adj"] = (polls["margin"] - bias
                     + undecided_shift(polls["margin"], polls["undecided"], typical=typical_share(race_key, polls["undecided"]))
-                    + polls["undecided"] * undecided_composition(polls["office"], polls["state_po"]))
+                    + polls["undecided"] * undecided_composition(polls["office"], polls["state_po"])
+                    + pollster_house_adj(polls["pollster"], races=race_key))
     age = (forecast_date - polls["end_date"]).dt.days.clip(lower=0)
     n = polls["sample_size"].fillna(600).clip(200, 3000)
     quality = (np.sqrt(n / 600)
