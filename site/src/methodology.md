@@ -164,6 +164,8 @@ We also tested whether kitchen-table conditions (consumer sentiment, how people 
 
 A large voter survey (the Cooperative Election Study, which checks official records to see who actually voted) showed that undecided voters turn out at about half the rate of decided ones, and that young and Hispanic undecided voters lean much more Democratic than others. So we tested whether undecided voters in states with more Hispanic or Black voters break more Democratic. In past polls they did, but adding it made the full model's forecasts of 2018 through 2022 slightly worse, so it is not in the model.
 
+Primary turnout seemed like a natural enthusiasm gauge: if one party's voters flood its primaries, maybe they show up in November too. Using the Federal Election Commission's official results for every House primary from 2006 to 2022, states where Democrats' share of primary votes rose did tend to swing toward Democrats in the fall, but weakly, and the model already catches those swings through polls and special elections. Adding primary turnout didn't sharpen its calls in close races in any year, so it is not in the model.
+
 ## Sources
 
 Polls from VoteHub (CC BY 4.0), Decision Desk HQ and Wikipedia. Election results from the MIT Election Data + Science Lab. District-level presidential results and special elections from The Downballot. Historical polls from FiveThirtyEight's public archive. Presidential approval history from the American Presidency Project. Eligible-voter counts from the Census Bureau. The code is public on [GitHub](https://github.com/kurtawirth/whoshowsup).
