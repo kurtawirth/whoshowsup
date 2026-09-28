@@ -174,6 +174,25 @@ def polls_2024() -> pd.DataFrame:
 POLLS_538 = "--polls=538" in sys.argv
 if POLLS_538:
     TAG += "_p538"
+# --neff=live: weight polls and count the average's worth (n_eff) exactly as the live model does
+# (population weights; n_eff = quality-weighted count of polls in the last 100 days, not decayed)
+NEFF_LIVE = "--neff=live" in sys.argv
+if NEFF_LIVE:
+    TAG += "_nefflive"
+# --trust=full: poll-average accuracy (floor, spread) from core/poll_trust.py, fit on full-season
+# polls leaving the test year out
+TRUST_FULL = "--trust=full" in sys.argv
+if TRUST_FULL:
+    TAG += "_trustfull"
+
+
+def set_trust(year: int) -> None:
+    if not TRUST_FULL:
+        return
+    t = pd.read_csv(PROC / "poll_trust.csv")
+    t = t[t.left_out.astype(str) == str(year)]
+    for r in t.itertuples():
+        rm.POLL_FLOOR[r.office], rm.POLL_SPREAD[r.office] = float(r.floor), float(r.spread)
 
 
 def polls_538(year: int) -> pd.DataFrame:
@@ -215,6 +234,12 @@ def poll_summary(races: pd.DataFrame, year: int) -> pd.DataFrame:
     age = (d.time_to_election - CUTOFF_DAYS).clip(lower=0)
     n = d.samplesize.fillna(600).clip(200, 3000)
     d["w"] = 0.5 ** (age / rm.POLL_HALF_LIFE_DAYS) * np.sqrt(n / 600) * np.where(d.partisan != "", rm.PARTISAN_WEIGHT, 1.0)
+    d["q"] = d["w"]
+    if NEFF_LIVE:
+        pop = d["population"].fillna("").astype(str).str.lower() if "population" in d else pd.Series("", index=d.index)
+        quality = np.sqrt(n / 600) * pop.map(rm.POP_WEIGHT).fillna(0.8) * np.where(d.partisan != "", rm.PARTISAN_WEIGHT, 1.0)
+        d["w"] = 0.5 ** (age / rm.POLL_HALF_LIFE_DAYS) * quality
+        d["q"] = np.where(age <= rm.POLL_WINDOW_DAYS, 1.0, 0.5 ** ((age - rm.POLL_WINDOW_DAYS) / 30)) * quality
     # Match Senate/Gov polls by the Democrat's name so two same-state Senate races stay separate.
     d["dem_key"] = d.dem_name.map(_key)
     rows = []
@@ -223,7 +248,7 @@ def poll_summary(races: pd.DataFrame, year: int) -> pd.DataFrame:
         if r.office == "SEN" and "dem_key" in r and isinstance(r.dem_key, str):
             x = x[x.dem_key == r.dem_key]
         rows.append({"poll_avg": np.average(x.adj, weights=x.w) if len(x) else np.nan,
-                     "poll_n_eff": x.w.sum(), "poll_count": len(x),
+                     "poll_n_eff": x.q.sum(), "poll_count": len(x),
                      "poll_undecided": np.average(x.undecided, weights=x.w) if len(x) else np.nan})
     return pd.concat([races.reset_index(drop=True), pd.DataFrame(rows)], axis=1)
 
@@ -293,6 +318,7 @@ def run_all(bonus_for: dict | None = None) -> tuple[pd.DataFrame, list]:
             if len(uc):
                 rm.UNDECIDED_COMPOSITION.update({k: float(uc[k].iloc[0]) for k in ("hisp", "black")})
         races = poll_summary(races, year)
+        set_trust(year)
         bonus = 0.0 if bonus_for is None else bonus_for[year]
         live, fixed_r, margin, E, a = rm.run_simulation(races, env, D0, R0, np.random.default_rng(year),
                                                         close_bonus=bonus)
