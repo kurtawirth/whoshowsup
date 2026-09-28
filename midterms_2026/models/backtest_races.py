@@ -21,8 +21,8 @@ Sept 22 of that year, then run the SAME simulation engine used for 2026
   incumbency            previous winner found on the ballot by name
   personal vote         Senate / Governor: the incumbent's own previous race (matched by name)
                         House: the incumbent's previous race (core/house_personal_vote.py), fit without the test year
-  polls                 538's archive (2018-2022; its last ~60 days) and Wikipedia's race pages
-                        (2024, core/polls_2024.py), only polls ending 42+ days before the election
+  polls                 538's full-season poll lists (core/poll_archive.py), only polls ending 42+
+                        days before the election, weighted and counted as the live model does
   candidate quality     not coded for past years -> 0 (a known handicap here)
 
 Scored against actual results:
@@ -169,16 +169,13 @@ def polls_2024() -> pd.DataFrame:
         partisan=d.pollster_party.fillna(""), dem_name=d.dem_name.fillna(""))
 
 
-# --polls=538: every year's polls from 538's full-season lists (core/poll_archive.py) instead of
-# raw_polls.csv (last ~60 days, 2018-2022) + Wikipedia (2024)
-POLLS_538 = "--polls=538" in sys.argv
-if POLLS_538:
-    TAG += "_p538"
-# --neff=live: weight polls and count the average's worth (n_eff) exactly as the live model does
-# (population weights; n_eff = quality-weighted count of polls in the last 100 days, not decayed)
-NEFF_LIVE = "--neff=live" in sys.argv
-if NEFF_LIVE:
-    TAG += "_nefflive"
+# Polls as the live model sees them (user decision 2026-09-28): every poll of the season from 538's
+# full lists (core/poll_archive.py, 2018-2024), weighted and counted (n_eff) exactly as the live model
+# does. --polls=legacy: raw_polls.csv (last ~60 days) + Wikipedia for 2024, with decayed n_eff.
+POLLS_538 = NEFF_LIVE = "--polls=legacy" not in sys.argv
+ARCHIVE_YEARS = (2018, 2020, 2022, 2024)
+if not POLLS_538:
+    TAG += "_legacypolls"
 # --trust=full: poll-average accuracy (floor, spread) from core/poll_trust.py, fit on full-season
 # polls leaving the test year out
 TRUST_FULL = "--trust=full" in sys.argv
@@ -204,7 +201,7 @@ def polls_538(year: int) -> pd.DataFrame:
 
 
 def poll_summary(races: pd.DataFrame, year: int) -> pd.DataFrame:
-    if POLLS_538:
+    if POLLS_538 and year in ARCHIVE_YEARS:
         d = polls_538(year)
         d = d[d.time_to_election >= CUTOFF_DAYS].copy()
     elif year == 2024:  # 538's archive stops at 2022

@@ -66,7 +66,7 @@ No pundit ratings (Cook, Sabato, Inside Elections), no other forecasters' models
 
 ## Track record
 
-We rebuilt 2018, 2020, 2022 and 2024 exactly as they looked on September 22 of each year, using only what was known then, and ran the same model on every House, Senate and governor race. Each year's national estimate was fit without that year, and the close-seat effect was estimated only from the other three years. Race polls for 2018 through 2022 come from FiveThirtyEight's public archive; for 2024, which the archive doesn't cover, from Wikipedia's race pages, counting only polls finished by that date.
+We rebuilt 2018, 2020, 2022 and 2024 exactly as they looked on September 22 of each year, using only what was known then, and ran the same model on every House, Senate and governor race. Each year's national estimate was fit without that year, and the close-seat effect was estimated only from the other three years. Race polls come from FiveThirtyEight's complete poll lists for each season, counting only polls finished by that date and weighing them exactly as the live forecast does.
 
 ```js
 const scores = Object.fromEntries((track.backtest_scores ?? []).map((d) => [d.set, d]));
