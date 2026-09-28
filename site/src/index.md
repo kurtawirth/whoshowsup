@@ -10,6 +10,7 @@ const seats = FileAttachment("data/seats.json").json();
 const races = FileAttachment("data/races.json").json();
 const history = FileAttachment("data/history.json").json();
 const national = FileAttachment("data/national.json").json();
+const track = FileAttachment("data/track_record.json").json();
 ```
 
 ```js
@@ -148,12 +149,13 @@ display(html`<p>Three independent readings of the national mood, each corrected 
 ## How the forecast has moved
 
 ```js
-const hist = history.map((d) => ({...d, date: new Date(`${d.forecast_date}T12:00:00`)}));
+const trackAll = (track.backtest_scores ?? []).find((d) => d.set === "all") ?? {};
+const hist = history.map((d) => ({...d, date: new Date(d.forecast_date)}));  // UTC midnight, to sit on the day ticks
 display(hist.length < 3
   ? html`<p class="caption">The forecast launched on ${date(history[0].forecast_date)}. This chart fills in as daily updates accumulate: ${history.map((d) => `${date(d.forecast_date)}: House ${pct(d.p_house_d)} D, Senate ${pct(d.p_senate_d)} D`).join(" · ")}.</p>`
-  : ((w) => Plot.plot({
-      width: w, height: 260, y: {domain: [0, 1], tickFormat: "%", label: "Chance Democrats win control", grid: true},
-      x: {label: null},
+  : resize((w) => Plot.plot({
+      width: w, height: 260, marginRight: 64, y: {domain: [0, 1], tickFormat: "%", label: "Chance Democrats win control", grid: true},
+      x: {label: null, ticks: d3.utcDay.every(Math.max(1, Math.ceil(hist.length / Math.max(2, Math.floor(w / 90))))), tickFormat: "%b %-d"},
       style: {background: "transparent", color: t["ink-3"], fontSize: "12px"},
       marks: [
         Plot.ruleY([0.5], {stroke: t.axis}),
@@ -170,7 +172,7 @@ display(hist.length < 3
 
 - **Turnout first.** Special-election overperformance is one of the two biggest inputs to the national picture. Every simulation also randomizes how much of the national swing comes from turnout versus voters changing sides.
 - **Independent.** The model uses no pundit ratings and no other forecasts. Prediction markets will be shown next to it for comparison but will have no effect on its numbers.
-- **Checked against past elections.** We reran the full model on 2018, 2020, 2022 and 2024, using only what was known in late September of each year. It picked the winner in 96% of 1,691 races, and the results landed inside its 80% ranges 85% of the time. Each new ingredient had to make those past forecasts more accurate to be included; ideas that didn't were left out ([see what we tried](./methodology#ideas-we-tested-and-dropped)).
+- **Checked against past elections.** We reran the full model on 2018, 2020, 2022 and 2024, using only what was known in late September of each year. It picked the winner in ${pct(trackAll.correct_calls)} of ${trackAll.races.toLocaleString()} races, and the results landed inside its 80% ranges ${pct(trackAll.inside_80)} of the time. Each new ingredient had to make those past forecasts more accurate to be included; ideas that didn't were left out ([see what we tried](./methodology#ideas-we-tested-and-dropped)).
 - **Honest about polls.** September generic-ballot polls have overstated Democrats in 14 of the last 15 elections, campaign-sponsored polls lean toward their sponsor by about four points, and fresh polls count more than stale ones. The model corrects for all three using measured numbers.
 
 <p><a href="./methodology">How the model works, and its track record →</a></p>
