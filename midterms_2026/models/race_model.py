@@ -88,6 +88,13 @@ POP_WEIGHT = {"lv": 1.0, "rv": 0.8, "v": 0.9, "a": 0.6}
 # guess of 1/tier for the Senate raised Brier only by making lopsided races more lopsided, while
 # Senate margin error rose 5.5 -> 6.1); Governor ~2.7/tier near a toss-up (2.4-3.0 leaving a year out).
 QUALITY_EFFECT = {"HOUSE": 0.0, "SEN": 0.0, "GOV": 2.7}
+# A challenger's statewide record (core/statewide_record.py): a Senate or governor nominee who is not the
+# incumbent here but ran statewide before (Senate, governor or an at-large House seat, same state and party,
+# within 12 years) carries part of how far they ran ahead of or behind expectations then:
+# rho x that edge, plus `has` points for having a record at all. Tested 2026-09-29 (rho ~0.36 fit on
+# 1996-2024, left-out year): better in 2010-2016 (Brier 0.078 -> 0.075) but worse in 2018-2024
+# (0.035 -> 0.037, 8 -> 9 misses), so it is OFF (zeros); backtest_races.py --chal=rho reruns the test.
+CHALLENGER = {"SEN": {"rho": 0.0, "has": 0.0}, "GOV": {"rho": 0.0, "has": 0.0}}
 QUALITY_FADE = {"GOV": 12.0}
 # Candidate ideology (core/candidate_ideology.py, DIME CFscores from earlier cycles): points per
 # unit of ideology_gap = extremity(R) - extremity(D), near a toss-up only (fade width 12).
@@ -345,6 +352,30 @@ def prior_edge(races: pd.DataFrame) -> pd.Series:
     return out
 
 
+def challenger_record(races: pd.DataFrame, year: int = 2026) -> tuple[pd.Series, pd.Series]:
+    """Senate/governor nominees' statewide records (see CHALLENGER), net in Democratic terms:
+    (D nominee's past edge - R nominee's past edge, incumbents excluded) and (has D - has R)."""
+    import sys
+    sys.path.insert(0, str(ROOT / "core"))
+    import statewide_record as sr
+    from house_calibration import _key
+    rn = sr.runs()
+    rec, has = pd.Series(0.0, index=races.index), pd.Series(0.0, index=races.index)
+    for i, r in races.iterrows():
+        if r["office"] not in ("SEN", "GOV") or r.get("race_type") in ("independent", "same_party"):
+            continue
+        for side, col in ((1, "dem_candidate"), (-1, "rep_candidate")):
+            if r["inc_side"] == side:
+                continue  # the incumbent's own record is the personal vote (PERSONAL)
+            for name in str(r[col] or "").split(";"):
+                e, _ = sr.record(rn, year, r["state_po"], _key(name.strip()), side)
+                if not np.isnan(e):
+                    rec[i] += side * e
+                    has[i] += side
+                    break
+    return rec, has
+
+
 def money_ratio(races: pd.DataFrame, year: int = 2026) -> pd.Series:
     """ln((D money + 25k) / (R money + 25k)) for each House/Senate race; NaN where unknown."""
     path = PROC / "fec_money.csv"
@@ -448,6 +479,14 @@ def run_simulation(races: pd.DataFrame, env: np.ndarray, nat_d0: float, nat_r0: 
             shift, extra = INDEPENDENT_ADJ[k]
             adj[i] += shift
             fund_sd[i] = np.hypot(fund_sd[i], extra)
+    challenger_adj = np.zeros(len(live))
+    if "chal_rec" in live:
+        rec = live["chal_rec"].fillna(0).to_numpy(dtype=float)
+        has = live["chal_has"].fillna(0).to_numpy(dtype=float)
+        for o, c in CHALLENGER.items():
+            m = office == o
+            challenger_adj[m] = c["rho"] * rec[m] + c["has"] * has[m]
+    adj += challenger_adj
     # Incumbents: replace the flat incumbency bonus with the personal vote.
     first = live["first_term"].fillna(0).to_numpy(dtype=float) if "first_term" in live else np.zeros(len(live))
     for i in range(len(live)):
@@ -516,6 +555,7 @@ def run_simulation(races: pd.DataFrame, env: np.ndarray, nat_d0: float, nat_r0: 
     live["fundamentals_mean"] = fund.mean(axis=1)
     live["money_adj"] = money_adj
     live["quality_adj"] = quality_adj
+    live["challenger_adj"] = challenger_adj
     live["ideology_adj"] = ideology_adj
     live["poll_weight"] = w_poll
     fixed_r = races[fixed].copy()
@@ -531,6 +571,7 @@ def simulate(forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
     races["inc_side"] = races.apply(incumbency_side, axis=1)
     races["quality_diff"] = quality_diff(races)
     races["prior_edge"] = prior_edge(races)
+    races["chal_rec"], races["chal_has"] = challenger_record(races)
     races["money_log_ratio"] = money_ratio(races)
     races["ideology_gap"] = ideology_gap(races)
     # FEC money and DIME scores are matched to the party nominees; in independent races the
@@ -548,7 +589,7 @@ def simulate(forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
     out = pd.concat([live, fixed_r], ignore_index=True)
     OUT.mkdir(parents=True, exist_ok=True)
     cols = ["office", "state_po", "district", "special", "race_type", "incumbent", "incumbent_party", "inc_side",
-            "dem_candidate", "rep_candidate", "race_note", "pres24", "quality_diff", "prior_edge", "money_log_ratio", "money_adj", "quality_adj", "ideology_gap", "ideology_adj", "poll_count", "poll_avg", "poll_undecided",
+            "dem_candidate", "rep_candidate", "race_note", "pres24", "quality_diff", "prior_edge", "money_log_ratio", "money_adj", "quality_adj", "challenger_adj", "chal_rec", "ideology_gap", "ideology_adj", "poll_count", "poll_avg", "poll_undecided",
             "poll_weight", "fundamentals_mean", "margin_median", "margin_p10", "margin_p90", "p_dem"]
     out["race_id"] = out.apply(race_id, axis=1)
     out[["race_id"] + cols].sort_values(["office", "state_po", "district"]).to_csv(OUT / "race_forecasts.csv", index=False)

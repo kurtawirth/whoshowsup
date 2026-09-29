@@ -148,6 +148,20 @@ def statewide_races(year: int) -> pd.DataFrame:
                     e = r.incumbent_side * hit.sort_values("year").iloc[-1].resid
             edges.append(e)
         cur["prior_edge"] = edges
+        # challengers' statewide records (core/statewide_record.py), incumbents excluded
+        recs, hass = [], []
+        for _, r in cur.iterrows():
+            rec = has = 0.0
+            for side, key in ((1, r.dem_key), (-1, r.rep_key)):
+                if r.incumbent_side == side:
+                    continue
+                e, _ = sr.record(RUNS, year, r.state_po, key, side)
+                if not np.isnan(e):
+                    rec += side * e
+                    has += side
+            recs.append(rec)
+            hass.append(has)
+        cur["chal_rec"], cur["chal_has"] = recs, hass
         parts.append(cur)
     out = pd.concat(parts, ignore_index=True).merge(sp, on="state_po")
     out = out.rename(columns={"incumbent_side": "inc_side", "margin": "actual"})
@@ -157,6 +171,21 @@ def statewide_races(year: int) -> pd.DataFrame:
 
 
 import house_personal_vote as hpv  # noqa: E402
+import statewide_record as sr  # noqa: E402
+RUNS = sr.runs()
+RECORD_TABLE = sr.race_table()
+# Challengers' statewide records (race_model.CHALLENGER), fit leaving the test year out.
+# --chal=off (none, the old model) | rho (carry part of the past edge) | both (plus a flat bump for a record)
+CHAL = next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--chal=")), "off")
+
+
+def set_challenger(year: int) -> None:
+    for off in ("SEN", "GOV"):
+        if CHAL == "off":
+            rm.CHALLENGER[off] = {"rho": 0.0, "has": 0.0}
+            continue
+        f = sr.fit(RECORD_TABLE[(RECORD_TABLE.office == off) & (RECORD_TABLE.year != year)])
+        rm.CHALLENGER[off] = {"rho": f["rho"], "has": f["has"] if CHAL == "both" else 0.0}
 HOUSE_PERSONAL = True  # House incumbents' personal vote (False = the old flat bonus, for comparison)
 HOUSE_PAIRS = pd.read_csv(PROC / "house_personal_pairs.csv")
 import statewide_personal_vote as spv  # noqa: E402
@@ -222,6 +251,8 @@ if not POLLS_538:
     TAG += "_legacypolls"
 if SPV != "robust":
     TAG += f"_spv-{SPV}"
+if CHAL != "off":
+    TAG += f"_chal-{CHAL}"
 # --trust=full: poll-average accuracy (floor, spread) from core/poll_trust.py, fit on full-season
 # polls leaving the test year out
 TRUST_FULL = "--trust=full" in sys.argv
@@ -368,6 +399,7 @@ def run_all(bonus_for: dict | None = None) -> tuple[pd.DataFrame, list]:
         races = poll_summary(races, year)
         set_trust(year)
         set_statewide_personal(year)
+        set_challenger(year)
         bonus = 0.0 if bonus_for is None else bonus_for[year]
         live, fixed_r, margin, E, a = rm.run_simulation(races, env, D0, R0, np.random.default_rng(year),
                                                         close_bonus=bonus)
