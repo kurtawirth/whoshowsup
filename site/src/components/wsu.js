@@ -397,7 +397,7 @@ export const RACE_SORTS = [
   {label: "State A–Z", value: (r) => `${r.state_name} ${String(r.district ?? 0).padStart(2, "0")}`, dir: 1}
 ];
 
-export function raceTable(rows, columns, {search = true, filters = [], pageSize = 50, sort, sorts = null} = {}) {
+export function raceTable(rows, columns, {search = true, filters = [], pageSize = 50, sort, sorts = null, placeholder = "Search candidates, states, districts"} = {}) {
   const root = document.createElement("div");
   const controls = document.createElement("div");
   controls.className = "table-controls";
@@ -406,7 +406,7 @@ export function raceTable(rows, columns, {search = true, filters = [], pageSize 
   if (search) {
     const input = document.createElement("input");
     input.type = "search";
-    input.placeholder = "Search candidates, states, districts";
+    input.placeholder = placeholder;
     input.setAttribute("aria-label", "Search races");
     input.style.minWidth = "260px";
     input.addEventListener("input", () => { q = input.value.toLowerCase(); shown = pageSize; render(); });

@@ -278,3 +278,10 @@ details summary { cursor: pointer; font: 600 14px var(--sans); color: var(--ink-
 .ev-party { display: inline-flex; width: 140px; height: 10px; border-radius: 5px; overflow: hidden; gap: 2px; background: var(--surface); }
 .ev-party > b { display: block; height: 100%; }
 .ev-party-lab { font-family: var(--sans); font-size: 12.5px; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* special elections: shift bar centered on zero */
+.sp-shift-cell { display: inline-flex; align-items: center; gap: 10px; white-space: nowrap; }
+.sp-shift { position: relative; display: inline-block; width: 120px; height: 10px; }
+.sp-shift i { position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: var(--axis); }
+.sp-shift b { position: absolute; top: 0; height: 100%; border-radius: 3px; }
+.sp-shift-lab { font-variant-numeric: tabular-nums; min-width: 3.2em; }

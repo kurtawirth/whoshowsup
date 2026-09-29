@@ -188,11 +188,12 @@ def national() -> dict:
         "env": {"median": draws.median(), "p10": draws.quantile(.1), "p90": draws.quantile(.9),
                 "hist": np.histogram(draws, bins=np.arange(-6, 20.5, 0.5))[0].tolist(), "hist_start": -6, "hist_step": 0.5},
         "history": hist[["year", "pres_party", "midterm", "house_margin", "net_approval", "generic_margin",
-                         "specials_implied"]].to_dict("records"),
+                         "specials_implied", "specials_n", "specials_overperf", "last_pres_margin"]].to_dict("records"),
         "generic": gen[["end_date", "pollster", "population", "margin", "dem_pct", "rep_pct", "url"]].to_dict("records"),
         "approval": app[["end_date", "pollster", "approve", "disapprove"]].dropna().to_dict("records"),
         "specials": spec[spec["year"] >= 2017][["date", "state_po", "district", "chamber", "special_margin",
-                                                "pres_margin", "overperformance", "year", "flipped"]].to_dict("records"),
+                                                "pres_margin", "overperformance", "year", "flipped", "held_by", "winner",
+                                                "pres_baseline"]].to_dict("records"),
     }
 
 

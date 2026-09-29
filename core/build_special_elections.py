@@ -63,7 +63,9 @@ def parse_year(path: Path) -> pd.DataFrame:
             "date": date, "state_po": r[col["State"]], "district": r[col["District"]].replace(" *", "").strip(),
             "held_by": r[col["Held By"]].strip("()"), "winner": r[col["Winner"]].split(")")[0].strip("( "),
             "flipped": "✓" in r[col["Winner"]],
-            "chamber": "US House" if re.match(r"^[A-Z]{2}-(\d+|AL)$", r[col["District"]].strip()) else "state legislature",
+            # congressional districts are written "GA-14", U.S. Senate seats "AL-Sen"; state seats "SD-45", "HD-85"
+            "chamber": ("US House" if re.match(rf"^{r[col['State']]}-(\d+|AL)$", r[col["District"]].strip())
+                        else "US Senate" if r[col["District"]].strip() == f"{r[col['State']]}-Sen" else "state legislature"),
             "special_margin": _pct(r[margins[0]]),
             "pres_margin": _pct(r[margins[1]]) if len(margins) > 1 else float("nan"),
             "overperformance": _pct(r[diffs[0]]) if diffs else float("nan"),

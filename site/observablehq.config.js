@@ -11,6 +11,7 @@ const nav = [
   ["/senate", "Senate"],
   ["/governors", "Governors"],
   ["/national", "The national picture"],
+  ["/specials", "Special elections"],
   ["/early-vote", "Early vote"],
   ["/compare", "Compare"],
   ["/methodology", "How it works"]

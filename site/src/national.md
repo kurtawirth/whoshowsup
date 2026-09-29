@@ -93,7 +93,7 @@ display(Plot.plot({
 
 ## Special elections: the turnout signal
 
-<p class="caption">Every special election contested by both parties since 2017. Each dot shows how much better (up) or worse (down) the Democrat did than the district's last presidential result. These low-turnout races reveal which party's voters are more motivated.</p>
+<p class="caption">Every special election contested by both parties since 2017. Each dot shows how much better (up) or worse (down) the Democrat did than the district's last presidential result. These low-turnout races reveal which party's voters are more motivated. <a href="./specials">See every race and the running average.</a></p>
 
 ```js
 const spec = national.specials.map((d) => ({...d, dt: new Date(`${d.date}T12:00:00`)}));
