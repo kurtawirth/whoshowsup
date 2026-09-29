@@ -8,6 +8,7 @@ import {marginRange, pollChart, probHistory, pastResults} from "../components/ch
 const races = FileAttachment("../data/races.json").json();
 const details = FileAttachment("../data/race_detail.json").json();
 const top = FileAttachment("../data/topline.json").json();
+const markets = FileAttachment("../data/markets.json").json();
 ```
 
 ```js
@@ -50,6 +51,11 @@ if (fixed) {
   </div>`);
   display(probBar(pD, {dLabel: dName, rLabel: rName, dColor: dTag === "I" ? t.ind : t.dem, rColor: rTag === "I" ? t.ind : t.rep}));
   display(html`<p class="dek" style="margin-top:18px">${lead ? dName : rName} wins in ${pct(Math.max(pD, 1 - pD))} of our simulations, ${oddsText(Math.max(pD, 1 - pD))}. The most likely result is ${margin(r.margin_median).replace("D+", `${dTag}+`)}. ${ratingSentence(r)}</p>`);
+  const mk = markets.races[id];
+  if (mk) {
+    const mLead = mk.p >= 0.5;
+    display(html`<p class="caption">For comparison, traders on <a href="${mk.url}">PredictIt</a> give ${mLead ? dName : rName} a ${pct(Math.max(mk.p, 1 - mk.p))} chance (as of ${date(markets.asof)}). Market prices are shown for reference only and play no part in our forecast. <a href="${link("compare#prediction-markets")}">More on markets</a>.</p>`);
+  }
 }
 function oddsText(p) { return p >= 0.95 ? "a strong favorite" : p >= 0.8 ? "a clear favorite" : p >= 0.6 ? "a modest favorite" : "close to a coin flip"; }
 function ratingSentence(r) { return `We rate it <b>${r.rating}</b>.`.replace(/<\/?b>/g, ""); }

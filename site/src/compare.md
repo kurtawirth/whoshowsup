@@ -3,10 +3,11 @@ title: Compare the forecasters
 ---
 
 ```js
-import {tokens, pct, pctPair, date, ratingPill, raceLink, RATINGS, favoriteText} from "./components/wsu.js";
+import {tokens, pct, pctPair, date, ratingPill, raceLink, RATINGS, favoriteText, sides} from "./components/wsu.js";
 const races = FileAttachment("data/races.json").json();
 const outlets = FileAttachment("data/outlets.json").json();
 const top = FileAttachment("data/topline.json").json();
+const markets = FileAttachment("data/markets.json").json();
 ```
 
 ```js
@@ -35,7 +36,7 @@ const competitive = (x) => x.r.rating !== "Safe D" && x.r.rating !== "Safe R" ||
 
 # How our forecast compares with the major forecasters
 
-<p class="dek">The raters and modelers below never feed into Who Shows Up; we build the forecast from polls, special elections and past results alone. Here is where we agree with them, where we don't, and how our method would have stacked up against them in past elections.</p>
+<p class="dek">The raters, modelers and prediction markets below never feed into Who Shows Up; we build the forecast from polls, special elections and past results alone. Here is where we agree with them, where we don't, and how our method would have stacked up against the raters and modelers in past elections.</p>
 
 ```js
 const disagree = rows.filter((x) => x.cons != null && Math.abs(x.gap) >= 1.5 && competitive(x))
@@ -82,6 +83,57 @@ display(compareTable("GOV"));
 const houseRows = rows.filter((x) => x.r.office === "HOUSE");
 display(houseRows.length ? html`<h2>House</h2>${compareTable("HOUSE", 25)}` : html``);
 ```
+
+## Prediction markets
+
+```js
+const mkRows = Object.entries(markets.races).filter(([id]) => byId.has(id))
+  .map(([id, m]) => ({r: byId.get(id), m: m.p, gap: byId.get(id).p_dem - m.p}));
+const ctl = (key) => markets.races[`control-${key}`]?.p;
+const sideName = (r) => (sides(r).indD ? r.race_note.split(" ").pop() : "Democrats");
+display(html`<p>Prediction markets let people bet on the outcome, and the prices turn into odds. Below are the prices on <a href="https://www.predictit.org">PredictIt</a>, a U.S. market for political bets, as of ${date(markets.asof)}, next to our forecast. Markets are shown for comparison only and never change our numbers.</p>`);
+display(html`<div class="stat-row">
+  <div class="s"><div class="k">Democrats win the House</div><div class="v">Us ${pct(top.p_house_d)} · Market ${ctl("house") == null ? "–" : pct(ctl("house"))}</div></div>
+  <div class="s"><div class="k">Democrats win the Senate</div><div class="v">Us ${pct(top.p_senate_d)} · Market ${ctl("senate") == null ? "–" : pct(ctl("senate"))}</div></div>
+  <div class="s"><div class="k">Races with a market</div><div class="v">${mkRows.length}</div></div>
+</div>`);
+```
+
+```js
+const officeLabel = {SEN: "Senate", GOV: "Governor", HOUSE: "House"};
+const mkLabel = (x) => (x.r.office === "HOUSE" ? x.r.label : `${x.r.state_po} ${officeLabel[x.r.office].slice(0, 3)}${x.r.special ? " (sp.)" : ""}`);
+const bigGaps = [...mkRows].sort((a, b) => Math.abs(b.gap) - Math.abs(a.gap)).slice(0, 6);
+display(resize((w) => Plot.plot({
+  width: Math.min(w, 640), height: Math.min(w, 640) * 0.9, marginLeft: 48, marginBottom: 44,
+  x: {label: "PredictIt: chance for Democrats →", domain: [0, 1], tickFormat: "%", grid: true},
+  y: {label: "↑ Who Shows Up: chance for Democrats", domain: [0, 1], tickFormat: "%", grid: true},
+  symbol: {domain: ["Senate", "Governor", "House"], range: ["circle", "square", "triangle"], legend: true},
+  style: {background: "transparent", color: t["ink-3"], fontSize: "12px"},
+  marks: [
+    Plot.line([[0, 0], [1, 1]], {stroke: t.axis, strokeDasharray: "4,4"}),
+    Plot.dot(mkRows, {x: "m", y: (d) => d.r.p_dem, symbol: (d) => officeLabel[d.r.office], r: 5,
+      fill: (d) => (d.r.p_dem >= 0.5 ? t.dem : t.rep), fillOpacity: 0.75, stroke: t.surface, strokeWidth: 1.5}),
+    Plot.text(bigGaps, {x: "m", y: (d) => d.r.p_dem, text: mkLabel, dy: -11, fill: t.ink, fontWeight: 600}),
+    Plot.tip(mkRows, Plot.pointer({x: "m", y: (d) => d.r.p_dem, title: (d) => `${d.r.office === "HOUSE" ? `House ${d.r.label}` : `${d.r.state_name} ${officeLabel[d.r.office]}${d.r.special ? " (special)" : ""}`}\nChance for ${sideName(d.r)}: us ${pct(d.r.p_dem)}, PredictIt ${pct(d.m)}`}))
+  ]
+})));
+```
+
+<p class="caption">Each mark is a race with a PredictIt market. Races on the dashed line are ones where we and the market agree; above it, we're more optimistic for Democrats than the market is, and below it, less. In Nebraska's Senate race the Democratic side is independent Dan Osborn.</p>
+
+```js
+const gapRows = mkRows.filter((x) => Math.abs(x.gap) >= 0.1).sort((a, b) => Math.abs(b.gap) - Math.abs(a.gap));
+display(gapRows.length ? html`<div class="table-wrap"><table class="wsu-table">
+  <thead><tr><th>Race</th><th class="num">Us</th><th class="num">PredictIt</th><th>Difference</th></tr></thead>
+  <tbody>${gapRows.map((x) => html`<tr>
+    <td>${raceLink(x.r, x.r.office === "HOUSE" ? `House: ${x.r.label}` : `${x.r.state_name} ${officeLabel[x.r.office]}${x.r.special ? " (special)" : ""}`)}</td>
+    <td class="num">${pct(x.r.p_dem)}</td>
+    <td class="num"><a href="${markets.races[x.r.race_id].url}">${pct(x.m)}</a></td>
+    <td>We're ${Math.round(Math.abs(x.gap) * 100)} points ${x.gap > 0 ? "higher" : "lower"} on ${sideName(x.r)}</td>
+  </tr>`)}</tbody></table></div>` : html`<p class="caption">No race differs by 10 points or more.</p>`);
+```
+
+<p class="caption">Races where our chance for Democrats and the market's differ by 10 points or more. PredictIt's prices come from its free data feed, credited to PredictIt, and are converted to chances: each price is the midpoint between the best offers to buy and sell, rescaled so a race's prices add up to 100% (PredictIt's fees push them a little over). Markets with too few trades to set a clear price are left out, which is why only some House races appear. PredictIt limits how much each trader can bet, so its prices can differ from larger markets. We don't use Kalshi or Polymarket because their terms don't allow their prices to be republished or collected automatically.</p>
 
 ## Track record against the pros
 

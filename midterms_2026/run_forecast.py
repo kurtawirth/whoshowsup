@@ -189,6 +189,8 @@ def main() -> None:
     if refresh:
         import outlet_ratings  # other forecasters' current ratings: shown on the Compare page, never a model input
         step("Other forecasters' ratings (display only)")(outlet_ratings.current)
+        import predictit_markets  # prediction-market prices: shown next to ours, never a model input
+        step("Prediction markets (PredictIt, display only)")(predictit_markets.main)
     step("Website data")(export_site_data.main)
     step("Website test build")(build_site)
 

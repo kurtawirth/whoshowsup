@@ -11,6 +11,7 @@ pages load directly; nothing here changes the model.
   national.json     national environment: three reads, generic ballot, approval, specials
   track_record.json backtests: national and race-level calibration
   hexmap.json       House hex layout
+  markets.json      PredictIt prices matched to our races (display only)
 """
 from pathlib import Path
 import json
@@ -241,6 +242,21 @@ def outlets(f: pd.DataFrame) -> dict:
     return out
 
 
+def markets() -> dict:
+    """PredictIt prices matched to our races (core/predictit_markets.py) -- display only, never a model input."""
+    path = PROC / "markets_predictit.csv"
+    if not path.exists():
+        return {"asof": None, "races": {}, "history": []}
+    m = pd.read_csv(path)
+    last = m["date"].max()
+    cur = m[m["date"] == last]
+    ctrl = m[m["race_id"].str.startswith("control-")].pivot_table(index="date", columns="race_id", values="p_dem")
+    return {"asof": last,
+            "races": {r.race_id: {"p": r.p_dem, "url": r.url} for r in cur.itertuples()},
+            "history": [{"date": d, "house": row.get("control-house"), "senate": row.get("control-senate")}
+                        for d, row in ctrl.iterrows()]}
+
+
 def early_vote() -> dict:
     """Early and absentee voting by state (core/early_vote.py, civicAPI): the latest counts, the daily
     series of ballots cast, and each state's 2022 turnout (all U.S. House votes) for scale."""
@@ -315,6 +331,7 @@ def main() -> None:
     write("hexmap.json", hexmap)
     write("states.json", {"names": STATE_NAMES, "fips": FIPS})
     write("early_vote.json", early_vote())
+    write("markets.json", markets())
     sizes = {p.name: f"{p.stat().st_size / 1024:.0f} KB" for p in sorted(SITE.glob("*.json"))}
     print("wrote", sizes)
 
