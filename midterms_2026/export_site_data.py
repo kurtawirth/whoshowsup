@@ -273,7 +273,9 @@ def early_vote() -> dict:
         if r.state_po in party.index and party.loc[r.state_po].sum() > 0:
             row.update({k: int(party.loc[r.state_po, k]) for k in ("dem", "rep", "other")})
         rows.append(row)
-    return {"as_of": str(d["date"].max()), "states": rows, "series": series.to_dict("records")}
+    mode_path = PROC / "early_vote_by_mode.csv"  # core/early_vote_history.py (MIT's SPAE survey)
+    by_mode = pd.read_csv(mode_path).to_dict("records") if mode_path.exists() else []
+    return {"as_of": str(d["date"].max()), "states": rows, "series": series.to_dict("records"), "by_mode": by_mode}
 
 
 def seats() -> dict:

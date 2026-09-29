@@ -30,6 +30,35 @@ display(html`<div class="stat-row">
 </div>`);
 ```
 
+## Early voters lean Democratic
+
+Early voters have leaned Democratic in every election since at least 2008. Among people who voted in person before Election Day, Democrats outnumbered Republicans by 8 to 19 points; among mail voters, by 1 to 13 points; Election Day voters split about evenly. Then 2020 blew the gap open. Voting by mail became a Democratic habit and Election Day turned Republican, and the split held in 2022.
+
+So an early vote that looks very blue is normal and says little on its own. What matters is whether it is bluer or redder than usual, and the ballots cast on Election Day will pull the count back toward Republicans.
+
+```js
+const modes = ["Mail", "Early in person", "Election Day"];
+const modeColor = {"Mail": t.ind, "Early in person": t.ink, "Election Day": t["ink-3"]};
+const lean = (g) => (Math.abs(g) < 0.5 ? "even" : g > 0 ? `D+${Math.round(g)}` : `R+${Math.round(-g)}`);
+const byMode = ev.by_mode.map((d) => ({...d, when: new Date(`${d.year}-11-06`)}));
+display(resize((w) => Plot.plot({
+  width: w, height: 300, marginLeft: 48, marginRight: w < 560 ? 12 : 110,
+  x: {label: null, ticks: [...new Set(byMode.map((d) => d.when.getTime()))].map((v) => new Date(v)), tickFormat: "%Y"},
+  y: {label: "Party lean of voters (D minus R, points)", grid: true, tickFormat: (v) => (v === 0 ? "Even" : v > 0 ? `D+${v}` : `R+${-v}`), domain: [-25, 30]},
+  color: {domain: modes, range: modes.map((m) => modeColor[m]), legend: w < 560},
+  style: {background: "transparent", color: t["ink-3"], fontSize: "12px"},
+  marks: [
+    Plot.ruleY([0], {stroke: t.axis}),
+    Plot.line(byMode, {x: "when", y: "gap", stroke: "mode", strokeWidth: 2.5, strokeDasharray: (d) => (d.mode === "Election Day" ? "5,4" : null)}),
+    Plot.dot(byMode, {x: "when", y: "gap", fill: "mode", r: 4, stroke: t.surface, strokeWidth: 2}),
+    w < 560 ? null : Plot.text(byMode.filter((d) => d.year === d3.max(byMode, (e) => e.year)), {x: "when", y: "gap", text: "mode", fill: "mode", dx: 10, textAnchor: "start", fontWeight: 600}),
+    Plot.tip(byMode, Plot.pointer({x: "when", y: "gap", title: (d) => `${d.year}, ${d.mode.toLowerCase()} voters\n${lean(d.gap)} by party\n${Math.round(100 * d.share_of_voters)}% of all voters`}))
+  ]
+})));
+```
+
+<p class="caption">How voters who cast their ballot each way identified themselves by party, with Democrats' share minus Republicans'. From MIT's Survey of the Performance of American Elections, about 10,000 voters per election (the 2018 and 2024 surveys aren't available to download). It measures party identification, not votes, but the pattern matches how the parties' voters have used each method.</p>
+
 ## Ballots cast over time
 
 ```js
