@@ -3,7 +3,9 @@
 **Live forecast: https://whoshowsup.net/**
 
 An independent, turnout-first forecast of the **November 3, 2026 U.S. midterms**: every House,
-Senate and governor race, updated every morning. By Kurt Wirth, Ph.D.
+Senate and governor race, updated every morning. By Kurt Wirth, Ph.D., built with
+[Claude](https://www.anthropic.com/claude) (Anthropic's AI model), which wrote the code under the author's
+direction; the modeling decisions are the author's.
 
 ## Approach
 
