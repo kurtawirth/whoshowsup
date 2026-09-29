@@ -62,7 +62,7 @@ Each of the 20,000 simulated elections draws a national environment, a turnout/p
 
 ## What the model does not use
 
-No pundit ratings (Cook, Sabato, Inside Elections), no other forecasters' models, and no prediction markets. Markets will be shown alongside the forecast for comparison, never as an input.
+No pundit ratings (Cook, Sabato, Inside Elections), no other forecasters' models, and no prediction markets. If markets appear on the site, it is for comparison, never as an input.
 
 ## Track record
 

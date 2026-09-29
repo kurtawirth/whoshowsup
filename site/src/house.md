@@ -17,7 +17,7 @@ const house = races.filter((r) => r.office === "HOUSE");
 const byRating = d3.rollup(house, (v) => v.length, (r) => r.rating);
 const lead = top.p_house_d >= 0.5 ? "Democrats" : "Republicans";
 const q = Math.max(top.p_house_d, 1 - top.p_house_d);
-const verb = q >= 0.95 ? "are overwhelming favorites" : q >= 0.8 ? "are clear favorites" : q >= 0.6 ? "are favored" : "have a slight edge";
+const verb = q >= 0.95 ? "are strong favorites" : q >= 0.8 ? "are clear favorites" : q >= 0.6 ? "are favored" : "have a slight edge";
 ```
 
 <p class="kicker">House of Representatives · Updated ${date(top.forecast_date)}</p>

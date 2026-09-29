@@ -24,7 +24,7 @@ const style = {background: "transparent", color: t["ink-3"], fontSize: "12px"};
 
 # ${env.median >= 0.5 ? `Expect Democrats to win the House popular vote by about ${Math.round(env.median)} points` : env.median <= -0.5 ? `Expect Republicans to win the House popular vote by about ${Math.round(-env.median)} points` : "The national House vote looks roughly even"}
 
-<p class="dek">Before forecasting any single race, the model estimates the national mood: how the House popular vote will split nationwide. Our estimate is ${margin(env.median)}, with an 80% chance of falling between ${margin(env.p10)} and ${margin(env.p90)}. For comparison, Democrats won it by 8.7 points in the 2018 wave and lost it by 2.5 in 2024.</p>
+<p class="dek">Before forecasting any single race, the model estimates the national mood: how the House popular vote is likely to split nationwide. Our estimate is ${margin(env.median)}, with an 80% chance of falling between ${margin(env.p10)} and ${margin(env.p90)}. For comparison, Democrats won it by 8.7 points in the 2018 wave and lost it by 2.5 in 2024.</p>
 
 ## Three readings, one estimate
 
