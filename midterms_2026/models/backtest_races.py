@@ -159,6 +159,25 @@ def statewide_races(year: int) -> pd.DataFrame:
 import house_personal_vote as hpv  # noqa: E402
 HOUSE_PERSONAL = True  # House incumbents' personal vote (False = the old flat bonus, for comparison)
 HOUSE_PAIRS = pd.read_csv(PROC / "house_personal_pairs.csv")
+import statewide_personal_vote as spv  # noqa: E402
+STATEWIDE_PAIRS = spv.pairs()
+# Senators' and governors' personal vote (race_model.PERSONAL), learned leaving the test year out.
+# --spv=fixed: race_model's constants as they are. --spv=recent|robust|robust_all: OLS on the recent
+# era (2018 on, for tests from 2018), Huber on the recent era, Huber on all years.
+SPV = next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--spv=")), "robust")
+PERSONAL_FIXED = {k: dict(v) for k, v in rm.PERSONAL.items()}
+
+
+def set_statewide_personal(year: int) -> None:
+    for off in ("SEN", "GOV"):
+        if SPV == "fixed":
+            rm.PERSONAL[off] = dict(PERSONAL_FIXED[off])
+            continue
+        x = STATEWIDE_PAIRS[(STATEWIDE_PAIRS.office == off) & (STATEWIDE_PAIRS.year != year)]
+        if SPV in ("recent", "robust") and year >= RECENT_ERA:
+            x = x[x.year >= RECENT_ERA]
+        f = spv.fit(x, robust=SPV != "recent")
+        rm.PERSONAL[off] = {k: f[k] for k in ("intercept", "rho", "sd")}
 MONEY = True  # campaign money term (core/money_effect.py), leave-one-year-out coefficients
 MONEY_OFFICES = ("HOUSE", "SEN")
 QUALITY = True  # candidate experience tiers (core/candidate_experience.py); weights are rm.QUALITY_EFFECT
@@ -201,6 +220,8 @@ POLLS_538 = NEFF_LIVE = "--polls=legacy" not in sys.argv
 ARCHIVE_YEARS = (2018, 2020, 2022, 2024)
 if not POLLS_538:
     TAG += "_legacypolls"
+if SPV != "robust":
+    TAG += f"_spv-{SPV}"
 # --trust=full: poll-average accuracy (floor, spread) from core/poll_trust.py, fit on full-season
 # polls leaving the test year out
 TRUST_FULL = "--trust=full" in sys.argv
@@ -346,6 +367,7 @@ def run_all(bonus_for: dict | None = None) -> tuple[pd.DataFrame, list]:
                 rm.UNDECIDED_COMPOSITION.update({k: float(uc[k].iloc[0]) for k in ("hisp", "black")})
         races = poll_summary(races, year)
         set_trust(year)
+        set_statewide_personal(year)
         bonus = 0.0 if bonus_for is None else bonus_for[year]
         live, fixed_r, margin, E, a = rm.run_simulation(races, env, D0, R0, np.random.default_rng(year),
                                                         close_bonus=bonus)

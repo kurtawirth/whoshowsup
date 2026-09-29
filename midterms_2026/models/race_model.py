@@ -45,10 +45,13 @@ FORECAST_DATE = pd.Timestamp.today().normalize()  # the pipeline passes an expli
 INCUMBENCY = {"HOUSE": 2.3, "SEN": 5.4, "GOV": 4.5}
 # Personal vote: an incumbent's previous over/under-performance vs lean + environment
 # partly persists. expected edge = intercept + rho * previous edge; the remaining noise
-# is smaller than for a generic race. Estimated from re-running incumbents
-# (Senate 2012-2024, n=159; Governor 2018->2022, n=26).
-PERSONAL = {"SEN": {"intercept": 3.0, "rho": 0.43, "sd": 9.1},
-            "GOV": {"intercept": 5.1, "rho": 0.63, "sd": 8.2},
+# is smaller than for a generic race. Estimated from re-running incumbents since 2018, the recent era
+# (core/statewide_personal_vote.py; Huber line, so a few extreme incumbents don't set it): Senate n=94,
+# Governor n=51. Senators' carryover has shrunk (0.64 of the edge in 1996-2004, 0.32 since 2018).
+# Backtest vs the old hand-set values (leaving each year out): governors Brier 0.0348 -> 0.0322 and
+# 4 -> 3 misses; senators 6 -> 5 misses, margin error 5.30 -> 5.02 (Brier 0.0371 -> 0.0377).
+PERSONAL = {"SEN": {"intercept": 1.6, "rho": 0.32, "sd": 6.6},
+            "GOV": {"intercept": 7.96, "rho": 0.91, "sd": 13.07},
             # House (core/house_personal_vote.py, 1,271 re-running incumbents 2016-2024; 2014's
             # incumbents now known, so 2016's first re-elections are counted right): the
             # previous race's edge over lean + year, plus a bump for a member's first re-election.
