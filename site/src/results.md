@@ -121,7 +121,14 @@ if (started && calledRows.length) display(html`<div class="stat-row">
   <div class="s"><div class="k">Inside our 80% range</div><div class="v">${settled.length ? `${inRange.length} of ${settled.length}` : "–"}</div><div class="muted">races with 95%+ counted</div></div>
 </div>`);
 const upsets = calledRows.filter((d) => d.called !== d.fav).sort((a, b) => Math.abs(b.p_dem - 0.5) - Math.abs(a.p_dem - 0.5));
-if (upsets.length) display(html`<p><b>Called against our forecast:</b> ${upsets.map((d, i) => html`${i ? "; " : ""}${raceLink(d, raceName(d))} (${lastName(d.nameOf(d.called))}, whom we gave ${pct(d.called === "D" ? d.p_dem : 1 - d.p_dem)})`)}.</p>`);
+const upsetItem = (d) => html`<li>${raceLink(d, raceName(d))}: ${lastName(d.nameOf(d.called))} wins, whom we gave ${pct(d.called === "D" ? d.p_dem : 1 - d.p_dem)}</li>`;
+if (upsets.length) display(html`<div class="upsets"><p><b>Called against our forecast</b>${upsets.length > 5 ? ", biggest surprises first" : ""}:</p>
+  <ul class="tight">${upsets.slice(0, 5).map(upsetItem)}</ul>
+  ${upsets.length > 5 ? html`<details><summary>Show all ${upsets.length}</summary><ul class="tight">${upsets.slice(5).map(upsetItem)}</ul></details>` : ""}</div>`);
+```
+
+```js
+if (started) display(watchTable());
 ```
 
 ```js
@@ -141,17 +148,19 @@ const status = (d) => (d.called ? html`<span class="res-called">${chip(d.tagOf(d
 if (started) {
   const order = (d) => (d.called ? 2 : d.counted ? 0 : 1) * 10 + Math.abs(d.p_dem - 0.5);
   display(html`<h2>Every race</h2>`);
-  display(raceTable(withSearch([...rows].sort((a, b) => order(a) - order(b))), [
+  const tbl = raceTable(withSearch([...rows].sort((a, b) => order(a) - order(b))), [
     {key: "label", label: "Race", sort: true, render: (d) => raceLink(d, raceName(d))},
     {key: "status", label: "Result so far", render: status},
-    {key: "pct", label: "Counted", num: true, sort: true, sortValue: (d) => d.x.pct ?? -1, render: (d) => (d.counted ? `${d.x.pct ?? 0}%` : "–")},
+    {key: "pct", label: "Counted", num: true, sort: true, sortValue: (d) => d.x.pct ?? -1, render: (d) => (d.counted ? `${d.x.pct ?? 0}%` : "")},
     {key: "range", label: "vs. our forecast", render: rangeBar},
     {key: "p_dem", label: "Our odds", sort: true, sortValue: (d) => Math.max(d.p_dem, 1 - d.p_dem), render: (d) => `${lastName(d.nameOf(d.fav))} ${pct(Math.max(d.p_dem, 1 - d.p_dem))}`}
   ], {filters: [
     {key: "office", label: "All offices", options: [["SEN", "Senate"], ["GOV", "Governor"], ["HOUSE", "House"]], test: (d, v) => d.office === v},
     {key: "state", label: "All races", options: [["called", "Called"], ["open", "Not called"], ["upset", "Called against our forecast"]],
       test: (d, v) => (v === "called" ? Boolean(d.called) : v === "open" ? !d.called : d.called && d.called !== d.fav)}
-  ], pageSize: 40, placeholder: "Search races, candidates, states"}));
+  ], pageSize: 40, placeholder: "Search races, candidates, states"});
+  tbl.classList.add("res-cards");
+  display(tbl);
   display(html`<p class="caption">"vs. our forecast": the bar is the range our forecast gave an 80% chance, the tick our most likely result, and the dot the count so far (early counts can swing a lot as different kinds of ballots come in). Margins are between the two main sides only.</p>`);
 }
 ```
@@ -183,13 +192,27 @@ const watch = [...contested].filter((r) => r.office !== "HOUSE" || Math.abs(r.p_
   .sort((a, b) => a.when[0] - b.when[0] || a.when[1] - b.when[1] || a.i - b.i)
   .map((x) => x.r);
 const closeText = (st) => { const [a, b] = CLOSE[st] ?? [21, 21]; return b > a ? `${clock(a)} (rest ${clock(b)})` : clock(a); };
-display(html`<h2>Races to watch</h2><p class="caption">The races most likely to decide control of the House or Senate in our forecast, in the order their polls close, so the first results come first.</p>
-<div class="table-wrap"><table class="wsu-table">
-  <thead><tr><th>Polls close (ET)</th><th>Race</th><th>Our forecast</th></tr></thead>
-  <tbody>${watch.map((r) => { const s = sides(r), fav = r.p_dem >= 0.5; return html`<tr>
-    <td class="nowrap">${closeText(r.state_po)}</td><td>${raceLink(r, raceName(r))}</td>
-    <td>${chip(fav ? s.dTag : s.rTag)} ${lastName(fav ? s.d : s.r)} ${pct(Math.max(r.p_dem, 1 - r.p_dem))}</td></tr>`; })}</tbody>
-</table></div>`);
+const rowOf = new Map(rows.map((d) => [d.race_id, d]));
+function watchTable() {
+  return html`<div class="res-cards"><h2>Races to watch</h2><p class="caption">The races most likely to decide control of the House or Senate in our forecast, in the order their polls close${started ? ", with the count as it comes in" : ", so the first results come first"}.</p>
+  <div class="table-wrap"><table class="wsu-table">
+    <thead>${started
+      ? html`<tr><th>Polls close (ET)</th><th>Race</th><th>Result so far</th><th class="num">Counted</th><th>vs. our forecast</th><th>Our forecast</th></tr>`
+      : html`<tr><th>Polls close (ET)</th><th>Race</th><th>Our forecast</th></tr>`}</thead>
+    <tbody>${watch.map((r) => {
+      // whole rows only: table cells built on their own are dropped by the browser's HTML parser
+      const d = rowOf.get(r.race_id);
+      const odds = html`${chip(d.tagOf(d.fav))} ${lastName(d.nameOf(d.fav))} ${pct(Math.max(r.p_dem, 1 - r.p_dem))}`;
+      return started
+        ? html`<tr><td class="c-close nowrap">${closeText(r.state_po)}</td><td class="c-label">${raceLink(r, raceName(r))}</td>
+            <td class="c-status">${status(d)}</td><td class="c-pct num">${d.counted ? `${d.x.pct ?? 0}%` : ""}</td>
+            <td class="c-range">${rangeBar(d)}</td><td class="c-p_dem">${odds}</td></tr>`
+        : html`<tr><td class="c-close nowrap">${closeText(r.state_po)}</td><td class="c-label">${raceLink(r, raceName(r))}</td>
+            <td class="c-p_dem">${odds}</td></tr>`;
+    })}</tbody>
+  </table></div></div>`;
+}
+if (!started) display(watchTable());
 ```
 
 <p class="caption">Election-night results from <a href="https://civicapi.org">civicAPI</a>, which compiles them from state and local election offices. They are shown for comparison only and are not official; official results come from each state after its canvass.</p>

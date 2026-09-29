@@ -307,3 +307,24 @@ details summary { cursor: pointer; font: 600 14px var(--sans); color: var(--ink-
 .rng em { position: absolute; top: 2px; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; border: 2px solid var(--surface); box-sizing: content-box; }
 .res-called { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; white-space: nowrap; }
 .nowrap { white-space: nowrap; }
+
+.upsets p { margin-bottom: 4px; }
+.upsets details summary { cursor: pointer; font-family: var(--sans); font-size: 14px; color: var(--ink-2); margin: 4px 0; }
+/* election-night race tables become stacked cards on phones:
+   race name / result + share counted / forecast bar + our odds */
+@media (max-width: 640px) {
+  .res-cards table, .res-cards tbody { display: block; }
+  .res-cards thead { display: none; }
+  .res-cards tr { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: center; padding: 10px 2px; border-bottom: 1px solid var(--hair); }
+  .res-cards td { display: block; border: 0; padding: 0; }
+  .res-cards tr:hover td { background: none; }
+  .res-cards td.c-close { grid-column: 1 / -1; font-size: 12px; color: var(--ink-3); }
+  .res-cards td.c-close::before { content: "Polls close "; }
+  .res-cards td.c-label { grid-column: 1 / -1; font-size: 15px; }
+  .res-cards td.c-pct { text-align: right; color: var(--ink-3); font-size: 13px; }
+  .res-cards td.c-pct:not(:empty)::after { content: " counted"; }
+  .res-cards td.c-p_dem::before { content: "Our forecast: "; color: var(--ink-3); }
+  .res-cards td.c-range .rng { width: 100%; max-width: 220px; }
+  .res-cards td.c-p_dem { text-align: right; font-size: 13px; color: var(--ink-2); }
+  .res-cards .table-wrap { overflow-x: visible; }
+}

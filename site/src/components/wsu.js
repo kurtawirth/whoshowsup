@@ -485,7 +485,8 @@ export function raceTable(rows, columns, {search = true, filters = [], pageSize 
       const tr = document.createElement("tr");
       for (const c of columns) {
         const td = document.createElement("td");
-        if (c.num) td.className = "num";
+        td.className = `c-${c.key}${c.num ? " num" : ""}`;
+        td.dataset.label = c.label;
         const v = c.render ? c.render(r) : r[c.key];
         if (v instanceof Node) td.append(v); else td.textContent = v ?? "–";
         tr.append(td);
