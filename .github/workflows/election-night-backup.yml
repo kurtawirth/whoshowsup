@@ -1,0 +1,82 @@
+# Election night backup for scripts/election_night.py, which runs on the author's PC (Windows task
+# "Politics - election night results"). Every 10 minutes on election night this checks the published
+# results; if they are more than 15 minutes old (the PC is off, asleep or offline) it fetches the latest
+# counts from civicAPI here, commits site/src/data/live.json and redeploys the site. While the PC's poller
+# is keeping up, it does nothing. Results are display only and never feed the forecast.
+name: Election night backup
+
+on:
+  schedule:
+    - cron: "*/10 23 3 11 *"   # Nov 3, 6:00-6:59 p.m. ET (UTC-5)
+    - cron: "*/10 0-9 4 11 *"  # Nov 4, 7:00 p.m.-4:59 a.m. ET
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Run even if the published results are fresh or it isn't election night 2026"
+        type: boolean
+        default: false
+      dry_run:
+        description: "Fetch and write, but don't commit or deploy (for testing)"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: election-night-backup
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Are the published results stale?
+        id: check
+        env:
+          FORCE: ${{ inputs.force || 'false' }}
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import datetime as dt, json, os
+          live = json.load(open("site/src/data/live.json", encoding="utf-8"))
+          now = dt.datetime.now(dt.timezone.utc)
+          asof = live.get("asof")
+          age = (now - dt.datetime.fromisoformat(asof)).total_seconds() / 60 if asof else float("inf")
+          stale = live.get("mode") != "live" or age > 15
+          run = os.environ["FORCE"] == "true" or (now.year == 2026 and stale)
+          print(f"run={'true' if run else 'false'}")
+          print(f"age={age:.0f}")
+          PY
+          cat "$GITHUB_OUTPUT"
+
+      - if: steps.check.outputs.run == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - if: steps.check.outputs.run == 'true'
+        name: Fetch results from civicAPI
+        run: |
+          pip install --quiet pandas numpy requests
+          python scripts/election_night.py --write-only --once
+          head -c 400 site/src/data/live.json; echo
+
+      - if: steps.check.outputs.run == 'true' && inputs.dry_run != true
+        name: Commit and publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site/src/data/live.json
+          if git diff --cached --quiet; then echo "No change"; exit 0; fi
+          git commit -m "Election night (cloud backup): results as of $(date -u +%H:%MZ)"
+          for i in 1 2 3; do
+            git push && break
+            git pull --rebase -X theirs || git rebase --abort
+          done
+          # pushes made with this workflow's token don't start other workflows, so start the deploy directly
+          gh workflow run deploy-site.yml --ref main

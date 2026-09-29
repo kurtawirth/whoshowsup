@@ -3,6 +3,8 @@
     .venv/Scripts/python.exe scripts/election_night.py                 # the real thing: poll + publish until done
     .venv/Scripts/python.exe scripts/election_night.py --practice      # poll for real, write live.json, don't publish
     .venv/Scripts/python.exe scripts/election_night.py --simulate      # rehearsal: made-up results, nothing fetched
+    python scripts/election_night.py --write-only --once                # GitHub's cloud backup: fetch + write live.json;
+                                                                        #   the workflow commits and deploys
     options: --once (one round), --interval=180 (seconds), --until=2026-11-04T09:00 (UTC; default 4 a.m. ET Nov 4),
              --sim-hour=22 (simulation: stop at 10 p.m. ET), --keep (simulation: leave the made-up live.json in place to look at; restore it before the next push!)
 
@@ -35,6 +37,17 @@ ARGS = {a.split("=", 1)[0]: (a.split("=", 1)[1] if "=" in a else True) for a in 
 INTERVAL = int(ARGS.get("--interval", 180))
 UNTIL = pd.Timestamp(ARGS.get("--until", "2026-11-04T09:00"), tz="UTC")
 PRACTICE, SIMULATE, ONCE = "--practice" in ARGS, "--simulate" in ARGS, "--once" in ARGS
+WRITE_ONLY = "--write-only" in ARGS
+
+
+def keep_awake(on: bool = True) -> None:
+    """Stop Windows from sleeping while the poller runs (no-op elsewhere)."""
+    try:
+        import ctypes
+        ES_CONTINUOUS, ES_SYSTEM_REQUIRED = 0x80000000, 0x00000001
+        ctypes.windll.kernel32.SetThreadExecutionState(ES_CONTINUOUS | (ES_SYSTEM_REQUIRED if on else 0))
+    except (AttributeError, OSError):
+        pass
 
 
 def log(msg: str) -> None:
@@ -65,7 +78,12 @@ def publish(n_called: int, n_total: int) -> None:
         if p.returncode == 0:
             log("published")
             return
-        git("pull", "--rebase")
+        # someone else pushed (the daily run, or the cloud backup writing live.json): replay our commit on
+        # top, keeping our copy of live.json if both changed it (ours is the newer, complete file)
+        r = git("pull", "--rebase", "-X", "theirs")
+        if r.returncode:
+            git("rebase", "--abort")
+            log(f"pull failed: {r.stderr.strip()[:200]}")
     log(f"push failed: {p.stderr.strip()[:200]}")
 
 
@@ -116,7 +134,11 @@ def main() -> None:
                 LIVE.write_text(original, encoding="utf-8")
                 log("rehearsal over: live.json restored")
     else:
-        run()
+        keep_awake(True)
+        try:
+            run()
+        finally:
+            keep_awake(False)
 
 
 PLACEHOLDER = {"mode": "waiting", "source": "civicAPI", "races": {}, "called": 0, "reporting": 0}
@@ -142,9 +164,11 @@ def run() -> None:
         live.update({"asof": datetime.now(timezone.utc).isoformat(timespec="seconds"),
                      "mode": "simulation" if SIMULATE else "practice" if PRACTICE else "live",
                      "source": "civicAPI", "called": called, "reporting": reporting, "total": total})
+        if SIMULATE:  # stamp the simulated time of night (ET is UTC-5 on Nov 3)
+            live["asof"] = (datetime(2026, 11, 3, tzinfo=timezone.utc) + timedelta(hours=sim.clock + 5)).isoformat(timespec="seconds")
         LIVE.write_text(json.dumps(live, separators=(",", ":")), encoding="utf-8")
         log(f"round {k}: {len(res)} races fetched, {reporting} with votes, {called} of {total} called")
-        if not (PRACTICE or SIMULATE):
+        if not (PRACTICE or SIMULATE or WRITE_ONLY):
             publish(called, total)
         k += 1
         done = called >= total or pd.Timestamp.now(tz="UTC") >= UNTIL or (SIMULATE and sim.clock > float(ARGS.get("--sim-hour", 29)))
