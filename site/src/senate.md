@@ -97,8 +97,8 @@ display(seatChart(seats.senate, 51, {width, label: "Senate", total: 100, height:
 ```js
 const columns = [
   {key: "label", label: "State", sort: true, render: (r) => raceLink(r)},
-  {key: "dem_candidate", label: "Democrat", render: (r) => r.race_type === "independent" ? `${r.race_note} (I)` : String(r.dem_candidate ?? "–")},
-  {key: "rep_candidate", label: "Republican", render: (r) => String(r.rep_candidate ?? "–").split(";")[0]},
+  {key: "dem_candidate", label: "Democrat", render: (r) => r.race_type === "independent" ? `${r.race_note} (I)` : r.dem_name ?? "–"},
+  {key: "rep_candidate", label: "Republican", render: (r) => r.rep_name ?? "–"},
   {key: "incumbent", label: "Incumbent", render: (r) => `${r.incumbent} (${r.incumbent_party})`},
   {key: "poll_count", label: "Polls", num: true, sort: true, defaultDir: -1, render: (r) => r.poll_count ?? 0},
   {key: "margin_median", label: "Forecast margin", num: true, sort: true, render: (r) => margin(r.margin_median)},

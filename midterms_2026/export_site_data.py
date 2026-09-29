@@ -98,7 +98,33 @@ def races() -> pd.DataFrame:
     f["label"] = np.where(f["office"] == "HOUSE",
                           f["state_po"] + "-" + np.where(f["district"] == 0, "AL", f["district"].astype(str)),
                           f["state_name"] + np.where(f["special"], " (special)", ""))
+    f["dem_name"], f["rep_name"] = lead_names(f)
     return f
+
+
+def lead_names(f: pd.DataFrame) -> tuple[pd.Series, pd.Series]:
+    """The one name to show for each side. Where a side has several candidates on the ballot (Alaska's
+    top four, Louisiana's jungle races), use the one this race's polls test most often, else the
+    incumbent if they're on that side, else the first listed."""
+    polls = pd.read_csv(PROC / "polls_2026_races.csv")
+    polls["special"] = polls["special"].astype(bool)
+    out = {"D": [], "R": []}
+    for r in f.itertuples():
+        pr = polls[(polls["office"] == r.office) & (polls["state_po"] == r.state_po)
+                   & (polls["district"] == r.district) & (polls["special"] == bool(r.special))]
+        for side, col, sign in (("D", "dem_candidate", 1), ("R", "rep_candidate", -1)):
+            names = [n.strip() for n in str(getattr(r, col) or "").split(";") if n.strip() and n.strip() != "nan"]
+            name = names[0] if names else None
+            if len(names) > 1 and r.race_type == "same_party":
+                name = " / ".join(names)  # both finalists are from this party: show both
+            elif len(names) > 1:
+                tested = pr[col][pr[col].isin(names)].value_counts()
+                if len(tested):
+                    name = tested.index[0]
+                elif r.inc_side == sign and isinstance(r.incumbent, str):
+                    name = next((n for n in names if n.split()[-1] == r.incumbent.split()[-1]), r.incumbent)
+            out[side].append(name)
+    return pd.Series(out["D"], index=f.index), pd.Series(out["R"], index=f.index)
 
 
 def poll_label(pollster: str, sponsors) -> str:
@@ -319,7 +345,7 @@ def main() -> None:
     write("seats.json", seats())
     f = races()
     cols = ["race_id", "label", "office", "state_po", "state_name", "district", "special", "race_type", "race_note",
-            "incumbent", "incumbent_party", "inc_side", "dem_candidate", "rep_candidate", "pres24", "pres20_margin",
+            "incumbent", "incumbent_party", "inc_side", "dem_candidate", "rep_candidate", "dem_name", "rep_name", "pres24", "pres20_margin",
             "lines_changed", "quality_diff", "prior_edge", "dem_money", "rep_money", "money_adj", "quality_adj", "ideology_adj", "poll_count", "poll_avg", "poll_undecided", "poll_weight",
             "fundamentals_mean", "margin_median", "margin_p10", "margin_p90", "p_dem", "rating", "control_leverage"]
     write("races.json", f[cols].to_dict("records"))

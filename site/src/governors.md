@@ -53,8 +53,8 @@ display(seatChart(seats.governor, 19, {width, label: "Governorships", total: 36,
 ```js
 display(raceTable(withSearch(gov), [
   {key: "label", label: "State", sort: true, render: (r) => raceLink(r)},
-  {key: "dem_candidate", label: "Democrat", render: (r) => String(r.dem_candidate ?? "–")},
-  {key: "rep_candidate", label: "Republican", render: (r) => String(r.rep_candidate ?? "–").split(";")[0]},
+  {key: "dem_candidate", label: "Democrat", render: (r) => r.dem_name ?? "–"},
+  {key: "rep_candidate", label: "Republican", render: (r) => r.rep_name ?? "–"},
   {key: "incumbent", label: "Current governor", render: (r) => `${r.incumbent} (${r.incumbent_party})${r.inc_side ? "" : ", not running"}`},
   {key: "poll_count", label: "Polls", num: true, sort: true, defaultDir: -1, render: (r) => r.poll_count ?? 0},
   {key: "margin_median", label: "Forecast margin", num: true, sort: true, render: (r) => margin(r.margin_median)},

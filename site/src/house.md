@@ -55,8 +55,8 @@ const competitive = house.filter((r) => r.race_type !== "same_party" && r.p_dem 
 const columns = [
   {key: "label", label: "District", sort: true, render: (r) => raceLink(r)},
   {key: "incumbent", label: "Incumbent", render: (r) => (r.inc_side ? `${r.incumbent} (${r.incumbent_party})` : "Open seat")},
-  {key: "dem_candidate", label: "Democrat", render: (r) => String(r.dem_candidate ?? "–").split(";")[0]},
-  {key: "rep_candidate", label: "Republican", render: (r) => String(r.rep_candidate ?? "–").split(";")[0]},
+  {key: "dem_candidate", label: "Democrat", render: (r) => r.dem_name ?? "–"},
+  {key: "rep_candidate", label: "Republican", render: (r) => r.rep_name ?? "–"},
   {key: "pres24", label: "2024 pres.", num: true, sort: true, render: (r) => margin(r.pres24)},
   {key: "margin_median", label: "Forecast margin", num: true, sort: true, render: (r) => margin(r.margin_median)},
   {key: "p_dem", label: "Chance", num: true, sort: true, defaultDir: -1, render: (r) => favoriteText(r)},

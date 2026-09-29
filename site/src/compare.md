@@ -90,50 +90,70 @@ display(houseRows.length ? html`<h2>House</h2>${compareTable("HOUSE", 25)}` : ht
 const mkRows = Object.entries(markets.races).filter(([id]) => byId.has(id))
   .map(([id, m]) => ({r: byId.get(id), m: m.p, gap: byId.get(id).p_dem - m.p}));
 const ctl = (key) => markets.races[`control-${key}`]?.p;
-const sideName = (r) => (sides(r).indD ? r.race_note.split(" ").pop() : "Democrats");
+// Neutral wording: always name whichever side is favored, with its own chance.
+const lastName = (s) => String(s).trim().split(/\s+/).filter((w) => !/^(Jr\.?|Sr\.?|I{2,3})$/.test(w)).pop();
+const favored = (r, p) => {
+  const s = sides(r), dSide = p >= 0.5;
+  return {name: lastName(dSide ? s.d : s.r), tag: dSide ? s.dTag : s.rTag, p: Math.max(p, 1 - p)};
+};
+const partyPick = (p) => ({name: p >= 0.5 ? "Democrats" : "Republicans", tag: p >= 0.5 ? "D" : "R", p: Math.max(p, 1 - p)});
+const tagColor = (tag) => (tag === "D" ? t.dem : tag === "R" ? t.rep : t.ind);
+const chip = (x) => html`<span class="mk-pick"><span class="party-chip ${x.tag.toLowerCase()}">${x.tag}</span> ${x.name} ${pct(x.p)}</span>`;
 display(html`<p>Prediction markets let people bet on the outcome, and the prices turn into odds. Below are the prices on <a href="https://www.predictit.org">PredictIt</a>, a U.S. market for political bets, as of ${date(markets.asof)}, next to our forecast. Markets are shown for comparison only and never change our numbers.</p>`);
+const ctlCard = (label, ours, theirs) => html`<div class="s"><div class="k">${label}</div>
+  <div class="mk-ctl"><span class="mk-src">Us</span>${chip(partyPick(ours))}</div>
+  <div class="mk-ctl"><span class="mk-src">PredictIt</span>${theirs == null ? "–" : chip(partyPick(theirs))}</div></div>`;
 display(html`<div class="stat-row">
-  <div class="s"><div class="k">Democrats win the House</div><div class="v">Us ${pct(top.p_house_d)} · Market ${ctl("house") == null ? "–" : pct(ctl("house"))}</div></div>
-  <div class="s"><div class="k">Democrats win the Senate</div><div class="v">Us ${pct(top.p_senate_d)} · Market ${ctl("senate") == null ? "–" : pct(ctl("senate"))}</div></div>
+  ${ctlCard("Control of the House", top.p_house_d, ctl("house"))}
+  ${ctlCard("Control of the Senate", top.p_senate_d, ctl("senate"))}
   <div class="s"><div class="k">Races with a market</div><div class="v">${mkRows.length}</div></div>
 </div>`);
 ```
 
 ```js
 const officeLabel = {SEN: "Senate", GOV: "Governor", HOUSE: "House"};
+const raceName = (r) => (r.office === "HOUSE" ? `House: ${r.label}` : `${r.state_name} ${officeLabel[r.office]}${r.special ? " (special)" : ""}`);
 const mkLabel = (x) => (x.r.office === "HOUSE" ? x.r.label : `${x.r.state_po} ${officeLabel[x.r.office].slice(0, 3)}${x.r.special ? " (sp.)" : ""}`);
 const bigGaps = [...mkRows].sort((a, b) => Math.abs(b.gap) - Math.abs(a.gap)).slice(0, 6);
+// Both axes run from a sure Republican win to a sure win for the other side, with 50/50 in the middle.
+const sideTick = (v) => (Math.abs(v - 0.5) < 1e-9 ? "50/50" : v < 0.5 ? `R ${Math.round((1 - v) * 100)}%` : `D ${Math.round(v * 100)}%`);
+const ticks = [0, 0.25, 0.5, 0.75, 1];
 display(resize((w) => Plot.plot({
-  width: Math.min(w, 640), height: Math.min(w, 640) * 0.9, marginLeft: 48, marginBottom: 44,
-  x: {label: "PredictIt: chance for Democrats →", domain: [0, 1], tickFormat: "%", grid: true},
-  y: {label: "↑ Who Shows Up: chance for Democrats", domain: [0, 1], tickFormat: "%", grid: true},
+  width: Math.min(w, 640), height: Math.min(w, 640) * 0.9, marginLeft: 56, marginBottom: 44, marginRight: 24,
+  x: {label: "PredictIt →", domain: [0, 1], ticks, tickFormat: sideTick, grid: true},
+  y: {label: "↑ Who Shows Up", domain: [0, 1], ticks, tickFormat: sideTick, grid: true},
   symbol: {domain: ["Senate", "Governor", "House"], range: ["circle", "square", "triangle"], legend: true},
   style: {background: "transparent", color: t["ink-3"], fontSize: "12px"},
   marks: [
     Plot.line([[0, 0], [1, 1]], {stroke: t.axis, strokeDasharray: "4,4"}),
+    Plot.ruleX([0.5], {stroke: t.axis}), Plot.ruleY([0.5], {stroke: t.axis}),
     Plot.dot(mkRows, {x: "m", y: (d) => d.r.p_dem, symbol: (d) => officeLabel[d.r.office], r: 5,
-      fill: (d) => (d.r.p_dem >= 0.5 ? t.dem : t.rep), fillOpacity: 0.75, stroke: t.surface, strokeWidth: 1.5}),
+      fill: (d) => tagColor(favored(d.r, d.r.p_dem).tag), fillOpacity: 0.75, stroke: t.surface, strokeWidth: 1.5}),
     Plot.text(bigGaps, {x: "m", y: (d) => d.r.p_dem, text: mkLabel, dy: -11, fill: t.ink, fontWeight: 600}),
-    Plot.tip(mkRows, Plot.pointer({x: "m", y: (d) => d.r.p_dem, title: (d) => `${d.r.office === "HOUSE" ? `House ${d.r.label}` : `${d.r.state_name} ${officeLabel[d.r.office]}${d.r.special ? " (special)" : ""}`}\nChance for ${sideName(d.r)}: us ${pct(d.r.p_dem)}, PredictIt ${pct(d.m)}`}))
+    Plot.tip(mkRows, Plot.pointer({x: "m", y: (d) => d.r.p_dem, title: (d) => {
+      const us = favored(d.r, d.r.p_dem), them = favored(d.r, d.m);
+      return `${raceName(d.r)}\nUs: ${us.name} ${pct(us.p)}\nPredictIt: ${them.name} ${pct(them.p)}`;
+    }}))
   ]
 })));
 ```
 
-<p class="caption">Each mark is a race with a PredictIt market. Races on the dashed line are ones where we and the market agree; above it, we're more optimistic for Democrats than the market is, and below it, less. In Nebraska's Senate race the Democratic side is independent Dan Osborn.</p>
+<p class="caption">Each mark is a race with a PredictIt market, colored by the side our forecast favors. Both scales run from a sure Republican win (R 100%) through a coin flip (50/50) to a sure win for the other side (D 100%). On the dashed line, we and the market agree. Above it, our forecast leans further toward the Democratic side than the market does; below it, further toward the Republican side. In Nebraska's Senate race the other side is independent Dan Osborn.</p>
 
 ```js
 const gapRows = mkRows.filter((x) => Math.abs(x.gap) >= 0.1).sort((a, b) => Math.abs(b.gap) - Math.abs(a.gap));
+const toward = (x) => { const s = sides(x.r); return x.gap > 0 ? lastName(s.d) : lastName(s.r); };
 display(gapRows.length ? html`<div class="table-wrap"><table class="wsu-table">
-  <thead><tr><th>Race</th><th class="num">Us</th><th class="num">PredictIt</th><th>Difference</th></tr></thead>
+  <thead><tr><th>Race</th><th>Our forecast</th><th>PredictIt</th><th>Difference</th></tr></thead>
   <tbody>${gapRows.map((x) => html`<tr>
-    <td>${raceLink(x.r, x.r.office === "HOUSE" ? `House: ${x.r.label}` : `${x.r.state_name} ${officeLabel[x.r.office]}${x.r.special ? " (special)" : ""}`)}</td>
-    <td class="num">${pct(x.r.p_dem)}</td>
-    <td class="num"><a href="${markets.races[x.r.race_id].url}">${pct(x.m)}</a></td>
-    <td>We're ${Math.round(Math.abs(x.gap) * 100)} points ${x.gap > 0 ? "higher" : "lower"} on ${sideName(x.r)}</td>
+    <td>${raceLink(x.r, raceName(x.r))}</td>
+    <td>${chip(favored(x.r, x.r.p_dem))}</td>
+    <td><a href="${markets.races[x.r.race_id].url}">${chip(favored(x.r, x.m))}</a></td>
+    <td>${Math.round(Math.abs(x.gap) * 100)} points more toward ${toward(x)} in our forecast</td>
   </tr>`)}</tbody></table></div>` : html`<p class="caption">No race differs by 10 points or more.</p>`);
 ```
 
-<p class="caption">Races where our chance for Democrats and the market's differ by 10 points or more. PredictIt's prices come from its free data feed, credited to PredictIt, and are converted to chances: each price is the midpoint between the best offers to buy and sell, rescaled so a race's prices add up to 100% (PredictIt's fees push them a little over). Markets with too few trades to set a clear price are left out, which is why only some House races appear. PredictIt limits how much each trader can bet, so its prices can differ from larger markets. We don't use Kalshi or Polymarket because their terms don't allow their prices to be republished or collected automatically.</p>
+<p class="caption">Races where our forecast and the market differ by 10 points or more, naming the side each one favors. PredictIt's prices come from its free data feed, credited to PredictIt, and are converted to chances: each price is the midpoint between the best offers to buy and sell, rescaled so a race's prices add up to 100% (PredictIt's fees push them a little over). Markets with too few trades to set a clear price are left out, which is why only some House races appear. PredictIt limits how much each trader can bet, so its prices can differ from larger markets. We don't use Kalshi or Polymarket because their terms don't allow their prices to be republished or collected automatically.</p>
 
 ## Track record against the pros
 

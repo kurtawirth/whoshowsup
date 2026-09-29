@@ -57,8 +57,8 @@ export function sides(r) {
   const ind = r.race_type === "independent";
   const indD = ind && Boolean(r.rep_candidate);
   return {
-    d: indD ? r.race_note : first(r.dem_candidate) || "Democrat", dTag: indD ? "I" : "D",
-    r: ind && !indD ? r.race_note : first(r.rep_candidate) || "Republican", rTag: ind && !indD ? "I" : "R",
+    d: indD ? r.race_note : r.dem_name || first(r.dem_candidate) || "Democrat", dTag: indD ? "I" : "D",
+    r: ind && !indD ? r.race_note : r.rep_name || first(r.rep_candidate) || "Republican", rTag: ind && !indD ? "I" : "R",
     indD
   };
 }
