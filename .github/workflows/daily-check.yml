@@ -1,0 +1,56 @@
+# Morning check that the daily forecast ran and reached the site. The forecast runs at 7 a.m. ET on the
+# author's PC (Windows task "Politics - daily midterm forecast") and takes about 15 minutes. If by
+# ~9:30 a.m. ET today's forecast isn't on GitHub, a step failed, or the site didn't deploy, this job
+# fails -- and GitHub emails the repository owner about the failed run (Settings > Notifications >
+# Actions). It changes nothing.
+name: Daily forecast check
+
+on:
+  schedule:
+    - cron: "30 13 * * *"   # 9:30 a.m. EDT / 8:30 a.m. EST, well after the 7 a.m. run
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Did today's forecast run, finish cleanly and reach the site?
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          deploy=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow deploy-site.yml --branch main --limit 1 \
+                   --json conclusion,createdAt,status -q '.[0] | "\(.status) \(.conclusion) \(.createdAt)"')
+          DEPLOY="$deploy" python3 - <<'PY'
+          import datetime as dt, json, os, sys
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+          today = dt.datetime.now(ZoneInfo("America/New_York")).date().isoformat()
+          top = json.loads(Path("site/src/data/topline.json").read_text(encoding="utf-8"))
+          status_path = Path("midterms_2026/outputs/run_status.json")
+          status = json.loads(status_path.read_text(encoding="utf-8")) if status_path.exists() else {}
+          problems = []
+          if top.get("forecast_date") != today:
+              problems.append(f"The site's forecast is dated {top.get('forecast_date')}, not today ({today}): "
+                              "the 7 a.m. run didn't run or didn't push (PC off, asleep or offline?). "
+                              "See logs/forecast_{today}.log on the PC.")
+          if status.get("forecast_date") == today and status.get("failed_steps"):
+              problems.append("Steps that failed this morning: " + "; ".join(status["failed_steps"]))
+          state, conclusion, created = (os.environ.get("DEPLOY", "") + "  ").split(" ")[:3]
+          if conclusion not in ("success", "") and state == "completed":
+              problems.append(f"The latest site deploy ({created}) ended with '{conclusion}'.")
+          summary = Path(os.environ["GITHUB_STEP_SUMMARY"])
+          if problems:
+              summary.write_text("## Daily forecast check: problems\n\n" + "\n".join(f"- {p}" for p in problems) + "\n")
+              for p in problems:
+                  print(f"::error::{p}")
+              sys.exit(1)
+          note = f"; warnings: {'; '.join(status['warnings'])}" if status.get("warnings") else ""
+          summary.write_text(f"## Daily forecast check: OK\n\nForecast dated {today}, site deployed{note}.\n")
+          print(f"OK: forecast dated {today}, latest deploy {conclusion or state}{note}")
+          PY

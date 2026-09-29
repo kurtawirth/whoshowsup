@@ -209,6 +209,11 @@ def main() -> None:
         print(f"\nInputs: {int(top['race_polls'].iloc[0])} race polls, "
               f"{int(top['generic_polls_30d'].iloc[0])} generic-ballot polls in the last 30 days")
     print("\n" + ("\n".join(f"WARNING: {w}" for w in warnings) if warnings else "No warnings."))
+    # read each morning by .github/workflows/daily-check.yml, which emails an alert if this run failed or never came
+    (OUT / "run_status.json").write_text(json.dumps({
+        "forecast_date": str(asof.date()), "finished_at": pd.Timestamp.now().strftime("%Y-%m-%d %H:%M"),
+        "refresh": refresh, "failed_steps": [w.split(" FAILED")[0] for w in warnings if " FAILED" in w],
+        "warnings": warnings}, indent=1), encoding="utf-8")
     if args.push:
         step("Push to GitHub")(push, asof)
 
