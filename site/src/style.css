@@ -290,3 +290,20 @@ details summary { cursor: pointer; font: 600 14px var(--sans); color: var(--ink-
 .mk-pick { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; font-weight: 600; }
 .mk-ctl { display: flex; align-items: center; gap: 10px; margin-top: 4px; font-size: 16px; }
 .mk-src { min-width: 5.5em; font-size: 12px; color: var(--ink-3); }
+
+/* election night */
+.sim-banner { font-family: var(--sans); background: color-mix(in srgb, var(--rep) 14%, var(--card)); border: 1px solid var(--rep); border-radius: 8px; padding: 10px 14px; margin: 12px 0; }
+.tallies { display: grid; gap: 22px; margin: 18px 0 8px; font-family: var(--sans); }
+.tally-head { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; margin-bottom: 6px; }
+.tally-head b { font-size: 17px; }
+.tally-bar { position: relative; display: flex; gap: 2px; height: 22px; border-radius: 5px; overflow: hidden; background: var(--surface); }
+.tally-bar b { display: block; height: 100%; }
+.tally-bar i { position: absolute; top: -3px; bottom: -3px; width: 2px; margin-left: -1px; background: var(--ink); }
+.tally-nums { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 6px; font-size: 14px; }
+.rng { position: relative; display: inline-block; width: 200px; height: 14px; vertical-align: middle; }
+.rng .mid { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--axis); }
+.rng b { position: absolute; top: 4px; height: 6px; border-radius: 3px; background: var(--hair); }
+.rng .med { position: absolute; top: 2px; height: 10px; width: 2px; margin-left: -1px; background: var(--ink-3); }
+.rng em { position: absolute; top: 2px; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; border: 2px solid var(--surface); box-sizing: content-box; }
+.res-called { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; white-space: nowrap; }
+.nowrap { white-space: nowrap; }

@@ -21,6 +21,7 @@ the run, because a partial refresh is still better than none -- but read them.
 """
 from pathlib import Path
 import argparse
+import json
 import shutil
 import subprocess
 import sys
@@ -140,6 +141,10 @@ def build_site() -> None:
 
 def push(asof: pd.Timestamp) -> None:
     gh_msg = f"Forecast update {asof.date()}\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+    live = ROOT / "site" / "src" / "data" / "live.json"  # never publish an election-night rehearsal's made-up results
+    if live.exists() and json.loads(live.read_text(encoding="utf-8")).get("mode") in ("simulation", "practice"):
+        subprocess.run(["git", "checkout", "--", "site/src/data/live.json"], cwd=ROOT)
+        warnings.append("live.json held rehearsal results; restored the published version before pushing")
     subprocess.run(["git", "add", "-A"], cwd=ROOT, check=True)
     if subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=ROOT).returncode != 0:
         subprocess.run(["git", "commit", "-q", "-m", gh_msg], cwd=ROOT, check=True)
@@ -179,6 +184,8 @@ def main() -> None:
     if refresh:
         import early_vote  # display only: early and absentee voting (civicAPI), never a model input
         step("Early vote (civicAPI)")(early_vote.main)
+        import civic_results  # election-night results: match civicAPI's Nov 3 races to ours (display only)
+        step("Election-night race matching (civicAPI)")(civic_results.map_races)
     step("National history")(build_national_history.main, (asof.month, asof.day))
     step("National environment model")(national_env.main, False)
     step(f"Poll accuracy at {days_out} days out")(poll_average_error.main, max(days_out, 1))
