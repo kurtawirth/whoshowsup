@@ -34,7 +34,7 @@ display(html`<div class="stat-row">
 
 In every election since 2008, people who voted by mail have voted more Democratic for the U.S. House than people who voted on Election Day. Until 2016 the gap was modest, and in strong Republican years like 2010 and 2014 even mail voters narrowly favored Republicans. Then 2020 blew it open: mail voters backed Democrats by 38 points while Election Day voters backed Republicans by 33, and the split has stayed wide since. People who vote early in person are different. They vote much like Election Day voters, and in 2024 they favored Republicans by 15 points.
 
-So early returns heavy with mail ballots will look very blue, and that is normal. What matters is whether they are bluer or redder than usual, and the ballots cast in person, early or on Election Day, will pull the count toward Republicans.
+So early returns that are heavy with mail ballots are likely to look quite blue, and on its own that may not mean much. A more telling sign is whether they look bluer or redder than in past years. And if recent patterns hold, ballots cast in person, early or on Election Day, would tend to pull the count back toward Republicans.
 
 ```js
 const modes = ["Mail", "Early in person", "Election Day"];
