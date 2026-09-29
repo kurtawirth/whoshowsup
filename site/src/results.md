@@ -177,12 +177,17 @@ display(html`<div class="table-wrap"><table class="wsu-table waves">
 ```js
 const watch = [...contested].filter((r) => r.office !== "HOUSE" || Math.abs(r.p_dem - 0.5) < 0.2)
   .sort((a, b) => (b.control_leverage ?? 0) - (a.control_leverage ?? 0) || Math.abs(a.p_dem - 0.5) - Math.abs(b.p_dem - 0.5))
-  .filter((r) => Math.abs(r.p_dem - 0.5) < 0.35).slice(0, 12);
-display(html`<h2>Races to watch</h2><p class="caption">The races most likely to decide control of the House or Senate, and the closest governor races, in our forecast.</p>
+  .filter((r) => Math.abs(r.p_dem - 0.5) < 0.35).slice(0, 12)
+  // in the order results start coming in: first poll closing, then last, then importance (kept from above)
+  .map((r, i) => ({r, i, when: CLOSE[r.state_po] ?? [21, 21]}))
+  .sort((a, b) => a.when[0] - b.when[0] || a.when[1] - b.when[1] || a.i - b.i)
+  .map((x) => x.r);
+const closeText = (st) => { const [a, b] = CLOSE[st] ?? [21, 21]; return b > a ? `${clock(a)} (rest ${clock(b)})` : clock(a); };
+display(html`<h2>Races to watch</h2><p class="caption">The races most likely to decide control of the House or Senate in our forecast, in the order their polls close, so the first results come first.</p>
 <div class="table-wrap"><table class="wsu-table">
-  <thead><tr><th>Race</th><th>Polls close (ET)</th><th>Our forecast</th></tr></thead>
+  <thead><tr><th>Polls close (ET)</th><th>Race</th><th>Our forecast</th></tr></thead>
   <tbody>${watch.map((r) => { const s = sides(r), fav = r.p_dem >= 0.5; return html`<tr>
-    <td>${raceLink(r, raceName(r))}</td><td>${clock((CLOSE[r.state_po] ?? [21])[0])}</td>
+    <td class="nowrap">${closeText(r.state_po)}</td><td>${raceLink(r, raceName(r))}</td>
     <td>${chip(fav ? s.dTag : s.rTag)} ${lastName(fav ? s.d : s.r)} ${pct(Math.max(r.p_dem, 1 - r.p_dem))}</td></tr>`; })}</tbody>
 </table></div>`);
 ```
