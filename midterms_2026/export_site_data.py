@@ -240,6 +240,42 @@ def outlets(f: pd.DataFrame) -> dict:
     return out
 
 
+def early_vote() -> dict:
+    """Early and absentee voting by state (core/early_vote.py, civicAPI): the latest counts, the daily
+    series of ballots cast, and each state's 2022 turnout (all U.S. House votes) for scale."""
+    path = PROC / "early_vote.csv"
+    if not path.exists():
+        return {"states": [], "series": []}
+    d = pd.read_csv(path)
+    d = d[d["date"] <= f"{pd.Timestamp.today():%Y-%m-%d}"]
+    wide = d.pivot_table(index=["state_po", "date"], columns="category", values="total", aggfunc="last")
+    wide = wide.reindex(columns=["requested", "returned", "inperson"])
+    # states don't report every day: carry each state's last count forward over the days it skipped
+    days = pd.date_range(d["date"].min(), d["date"].max()).strftime("%Y-%m-%d")
+    wide = wide.reindex(pd.MultiIndex.from_product([wide.index.levels[0], days], names=["state_po", "date"]))
+    wide = wide.groupby(level=0).ffill().fillna(0)
+    wide["cast"] = wide["returned"] + wide["inperson"]
+    series = wide.reset_index()[["date", "state_po", "cast"]]
+    # party registration of ballots cast (returned + in person), where the state records party
+    cast = d[d["category"].isin(["returned", "inperson"]) & d["dem"].notna()]
+    latest_date = d.groupby("state_po")["date"].max()
+    cast = cast[cast["date"] == cast["state_po"].map(latest_date)]
+    party = cast.groupby("state_po")[["dem", "rep", "other"]].sum()
+    h = pd.read_csv(RAW / "medsl" / "house_1976_2024.tab", sep=None, engine="python", encoding="latin-1")
+    h = h[(h["year"] == 2022) & (h["stage"].str.upper() == "GEN")]
+    t22 = h.groupby("state_po")["candidatevotes"].sum()
+    last = wide.groupby(level=0).tail(1).reset_index()
+    rows = []
+    for r in last.itertuples():
+        row = {"state_po": r.state_po, "state_name": STATE_NAMES.get(r.state_po, r.state_po), "date": r.date,
+               "requested": int(r.requested), "returned": int(r.returned), "inperson": int(r.inperson),
+               "cast": int(r.cast), "turnout22": int(t22.get(r.state_po, 0))}
+        if r.state_po in party.index and party.loc[r.state_po].sum() > 0:
+            row.update({k: int(party.loc[r.state_po, k]) for k in ("dem", "rep", "other")})
+        rows.append(row)
+    return {"as_of": str(d["date"].max()), "states": rows, "series": series.to_dict("records")}
+
+
 def seats() -> dict:
     s = np.load(OUT / "simulations.npz")
     def dist(a, lo, hi):
@@ -275,6 +311,7 @@ def main() -> None:
     hexmap = json.loads((PROC / "house_hexmap.json").read_text())
     write("hexmap.json", hexmap)
     write("states.json", {"names": STATE_NAMES, "fips": FIPS})
+    write("early_vote.json", early_vote())
     sizes = {p.name: f"{p.stat().st_size / 1024:.0f} KB" for p in sorted(SITE.glob("*.json"))}
     print("wrote", sizes)
 

@@ -11,6 +11,7 @@ const nav = [
   ["/senate", "Senate"],
   ["/governors", "Governors"],
   ["/national", "The national picture"],
+  ["/early-vote", "Early vote"],
   ["/compare", "Compare"],
   ["/methodology", "How it works"]
 ];
@@ -86,7 +87,7 @@ export default {
   <p>Poll data from <a href="https://votehub.com">VoteHub</a> (CC BY 4.0), <a href="https://votes.decisiondeskhq.com/polls">Decision Desk HQ</a>, and Wikipedia;
   results from the <a href="https://electionlab.mit.edu">MIT Election Data + Science Lab</a>; district presidential results and special elections from
   <a href="https://www.the-downballot.com">The Downballot</a>; historical polls from FiveThirtyEight's public archive; campaign finance from the
-  <a href="https://www.fec.gov/data/">Federal Election Commission</a>; candidate ideology scores from Adam Bonica's
+  <a href="https://www.fec.gov/data/">Federal Election Commission</a>; early-vote counts from <a href="https://civicapi.org">civicAPI</a>; candidate ideology scores from Adam Bonica's
   <a href="https://data.stanford.edu/dime">Database on Ideology, Money in Politics, and Elections</a> (DIME, Stanford University Libraries, ODC-BY 1.0); hex layout adapted from
   Pitch Interactive's Tilegrams. Full source: <a href="https://github.com/kurtawirth/whoshowsup">GitHub</a>.</p>
 </div>`

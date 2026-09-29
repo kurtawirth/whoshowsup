@@ -271,3 +271,10 @@ details summary { cursor: pointer; font: 600 14px var(--sans); color: var(--ink-
 /* framework defaults cap tables and figures at 640px -- let ours use the column */
 .wsu-table, table.wsu-table { max-width: none; }
 #observablehq-main > .observablehq:empty { display: none; }
+
+/* ---------- early vote ---------- */
+.muted { color: var(--ink-3); font-size: 13px; }
+.ev-party-cell { display: inline-flex; align-items: center; gap: 10px; white-space: nowrap; }
+.ev-party { display: inline-flex; width: 140px; height: 10px; border-radius: 5px; overflow: hidden; gap: 2px; background: var(--surface); }
+.ev-party > b { display: block; height: 100%; }
+.ev-party-lab { font-family: var(--sans); font-size: 12.5px; font-weight: 600; font-variant-numeric: tabular-nums; }

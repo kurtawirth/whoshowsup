@@ -176,6 +176,9 @@ def main() -> None:
     import candidate_ideology
     step("Candidate ideology (DIME)")(candidate_ideology.update_current)
     step("Special elections")(build_special_elections.main)
+    if refresh:
+        import early_vote  # display only: early and absentee voting (civicAPI), never a model input
+        step("Early vote (civicAPI)")(early_vote.main)
     step("National history")(build_national_history.main, (asof.month, asof.day))
     step("National environment model")(national_env.main, False)
     step(f"Poll accuracy at {days_out} days out")(poll_average_error.main, max(days_out, 1))
