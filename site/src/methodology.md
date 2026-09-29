@@ -81,9 +81,11 @@ display(html`<div class="stat-row">
   <div class="s"><div class="k">Winners called correctly</div><div class="v">${(all.correct_calls * 100).toFixed(1)}%</div></div>
   <div class="s"><div class="k">Results inside the 80% range</div><div class="v">${(all.inside_80 * 100).toFixed(0)}%</div></div>
   <div class="s"><div class="k">Brier score (lower is better)</div><div class="v">${all.brier.toFixed(3)}</div></div>
-  <div class="s"><div class="k">Using 2024 lean alone</div><div class="v">${all.brier_lean_only.toFixed(3)}</div></div>
+  <div class="s"><div class="k">Lean and national mood alone</div><div class="v">${all.brier_lean_only.toFixed(3)}</div></div>
 </div>`);
 ```
+
+<p class="caption">The last number is a simple yardstick: each race called from its district's or state's most recent presidential result plus the model's national estimate for that year, with no polls, incumbents or anything else. Lower Brier scores are better, and 0.25 is a coin flip.</p>
 
 ### When we said X%, did it happen X% of the time?
 
