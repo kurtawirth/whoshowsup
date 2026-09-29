@@ -130,17 +130,17 @@ display(raceTable(rows, [
     pageSize: 25, placeholder: "Search states and seats"}));
 ```
 
-<p class="caption">Only races where both a Democrat and a Republican ran. "Result" is the winner's margin in the special election; "President ${baseline}" is how the same district voted for president.</p>
+<p class="caption">Only races where both a Democrat and a Republican ran. "Result" is the Democrat's margin over the Republican (or the reverse) in the special election; "President ${baseline}" is how the same district voted for president.</p>
 
 ## What special elections said before, and what happened
 
 ```js
-const hist = national.history.filter((d) => d.specials_implied != null)
+const specHist = national.history.filter((d) => d.specials_implied != null)
   .map((d) => ({...d, miss: d.house_margin == null ? null : d.specials_implied - d.house_margin}));
-const past = hist.filter((d) => d.miss != null);
+const specPast = specHist.filter((d) => d.miss != null);
 display(html`<div class="table-wrap"><table class="wsu-table">
   <thead><tr><th>Cycle</th><th class="num">Races by late Sept.</th><th class="num">Average shift</th><th class="num">Points to a House vote of</th><th class="num">Actual House vote</th></tr></thead>
-  <tbody>${hist.map((d) => html`<tr>
+  <tbody>${specHist.map((d) => html`<tr>
     <td>${cycleLabel(d.year - 1)}</td>
     <td class="num">${d.specials_n}</td>
     <td class="num">${shift(d.specials_overperf)}</td>
@@ -151,9 +151,11 @@ display(html`<div class="table-wrap"><table class="wsu-table">
 ```
 
 ```js
-const read = national.reads.find((d) => d.read === "specials");
-const now = hist.find((d) => d.house_margin == null);
-display(html`<p>To turn the average shift into a national number, add it to the last presidential result: if the country voted ${margin(now.last_pres_margin)} for president and specials are running ${shift(now.specials_overperf)}, they point to a House vote around ${margin(now.specials_implied)}. In each of the ${past.length} past cycles this pointed the right way but ran ${d3.min(past, (d) => d.miss).toFixed(0)} to ${d3.max(past, (d) => d.miss).toFixed(0)} points too Democratic, probably because the people who vote in specials lean more Democratic than the people who vote in November. Three cycles is not much to go on, so the model learns that offset cautiously and subtracts it: this cycle's ${margin(now.specials_implied)} becomes ${margin(read.dem_margin)}. That reading gets ${pct(read.weight)} of the weight in <a href="./national">our national estimate</a>, alongside the generic ballot and the fundamentals.</p>`);
+const specRead = national.reads.find((d) => d.read === "specials");
+const thisCycle = specHist.find((d) => d.house_margin == null);
+const [lo, hi] = d3.extent(specPast, (d) => Math.round(d.miss));
+const missRange = lo === hi ? `about ${lo} points` : `${lo} to ${hi} points`;
+display(html`<p>To turn the average shift into a national number, add it to the last presidential result: if the country voted ${margin(thisCycle.last_pres_margin)} for president and specials are running ${shift(thisCycle.specials_overperf)}, they point to a House vote around ${margin(thisCycle.specials_implied)}. In each of the ${["zero", "one", "two", "three", "four"][specPast.length] ?? specPast.length} past cycles this pointed the right way but ran ${missRange} too Democratic, probably because the people who vote in specials lean more Democratic than the people who vote in November. Three cycles is not much to go on, so the model learns that offset cautiously and subtracts it: this cycle's ${margin(thisCycle.specials_implied)} becomes ${margin(specRead.dem_margin)}. That reading gets ${pct(specRead.weight)} of the weight in <a href="./national">our national estimate</a>, alongside the generic ballot and the fundamentals.</p>`);
 ```
 
 <p class="caption">Special-election results from <a href="https://www.the-downballot.com">The Downballot</a>'s special elections Big Board (formerly Daily Kos Elections), updated every morning. The 2023–24 cycle isn't included in the source data we use.</p>
