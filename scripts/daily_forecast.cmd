@@ -1,6 +1,7 @@
 @echo off
 rem Daily 2026 forecast: refresh all data, rerun the models, push results to GitHub.
-rem Run by the Windows scheduled task "Politics - daily midterm forecast" (7:00 AM; wakes the PC).
+rem Run by the Windows scheduled task "Politics - daily midterm forecast" (7:00 AM; wakes the PC),
+rem launched as "conhost.exe --headless cmd.exe /c ..." so no window appears.
 rem Each day's output goes to logs\forecast_YYYY-MM-DD.log (not committed).
 rem Afterwards, scripts\sleep_if_idle.ps1 puts the PC back to sleep if the task woke it and nobody is using it.
 cd /d "%~dp0.."
