@@ -1,0 +1,12 @@
+{
+ "forecast_date": "2026-09-30",
+ "finished_at": "2026-09-30 07:21",
+ "refresh": true,
+ "failed_steps": [
+  "Website data"
+ ],
+ "warnings": [
+  "Poll check: GOV MA: recent VoteHub poll (MassINC Polling Group, Sep 22) without Maura Healey vs Mike Minogue: Maura Healy, Michael Minogue, Andrea James",
+  "Website data FAILED: TypeError('sequence item 8: expected str instance, float found')"
+ ]
+}
