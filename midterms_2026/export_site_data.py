@@ -306,7 +306,7 @@ def changes(min_move: float = 0.02, top_n: int = 8) -> dict:
     polls = {d: pd.read_csv(hist / d / "polls.csv") if (hist / d / "polls.csv").exists() else None for d in (d0, d1)}
     new_polls = None
     if polls[d0] is not None and polls[d1] is not None:
-        a, b = (polls[d][POLL_KEY].astype(str).agg("|".join, axis=1) for d in (d0, d1))
+        a, b = (polls[d][POLL_KEY].map(str).agg("|".join, axis=1) for d in (d0, d1))  # map(str): blanks become "nan", not NaN
         new_polls = polls[d1][~b.isin(set(a))]
     rows = []
     for rid, r in f.iterrows():

@@ -29,6 +29,32 @@ const shareOf = (v, i) => (v && v[2] ? (100 * v[i]) / v[2] : null);
 const previousKey = (k) => { const [o, y, sp] = k.split("-"); return `${o}-${+y - 4}${sp ? "-special" : ""}`; };
 // remembered across state and election changes (those rebuild the controls)
 const memo = {election: params.get("election") ?? "PRES-2024", shift: params.get("mode") === "shift"};
+// Browser history: the address bar follows the view. Opening a state or a county adds a step the back button
+// returns to; changing the election or Result/Shift just updates the address.
+const nav = {first: true, target: null, timer: null, cur: null};
+const viewQuery = ({state, county, election, shift}) => {
+  const q = new URLSearchParams();
+  if (state) q.set("state", state);
+  if (county) q.set("county", county);
+  if (election && election !== "PRES-2024") q.set("election", election);
+  if (shift) q.set("mode", "shift");
+  const s = q.toString();
+  return s ? `?${s}` : "";
+};
+const queryView = (search) => {
+  const q = new URLSearchParams(search);
+  return {state: (q.get("state") ?? "").toUpperCase(), county: q.get("county"), election: q.get("election") ?? "PRES-2024", shift: q.get("mode") === "shift"};
+};
+// commit after a short pause, so a click that changes both the state and the county is one step
+nav.commit = () => {
+  const qs = viewQuery(nav.cur);
+  if (qs === location.search) { if (nav.target === qs) nav.target = null; nav.first = false; return; }
+  const was = queryView(location.search);
+  const newStep = !nav.first && nav.target === null && (was.state !== nav.cur.state || (was.county ?? null) !== (nav.cur.county ?? null));
+  history[newStep ? "pushState" : "replaceState"](null, "", location.pathname + qs);
+  if (nav.target === qs) nav.target = null;
+  nav.first = false;
+};
 ```
 
 <p class="kicker">Past results · County by county</p>
@@ -94,6 +120,40 @@ function backToNation() {
 }
 const back = statePo ? html`<button class="pr-back" type="button" onclick=${backToNation}>← Back to the national map</button>` : "";
 display(html`${back ? html`<div class="pr-backrow">${back}</div>` : ""}<div class="pr-controls">${stateInput}${electionInput}${modeInput}${search}</div>`);
+```
+
+```js
+// keep the address bar in step with the view
+nav.cur = {state: statePo, county: picked, election, shift: mode !== "Result"};
+clearTimeout(nav.timer);
+nav.timer = setTimeout(nav.commit, 60);
+```
+
+```js
+// back / forward: put the view the address describes back on screen
+function restoreView() {
+  const v = queryView(location.search);
+  nav.target = viewQuery(v);
+  setTimeout(() => { nav.target = null; }, 1500);
+  memo.election = v.election;
+  memo.shift = v.shift;
+  if ((v.county ?? null) !== (picked ?? null)) { search.value = ""; pick(v.county); }
+  if (stateInput.value !== v.state) {
+    // a new state rebuilds the election and Result/Shift controls from memo
+    stateInput.value = v.state;
+    stateInput.dispatchEvent(new Event("input", {bubbles: true}));
+    return;
+  }
+  if (electionInput.value !== v.election && available.includes(v.election)) {
+    electionInput.value = v.election;
+    electionInput.dispatchEvent(new Event("input", {bubbles: true}));
+    return;
+  }
+  const want = v.shift && modeChoices.length > 1 ? modeChoices[1] : "Result";
+  if (modeInput.value !== want) { modeInput.value = want; modeInput.dispatchEvent(new Event("input", {bubbles: true})); }
+}
+addEventListener("popstate", restoreView);
+invalidation.then(() => removeEventListener("popstate", restoreView));
 ```
 
 ```js
