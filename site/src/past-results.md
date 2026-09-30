@@ -104,8 +104,24 @@ const color = d3.scaleDiverging([-span, 0, span], d3.piecewise(d3.interpolateRgb
 const shown = counties.filter((f) => poOf[f.id.slice(0, 2)] && (f.id.slice(0, 2) !== "02" || f.id === "02000") && inState(f.id));
 // statewide (or national) totals for this election
 const tot = shown.reduce((a, f) => { const v = data.results[f.id]?.[election]; if (v) { a[0] += v[0]; a[1] += v[1]; a[2] += v[2]; a.n++; a.d += v[0] > v[1]; } return a; }, Object.assign([0, 0, 0], {n: 0, d: 0}));
+// States whose results aren't broken down by county
+const NOTES = {
+  AK: "Alaska doesn't report election results by borough or county. It reports them by state legislative district, whose lines are redrawn every ten years, so there's no stable local unit to map. Alaska is shown here as one statewide unit, with its full results history.",
+  LA: "Louisiana's counties are called parishes."
+};
+// ...and elections that need a word of context
+const ELECTION_NOTES = {
+  "GA|SEN-2020": "No candidate won a majority in November, so this race went to a January 2021 runoff, which Democrat Jon Ossoff won. The map shows the November vote.",
+  "GA|SEN-2020-special": "This special election put every candidate on one November ballot, several from each party; the map adds them up by party. No one won a majority, and Democrat Raphael Warnock won the January 2021 runoff.",
+  "GA|SEN-2022": "No candidate won a majority in November, so this race went to a December runoff, which Democrat Raphael Warnock also won. The map shows the November vote.",
+  "LA|SEN-2020": "Louisiana puts every candidate on one ballot; the map adds up each party's candidates.",
+  "LA|GOV-2019": "Louisiana puts every candidate on one ballot in October; this is the November runoff between the top two.",
+  "LA|GOV-2023": "Louisiana puts every candidate on one ballot; the map adds up each party's candidates. Republican Jeff Landry won outright in October."
+};
+const notes = [statePo && NOTES[statePo], statePo && ELECTION_NOTES[`${statePo}|${election}`]].filter(Boolean);
+if (notes.length) display(html`<div class="pr-note">${notes.map((n) => html`<p>${n}</p>`)}</div>`);
 display(tot.n ? html`<p class="pr-summary"><b>${electionLabel(election)}, ${statePo ? states.names[statePo] : "all counties"}:</b>
-  ${statePo || election.startsWith("PRES") ? html`${lean(marginOf(tot))} overall (Democrats ${shareOf(tot, 0).toFixed(1)}%, Republicans ${shareOf(tot, 1).toFixed(1)}%). ` : ""}${statePo === "AK" ? "" : `Democrats carried ${tot.d.toLocaleString()} of ${tot.n.toLocaleString()} ${statePo === "LA" ? "parishes" : "counties"}${statePo ? "" : " with a race"}.`}</p>` : html`<p class="caption">No county results for this election here.</p>`);
+  ${statePo || election.startsWith("PRES") ? html`${lean(marginOf(tot))} overall (Democrats ${shareOf(tot, 0).toFixed(1)}%, Republicans ${shareOf(tot, 1).toFixed(1)}%). ` : ""}${statePo === "AK" ? "" : `Democrats carried ${tot.d.toLocaleString()} of ${tot.n.toLocaleString()} ${statePo === "LA" ? "parishes" : statePo === "VA" ? "counties and independent cities" : "counties"}${statePo ? "" : " with a race"}.`}</p>` : html`<p class="caption">No county results for this election here.</p>`);
 ```
 
 ```js
@@ -181,11 +197,12 @@ function countyPanel(fips) {
   const hist = data.elections.filter((e) => r[e.key]).map((e) => {
     const v = r[e.key];
     return {...e, label: electionLabel(e.key), m: marginOf(v), d: shareOf(v, 0), r: shareOf(v, 1), total: v[2],
-      turnout: cv[String(e.year)] ? v[2] / cv[String(e.year)] : null};
+      turnout: (cv[String(e.year)] ?? cv[String(e.year - 1)]) ? v[2] / (cv[String(e.year)] ?? cv[String(e.year - 1)]) : null};
   });
   const chart = Plot.plot({
     width: Math.min(width, 640), height: 220, marginLeft: 48,
-    x: {label: null, ticks: [...new Set(hist.map((d) => d.year))], tickFormat: (y) => (width < 560 ? `'${String(y).slice(2)}` : String(y))},
+    x: {label: null, ticks: [...new Set(hist.map((d) => d.year))],
+      tickFormat: (y) => (width < 560 || new Set(hist.map((d) => d.year)).size > 9 ? `'${String(y).slice(2)}` : String(y))},
     y: {label: "Margin (D minus R)", grid: true, tickFormat: (v) => (v === 0 ? "Even" : v > 0 ? `D+${v}` : `R+${-v}`)},
     symbol: {domain: ["President", "Senate", "Governor"], range: ["circle", "triangle", "square"], legend: true},
     style: {background: "transparent", color: t["ink-3"], fontSize: "12px"},
@@ -208,7 +225,7 @@ function countyPanel(fips) {
         <td class="num"><b style="color:${d.m >= 0 ? t["party-d"] : t["party-r"]}">${lean(d.m)}</b></td><td class="num">${d.total.toLocaleString()}</td>
         <td class="num">${d.turnout ? `${Math.round(100 * d.turnout)}%` : "–"}</td></tr>`)}</tbody>
     </table></div>
-    <p class="caption">Turnout is votes cast in that race as a share of the county's adult citizens (Census estimates, available from 2008). Senate and governor results by county are available for 2018 on.</p>
+    <p class="caption">Turnout is votes cast in that race as a share of the county's adult citizens (Census estimates, available from 2008; odd-year races use the previous year's estimate). Senate and governor results by county are available from 2018 on.</p>
   </div>`;
 }
 function waveWord(b) { return b >= 1.15 ? "turnout swings harder than the state's" : b <= 0.85 ? "turnout swings less than the state's" : "turnout moves about in step with the state"; }
@@ -216,4 +233,4 @@ display(picked && data.results[picked] ? countyPanel(picked) : html`<p class="ca
 function isTouchDevice() { return matchMedia("(pointer: coarse)").matches; }
 ```
 
-<p class="caption">County results from the MIT Election Data + Science Lab (presidential 2000-2024; Senate and governor from 2018), with a few gaps filled from Wikipedia. Alaska reports results by legislative district rather than by borough, so it is shown as one statewide unit, with presidential results only. A handful of places that report separately from their county (Kansas City, Missouri, for example) are left out. Map shapes from the U.S. Census Bureau via us-atlas.</p>
+<p class="caption">County results from the MIT Election Data + Science Lab (presidential 2000-2024; Senate and governor 2018, 2022 and 2024); for races those files don't cover (2020 Senate and governor, 2024 governor, and the odd-year governor races), official results by county from the <a href="https://doi.org/10.7910/DVN/RV80FW">2020 official results collection</a> on Harvard Dataverse, <a href="https://openelections.net">OpenElections</a> (Kansas 2020), the Louisiana Secretary of State (2019), and each race's Wikipedia results table, all checked against official statewide totals. Where one party had several candidates on the same ballot (Georgia's 2020 special election, Louisiana, Alaska), each party's candidates are added together. Arkansas's 2020 Senate race had no Democratic candidate and isn't shown. A handful of places that report separately from their county (Kansas City, Missouri, for example) are left out. Map shapes from the U.S. Census Bureau via us-atlas.</p>

@@ -8,6 +8,10 @@ Sources (all in data/raw/):
   - medsl_2018/         MEDSL precinct returns (US Senate, statewide offices)
   - medsl_2022/         MEDSL precinct returns, one zip per state
   - medsl_2024/         MEDSL county-level US Senate returns
+  - wikipedia/          county tables for races the MEDSL files lack (core/wiki_county_patch.py): 2020 Senate
+                        and governor, 2024 governor, and the odd-year governor races 2019-2025
+  - official_2020/, openelections_ks_2020/, la_sos/   official county results where Wikipedia has no table or
+                        lumps a party's minor candidates together (core/county_official_sources.py)
 
 Why statewide races only: every county has a contested race at the top of
 the ticket, so turnout comparisons are never distorted by an uncontested
@@ -18,7 +22,8 @@ import zipfile
 
 import pandas as pd
 
-from wiki_county_patch import all_patches
+from wiki_county_patch import all_patches, extra_races
+from county_official_sources import all_official
 
 ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / "data" / "raw"
@@ -45,6 +50,8 @@ def _collapse_precincts(df: pd.DataFrame) -> pd.DataFrame:
     df = df[~cand.str.contains(NON_CANDIDATES)]
     df["votes"] = pd.to_numeric(df["votes"], errors="coerce").fillna(0)
     df["county_fips"] = pd.to_numeric(df["county_fips"], errors="coerce")
+    # Alaska reports by legislative district, with no borough code: keep it as one statewide unit (2000)
+    df.loc[df["state_po"].eq("AK") & df["county_fips"].isna(), "county_fips"] = 2000
     df = df.dropna(subset=["county_fips"])
     df["special"] = df["special"].astype(str).str.upper().eq("TRUE")
     # Rescue major-party labels MEDSL files under OTHER: North Dakota's
@@ -139,6 +146,16 @@ def main() -> None:
     patched = set(map(tuple, patches[["year", "state_po", "office", "special"]].drop_duplicates().values))
     keep = [tuple(r) not in patched for r in stat[["year", "state_po", "office", "special"]].values]
     stat = pd.concat([stat[keep], patches], ignore_index=True)
+    # Whole races the MEDSL files don't have: official sources first, then Wikipedia's tables
+    official = all_official()
+    extra, failed = extra_races()
+    have = set(map(tuple, pd.concat([stat, official])[["year", "state_po", "office", "special"]].drop_duplicates().values))
+    extra = extra[[tuple(r) not in have for r in extra[["year", "state_po", "office", "special"]].values]] if len(extra) else extra
+    official_keys = set(map(tuple, official[["year", "state_po", "office", "special"]].drop_duplicates().values))
+    unfilled = {k: v for k, v in failed.items() if k not in official_keys}
+    if unfilled:
+        print("Races still missing county results:", unfilled)
+    stat = pd.concat([stat, official, extra], ignore_index=True)
     stat = stat[stat["state_po"] != "DC"]  # DC "senator" rows are the non-voting shadow seat
     out = pd.concat([pres, stat], ignore_index=True)
     out["county_fips"] = out["county_fips"].astype(int)

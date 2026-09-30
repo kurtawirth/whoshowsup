@@ -383,6 +383,13 @@ def counties() -> dict:
             d_ = int(g.loc[g["party_simplified"] == "DEMOCRAT", "candidatevotes"].sum())
             r_ = int(g.loc[g["party_simplified"] == "REPUBLICAN", "candidatevotes"].sum())
             agg[f"PRES-{y}"] = [d_, r_, int(g["totalvotes"].iloc[0])]
+        # the 2020 Senate race (Sullivan vs. Gross) isn't in the precinct files used above: MEDSL's statewide file
+        sen = pd.read_csv(RAW / "medsl" / "senate_1976_2024.csv", encoding="latin-1")
+        sen = sen[(sen["state_po"] == "AK") & (sen["year"] == 2020) & (sen["stage"].str.lower() == "gen")]
+        if len(sen) and "SEN-2020" not in agg:
+            agg["SEN-2020"] = [int(sen.loc[sen["party_simplified"] == "DEMOCRAT", "candidatevotes"].sum()),
+                               int(sen.loc[sen["party_simplified"] == "REPUBLICAN", "candidatevotes"].sum()),
+                               int(sen["totalvotes"].iloc[0])]
         out["02000"] = agg
         years = {y for f in cvap if f.startswith("02") for y in cvap[f]}
         cvap["02000"] = {y: sum(cvap[f].get(y, 0) for f in list(cvap) if f.startswith("02") and f != "02000") for y in years}

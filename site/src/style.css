@@ -342,3 +342,5 @@ details summary { cursor: pointer; font: 600 14px var(--sans); color: var(--ink-
 .pr-summary { font-family: var(--sans); font-size: 15px; margin: 8px 0 12px; }
 .pr-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; margin: 8px 0 20px; font-family: var(--sans); }
 .pr-panel { margin-top: 12px; padding-top: 4px; border-top: 1px solid var(--hair); }
+.pr-note { font-family: var(--sans); font-size: 14px; line-height: 1.5; background: var(--card); border: 1px solid var(--hair); border-left: 3px solid var(--ink-3); border-radius: 6px; padding: 10px 14px; margin: 6px 0 12px; max-width: 720px; }
+.pr-note p { margin: 0; font: inherit; max-width: none; } .pr-note p + p { margin-top: 6px; }

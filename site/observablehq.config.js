@@ -50,7 +50,7 @@ const nav = [
   ["/house", "House"],
   ["/senate", "Senate"],
   ["/governors", "Governors"],
-  ["/national", "The national picture"],
+  ["/national", "National picture"],
   ["/specials", "Special elections"],
   ["/early-vote", "Early vote"],
   ["/results", "Election night"],
