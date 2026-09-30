@@ -126,6 +126,7 @@ if (polls.length) {
 if ((det.past ?? []).length) {
   display(html`<h2>Past results</h2><p class="caption">${r.office === "HOUSE" ? "Presidential margins within this district's current lines." : "Statewide results since 2000, two-party margin."}</p>`);
   display(pastResults(det.past, {width: Math.min(width, 800)}));
+  if (r.office !== "HOUSE" && r.state_po !== "AK") display(html`<p><a href="${link(`past-results?state=${r.state_po}`)}">See how each ${r.state_po === "LA" ? "parish" : "county"} in ${r.state_name} voted →</a></p>`);
 }
 ```
 

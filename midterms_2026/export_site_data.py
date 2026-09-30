@@ -13,6 +13,7 @@ pages load directly; nothing here changes the model.
   hexmap.json       House hex layout
   markets.json      PredictIt prices matched to our races (display only)
   changes.json      what moved since the previous daily run, and why (front page)
+  counties.json     county results 2000-2024, eligible adults and turnout wave sensitivity (Past results page)
 """
 from pathlib import Path
 import json
@@ -337,6 +338,39 @@ def changes(min_move: float = 0.02, top_n: int = 8) -> dict:
             "moved": len(rows), "races": rows[:top_n]}
 
 
+def counties() -> dict:
+    """County-level results for the Past results page (display only): presidential 2000-2024, Senate and
+    governor 2018-2024 (core/build_county_results.py); eligible adults (Census CVAP, 2008 on, as in
+    core/turnout_sensitivity.py) for turnout; and each county's turnout wave sensitivity
+    (core/turnout_sensitivity.py). Alaska reports by legislative district rather than borough, so it has
+    no county rows. Compact: {fips: {"PRES-2024": [dem, rep, total], ...}}."""
+    res = pd.read_parquet(PROC / "county_results.parquet")
+    res = res[res["county_fips"].notna()]
+    res["key"] = res["office"] + "-" + res["year"].astype(str) + np.where(res["special"], "-special", "")
+    res["fips"] = res["county_fips"].astype(int).astype(str).str.zfill(5)
+    out = {}
+    for r in res.itertuples():
+        out.setdefault(r.fips, {})[r.key] = [int(r.dem), int(r.rep), int(r.total)]
+    import sys
+    sys.path.insert(0, str(ROOT / "core"))
+    from turnout_sensitivity import load_cvap
+    cv = load_cvap()
+    cvap = {}
+    for r in cv.dropna(subset=["cvap", "county_fips", "year"]).itertuples():
+        cvap.setdefault(str(int(r.county_fips)).zfill(5), {})[str(int(r.year))] = int(round(r.cvap))
+    sens = {}
+    sp = PROC / "county_turnout_sensitivity.parquet"
+    if sp.exists():
+        s = pd.read_parquet(sp)
+        for r in s.itertuples():
+            if pd.notna(r.dem_beta) and pd.notna(r.rep_beta):
+                sens[str(int(r.county_fips)).zfill(5)] = [round(float(r.dem_beta), 2), round(float(r.rep_beta), 2)]
+    elections = (res.drop_duplicates("key")[["key", "year", "office", "special"]]
+                 .sort_values(["year", "office"]).to_dict("records"))
+    names = {str(int(r.county_fips)).zfill(5): str(r.name).split(",")[0] for r in cv.dropna(subset=["name"]).drop_duplicates("county_fips", keep="last").itertuples()}
+    return {"elections": elections, "results": out, "cvap": cvap, "sensitivity": sens, "names": names}
+
+
 def early_vote() -> dict:
     """Early and absentee voting by state (core/early_vote.py, civicAPI): the latest counts, the daily
     series of ballots cast, and each state's 2022 turnout (all U.S. House votes) for scale."""
@@ -413,6 +447,7 @@ def main() -> None:
     write("early_vote.json", early_vote())
     write("markets.json", markets())
     write("changes.json", changes())
+    write("counties.json", counties())
     import share_card  # the preview image for shared links, with today's odds
     share_card.make()
     sizes = {p.name: f"{p.stat().st_size / 1024:.0f} KB" for p in sorted(SITE.glob("*.json"))}

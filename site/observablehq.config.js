@@ -54,6 +54,7 @@ const nav = [
   ["/specials", "Special elections"],
   ["/early-vote", "Early vote"],
   ["/results", "Election night"],
+  ["/past-results", "Past results"],
   ["/compare", "Compare"],
   ["/methodology", "How it works"]
 ];

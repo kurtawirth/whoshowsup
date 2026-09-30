@@ -332,3 +332,13 @@ details summary { cursor: pointer; font: 600 14px var(--sans); color: var(--ink-
 /* front page: what changed since the last run */
 .changes { padding-left: 1.1em; }
 .changes li { margin: 6px 0; }
+
+/* past results (county explorer) */
+.pr-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px; margin: 14px 0 10px; font-family: var(--sans); }
+.pr-controls form { margin: 0; width: auto; --label-width: auto; }
+.pr-controls form > label { width: auto; margin-right: 8px; font-size: 13px; color: var(--ink-3); font-weight: 600; }
+.pr-controls select, .pr-controls input[type=text] { font: 14px var(--sans); padding: 6px 10px; border-radius: 8px; border: 1px solid var(--axis); background: var(--card); color: var(--ink); }
+.pr-controls input[type=radio] { accent-color: var(--ink-2); }
+.pr-summary { font-family: var(--sans); font-size: 15px; margin: 8px 0 12px; }
+.pr-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; margin: 8px 0 20px; font-family: var(--sans); }
+.pr-panel { margin-top: 12px; padding-top: 4px; border-top: 1px solid var(--hair); }
