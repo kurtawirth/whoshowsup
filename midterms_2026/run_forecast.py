@@ -125,6 +125,8 @@ def record(asof: pd.Timestamp) -> pd.DataFrame:
     snap.mkdir(parents=True, exist_ok=True)
     for f in ("race_forecasts.csv", "chamber_summary.csv", "topline.csv", "national_env_reads.csv"):
         shutil.copy(OUT / f, snap / f)
+    # the day's race polls, so the site can say which polls were new since the last run ("What changed")
+    polls[polls["end_date"] <= asof][["office", "state_po", "district", "special", "pollster", "end_date", "dem_pct", "rep_pct", "population"]].to_csv(snap / "polls.csv", index=False)
     return top
 
 

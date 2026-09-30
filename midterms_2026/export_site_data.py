@@ -12,6 +12,7 @@ pages load directly; nothing here changes the model.
   track_record.json backtests: national and race-level calibration
   hexmap.json       House hex layout
   markets.json      PredictIt prices matched to our races (display only)
+  changes.json      what moved since the previous daily run, and why (front page)
 """
 from pathlib import Path
 import json
@@ -283,6 +284,59 @@ def markets() -> dict:
                         for d, row in ctrl.iterrows()]}
 
 
+POLL_KEY = ["office", "state_po", "district", "special", "pollster", "end_date", "dem_pct", "rep_pct", "population"]
+
+
+def changes(min_move: float = 0.02, top_n: int = 8) -> dict:
+    """What moved since the previous daily run, and roughly why. A race's forecast margin is about
+    w x poll average + (1 - w) x fundamentals (w = the polls' weight), so a change splits into: polls
+    (new polls, or older ones fading), the national estimate, campaign money, candidate factors
+    (experience, ideology), and anything else, each in points of margin toward the Democratic side."""
+    hist = OUT / "history"
+    days = sorted(p.name for p in hist.iterdir() if (p / "race_forecasts.csv").exists())
+    if len(days) < 2:
+        return {}
+    d0, d1 = days[-2], days[-1]
+    t0, t1 = (pd.read_csv(hist / d / "topline.csv").iloc[0] for d in (d0, d1))
+    f0, f1 = (pd.read_csv(hist / d / "race_forecasts.csv").set_index("race_id") for d in (d0, d1))
+    f = f1.join(f0, rsuffix="_0", how="inner")
+    f = f[f["race_type"] != "same_party"]
+    dnat = float(t1["nat_median"] - t0["nat_median"])
+    polls = {d: pd.read_csv(hist / d / "polls.csv") if (hist / d / "polls.csv").exists() else None for d in (d0, d1)}
+    new_polls = None
+    if polls[d0] is not None and polls[d1] is not None:
+        a, b = (polls[d][POLL_KEY].astype(str).agg("|".join, axis=1) for d in (d0, d1))
+        new_polls = polls[d1][~b.isin(set(a))]
+    rows = []
+    for rid, r in f.iterrows():
+        dp = float(r["p_dem"] - r["p_dem_0"])
+        if abs(dp) < min_move:
+            continue
+        w1, w0 = (0.0 if pd.isna(x) else float(x) for x in (r["poll_weight"], r["poll_weight_0"]))
+        pa1, pa0 = (0.0 if pd.isna(x) else float(x) for x in (r["poll_avg"], r["poll_avg_0"]))
+        g = lambda c: (0.0 if pd.isna(r.get(c)) else float(r[c])) - (0.0 if pd.isna(r.get(c + "_0")) else float(r[c + "_0"]))  # noqa: E731
+        parts = {"polls": w1 * pa1 - w0 * pa0 - (w1 - w0) * float(r["fundamentals_mean_0"]),
+                 "national": (1 - w1) * dnat,
+                 "money": (1 - w1) * g("money_adj"),
+                 "candidates": (1 - w1) * (g("quality_adj") + g("ideology_adj"))}
+        dm = float(r["margin_median"] - r["margin_median_0"])
+        parts["other"] = dm - sum(parts.values())
+        n_new = int(r["poll_count"] - r["poll_count_0"]) if pd.notna(r["poll_count"]) and pd.notna(r["poll_count_0"]) else 0
+        names = []
+        if new_polls is not None:
+            m = new_polls[(new_polls["office"] == r["office"]) & (new_polls["state_po"] == r["state_po"])
+                          & (new_polls["district"] == r["district"]) & (new_polls["special"].astype(str) == str(r["special"]))]
+            n_new, names = len(m), sorted(set(m["pollster"].astype(str)))
+        rows.append({"race_id": rid, "p0": float(r["p_dem_0"]), "p1": float(r["p_dem"]), "m0": float(r["margin_median_0"]),
+                     "m1": float(r["margin_median"]), "new_polls": n_new, "pollsters": names[:4],
+                     "parts": {k: round(v, 2) for k, v in parts.items()}})
+    rows.sort(key=lambda x: -abs(x["p1"] - x["p0"]))
+    return {"date": d1, "prev": d0, "nat0": float(t0["nat_median"]), "nat1": float(t1["nat_median"]),
+            "house0": float(t0["p_house_d"]), "house1": float(t1["p_house_d"]),
+            "senate0": float(t0["p_senate_d"]), "senate1": float(t1["p_senate_d"]),
+            "moved": len(rows), "races": rows[:top_n]}
+
+
 def early_vote() -> dict:
     """Early and absentee voting by state (core/early_vote.py, civicAPI): the latest counts, the daily
     series of ballots cast, and each state's 2022 turnout (all U.S. House votes) for scale."""
@@ -358,6 +412,7 @@ def main() -> None:
     write("states.json", {"names": STATE_NAMES, "fips": FIPS})
     write("early_vote.json", early_vote())
     write("markets.json", markets())
+    write("changes.json", changes())
     sizes = {p.name: f"{p.stat().st_size / 1024:.0f} KB" for p in sorted(SITE.glob("*.json"))}
     print("wrote", sizes)
 

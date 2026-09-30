@@ -11,6 +11,7 @@ const races = FileAttachment("data/races.json").json();
 const history = FileAttachment("data/history.json").json();
 const national = FileAttachment("data/national.json").json();
 const track = FileAttachment("data/track_record.json").json();
+const changes = FileAttachment("data/changes.json").json();
 ```
 
 ```js
@@ -144,6 +145,40 @@ const strongest = [...reads].sort((a, b) => b.dem_margin - a.dem_margin)[0];
 display(html`<p>Three independent readings of the national mood, each corrected for how it has missed before, are blended by how accurate they have historically been. ${strongest.read === "specials"
   ? "Special-election results, our main turnout signal, currently point to the most Democratic environment of the three."
   : `Right now the ${readLabel[strongest.read].toLowerCase()} reading is the most favorable to Democrats.`} <a href="./national">See the national picture →</a></p>`);
+```
+
+```js
+// What moved since the previous daily run, and why (changes.json; see export_site_data.changes)
+const ch = changes;
+const office = {SEN: "Senate", GOV: "governor", HOUSE: "House"};
+const nameOf = (r) => (r.office === "HOUSE" ? `House: ${r.label}` : `${r.state_name} ${office[r.office]}${r.special ? " (special)" : ""}`);
+const last = (s) => String(s).trim().split(/\s+/).filter((w) => !/^(Jr\.?|Sr\.?|I{2,3})$/.test(w)).pop();
+const favText = (p) => `${p >= 0.5 ? "Democrats" : "Republicans"} ${pct(Math.max(p, 1 - p))}`;
+function why(x, r) {
+  const s = sides(r), toward = (v) => last(v > 0 ? s.d : s.r);
+  const dm = x.m1 - x.m0;
+  const label = {
+    polls: x.new_polls ? `${x.new_polls} new poll${x.new_polls === 1 ? "" : "s"}${x.pollsters.length ? ` (${x.pollsters.join(", ")})` : ""}` : "older polls counting for less as they age",
+    national: "our national estimate", money: "new campaign-finance reports", candidates: "candidate factors", other: "other model inputs"};
+  const parts = Object.entries(x.parts).filter(([k, v]) => Math.abs(v) >= Math.max(0.3, 0.25 * Math.abs(dm)))
+    .sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]));
+  const withMove = parts.filter(([, v]) => Math.sign(v) === Math.sign(dm)), against = parts.filter(([, v]) => Math.sign(v) !== Math.sign(dm));
+  if (!withMove.length) return "";
+  const list = (xs) => xs.map(([k]) => label[k]).join(" and ");
+  return ` Driven mostly by ${list(withMove)}, which moved our expected margin ${Math.abs(dm).toFixed(1)} points toward ${toward(dm)}${against.length ? `, partly offset by ${list(against)}` : ""}.`;
+}
+const byId = new Map(races.map((r) => [r.race_id, r]));
+if (ch && ch.date) {
+  const items = ch.races.filter((x) => byId.has(x.race_id)).map((x) => {
+    const r = byId.get(x.race_id), s = sides(r), up = x.p1 > x.p0;
+    const who = last(up ? s.d : s.r), a = up ? x.p0 : 1 - x.p0, b = up ? x.p1 : 1 - x.p1;
+    return html`<li><a href="./race/${r.race_id}">${nameOf(r)}</a>: ${who}'s chance rose from ${pct(a)} to ${pct(b)}.${why(x, r)}</li>`;
+  });
+  display(html`<h2>What changed since ${date(ch.prev)}</h2>
+  <p>House: ${favText(ch.house1)} (was ${favText(ch.house0)}). Senate: ${favText(ch.senate1)} (was ${favText(ch.senate0)}). National estimate: ${margin(ch.nat1)} (was ${margin(ch.nat0)}).</p>
+  ${items.length ? html`<ul class="changes">${items}</ul>${ch.moved > items.length ? html`<p class="caption">${ch.moved} races moved 2 points or more; the biggest moves are shown.</p>` : ""}`
+    : html`<p class="caption">No race's odds moved by 2 points or more.</p>`}`);
+}
 ```
 
 ## How the forecast has moved
