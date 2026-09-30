@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "observable preview --port 3000 --no-open",
-    "build": "observable build",
+    "build": "observable build && node copy-static.js",
     "clean": "rimraf src/.observablehq/cache"
   },
   "dependencies": {

@@ -413,6 +413,8 @@ def main() -> None:
     write("early_vote.json", early_vote())
     write("markets.json", markets())
     write("changes.json", changes())
+    import share_card  # the preview image for shared links, with today's odds
+    share_card.make()
     sizes = {p.name: f"{p.stat().st_size / 1024:.0f} KB" for p in sorted(SITE.glob("*.json"))}
     print("wrote", sizes)
 
