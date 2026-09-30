@@ -368,6 +368,25 @@ def counties() -> dict:
     elections = (res.drop_duplicates("key")[["key", "year", "office", "special"]]
                  .sort_values(["year", "office"]).to_dict("records"))
     names = {str(int(r.county_fips)).zfill(5): str(r.name).split(",")[0] for r in cv.dropna(subset=["name"]).drop_duplicates("county_fips", keep="last").itertuples()}
+    # Alaska reports by state legislative district, not borough, so it's shown as one statewide unit ("02000")
+    ak = [f for f in out if f.startswith("02")]
+    if ak:
+        agg = {}
+        for f in ak:
+            for k, v in out.pop(f).items():
+                agg[k] = [a + b for a, b in zip(agg.get(k, [0, 0, 0]), v)]
+        # MEDSL's statewide presidential totals, not the districts added up: its 2004 district file sums to
+        # about 1.5 times Alaska's real vote (every other year matches)
+        pres = pd.read_csv(RAW / "medsl" / "president_1976_2024.csv", encoding="latin-1")
+        pres = pres[(pres["state_po"] == "AK") & (pres["year"] >= 2000)]
+        for y, g in pres.groupby("year"):
+            d_ = int(g.loc[g["party_simplified"] == "DEMOCRAT", "candidatevotes"].sum())
+            r_ = int(g.loc[g["party_simplified"] == "REPUBLICAN", "candidatevotes"].sum())
+            agg[f"PRES-{y}"] = [d_, r_, int(g["totalvotes"].iloc[0])]
+        out["02000"] = agg
+        years = {y for f in cvap if f.startswith("02") for y in cvap[f]}
+        cvap["02000"] = {y: sum(cvap[f].get(y, 0) for f in list(cvap) if f.startswith("02") and f != "02000") for y in years}
+        names["02000"] = "Alaska (statewide)"
     return {"elections": elections, "results": out, "cvap": cvap, "sensitivity": sens, "names": names}
 
 

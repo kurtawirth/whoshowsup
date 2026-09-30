@@ -16,6 +16,9 @@ const params = new URLSearchParams(location.search);
 const poOf = Object.fromEntries(Object.entries(states.fips).map(([po, f]) => [f, po]));
 const counties = topojson.feature(topo, topo.objects.counties).features;
 const stateShapes = topojson.feature(topo, topo.objects.states).features;
+// Alaska reports by legislative district rather than borough: shown as one statewide unit
+const alaska = stateShapes.find((s) => s.id === "02");
+if (alaska) counties.push({...alaska, id: "02000", properties: {name: "Alaska"}});
 const nameOf = (fips) => data.names[fips] ?? counties.find((f) => f.id === fips)?.properties.name ?? fips;
 const officeName = {PRES: "President", SEN: "Senate", GOV: "Governor"};
 const electionLabel = (k) => { const [o, y, sp] = k.split("-"); return `${officeName[o]} ${y}${sp ? " (special)" : ""}`; };
@@ -24,7 +27,8 @@ const marginOf = (v) => (v && v[0] + v[1] > 0 ? (100 * (v[0] - v[1])) / (v[0] + 
 const shareOf = (v, i) => (v && v[2] ? (100 * v[i]) / v[2] : null);
 // the same office four years earlier (presidential: the last presidential race), for the shift view
 const previousKey = (k) => { const [o, y, sp] = k.split("-"); return `${o}-${+y - 4}${sp ? "-special" : ""}`; };
-const memo = {election: params.get("election") ?? "PRES-2024"};  // remembered across state changes
+// remembered across state and election changes (those rebuild the controls)
+const memo = {election: params.get("election") ?? "PRES-2024", shift: params.get("mode") === "shift"};
 ```
 
 <p class="kicker">Past results · County by county</p>
@@ -34,7 +38,7 @@ const memo = {election: params.get("election") ?? "PRES-2024"};  // remembered a
 <p class="dek">Pick a state and an election to see how its counties voted, or how they shifted since the last time. Tap or click a county for its full history: every presidential race since 2000, recent Senate and governor races, and turnout. These are past results only; they are not part of the forecast.</p>
 
 ```js
-const stateList = Object.entries(states.names).filter(([po]) => po !== "DC" && po !== "AK").sort((a, b) => a[1].localeCompare(b[1]));
+const stateList = Object.entries(states.names).filter(([po]) => po !== "DC").sort((a, b) => a[1].localeCompare(b[1]));
 const stateInput = Inputs.select([["", "All states"], ...stateList], {label: "State", width: 190, format: ([, n]) => n, valueof: ([po]) => po,
   value: stateList.find(([po]) => po === (params.get("state") ?? "").toUpperCase()) ? (params.get("state") ?? "").toUpperCase() : ""});
 const statePo = Generators.input(stateInput);
@@ -53,7 +57,9 @@ memo.election = election;
 const prevKey = previousKey(election);
 const canShift = Object.values(data.results).some((r) => r[prevKey]);
 const modeChoices = canShift ? ["Result", `Shift since ${electionLabel(prevKey).replace(/^\w+ /, "")}`] : ["Result"];
-const modeInput = Inputs.radio(modeChoices, {value: params.get("mode") === "shift" && canShift ? modeChoices[1] : "Result"});
+const modeInput = Inputs.radio(modeChoices, {value: memo.shift && canShift ? modeChoices[1] : "Result"});
+// remember the choice the moment it's made, so rebuilding the controls keeps it
+modeInput.addEventListener("input", () => { memo.shift = modeInput.value !== "Result"; });
 const mode = Generators.input(modeInput);
 ```
 
@@ -64,7 +70,7 @@ const pick = (fips) => { picked.value = fips; };
 
 ```js
 // Search any county by name (jumps to its state)
-const allNames = Object.keys(data.results).filter((f) => poOf[f.slice(0, 2)] && f.slice(0, 2) !== "02")
+const allNames = Object.keys(data.results).filter((f) => poOf[f.slice(0, 2)])
   .map((f) => [`${nameOf(f)}, ${states.names[poOf[f.slice(0, 2)]]}`, f]);
 const byLabel = new Map(allNames);
 const search = Inputs.text({placeholder: "Find a county", datalist: allNames.map(([l]) => l), width: 240});
@@ -95,11 +101,11 @@ const valueOf = (fips) => {
 const span = shift ? 25 : 50;
 const neutral = dark ? "#3a3936" : "#ecebe6";
 const color = d3.scaleDiverging([-span, 0, span], d3.piecewise(d3.interpolateRgb, [t.rep, neutral, t.dem])).clamp(true);
-const shown = counties.filter((f) => poOf[f.id.slice(0, 2)] && f.id.slice(0, 2) !== "02" && inState(f.id));
+const shown = counties.filter((f) => poOf[f.id.slice(0, 2)] && (f.id.slice(0, 2) !== "02" || f.id === "02000") && inState(f.id));
 // statewide (or national) totals for this election
 const tot = shown.reduce((a, f) => { const v = data.results[f.id]?.[election]; if (v) { a[0] += v[0]; a[1] += v[1]; a[2] += v[2]; a.n++; a.d += v[0] > v[1]; } return a; }, Object.assign([0, 0, 0], {n: 0, d: 0}));
 display(tot.n ? html`<p class="pr-summary"><b>${electionLabel(election)}, ${statePo ? states.names[statePo] : "all counties"}:</b>
-  ${statePo || election.startsWith("PRES") ? html`${lean(marginOf(tot))} overall (Democrats ${shareOf(tot, 0).toFixed(1)}%, Republicans ${shareOf(tot, 1).toFixed(1)}%). ` : ""}Democrats carried ${tot.d.toLocaleString()} of ${tot.n.toLocaleString()} counties${statePo ? "" : " with a race"}.</p>` : html`<p class="caption">No county results for this election here.</p>`);
+  ${statePo || election.startsWith("PRES") ? html`${lean(marginOf(tot))} overall (Democrats ${shareOf(tot, 0).toFixed(1)}%, Republicans ${shareOf(tot, 1).toFixed(1)}%). ` : ""}${statePo === "AK" ? "" : `Democrats carried ${tot.d.toLocaleString()} of ${tot.n.toLocaleString()} ${statePo === "LA" ? "parishes" : "counties"}${statePo ? "" : " with a race"}.`}</p>` : html`<p class="caption">No county results for this election here.</p>`);
 ```
 
 ```js
@@ -108,8 +114,9 @@ function countyMap(width) {
   let projection;
   if (focus) {
     const [[lon0, lat0], [lon1, lat1]] = d3.geoBounds(focus);
+    const center = lon1 < lon0 ? (lon0 + lon1 + 360) / 2 : (lon0 + lon1) / 2;  // Alaska crosses the 180th meridian
     projection = d3.geoConicEqualArea().parallels([lat0 + (lat1 - lat0) / 6, lat1 - (lat1 - lat0) / 6])
-      .rotate([-(lon0 + lon1) / 2, 0]).fitExtent([[8, 8], [967, 602]], focus);
+      .rotate([-center, 0]).fitExtent([[8, 8], [967, 602]], focus);
   } else {
     projection = d3.geoAlbersUsa().fitExtent([[4, 4], [971, 606]], {type: "FeatureCollection", features: shown});
   }
@@ -123,7 +130,7 @@ function countyMap(width) {
   const tt = tip();
   const rows = (f) => {
     const r = data.results[f.id] ?? {}, v = r[election], m = marginOf(v);
-    const out = [["t-title", `${nameOf(f.id)}, ${statePo ? states.names[statePo] : poOf[f.id.slice(0, 2)]}`]];
+    const out = [["t-title", f.id === "02000" ? "Alaska (statewide)" : `${nameOf(f.id)}, ${statePo ? states.names[statePo] : poOf[f.id.slice(0, 2)]}`]];
     if (!v) return [...out, ["t-sub", "No result for this election"]];
     out.push(["t-val", lean(m)], ["t-sub", `Democrats ${shareOf(v, 0).toFixed(1)}%, Republicans ${shareOf(v, 1).toFixed(1)}%`]);
     if (shift && r[prevKey]) out.push(["t-sub", `Shift since ${prevKey.split("-")[1]}: ${m - marginOf(r[prevKey]) >= 0 ? "toward Democrats" : "toward Republicans"} by ${Math.abs(m - marginOf(r[prevKey])).toFixed(1)}`]);
@@ -137,7 +144,12 @@ function countyMap(width) {
     .on("pointerenter", function (event, f) { if (isTouch(event)) return; d3.select(this).attr("stroke", t.ink).attr("stroke-width", 1.5).raise(); tt.show(event, rows(f)); })
     .on("pointermove", (event) => { if (!isTouch(event)) tt.move(event); })
     .on("pointerleave", function (event, f) { if (isTouch(event)) return; d3.select(this).attr("stroke", valueOf(f.id) == null ? t["ink-3"] : t.surface).attr("stroke-width", statePo ? 0.6 : 0.15); tt.hide(); })
-    .on("click", (event, f) => { tt.hide(); pick(f.id); });
+    .on("click", (event, f) => {
+      tt.hide();
+      pick(f.id);
+      const po = poOf[f.id.slice(0, 2)];
+      if (!statePo && po) { stateInput.value = po; stateInput.dispatchEvent(new Event("input", {bubbles: true})); }
+    });
   // state borders on top
   if (!statePo) svg.append("path").datum(topojson.mesh(topo, topo.objects.states, (a, b) => a !== b && a.id !== "02" && b.id !== "02"))
     .attr("d", path).attr("fill", "none").attr("stroke", t.surface).attr("stroke-width", statePo ? 0 : 1).attr("vector-effect", "non-scaling-stroke");
@@ -173,7 +185,7 @@ function countyPanel(fips) {
   });
   const chart = Plot.plot({
     width: Math.min(width, 640), height: 220, marginLeft: 48,
-    x: {label: null, tickFormat: "d", ticks: width < 560 ? [2000, 2004, 2008, 2012, 2016, 2020, 2024] : [...new Set(hist.map((d) => d.year))]},
+    x: {label: null, ticks: [...new Set(hist.map((d) => d.year))], tickFormat: (y) => (width < 560 ? `'${String(y).slice(2)}` : String(y))},
     y: {label: "Margin (D minus R)", grid: true, tickFormat: (v) => (v === 0 ? "Even" : v > 0 ? `D+${v}` : `R+${-v}`)},
     symbol: {domain: ["President", "Senate", "Governor"], range: ["circle", "triangle", "square"], legend: true},
     style: {background: "transparent", color: t["ink-3"], fontSize: "12px"},
@@ -187,7 +199,7 @@ function countyPanel(fips) {
   const s = data.sensitivity[fips];
   const waveText = s ? `When a party's turnout surges or sags across ${states.names[po]}, this county's ${waveWord(s[0])} for Democrats (${s[0].toFixed(1)}x the state's swing) and ${waveWord(s[1])} for Republicans (${s[1].toFixed(1)}x).` : "";
   return html`<div class="pr-panel">
-    <h2>${nameOf(fips)}, ${states.names[po]}</h2>
+    <h2>${fips === "02000" ? "Alaska (statewide)" : `${nameOf(fips)}, ${states.names[po]}`}</h2>
     ${waveText ? html`<p>${waveText}</p>` : ""}
     ${chart}
     <div class="table-wrap"><table class="wsu-table">
@@ -204,4 +216,4 @@ display(picked && data.results[picked] ? countyPanel(picked) : html`<p class="ca
 function isTouchDevice() { return matchMedia("(pointer: coarse)").matches; }
 ```
 
-<p class="caption">County results from the MIT Election Data + Science Lab (presidential 2000-2024; Senate and governor from 2018), with a few gaps filled from Wikipedia. Alaska isn't shown: it reports results by legislative district rather than by borough. A handful of places that report separately from their county (Kansas City, Missouri, for example) are left out. Map shapes from the U.S. Census Bureau via us-atlas.</p>
+<p class="caption">County results from the MIT Election Data + Science Lab (presidential 2000-2024; Senate and governor from 2018), with a few gaps filled from Wikipedia. Alaska reports results by legislative district rather than by borough, so it is shown as one statewide unit, with presidential results only. A handful of places that report separately from their county (Kansas City, Missouri, for example) are left out. Map shapes from the U.S. Census Bureau via us-atlas.</p>
