@@ -85,7 +85,15 @@ search.addEventListener("input", () => {
 
 ```js
 // all the controls in one row (re-laid out when the election list changes with the state)
-display(html`<div class="pr-controls">${stateInput}${electionInput}${modeInput}${search}</div>`);
+// from a state (or a county in it), one click back to the whole country
+function backToNation() {
+  pick(null);
+  search.value = "";
+  stateInput.value = "";
+  stateInput.dispatchEvent(new Event("input", {bubbles: true}));
+}
+const back = statePo ? html`<button class="pr-back" type="button" onclick=${backToNation}>← Back to the national map</button>` : "";
+display(html`${back ? html`<div class="pr-backrow">${back}</div>` : ""}<div class="pr-controls">${stateInput}${electionInput}${modeInput}${search}</div>`);
 ```
 
 ```js

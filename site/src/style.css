@@ -344,3 +344,6 @@ details summary { cursor: pointer; font: 600 14px var(--sans); color: var(--ink-
 .pr-panel { margin-top: 12px; padding-top: 4px; border-top: 1px solid var(--hair); }
 .pr-note { font-family: var(--sans); font-size: 14px; line-height: 1.5; background: var(--card); border: 1px solid var(--hair); border-left: 3px solid var(--ink-3); border-radius: 6px; padding: 10px 14px; margin: 6px 0 12px; max-width: 720px; }
 .pr-note p { margin: 0; font: inherit; max-width: none; } .pr-note p + p { margin-top: 6px; }
+.pr-backrow { margin: 14px 0 -4px; }
+.pr-back { font: 600 14px var(--sans); padding: 7px 14px; border-radius: 8px; border: 1px solid var(--axis); background: var(--card); color: var(--ink); cursor: pointer; }
+.pr-back:hover { background: var(--page); border-color: var(--ink-3); }
