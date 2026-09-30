@@ -116,6 +116,29 @@ export default {
       if (!svg.contains(e.target)) svg.dispatchEvent(new PointerEvent("pointerleave", {pointerType: "mouse"}));
   }, true);
 })();
+</script>
+<script>
+// The header grows to fit its contents; keep the page below it by publishing its real height.
+(() => {
+  const set = () => {
+    const h = document.getElementById("observablehq-header");
+    if (h) document.documentElement.style.setProperty("--wsu-header-h", h.offsetHeight + "px");
+  };
+  document.addEventListener("DOMContentLoaded", () => {
+    set();
+    const h = document.getElementById("observablehq-header");
+    if (h && "ResizeObserver" in window) new ResizeObserver(set).observe(h);
+    // the menu row: fade its right edge only while there's more to scroll to, and bring this page's item into view
+    const nav = document.querySelector(".wsu-nav");
+    if (!nav) return;
+    const fade = () => nav.classList.toggle("overflowing", nav.scrollLeft + nav.clientWidth < nav.scrollWidth - 4);
+    nav.addEventListener("scroll", fade, {passive: true});
+    if ("ResizeObserver" in window) new ResizeObserver(fade).observe(nav);
+    const cur = nav.querySelector("[aria-current]");
+    if (cur && nav.scrollWidth > nav.clientWidth) nav.scrollLeft = Math.max(0, cur.offsetLeft - nav.clientWidth / 2 + cur.offsetWidth / 2);
+    fade();
+  });
+})();
 </script>`,
   header: ({path}) => `
 <a class="wsu-brand" href="/">

@@ -61,7 +61,7 @@ display(Plot.plot({
     Plot.tip(readRows, Plot.pointerY({x: "dem_margin", y: "name", title: (d) => `${d.name}: ${margin(d.dem_margin)}${d.combined ? "" : ` (${Math.round(d.weight * 100)}% of the weight)`}\n80% range: ${margin(d.lo)} to ${margin(d.hi)}`}))
   ]
 }));
-display(html`<div class="grid-2" style="margin-top:8px">${reads.map((r) => html`<div class="panel"><h3>${readInfo[r.read][0]}</h3><p style="font-size:16px">${readInfo[r.read][1]}</p></div>`)}</div>`);
+display(html`<div class="grid-3" style="margin-top:8px">${reads.map((r) => html`<div class="panel"><h3>${readInfo[r.read][0]}</h3><p style="font-size:16px">${readInfo[r.read][1]}</p></div>`)}</div>`);
 ```
 
 ## The generic ballot
@@ -77,7 +77,7 @@ const trend = days.map((day) => {
   return {date: day, margin: s / w};
 });
 display(Plot.plot({
-  width, height: 320, marginLeft: 44,
+  width, height: 320, marginLeft: 44, marginRight: 56,
   x: {label: null, type: "utc"},
   y: {label: "Democratic lead (two-party)", grid: true, tickFormat: (d) => (d === 0 ? "Even" : margin(d).replace(".0", ""))},
   style,

@@ -204,7 +204,8 @@ export function pastResults(rows, {width}) {
   if (!rows.length) return null;
   const data = rows.map((r) => ({...r, key: `${r.year} ${r.office}`}));
   // Leave ~46px beyond the longest bar for its value label, whatever the chart width.
-  const marginLeft = width < 500 ? 96 : 120;
+  // wide enough for the longest label ("2020 Senate (special)"), at about 6.6px a character
+  const marginLeft = Math.max(width < 500 ? 96 : 120, Math.ceil(6.6 * d3.max(data, (d) => d.key.length)) + 14);
   const half = (width - marginLeft - 20) / 2;
   const ext = (Math.max(10, ...data.map((d) => Math.abs(d.margin))) + 1) / Math.max(0.35, 1 - 46 / half);
   return Plot.plot({
