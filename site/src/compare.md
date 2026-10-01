@@ -36,7 +36,7 @@ const competitive = (x) => x.r.rating !== "Safe D" && x.r.rating !== "Safe R" ||
 
 # How our forecast compares with the major forecasters
 
-<p class="dek">The raters, modelers and prediction markets below never feed into Who Shows Up; we build the forecast from polls, special elections and past results alone. Here is where we agree with them, where we don't, and how our method would have stacked up against the raters and modelers in past elections.</p>
+<p class="dek">The raters, modelers and prediction markets below never feed into Who Shows Up; we build the forecast from polls, special elections and past results alone. Here is where we agree with them and where we don't. Further down, a backtest asks how our method would have done in past elections. Who Shows Up launched in 2026, so those past-year results are a re-run after the fact, not predictions we made at the time.</p>
 
 ```js
 const disagree = rows.filter((x) => x.cons != null && Math.abs(x.gap) >= 1.5 && competitive(x))
@@ -155,7 +155,7 @@ display(gapRows.length ? html`<div class="table-wrap"><table class="wsu-table">
 
 <p class="caption">Races where our forecast and the market differ by 10 points or more, naming the side each one favors. PredictIt's prices come from its free data feed, credited to PredictIt, and are converted to chances: each price is the midpoint between the best offers to buy and sell, rescaled so a race's prices add up to 100% (PredictIt's fees push them a little over). Markets with too few trades to set a clear price are left out, which is why only some House races appear. PredictIt limits how much each trader can bet, so its prices can differ from larger markets. We don't use Kalshi or Polymarket because their terms don't allow their prices to be republished or collected automatically.</p>
 
-## Track record against the pros
+## Backtest: how our method would have done against the pros
 
 ```js
 const track = outlets.track ?? [];
@@ -164,40 +164,45 @@ const MAIN = ["Cook Political Report", "Sabato's Crystal Ball", "Inside Election
 const pick = (asof, subset) => track.filter((d) => d.asof === asof && d.subset === subset && MAIN.includes(d.outlet))
   .sort((a, b) => MAIN.indexOf(a.outlet) - MAIN.indexOf(b.outlet));
 const p1 = (v) => (v == null || Number.isNaN(v) ? "–" : `${(v * 100).toFixed(0)}%`);
-const vs = (a, b, better = "high") => {
+// One comparison cell: our backtest's number above the outlet's live number, each labeled; the better one is marked
+const vs = (a, b, them, better = "high") => {
   const aw = better === "high" ? a > b + 0.004 : a < b - 0.0004, bw = better === "high" ? b > a + 0.004 : b < a - 0.0004;
   const f = better === "high" ? p1 : (v) => (v == null || Number.isNaN(v) ? "–" : v.toFixed(3));
-  return html`<span class="${aw ? "win" : ""}">${f(a)}</span> <span class="vs">vs</span> <span class="${bw ? "win" : ""}">${f(b)}</span>`;
+  const line = (who, v, w) => html`<div class="pair ${w ? "win" : ""}"><span class="who">${who}</span><span class="val">${f(v)}</span>${w ? html`<span class="mark" title="Better">✓</span>` : ""}</div>`;
+  return html`<div class="pairs">${line("Ours", a, aw)}${line(them, b, bw)}</div>`;
 };
+const shortName = (o) => ({"Cook Political Report": "Cook", "Sabato's Crystal Ball": "Sabato", "Inside Elections": "Inside", "FiveThirtyEight (model)": "538", "RealClearPolitics": "RCP", "The Economist": "Economist"}[o] ?? o);
 function trackTable(asof, subset) {
   const list = pick(asof, subset);
   if (!list.length) return html`<p class="caption">Comparison not yet available.</p>`;
   return html`<div class="table-wrap"><table class="wsu-table track-table">
-    <thead><tr><th>Us vs.</th><th class="num">Races</th><th class="num">Winner called<br><small>Toss-up = half</small></th>
-      <th class="num">When both picked a side</th><th class="num">Direct disagreements<br><small>we were right</small></th>
-      <th class="num">Their Toss-ups we picked<br><small>we were right</small></th><th class="num">Brier<br><small>lower is better</small></th></tr></thead>
+    <thead><tr><th>Outlet<br><small>their calls, made live</small></th><th class="num">Races</th><th class="num">Winner called<br><small>Toss-up = half</small></th>
+      <th class="num">When both picked a side</th><th class="num">Direct disagreements<br><small>our method right</small></th>
+      <th class="num">Their Toss-ups<br><small>our method's pick right</small></th><th class="num">Brier<br><small>lower is better</small></th></tr></thead>
     <tbody>${list.map((d) => html`<tr>
       <td><b>${d.outlet.replace(" (model)", "")}</b><div class="cmp-p">${String(d.years).replaceAll(",", ", ")}</div></td>
       <td class="num">${d.races}</td>
-      <td class="num">${vs(d.ours_called, d.theirs_called)}</td>
-      <td class="num">${vs(d.ours_right_both, d.theirs_right_both)}<div class="cmp-p">${d.both_picked} races</div></td>
+      <td class="num">${vs(d.ours_called, d.theirs_called, shortName(d.outlet))}</td>
+      <td class="num">${vs(d.ours_right_both, d.theirs_right_both, shortName(d.outlet))}<div class="cmp-p">${d.both_picked} races</div></td>
       <td class="num">${d.ours_won_disagreements} of ${d.disagreed}</td>
       <td class="num">${d.their_tossups_we_picked ? html`${p1(d.ours_right_on_their_tossups)}<div class="cmp-p">${d.their_tossups_we_picked} races</div>` : "–"}</td>
-      <td class="num">${d.theirs_brier == null || Number.isNaN(d.theirs_brier) ? html`<span class="cmp-p">ratings only</span>` : vs(d.ours_brier, d.theirs_brier, "low")}</td>
+      <td class="num">${d.theirs_brier == null || Number.isNaN(d.theirs_brier) ? html`<span class="cmp-p">ratings only</span>` : vs(d.ours_brier, d.theirs_brier, shortName(d.outlet), "low")}</td>
     </tr>`)}</tbody></table></div>`;
 }
 const find = (outlet) => track.find((d) => d.asof === "sep22" && d.subset === "competitive" && d.outlet === outlet);
 const cook = find("Cook Political Report"), fte = find("FiveThirtyEight (model)"), sab = find("Sabato's Crystal Ball");
+display(html`<div class="callout warn"><b>Read this as a backtest, not a track record.</b>
+  Who Shows Up didn't exist in 2018 to 2024. We built the method in 2026 and re-ran it on those years using only what was known at the time, while the outlets below made their calls live, under real deadlines and without knowing how things turned out. Each piece of our model was fit without the year being tested, but we chose the method knowing which ideas had worked, which tends to make a backtest look better than live forecasting does. We don't yet know how well these results will hold up in real time; 2026 is the first real test.</div>`);
 if (cook && fte) display(html`<div class="callout"><b>The short version.</b>
-  In competitive races as of September 22, we called the winner in ${p1(cook.ours_called)} of the races Cook rated, versus ${p1(cook.theirs_called)} for Cook.
-  But most of that edge comes from <i>willingness to pick</i>: Cook left ${cook.their_tossups_we_picked} of those races as Toss-ups, and we picked a side in them and were right ${p1(cook.ours_right_on_their_tossups)} of the time.
-  When both of us picked a winner, the top raters were about as accurate as us or a bit more so (Cook ${p1(cook.theirs_right_both)} vs. our ${p1(cook.ours_right_both)}${sab ? `; Sabato ${p1(sab.theirs_right_both)} vs. ${p1(sab.ours_right_both)}` : ""}).
-  Against FiveThirtyEight's model, the one other forecast with public probabilities for these years, we were essentially tied (Brier ${fte.ours_brier.toFixed(3)} vs. ${fte.theirs_brier.toFixed(3)}).</div>`);
-display(html`<p>We reran our model on the 2018, 2020, 2022 and 2024 elections using only what was known at the time, and compared it race by race with each outlet's ratings from the same day. <b>Winner called</b> is the share of races where the favored side won, with a Toss-up counting as half right (a coin flip gets half). Because Toss-ups only earn half credit, we also show accuracy <b>when both sides picked a winner</b>, and how often our pick was right in races the outlet left as a Toss-up. The <b>Brier score</b> grades probabilities and applies only to forecasts that publish them.</p>`);
+  In the backtest's competitive races as of September 22, our method would have called the winner in ${p1(cook.ours_called)} of the races Cook rated, versus ${p1(cook.theirs_called)} for Cook's actual calls.
+  But most of that edge comes from <i>willingness to pick</i>: Cook left ${cook.their_tossups_we_picked} of those races as Toss-ups, and our method picked a side in them and was right ${p1(cook.ours_right_on_their_tossups)} of the time.
+  When both picked a winner, the top raters were about as accurate as our method or a bit more so (Cook ${p1(cook.theirs_right_both)} vs. our ${p1(cook.ours_right_both)}${sab ? `; Sabato ${p1(sab.theirs_right_both)} vs. ${p1(sab.ours_right_both)}` : ""}).
+  Against FiveThirtyEight's model, the one other forecast with public probabilities for these years, our method essentially tied (Brier ${fte.ours_brier.toFixed(3)} vs. ${fte.theirs_brier.toFixed(3)}).</div>`);
+display(html`<p>How to read the tables: we reran our model on the 2018, 2020, 2022 and 2024 elections using only what was known at the time, and compared it race by race with each outlet's ratings from the same day. In each cell, <b>Ours</b> is our backtest and the outlet's own number is below it; a check mark marks the better one. <b>Winner called</b> is the share of races where the favored side won, with a Toss-up counting as half right (a coin flip gets half). Because Toss-ups only earn half credit, we also show accuracy <b>when both sides picked a winner</b>, and how often our pick was right in races the outlet left as a Toss-up. The <b>Brier score</b> grades probabilities and applies only to forecasts that publish them.</p>`);
 display(html`<h3>Competitive races, as of September 22</h3>${trackTable("sep22", "competitive")}`);
 display(html`<h3>Competitive races, on the eve of the election</h3>${trackTable("eve", "competitive")}`);
 display(html`<details><summary>All races, including safe seats</summary>
   <h3>As of September 22</h3>${trackTable("sep22", "all")}<h3>On the eve of the election</h3>${trackTable("eve", "all")}</details>`);
 ```
 
-<p class="caption"><b>Read these with a grain of salt in our favor.</b> Our past-year numbers come from a backtest: the same method run after the fact on what was knowable then. Each piece was fit without the year being tested, but we designed the method in 2026 knowing how these elections turned out, while the outlets made their calls live. Our past-year runs read their race polls from FiveThirtyEight's complete poll lists, using only polls finished by each date. "Competitive" means at least one side rated the race below Safe. Past ratings are as listed on Wikipedia's election pages on each date, where every outlet's column is dated and cited; FiveThirtyEight's probabilities come from its archived forecast data. Only races both sides rated are compared.</p>
+<p class="caption">Our past-year runs read their race polls from FiveThirtyEight's complete poll lists, using only polls finished by each date. "Competitive" means at least one side rated the race below Safe. Past ratings are as listed on Wikipedia's election pages on each date, where every outlet's column is dated and cited; FiveThirtyEight's probabilities come from its archived forecast data. Only races both sides rated are compared.</p>
