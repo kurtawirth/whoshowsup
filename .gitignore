@@ -8,3 +8,6 @@ logs/
 
 # local API keys, never committed
 secrets/
+
+# The Turnout newsletter workspace: style guide, fact packs and drafts (private until published on Substack)
+newsletter/
