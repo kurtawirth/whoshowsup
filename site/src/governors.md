@@ -3,7 +3,7 @@ title: Governor forecasts
 ---
 
 ```js
-import {tokens, pct, margin, date, stateMap, ratingLegend, ratingPill, raceTable, raceLink, miniBar, favoriteText, withSearch, RATINGS, RACE_SORTS} from "./components/wsu.js";
+import {tokens, pct, margin, date, stateMap, ratingLegend, ratingPill, raceTable, raceLink, miniBar, favoriteText, withSearch, RATINGS, RACE_SORTS, shareBar} from "./components/wsu.js";
 import {seatChart} from "./components/charts.js";
 const top = FileAttachment("data/topline.json").json();
 const seats = FileAttachment("data/seats.json").json();
@@ -24,6 +24,12 @@ const flipsR = gov.filter((r) => r.incumbent_party === "D" && r.p_dem < 0.5);
 # Democrats are on track to win about ${Math.round(top.gov_median)} of 36 governorships
 
 <p class="dek">Thirty-six states elect a governor this year; each party currently holds 18 of those seats. Democrats win between ${Math.round(top.gov_p10)} and ${Math.round(top.gov_p90)} of them in 80% of our simulations. Governors' races are less partisan than federal ones, so popular incumbents like Vermont's Phil Scott can win in states that lean hard the other way.</p>
+
+```js
+{
+display(shareBar({path: "/governors", text: `The Who Shows Up 2026 governor forecast: Democrats win about ${Math.round(top.gov_median)} of the 36 governor's races.`}));
+}
+```
 
 ## The map
 

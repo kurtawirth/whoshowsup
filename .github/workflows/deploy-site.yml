@@ -34,6 +34,10 @@ jobs:
       - run: npm run build
         env:
           SITE_BASE: /
+      # preview images for shared race links, drawn in the runner's Chrome (any card it can't draw falls back to
+      # the site-wide image, and a failure here never blocks the deploy)
+      - run: node share-cards.js
+        continue-on-error: true
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site/dist

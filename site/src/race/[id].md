@@ -3,7 +3,7 @@ title: Race forecast
 ---
 
 ```js
-import {tokens, pct, pctPair, margin, date, probBar, ratingPill, favoriteText, raceLink, link, sides} from "../components/wsu.js";
+import {tokens, pct, pctPair, margin, date, probBar, ratingPill, favoriteText, raceLink, link, sides, shareBar} from "../components/wsu.js";
 import {marginRange, pollChart, probHistory, pastResults} from "../components/charts.js";
 const races = FileAttachment("../data/races.json").json();
 const details = FileAttachment("../data/race_detail.json").json();
@@ -57,6 +57,13 @@ if (fixed) {
     display(html`<p class="caption">For comparison, traders on <a href="${mk.url}">PredictIt</a> give ${mLead ? dName : rName} a ${pct(Math.max(mk.p, 1 - mk.p))} chance (as of ${date(markets.asof)}). Market prices are shown for reference only and play no part in our forecast. <a href="${link("compare#prediction-markets")}">More on markets</a>.</p>`);
   }
 }
+// a suggested post for the share buttons, in plain words
+const goal = r.office === "HOUSE" ? `to win ${place}` : r.office === "SEN" ? `to win ${r.state_name}'s Senate ${r.special ? "special election" : "race"}` : `to win ${r.state_name}'s race for governor`;
+const favP = Math.max(r.p_dem, 1 - r.p_dem), favName = r.p_dem >= 0.5 ? dName : rName;
+const an = /^(8|11|18)/.test(pct(favP)) ? "an" : "a";
+display(shareBar({path: `/race/${id}`, text: fixed
+  ? `Only ${r.race_note === "D" ? "Democrats" : "Republicans"} are on the ballot in ${heading}, so the seat is certain to stay ${r.race_note === "D" ? "Democratic" : "Republican"}. From the Who Shows Up 2026 forecast:`
+  : `The Who Shows Up 2026 forecast gives ${favName} ${an} ${pct(favP)} chance ${goal}.`}));
 function oddsText(p) { return p >= 0.95 ? "a strong favorite" : p >= 0.8 ? "a clear favorite" : p >= 0.6 ? "a modest favorite" : "close to a coin flip"; }
 function ratingSentence(r) { return `We rate it <b>${r.rating}</b>.`.replace(/<\/?b>/g, ""); }
 ```

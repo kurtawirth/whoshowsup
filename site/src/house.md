@@ -3,7 +3,7 @@ title: House forecast
 ---
 
 ```js
-import {tokens, pct, margin, date, hexMap, ratingLegend, ratingPill, raceTable, raceLink, miniBar, favoriteText, withSearch, RATINGS, RACE_SORTS} from "./components/wsu.js";
+import {tokens, pct, margin, date, hexMap, ratingLegend, ratingPill, raceTable, raceLink, miniBar, favoriteText, withSearch, RATINGS, RACE_SORTS, shareBar} from "./components/wsu.js";
 import {seatChart} from "./components/charts.js";
 const top = FileAttachment("data/topline.json").json();
 const seats = FileAttachment("data/seats.json").json();
@@ -25,6 +25,14 @@ const verb = q >= 0.95 ? "are strong favorites" : q >= 0.8 ? "are clear favorite
 # ${lead} ${verb} to win the House
 
 <p class="dek">Democrats win a majority in ${pct(top.p_house_d)} of our simulations. The most likely outcome is about ${Math.round(top.house_median)} Democratic seats, with an 80% chance of landing between ${Math.round(top.house_p10)} and ${Math.round(top.house_p90)}. It takes 218 for a majority.${top.p_house_ind != null ? ` Independent Bill Hill wins Alaska's seat in ${pct(top.p_house_ind)} of simulations; he hasn't said which party he would side with, so those wins count for neither party.` : ""}</p>
+
+```js
+{
+const side = (p) => (p >= 0.5 ? ["Democrats", p] : ["Republicans", 1 - p]);
+const [hp, hv] = side(top.p_house_d);
+display(shareBar({path: "/house", text: `The Who Shows Up 2026 House forecast: ${hp} win the House in ${pct(hv)} of our simulations, with about ${Math.round(top.house_median)} Democratic seats.`}));
+}
+```
 
 ```js
 display(html`<div class="stat-row">${RATINGS.map((r) => html`<div class="s"><div class="k">${r}</div><div class="v">${byRating.get(r) ?? 0}</div></div>`)}</div>`);

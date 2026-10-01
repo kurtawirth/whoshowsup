@@ -363,3 +363,10 @@ details summary { cursor: pointer; font: 600 14px var(--sans); color: var(--ink-
 .pr-back { font: 600 14px var(--sans); padding: 7px 14px; border-radius: 8px; border: 1px solid var(--axis); background: var(--card); color: var(--ink); cursor: pointer; }
 .pr-back:hover { background: var(--page); border-color: var(--ink-3); }
 .callout.warn { border-left-color: var(--ink); color: var(--ink); }
+/* share buttons (components/wsu.js shareBar) */
+.share-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 14px 0 6px; font-family: var(--sans); }
+.share-label { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); margin-right: 4px; }
+.share-btn { font: 500 13px/1 var(--sans); padding: 7px 12px; border-radius: 999px; border: 1px solid var(--axis); background: var(--card);
+  color: var(--ink-2) !important; text-decoration: none !important; cursor: pointer; }
+.share-btn:hover { border-color: var(--ink-3); color: var(--ink) !important; background: var(--page); }
+.share-btn:focus-visible { outline: 2px solid var(--likely-d); outline-offset: 2px; }

@@ -7,10 +7,13 @@ const base = process.env.SITE_BASE ?? "/";
 // Search and sharing: each page's title, description, canonical address and structured data (seo.js), plus
 // preview tags for shared links (Facebook, X, iMessage, Slack...). The image is regenerated with every daily
 // run; ?d= makes apps fetch the new one instead of a cached copy.
+const racePaths = new Set(races.map((r) => `/race/${r.race_id}`));
 function preview({path}) {
   const {desc, ogTitle} = pageMeta(path);
   const t = ogTitle && path !== "/index" ? `${ogTitle} | Who Shows Up` : "Who Shows Up: 2026 midterm forecast";
-  const url = `${SITE_URL}${path === "/index" ? "/" : path}`, img = `${SITE_URL}/share.png?d=${top.forecast_date}`;
+  // race pages get their own card (share-cards.js, drawn at deploy); every other page the site-wide one
+  const card = racePaths.has(path) ? `/share${path}.png` : "/share.png";
+  const url = `${SITE_URL}${path === "/index" ? "/" : path}`, img = `${SITE_URL}${card}?d=${top.forecast_date}`;
   return `<meta name="google-site-verification" content="6rfUjjMnBlKzcVuQNlzMMn9QOrCs1Gs6wL_y3Cu_ERQ">
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${esc(url)}">
@@ -24,7 +27,7 @@ ${jsonLd(path)}
 <meta property="og:image" content="${img}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="${esc(`Who Shows Up forecast, ${updated}: House ${fav(top.p_house_d)}, Senate ${fav(top.p_senate_d)} to win control`)}">
+<meta property="og:image:alt" content="${esc(racePaths.has(path) ? `Who Shows Up forecast for ${ogTitle}, ${updated}: ${desc.split(" (")[0].replace("Our forecast: ", "")}` : `Who Shows Up forecast, ${updated}: House ${fav(top.p_house_d)}, Senate ${fav(top.p_senate_d)} to win control`)}">
 <meta name="twitter:card" content="summary_large_image">`;
 }
 

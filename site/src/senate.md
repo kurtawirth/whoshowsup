@@ -3,7 +3,7 @@ title: Senate forecast
 ---
 
 ```js
-import {tokens, pct, margin, date, stateMap, ratingLegend, ratingPill, raceTable, raceLink, miniBar, favoriteText, withSearch, RATINGS, RACE_SORTS, raceHref, tip} from "./components/wsu.js";
+import {tokens, pct, margin, date, stateMap, ratingLegend, ratingPill, raceTable, raceLink, miniBar, favoriteText, withSearch, RATINGS, RACE_SORTS, raceHref, tip, shareBar} from "./components/wsu.js";
 import {seatChart} from "./components/charts.js";
 const top = FileAttachment("data/topline.json").json();
 const seats = FileAttachment("data/seats.json").json();
@@ -25,6 +25,14 @@ const headline = q < 0.55 ? "The Senate is a toss-up" : `${lead} ${q >= 0.8 ? "a
 # ${headline}
 
 <p class="dek">Democrats win a majority in ${pct(top.p_senate_d)} of our simulations. Republicans hold 53 seats today and Democrats 47 (including two independents who caucus with them). Of the 35 seats on the ballot, Republicans are defending 22, so Democrats need a net gain of four. The vice president breaks ties.</p>
+
+```js
+{
+const side = (p) => (p >= 0.5 ? ["Democrats", p] : ["Republicans", 1 - p]);
+const [sp, sv] = side(top.p_senate_d);
+display(shareBar({path: "/senate", text: `The Who Shows Up 2026 Senate forecast: ${sp} win the Senate in ${pct(sv)} of our simulations.`}));
+}
+```
 
 ## The map
 

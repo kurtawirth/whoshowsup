@@ -529,3 +529,42 @@ export function withSearch(races) {
   return races.map((r) => ({...r, _search: [r.label, r.state_name, r.state_po, r.dem_candidate, r.rep_candidate, r.incumbent]
     .filter(Boolean).join(" ").toLowerCase()}));
 }
+
+/** Share buttons for a page: the phone's own share sheet (where the browser has one), Bluesky, X, Threads,
+ *  Facebook, Reddit and Copy link. `path` is the page's address on the site; `text` is the suggested post. */
+export function shareBar({path, text, label = "Share this forecast"}) {
+  const url = `https://whoshowsup.net${path}`, enc = encodeURIComponent;
+  const bar = document.createElement("div");
+  bar.className = "share-bar";
+  const title = document.createElement("span");
+  title.className = "share-label";
+  title.textContent = label;
+  bar.append(title);
+  const button = (name, onClick) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "share-btn"; b.textContent = name;
+    b.addEventListener("click", onClick);
+    bar.append(b);
+    return b;
+  };
+  if (typeof navigator !== "undefined" && navigator.share && matchMedia("(pointer: coarse)").matches) {
+    button("Share…", () => navigator.share({title: "Who Shows Up", text, url}).catch(() => {}));
+  }
+  for (const [name, href] of [
+    ["Bluesky", `https://bsky.app/intent/compose?text=${enc(`${text} ${url}`)}`],
+    ["X", `https://twitter.com/intent/tweet?text=${enc(text)}&url=${enc(url)}`],
+    ["Threads", `https://www.threads.net/intent/post?text=${enc(`${text} ${url}`)}`],
+    ["Facebook", `https://www.facebook.com/sharer/sharer.php?u=${enc(url)}`],
+    ["Reddit", `https://www.reddit.com/submit?url=${enc(url)}&title=${enc(text)}`]
+  ]) {
+    const a = document.createElement("a");
+    a.className = "share-btn"; a.href = href; a.target = "_blank"; a.rel = "noopener"; a.textContent = name;
+    bar.append(a);
+  }
+  const copy = button("Copy link", async () => {
+    try { await navigator.clipboard.writeText(url); copy.textContent = "Copied"; }
+    catch { copy.textContent = url; }
+    setTimeout(() => { copy.textContent = "Copy link"; }, 2500);
+  });
+  return bar;
+}

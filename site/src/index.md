@@ -3,7 +3,7 @@ title: 2026 Midterm Forecast
 ---
 
 ```js
-import {tokens, pct, margin, date, oddsPhrase, probBar, raceLink, favoriteText, miniBar, ratingPill, link, sides} from "./components/wsu.js";
+import {tokens, pct, margin, date, oddsPhrase, probBar, raceLink, favoriteText, miniBar, ratingPill, link, sides, shareBar} from "./components/wsu.js";
 import {seatChart} from "./components/charts.js";
 const top = FileAttachment("data/topline.json").json();
 const seats = FileAttachment("data/seats.json").json();
@@ -38,6 +38,14 @@ const daysLeft = Math.round((new Date(`${top.election_day}T12:00:00`) - new Date
 # ${headline}
 
 <p class="dek">Who Shows Up forecasts every House, Senate and governor race by asking whose voters will actually turn out. It reads the electorate's enthusiasm from more than 100 special elections, blends it with polls and fundamentals, and simulates the election 20,000 times.</p>
+
+```js
+{
+const side = (p) => (p >= 0.5 ? ["Democrats", p] : ["Republicans", 1 - p]);
+const [hp, hv] = side(top.p_house_d), [sp, sv] = side(top.p_senate_d);
+display(shareBar({path: "/", text: `The Who Shows Up 2026 midterm forecast: ${hp} have ${/^(8|11|18)/.test(pct(hv)) ? "an" : "a"} ${pct(hv)} chance to win the House, and ${sp === hp ? "" : `${sp} `}${/^(8|11|18)/.test(pct(sv)) ? "an" : "a"} ${pct(sv)} chance to win the Senate.`}));
+}
+```
 
 ```js
 const t = (dark, tokens());
