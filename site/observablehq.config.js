@@ -139,7 +139,9 @@ export default {
     fade();
   });
 })();
-</script>`,
+</script>
+<!-- Visit counts (GoatCounter: no cookies, no personal data; local previews aren't counted) -->
+<script data-goatcounter="https://kurtawirth.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>`,
   header: ({path}) => `
 <a class="wsu-brand" href="/">
   <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 28 9v14L16 30 4 23V9z" fill="var(--safe-d)"/><path d="M16 2 28 9v14L16 30z" fill="var(--safe-r)"/><path d="m10.5 16.5 4 4 7.5-9" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -156,5 +158,6 @@ export default {
   <a href="https://www.fec.gov/data/">Federal Election Commission</a>; early-vote counts and election-night results from <a href="https://civicapi.org">civicAPI</a>; prediction-market prices (shown for comparison only) from <a href="https://www.predictit.org">PredictIt</a>; candidate ideology scores from Adam Bonica's
   <a href="https://data.stanford.edu/dime">Database on Ideology, Money in Politics, and Elections</a> (DIME, Stanford University Libraries, ODC-BY 1.0); hex layout adapted from
   Pitch Interactive's Tilegrams. Full source: <a href="https://github.com/kurtawirth/whoshowsup">GitHub</a>.</p>
+  <p>Visits are counted with <a href="https://www.goatcounter.com">GoatCounter</a>, which uses no cookies and collects no personal information.</p>
 </div>`
 };
