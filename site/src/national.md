@@ -121,8 +121,8 @@ display(Plot.plot({
     Plot.ruleY([0], {stroke: t.axis}),
     Plot.dot(spec, {x: "dt", y: "overperformance", r: 3.5, fill: (d) => (d.overperformance >= 0 ? t.dem : t.rep), fillOpacity: 0.45}),
     Plot.ruleY(cycleMeans, {x1: "x1", x2: "x2", y: "mean", stroke: t.ink, strokeWidth: 2.5}),
-    Plot.text(cycleMeans, {x: "x2", y: "mean", text: (d) => `${d.label}: ${d.mean > 0 ? "+" : ""}${d.mean.toFixed(1)}`, dx: 6, dy: -10, textAnchor: "end", fill: t.ink, fontWeight: 700}),
-    Plot.tip(spec, Plot.pointer({x: "dt", y: "overperformance", title: (d) => `${d.state_po} ${d.district} (${d.chamber})\n${date(d.date)}\nResult ${margin(d.special_margin)} vs. president ${margin(d.pres_margin)}\nOverperformance ${d.overperformance > 0 ? "+" : ""}${d.overperformance}`}))
+    Plot.text(cycleMeans, {x: "x2", y: "mean", text: (d) => `${d.label}: ${d.mean >= 0 ? "D" : "R"} +${Math.abs(d.mean).toFixed(1)}`, dx: 6, dy: -10, textAnchor: "end", fill: t.ink, fontWeight: 700}),
+    Plot.tip(spec, Plot.pointer({x: "dt", y: "overperformance", title: (d) => `${d.state_po} ${d.district} (${d.chamber})\n${date(d.date)}\nResult ${margin(d.special_margin)} vs. president ${margin(d.pres_margin)}\nOverperformance: ${d.overperformance >= 0 ? "D" : "R"} +${Math.abs(d.overperformance).toFixed(1)}`}))
   ]
 }));
 ```
