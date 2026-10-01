@@ -532,6 +532,11 @@ export function withSearch(races) {
 
 /** Share buttons for a page: the phone's own share sheet (where the browser has one), Bluesky, X, Threads,
  *  Facebook, Reddit and Copy link. `path` is the page's address on the site; `text` is the suggested post. */
+/** Count an event in GoatCounter (no cookies, no personal data); does nothing where the counter isn't loaded. */
+export function countEvent(name, title) {
+  try { window.goatcounter?.count?.({path: name, title: title ?? location.pathname, event: true}); } catch {}
+}
+
 export function shareBar({path, text, label = "Share this forecast"}) {
   const url = `https://whoshowsup.net${path}`, enc = encodeURIComponent;
   const bar = document.createElement("div");
@@ -548,7 +553,7 @@ export function shareBar({path, text, label = "Share this forecast"}) {
     return b;
   };
   if (typeof navigator !== "undefined" && navigator.share && matchMedia("(pointer: coarse)").matches) {
-    button("Share…", () => navigator.share({title: "Who Shows Up", text, url}).catch(() => {}));
+    button("Share…", () => { countEvent("share-native", path); navigator.share({title: "Who Shows Up", text, url}).catch(() => {}); });
   }
   for (const [name, href] of [
     ["Bluesky", `https://bsky.app/intent/compose?text=${enc(`${text} ${url}`)}`],
@@ -559,9 +564,11 @@ export function shareBar({path, text, label = "Share this forecast"}) {
   ]) {
     const a = document.createElement("a");
     a.className = "share-btn"; a.href = href; a.target = "_blank"; a.rel = "noopener"; a.textContent = name;
+    a.addEventListener("click", () => countEvent(`share-${name.toLowerCase()}`, path));
     bar.append(a);
   }
   const copy = button("Copy link", async () => {
+    countEvent("share-copy-link", path);
     try { await navigator.clipboard.writeText(url); copy.textContent = "Copied"; }
     catch { copy.textContent = url; }
     setTimeout(() => { copy.textContent = "Copy link"; }, 2500);

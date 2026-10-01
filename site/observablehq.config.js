@@ -141,6 +141,16 @@ export default {
   });
 })();
 </script>
+<script>
+// Clicks from a main page into a race page, counted as GoatCounter events ("race-from-senate"), so the
+// dashboard shows which pages send people to races. Nothing about the visitor is recorded.
+document.addEventListener("click", (e) => {
+  const a = e.target.closest ? e.target.closest('a[href*="race/"]') : null;
+  if (!a || location.pathname.indexOf("/race/") === 0) return;
+  const from = location.pathname.split("/").filter(Boolean).join("-").replace(".html", "") || "home";
+  try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({path: "race-from-" + from, title: a.pathname.replace(".html", ""), event: true}); } catch (err) {}
+});
+</script>
 <!-- Visit counts (GoatCounter: no cookies, no personal data; local previews aren't counted) -->
 <script data-goatcounter="https://kurtawirth.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>`,
   header: ({path}) => `
