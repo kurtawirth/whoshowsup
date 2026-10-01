@@ -1,12 +1,13 @@
 // After "observable build": finish the site for sharing, search engines and AI tools (see seo.js).
-// - share.png, the preview image for shared links (written daily by midterms_2026/share_card.py), at a fixed address
+// - share.png, the preview image for shared links (written daily by midterms_2026/share_card.py), and the site icons,
+//   at fixed addresses
 // - each page's own <title>, and a plain-text summary of the page for crawlers that don't run JavaScript
 // - sitemap.xml, robots.txt, llms.txt and llms-full.txt, rebuilt from the day's forecast
 import {copyFileSync, existsSync, readFileSync, readdirSync, writeFileSync} from "node:fs";
 import {join, relative} from "node:path";
 import {pageMeta, summaryHtml, sitemap, robots, llmsTxt, llmsFullTxt, esc} from "./seo.js";
 
-for (const f of ["share.png"]) if (existsSync(`src/${f}`)) copyFileSync(`src/${f}`, `dist/${f}`);
+for (const f of ["share.png", "favicon.svg", "favicon-32.png", "apple-touch-icon.png"]) if (existsSync(`src/${f}`)) copyFileSync(`src/${f}`, `dist/${f}`);
 
 const pages = (dir) => readdirSync(dir, {withFileTypes: true}).flatMap((e) =>
   e.isDirectory() ? (e.name.startsWith("_") ? [] : pages(join(dir, e.name))) : e.name.endsWith(".html") && !e.name.startsWith("_") ? [join(dir, e.name)] : []);
