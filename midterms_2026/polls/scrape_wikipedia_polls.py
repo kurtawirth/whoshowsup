@@ -198,7 +198,10 @@ def parse_table(tb: pd.DataFrame, dem: str, rep: str, refs: dict | None = None,
         if raw_src == "nan" or pct(r[dcol]) != pct(r[dcol]) or pct(r[rcol]) != pct(r[rcol]):  # separator/event rows
             continue
         pollster = re.sub(r"\[.*?\]|\((R|D)\)", "", raw_src).strip()
-        party = re.search(r"\((R|D)\)", raw_src)
+        # A joint team with one firm from each party (Fox News's Beacon (D)/Shaw (R), AARP's Fabrizio (R)/
+        # Impact (D)) is bipartisan, not one side's poll.
+        sides = set(re.findall(r"\((R|D)\)", raw_src))
+        party = re.search(r"\((R|D)\)", raw_src) if len(sides) == 1 else None
         size = clean(r[size_col]) if size_col else ""
         n = re.match(r"([\d,]+)", size)
         pop = re.search(r"\((LV|RV|A|V)\)", size)

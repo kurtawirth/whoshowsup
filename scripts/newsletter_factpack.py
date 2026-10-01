@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from datetime import date, timedelta
 from pathlib import Path
 
@@ -92,7 +93,7 @@ def main(days: int = 7) -> Path:
     if new.empty:  # fall back on end dates
         new = detail[detail["end_date"] >= base][KEY].copy()
     new = new.merge(detail[["office", "state_po", "district", "pollster", "end_date", "start_date", "sample_size", "partisan",
-                            "sponsors", "url", "dem_candidate", "rep_candidate"]].drop_duplicates(["office", "state_po", "district", "pollster", "end_date"]),
+                            "sponsors", "source", "url", "dem_candidate", "rep_candidate"]].drop_duplicates(["office", "state_po", "district", "pollster", "end_date"]),
                     on=["office", "state_po", "district", "pollster", "end_date"], how="left")
 
     def race_id(r) -> str:
@@ -103,6 +104,10 @@ def main(days: int = 7) -> Path:
         return rid + ("-special" if str(r["special"]) == "True" else "")
 
     new["race_id"] = new.apply(race_id, axis=1) if len(new) else []
+    # which polls the model treats as a party's side, decided exactly as the model decides it
+    sys.path[:0] = [str(ROOT / "midterms_2026" / "models"), str(ROOT / "midterms_2026"), str(ROOT / "core")]
+    from race_model import partisan_side
+    new["side"] = partisan_side(new) if len(new) else []
     by_race = new.groupby("race_id") if len(new) else {}
 
     # races that moved
@@ -119,13 +124,13 @@ def main(days: int = 7) -> Path:
         n_new = max(n_new, c1 - c0)  # the saved poll lists start 2026-09-29; poll counts cover earlier days
         dfund = r["fundamentals_mean"] - r["fundamentals_mean_0"] if pd.notna(r.get("fundamentals_mean_0")) else 0.0
         dnat = float(t1.nat_median - t0.nat_median)
-        if n_new:
-            why = f"{n_new} new poll(s)"
-        elif abs(dfund - dnat) >= 2.5:
-            why = (f"NO new polls, yet its non-poll baseline moved {dfund:+.1f} pts (national estimate moved {dnat:+.1f}): "
-                   "PROBABLY A DATA OR MODEL CHANGE, NOT NEWS. Don't report this move as something that happened in the race")
-        else:
-            why = "no new polls (moved with the national estimate, older polls fading, or campaign money)"
+        why = f"{n_new} new poll(s)" if n_new else "no new polls (moved with the national estimate, older polls fading, or campaign money)"
+        if abs(dfund - dnat) >= 2.5:
+            # the non-poll baseline moved far more than the national estimate: a model or data change, whatever
+            # else happened (a poll arriving the same week doesn't explain it)
+            why = (f"{'NO new polls' if not n_new else f'{n_new} new poll(s), BUT'} its non-poll baseline moved {dfund:+.1f} pts "
+                   f"(national estimate moved {dnat:+.1f}): PROBABLY A DATA OR MODEL CHANGE, NOT NEWS. Don't report this move as "
+                   "something that happened in the race; at most, report what the new polls themselves showed")
         L.append(f"- {rid} ({dn} vs. {rn}): {pct(r['p_dem_0'])} -> {pct(r['p_dem'])}; expected margin "
                  f"{lean(r['margin_median_0'], last(dn), last(rn))} -> {lean(r['margin_median'], last(dn), last(rn))}; "
                  f"poll avg {lean(r['poll_avg'], last(dn), last(rn))} ({int(r['poll_count']) if pd.notna(r['poll_count']) else 0} polls); {why}. "
@@ -135,8 +140,13 @@ def main(days: int = 7) -> Path:
     L += ["## New race polls this week (open each release for the details beyond the topline)"]
     if len(new):
         for _, p in new.sort_values(["office", "state_po", "district"]).iterrows():
-            spons = f"; sponsor: {p['sponsors']}" if pd.notna(p.get("sponsors")) and str(p.get("sponsors")).strip() else ""
-            part = f"; PARTISAN ({p['partisan']}) - the model corrects it toward the other side and counts it half" if pd.notna(p.get("partisan")) else ""
+            sp = str(p.get("sponsors")) if pd.notna(p.get("sponsors")) else ""
+            spons = ("; Wikipedia notes a sponsor (may be a news outlet; check the release)" if sp.startswith("(")
+                     else f"; sponsor: {sp}" if sp.strip() else "")
+            raw = str(p.get("partisan")) if pd.notna(p.get("partisan")) else ""
+            part = (f"; MODEL TREATS AS PARTISAN ({p['side']}): corrected toward the other side and counted at half weight" if p["side"]
+                    else f"; the source labels the firm {raw}, but the model does NOT treat this poll as partisan (the firm's track record says otherwise)" if raw
+                    else "")
             n = f"n={int(p['sample_size'])} " if pd.notna(p.get("sample_size")) else ""
             L.append(f"- {p['race_id']}: {p['pollster']}, {p.get('start_date', '')} to {p['end_date']}, {n}{str(p['population']).upper()}: "
                      f"{p.get('dem_candidate') or 'D'} {p['dem_pct']:g} - {p.get('rep_candidate') or 'R'} {p['rep_pct']:g}{spons}{part}. "
