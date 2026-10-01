@@ -69,16 +69,23 @@ display(html`<div class="grid-3" style="margin-top:8px">${reads.map((r) => html`
 
 ## The generic ballot
 
-<p class="caption">Each dot is a poll, shown as the two-party margin (undecided voters set aside). The line is the average the model uses, with each poll's weight halving every two weeks. The model then subtracts about three points, the amount September generic-ballot polls have overstated Democrats in 14 of the last 15 elections.</p>
-
 ```js
 const gen = national.generic.map((d) => ({...d, date: new Date(`${d.end_date}T12:00:00`)})).filter((d) => d.margin != null);
-const days = d3.utcDays(d3.min(gen, (d) => d.date), d3.max(gen, (d) => d.date), 3);
-const trend = days.map((day) => {
-  let w = 0, s = 0;
-  for (const p of gen) { const age = (day - p.date) / 864e5; if (age < 0 || age > 90) continue; const wi = Math.pow(0.5, age / 14); w += wi; s += wi * p.margin; }
-  return {date: day, margin: s / w};
-});
+// The model's own average (core/build_national_history.py): each pollster's polls from the last 30 days are
+// averaged, then the pollsters are averaged, so one busy firm can't dominate (60 days if 30 has none)
+const avgOn = (day) => {
+  for (const span of [30, 60]) {
+    const inWin = gen.filter((p) => p.date <= day && (day - p.date) / 864e5 < span);
+    if (inWin.length) return d3.mean(d3.rollups(inWin, (v) => d3.mean(v, (p) => p.margin), (p) => p.pollster), ([, m]) => m);
+  }
+  return null;
+};
+const asOf = new Date(`${top.forecast_date}T12:00:00`);
+const days = [...d3.utcDays(d3.min(gen, (d) => d.date), asOf, 3), asOf];
+const trend = days.map((day) => ({date: day, margin: avgOn(day)})).filter((d) => d.margin != null);
+const genModel = national.history.find((h) => h.year === 2026)?.generic_margin;
+const genRead = reads.find((r) => r.read === "generic")?.dem_margin;
+display(html`<p class="caption">Each dot is a poll, shown as the two-party margin (undecided voters set aside); polls paid for by a campaign or party are left out. The line is the average the model uses: each pollster's polls from the last 30 days are averaged, then the pollsters are averaged, so no single firm dominates. ${genModel != null && genRead != null ? `Today that average is ${margin(genModel)}. The model then subtracts ${(genModel - genRead).toFixed(1)} points, the amount September generic-ballot polls have overstated Democrats on average (they did in 14 of the last 15 elections), which gives the generic-ballot reading of ${margin(genRead)} in the chart above.` : "The model then subtracts about three points, the amount September generic-ballot polls have overstated Democrats on average."}</p>`);
 display(Plot.plot({
   width, height: 320, marginLeft: 44, marginRight: 56,
   x: {label: null, type: "utc"},

@@ -207,7 +207,9 @@ def national() -> dict:
     reads = pd.read_csv(OUT / "national_env_reads.csv")
     draws = pd.read_csv(OUT / "national_env_2026_draws.csv")["dem_margin"]
     gen = pd.read_csv(PROC / "polls_2026_generic.csv", parse_dates=["end_date"])
-    gen = gen[gen["end_date"] >= "2025-06-01"].copy()
+    # the polls the model's generic-ballot average uses (core/build_national_history.py): nonpartisan, no Rasmussen
+    gen = gen[(gen["end_date"] >= "2025-06-01") & gen["partisan"].isna()
+              & ~gen["pollster"].astype(str).str.lower().str.contains("rasmussen", regex=False)].copy()
     gen["margin"] = two_party(gen["dem_pct"], gen["rep_pct"])
     app = pd.read_csv(PROC / "polls_2026_approval.csv", parse_dates=["end_date"])
     app = app[app["end_date"] >= "2025-01-20"]
