@@ -11,7 +11,8 @@ function preview({path}) {
   const {desc, ogTitle} = pageMeta(path);
   const t = ogTitle && path !== "/index" ? `${ogTitle} | Who Shows Up` : "Who Shows Up: 2026 midterm forecast";
   const url = `${SITE_URL}${path === "/index" ? "/" : path}`, img = `${SITE_URL}/share.png?d=${top.forecast_date}`;
-  return `<meta name="description" content="${esc(desc)}">
+  return `<meta name="google-site-verification" content="6rfUjjMnBlKzcVuQNlzMMn9QOrCs1Gs6wL_y3Cu_ERQ">
+<meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${esc(url)}">
 <link rel="alternate" type="text/plain" title="The full forecast in plain text" href="${SITE_URL}/llms-full.txt">
 ${jsonLd(path)}
