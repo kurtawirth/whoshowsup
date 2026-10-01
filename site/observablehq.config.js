@@ -1,39 +1,21 @@
 // Who Shows Up -- site configuration (Observable Framework).
-import {readFileSync} from "node:fs";
+import {SITE_URL, races, top, fav, updated, esc, pageMeta, jsonLd} from "./seo.js";
 
 // Links are written site-root-relative ("/house"); Framework rewrites them relative to each page, so they work under any hosting base path.
 const base = process.env.SITE_BASE ?? "/";
-const races = JSON.parse(readFileSync(new URL("./src/data/races.json", import.meta.url), "utf-8"));
-const top = JSON.parse(readFileSync(new URL("./src/data/topline.json", import.meta.url), "utf-8"));
 
-// Preview tags for shared links (Facebook, X, iMessage, Slack...): each page's own title and a line with
-// today's odds; race pages name the matchup and our odds. The image is regenerated with every daily run;
-// ?d= makes apps fetch the new one instead of a cached copy.
-const SITE_URL = "https://whoshowsup.net";
-const pctText = (p) => (p >= 0.995 ? ">99%" : p <= 0.005 ? "<1%" : `${Math.round(p * 100)}%`);
-const fav = (p, d = "Democrats", r = "Republicans") => `${p >= 0.5 ? d : r} ${pctText(Math.max(p, 1 - p))}`;
-const updated = new Date(`${top.forecast_date}T12:00:00`).toLocaleDateString("en-US", {month: "short", day: "numeric"});
-const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
-const byRace = new Map(races.map((r) => [`/race/${r.race_id}`, r]));
-function preview({title, path}) {
-  const r = byRace.get(path);
-  let t = title && title !== "2026 Midterm Forecast" ? `${title} | Who Shows Up` : "Who Shows Up: 2026 midterm forecast";
-  let desc = `Chance of winning control: House ${fav(top.p_house_d)}, Senate ${fav(top.p_senate_d)} (updated ${updated}). A turnout-first forecast of every House, Senate and governor race.`;
-  if (r) {
-    const office = {HOUSE: "", SEN: " Senate", GOV: " governor"}[r.office];
-    const nth = (n) => n + (["th", "st", "nd", "rd"][(n % 100 - 20) % 10] || ["th", "st", "nd", "rd"][n % 100] || "th");
-    const place = r.office === "HOUSE" ? `${r.state_name}'s ${r.district === 0 ? "at-large House seat" : `${nth(r.district)} District`}`
-      : `${r.state_name}${office}${r.special ? " special" : ""}`;
-    const ind = r.race_type === "independent", indD = ind && Boolean(r.rep_candidate);
-    const d = indD ? r.race_note : r.dem_name, rep = ind && !indD ? r.race_note : r.rep_name;
-    t = r.race_type === "same_party" ? `${place} | Who Shows Up` : `${place}: ${d} vs. ${rep} | Who Shows Up`;
-    const tail = desc.split(". ").slice(-1)[0];
-    desc = r.race_type === "same_party"
-      ? `Only ${r.race_note === "D" ? "Democrats" : "Republicans"} are on the November ballot here. ${tail}`
-      : `Our forecast: ${fav(r.p_dem, d, rep)} to win (updated ${updated}). ${tail}`;
-  }
+// Search and sharing: each page's title, description, canonical address and structured data (seo.js), plus
+// preview tags for shared links (Facebook, X, iMessage, Slack...). The image is regenerated with every daily
+// run; ?d= makes apps fetch the new one instead of a cached copy.
+function preview({path}) {
+  const {desc, ogTitle} = pageMeta(path);
+  const t = ogTitle && path !== "/index" ? `${ogTitle} | Who Shows Up` : "Who Shows Up: 2026 midterm forecast";
   const url = `${SITE_URL}${path === "/index" ? "/" : path}`, img = `${SITE_URL}/share.png?d=${top.forecast_date}`;
-  return `<meta property="og:type" content="website">
+  return `<meta name="description" content="${esc(desc)}">
+<link rel="canonical" href="${esc(url)}">
+<link rel="alternate" type="text/plain" title="The full forecast in plain text" href="${SITE_URL}/llms-full.txt">
+${jsonLd(path)}
+<meta property="og:type" content="website">
 <meta property="og:site_name" content="Who Shows Up">
 <meta property="og:title" content="${esc(t)}">
 <meta property="og:description" content="${esc(desc)}">
@@ -80,7 +62,6 @@ export default {
   // One page per race: /race/house-tx-28, /race/senate-ga, /race/governor-az ...
   dynamicPaths: races.map((r) => `/race/${r.race_id}`),
   head: (page) => preview(page) + `
-<meta name="description" content="Who Shows Up: a turnout-first forecast of the 2026 U.S. midterm elections.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
