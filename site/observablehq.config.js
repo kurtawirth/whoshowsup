@@ -70,22 +70,38 @@ export default {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
 <script>
-// A tab left open across a site update still asks for the previous build's files (their names carry a
-// fingerprint, and each update replaces them), so it breaks. When the tab comes back into view, or a
-// file fails to load, check whether the site changed since this page loaded; if it did, reload.
+// A page from before a site update asks for the previous build's files (their names carry a fingerprint,
+// and each update replaces them), so its charts break. That happens to a tab left open, and to a fresh visit
+// when the browser reuses its cached copy of the page (GitHub Pages lets it for up to 10 minutes). So check
+// whether the site changed since this copy was built: as soon as the page loads, when a chart fails, when the
+// tab comes back into view, or when a file fails to load. If it did, refresh the cached copy and reload.
 (() => {
   const RE = /(?:_file|_import|_npm|_observablehq)\\/[^"'\\s)]+\\.[0-9a-f]{8}\\.[a-z]+/g;
   let ours = null, busy = false, last = 0;
   const snapshot = () => { ours ??= new Set(document.documentElement.outerHTML.match(RE) ?? []); };
-  document.addEventListener("DOMContentLoaded", snapshot);
   async function check() {
     if (busy || Date.now() - last < 30000) return;
     busy = true; last = Date.now(); snapshot();
     try {
-      const html = await (await fetch(location.pathname, {cache: "no-store"})).text();
-      if ((html.match(RE) ?? []).some((f) => !ours.has(f))) location.reload();
+      const html = await (await fetch(location.href, {cache: "no-store"})).text();
+      if (!(html.match(RE) ?? []).some((f) => !ours.has(f))) return;
+      // at most one automatic reload per page per minute, so a slow-to-update server can't cause a loop
+      const key = "wsu-reloaded:" + location.pathname;
+      let then = 0;
+      try { then = Number(sessionStorage.getItem(key)) || 0; sessionStorage.setItem(key, String(Date.now())); } catch {}
+      if (Date.now() - then < 60000) return;
+      await fetch(location.href, {cache: "reload"}).catch(() => {});  // replace the browser's cached copy
+      location.reload();
     } catch {} finally { busy = false; }
   }
+  document.addEventListener("DOMContentLoaded", () => {
+    snapshot();
+    check();
+    // a chart that fails to load its data shows an error box: check right away, even within 30 seconds
+    new MutationObserver((records) => {
+      if (records.some((r) => [...r.addedNodes].some((n) => n.nodeType === 1 && (n.classList?.contains("observablehq--error") || n.querySelector?.(".observablehq--error"))))) { last = 0; check(); }
+    }).observe(document.body, {childList: true, subtree: true});
+  });
   document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") check(); });
   addEventListener("pageshow", (e) => { if (e.persisted) check(); });
   addEventListener("error", (e) => { if (e.target !== window) check(); }, true);
