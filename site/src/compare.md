@@ -36,7 +36,7 @@ const competitive = (x) => x.r.rating !== "Safe D" && x.r.rating !== "Safe R" ||
 
 # How our forecast compares with the major forecasters
 
-<p class="dek">The raters, modelers and prediction markets below never feed into Who Shows Up; we build the forecast from polls, special elections and past results alone. Here is where we agree with them and where we don't. Further down, a backtest asks how our method would have done in past elections. Who Shows Up launched in 2026, so those past-year results are a re-run after the fact, not predictions we made at the time.</p>
+<p class="dek">Where we agree with the major raters, modelers and prediction markets, and where we don't. None of them feed into Who Shows Up.</p>
 
 ```js
 const disagree = rows.filter((x) => x.cons != null && Math.abs(x.gap) >= 1.5 && competitive(x))
