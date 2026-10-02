@@ -1,7 +1,7 @@
 {
- "forecast_date": "2026-10-01",
- "finished_at": "2026-10-01 14:33",
- "refresh": false,
+ "forecast_date": "2026-10-02",
+ "finished_at": "2026-10-02 07:23",
+ "refresh": true,
  "failed_steps": [],
  "warnings": [
   "Poll check: GOV MA: recent VoteHub poll (MassINC Polling Group, Sep 22) without Maura Healey vs Mike Minogue: Maura Healy, Michael Minogue, Andrea James"
