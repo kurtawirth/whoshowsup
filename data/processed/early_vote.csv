@@ -2,12 +2,17 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,CO,inperson,2.0,0.0,0.0,2.0
 2026-09-30,CO,inperson,0.0,0.0,0.0,0.0
 2026-10-01,CO,inperson,0.0,0.0,0.0,0.0
+2026-10-02,CO,inperson,2.0,0.0,0.0,2.0
 2026-09-29,CO,requested,3992813.0,983543.0,881064.0,2128206.0
 2026-09-30,CO,requested,3998800.0,985796.0,881914.0,2131090.0
 2026-10-01,CO,requested,3998505.0,985812.0,881937.0,2130756.0
+2026-10-02,CO,requested,4001514.0,985877.0,882100.0,2133537.0
 2026-09-29,CO,returned,2904.0,1552.0,262.0,1090.0
 2026-09-30,CO,returned,3256.0,1729.0,301.0,1226.0
 2026-10-01,CO,returned,3537.0,1869.0,329.0,1339.0
+2026-10-02,CO,returned,4012.0,2128.0,382.0,1502.0
+2026-10-02,CT,requested,18856.0,10074.0,3426.0,5356.0
+2026-10-02,CT,returned,156.0,101.0,6.0,49.0
 2026-09-04,FL,inperson,0.0,0.0,0.0,0.0
 2026-09-05,FL,inperson,0.0,0.0,0.0,0.0
 2026-09-06,FL,inperson,0.0,0.0,0.0,0.0
@@ -37,6 +42,7 @@ date,state_po,category,total,dem,rep,other
 2026-09-30,FL,inperson,0.0,0.0,0.0,0.0
 2026-10-01,FL,inperson,0.0,0.0,0.0,0.0
 2026-10-02,FL,inperson,0.0,0.0,0.0,0.0
+2026-10-03,FL,inperson,0.0,0.0,0.0,0.0
 2026-09-04,FL,requested,1.0,0.0,1.0,0.0
 2026-09-05,FL,requested,1.0,0.0,1.0,0.0
 2026-09-06,FL,requested,1.0,0.0,1.0,0.0
@@ -65,7 +71,8 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,FL,requested,1831130.0,799357.0,627175.0,404598.0
 2026-09-30,FL,requested,1937798.0,842983.0,665664.0,429151.0
 2026-10-01,FL,requested,1923983.0,835531.0,661769.0,426683.0
-2026-10-02,FL,requested,1923983.0,835531.0,661769.0,426683.0
+2026-10-02,FL,requested,2073104.0,897338.0,715101.0,460665.0
+2026-10-03,FL,requested,2073104.0,897338.0,715101.0,460665.0
 2026-09-04,FL,returned,0.0,0.0,0.0,0.0
 2026-09-05,FL,returned,0.0,0.0,0.0,0.0
 2026-09-06,FL,returned,0.0,0.0,0.0,0.0
@@ -94,7 +101,11 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,FL,returned,13986.0,6801.0,4207.0,2978.0
 2026-09-30,FL,returned,53049.0,23557.0,17738.0,11754.0
 2026-10-01,FL,returned,92958.0,40847.0,31820.0,20291.0
-2026-10-02,FL,returned,92958.0,40847.0,31820.0,20291.0
+2026-10-02,FL,returned,128833.0,56829.0,44328.0,27676.0
+2026-10-03,FL,returned,128833.0,56829.0,44328.0,27676.0
+2026-10-02,GA,inperson,0.0,,,
+2026-10-02,GA,requested,99726.0,,,
+2026-10-02,GA,returned,593.0,,,
 2026-09-24,HI,inperson,0.0,,,
 2026-09-25,HI,inperson,0.0,,,
 2026-09-28,HI,inperson,0.0,,,
@@ -127,6 +138,7 @@ date,state_po,category,total,dem,rep,other
 2026-09-30,ID,inperson,0.0,,,
 2026-10-01,ID,inperson,0.0,,,
 2026-10-02,ID,inperson,0.0,,,
+2026-10-03,ID,inperson,0.0,,,
 2026-09-19,ID,requested,66933.0,,,
 2026-09-20,ID,requested,66931.0,,,
 2026-09-21,ID,requested,70981.0,,,
@@ -141,6 +153,7 @@ date,state_po,category,total,dem,rep,other
 2026-09-30,ID,requested,88663.0,,,
 2026-10-01,ID,requested,88663.0,,,
 2026-10-02,ID,requested,88663.0,,,
+2026-10-03,ID,requested,88663.0,,,
 2026-09-19,ID,returned,5.0,0.0,5.0,0.0
 2026-09-20,ID,returned,5.0,0.0,5.0,0.0
 2026-09-21,ID,returned,5.0,0.0,5.0,0.0
@@ -155,6 +168,7 @@ date,state_po,category,total,dem,rep,other
 2026-09-30,ID,returned,8098.0,2567.0,5461.0,70.0
 2026-10-01,ID,returned,8098.0,2567.0,5461.0,70.0
 2026-10-02,ID,returned,8098.0,2567.0,5461.0,70.0
+2026-10-03,ID,returned,8098.0,2567.0,5461.0,70.0
 2026-09-06,IL,inperson,0.0,,,
 2026-09-07,IL,inperson,0.0,,,
 2026-09-08,IL,inperson,0.0,,,
@@ -181,7 +195,8 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,IL,inperson,9184.0,,,
 2026-09-30,IL,inperson,17848.0,,,
 2026-10-01,IL,inperson,17923.0,,,
-2026-10-02,IL,inperson,17923.0,,,
+2026-10-02,IL,inperson,25690.0,,,
+2026-10-03,IL,inperson,25690.0,,,
 2026-09-06,IL,requested,947926.0,,,
 2026-09-07,IL,requested,947926.0,,,
 2026-09-08,IL,requested,952622.0,,,
@@ -208,7 +223,8 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,IL,requested,1004589.0,,,
 2026-09-30,IL,requested,1014851.0,,,
 2026-10-01,IL,requested,1014851.0,,,
-2026-10-02,IL,requested,1014851.0,,,
+2026-10-02,IL,requested,1027249.0,,,
+2026-10-03,IL,requested,1027249.0,,,
 2026-09-06,IL,returned,0.0,,,
 2026-09-07,IL,returned,0.0,,,
 2026-09-08,IL,returned,0.0,,,
@@ -235,7 +251,8 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,IL,returned,1377.0,,,
 2026-09-30,IL,returned,7643.0,,,
 2026-10-01,IL,returned,8659.0,,,
-2026-10-02,IL,returned,8659.0,,,
+2026-10-02,IL,returned,26363.0,,,
+2026-10-03,IL,returned,26363.0,,,
 2026-09-22,IN,inperson,0.0,,,
 2026-09-23,IN,inperson,0.0,,,
 2026-09-24,IN,inperson,0.0,,,
@@ -247,6 +264,7 @@ date,state_po,category,total,dem,rep,other
 2026-09-30,IN,inperson,0.0,,,
 2026-10-01,IN,inperson,0.0,,,
 2026-10-02,IN,inperson,0.0,,,
+2026-10-03,IN,inperson,0.0,,,
 2026-09-22,IN,requested,27670.0,,,
 2026-09-23,IN,requested,29245.0,,,
 2026-09-24,IN,requested,30711.0,,,
@@ -257,7 +275,8 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,IN,requested,37065.0,,,
 2026-09-30,IN,requested,39001.0,,,
 2026-10-01,IN,requested,41224.0,,,
-2026-10-02,IN,requested,41224.0,,,
+2026-10-02,IN,requested,43668.0,,,
+2026-10-03,IN,requested,43668.0,,,
 2026-09-22,IN,returned,172.0,,,
 2026-09-23,IN,returned,489.0,,,
 2026-09-24,IN,returned,952.0,,,
@@ -268,7 +287,8 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,IN,returned,3608.0,,,
 2026-09-30,IN,returned,4535.0,,,
 2026-10-01,IN,returned,6299.0,,,
-2026-10-02,IN,returned,6299.0,,,
+2026-10-02,IN,returned,7212.0,,,
+2026-10-03,IN,returned,7212.0,,,
 2026-09-22,KY,inperson,0.0,0.0,0.0,0.0
 2026-09-23,KY,inperson,0.0,0.0,0.0,0.0
 2026-09-24,KY,inperson,0.0,0.0,0.0,0.0
@@ -278,6 +298,7 @@ date,state_po,category,total,dem,rep,other
 2026-09-28,KY,inperson,0.0,0.0,0.0,0.0
 2026-09-29,KY,inperson,0.0,0.0,0.0,0.0
 2026-09-30,KY,inperson,0.0,0.0,0.0,0.0
+2026-10-01,KY,inperson,0.0,0.0,0.0,0.0
 2026-09-22,KY,requested,9534.0,5096.0,2320.0,2118.0
 2026-09-23,KY,requested,11911.0,6605.0,3050.0,2256.0
 2026-09-24,KY,requested,14934.0,8476.0,3951.0,2507.0
@@ -287,6 +308,7 @@ date,state_po,category,total,dem,rep,other
 2026-09-28,KY,requested,20752.0,11927.0,5752.0,3073.0
 2026-09-29,KY,requested,22920.0,13200.0,6492.0,3228.0
 2026-09-30,KY,requested,25198.0,14495.0,7273.0,3430.0
+2026-10-01,KY,requested,26846.0,15450.0,7848.0,3548.0
 2026-09-22,KY,returned,36.0,23.0,8.0,5.0
 2026-09-23,KY,returned,81.0,48.0,24.0,9.0
 2026-09-24,KY,returned,204.0,122.0,64.0,18.0
@@ -296,6 +318,7 @@ date,state_po,category,total,dem,rep,other
 2026-09-28,KY,returned,962.0,545.0,334.0,83.0
 2026-09-29,KY,returned,1596.0,918.0,550.0,128.0
 2026-09-30,KY,returned,2166.0,1256.0,734.0,176.0
+2026-10-01,KY,returned,2783.0,1626.0,942.0,215.0
 2026-09-24,MD,requested,595608.0,,,
 2026-09-25,MD,requested,596412.0,,,
 2026-09-26,MD,requested,597447.0,,,
@@ -323,9 +346,11 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,MI,requested,2022747.0,,,
 2026-09-30,MI,requested,2022747.0,,,
 2026-10-01,MI,requested,2032542.0,,,
+2026-10-02,MI,requested,2038068.0,,,
 2026-09-29,MI,returned,24781.0,,,
 2026-09-30,MI,returned,24781.0,,,
 2026-10-01,MI,returned,64414.0,,,
+2026-10-02,MI,returned,93135.0,,,
 2026-09-24,MN,inperson,8403.0,,,
 2026-09-25,MN,inperson,8403.0,,,
 2026-09-26,MN,inperson,8403.0,,,
@@ -334,7 +359,8 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,MN,inperson,8403.0,,,
 2026-09-30,MN,inperson,8403.0,,,
 2026-10-01,MN,inperson,8403.0,,,
-2026-10-02,MN,inperson,8403.0,,,
+2026-10-02,MN,inperson,26174.0,,,
+2026-10-03,MN,inperson,26174.0,,,
 2026-09-24,MN,requested,384679.0,,,
 2026-09-25,MN,requested,384679.0,,,
 2026-09-26,MN,requested,384679.0,,,
@@ -343,7 +369,8 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,MN,requested,384679.0,,,
 2026-09-30,MN,requested,384679.0,,,
 2026-10-01,MN,requested,384679.0,,,
-2026-10-02,MN,requested,384679.0,,,
+2026-10-02,MN,requested,424515.0,,,
+2026-10-03,MN,requested,424515.0,,,
 2026-09-24,MN,returned,3919.0,,,
 2026-09-25,MN,returned,3919.0,,,
 2026-09-26,MN,returned,3919.0,,,
@@ -352,7 +379,8 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,MN,returned,3919.0,,,
 2026-09-30,MN,returned,3919.0,,,
 2026-10-01,MN,returned,3919.0,,,
-2026-10-02,MN,returned,3919.0,,,
+2026-10-02,MN,returned,37222.0,,,
+2026-10-03,MN,returned,37222.0,,,
 2026-09-28,MS,requested,8787.0,,,
 2026-09-28,MS,returned,4148.0,,,
 2026-09-21,MT,requested,9288.0,,,
@@ -367,6 +395,7 @@ date,state_po,category,total,dem,rep,other
 2026-09-30,MT,requested,9475.0,,,
 2026-10-01,MT,requested,9535.0,,,
 2026-10-02,MT,requested,9583.0,,,
+2026-10-03,MT,requested,9633.0,,,
 2026-09-21,MT,returned,20.0,,,
 2026-09-22,MT,returned,165.0,,,
 2026-09-23,MT,returned,212.0,,,
@@ -379,6 +408,7 @@ date,state_po,category,total,dem,rep,other
 2026-09-30,MT,returned,552.0,,,
 2026-10-01,MT,returned,582.0,,,
 2026-10-02,MT,returned,612.0,,,
+2026-10-03,MT,returned,649.0,,,
 2026-09-04,NC,inperson,0.0,0.0,0.0,0.0
 2026-09-05,NC,inperson,0.0,0.0,0.0,0.0
 2026-09-06,NC,inperson,0.0,0.0,0.0,0.0
@@ -408,6 +438,7 @@ date,state_po,category,total,dem,rep,other
 2026-09-30,NC,inperson,0.0,0.0,0.0,0.0
 2026-10-01,NC,inperson,0.0,0.0,0.0,0.0
 2026-10-02,NC,inperson,0.0,0.0,0.0,0.0
+2026-10-03,NC,inperson,0.0,0.0,0.0,0.0
 2026-09-04,NC,requested,46678.0,19989.0,8638.0,18051.0
 2026-09-05,NC,requested,49137.0,21077.0,9002.0,19058.0
 2026-09-06,NC,requested,49152.0,21085.0,9003.0,19064.0
@@ -437,6 +468,7 @@ date,state_po,category,total,dem,rep,other
 2026-09-30,NC,requested,95987.0,40158.0,16248.0,39581.0
 2026-10-01,NC,requested,98095.0,41020.0,16626.0,40449.0
 2026-10-02,NC,requested,100611.0,42101.0,17115.0,41395.0
+2026-10-03,NC,requested,102812.0,42962.0,17505.0,42345.0
 2026-09-04,NC,returned,0.0,0.0,0.0,0.0
 2026-09-05,NC,returned,10.0,6.0,1.0,3.0
 2026-09-06,NC,returned,10.0,6.0,1.0,3.0
@@ -466,6 +498,7 @@ date,state_po,category,total,dem,rep,other
 2026-09-30,NC,returned,14672.0,6761.0,2315.0,5596.0
 2026-10-01,NC,returned,16041.0,7369.0,2550.0,6122.0
 2026-10-02,NC,returned,17446.0,7975.0,2818.0,6653.0
+2026-10-03,NC,returned,18745.0,8570.0,3025.0,7150.0
 2026-09-07,ND,inperson,0.0,,,
 2026-09-08,ND,inperson,0.0,,,
 2026-09-09,ND,inperson,0.0,,,
@@ -492,6 +525,7 @@ date,state_po,category,total,dem,rep,other
 2026-09-30,ND,inperson,0.0,,,
 2026-10-01,ND,inperson,0.0,,,
 2026-10-02,ND,inperson,0.0,,,
+2026-10-03,ND,inperson,0.0,,,
 2026-09-07,ND,requested,63.0,,,
 2026-09-08,ND,requested,68.0,,,
 2026-09-09,ND,requested,1790.0,,,
@@ -517,7 +551,8 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,ND,requested,41061.0,,,
 2026-09-30,ND,requested,41818.0,,,
 2026-10-01,ND,requested,42570.0,,,
-2026-10-02,ND,requested,42570.0,,,
+2026-10-02,ND,requested,43263.0,,,
+2026-10-03,ND,requested,43263.0,,,
 2026-09-07,ND,returned,0.0,,,
 2026-09-08,ND,returned,0.0,,,
 2026-09-09,ND,returned,0.0,,,
@@ -543,13 +578,16 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,ND,returned,1199.0,,,
 2026-09-30,ND,returned,2186.0,,,
 2026-10-01,ND,returned,3445.0,,,
-2026-10-02,ND,returned,3447.0,,,
+2026-10-02,ND,returned,4820.0,,,
+2026-10-03,ND,returned,4822.0,,,
 2026-09-29,NE,requested,129548.0,58195.0,48257.0,23096.0
 2026-09-30,NE,requested,142901.0,61775.0,55793.0,25333.0
 2026-10-01,NE,requested,149868.0,63782.0,59645.0,26441.0
+2026-10-02,NE,requested,153946.0,65200.0,61669.0,27077.0
 2026-09-29,NE,returned,41.0,12.0,20.0,9.0
 2026-09-30,NE,returned,124.0,42.0,61.0,21.0
 2026-10-01,NE,returned,713.0,302.0,281.0,130.0
+2026-10-02,NE,returned,2050.0,912.0,783.0,355.0
 2026-09-18,NJ,inperson,0.0,0.0,0.0,0.0
 2026-09-21,NJ,inperson,0.0,0.0,0.0,0.0
 2026-09-22,NJ,inperson,0.0,0.0,0.0,0.0
@@ -560,6 +598,7 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,NJ,inperson,0.0,0.0,0.0,0.0
 2026-09-30,NJ,inperson,0.0,0.0,0.0,0.0
 2026-10-01,NJ,inperson,0.0,0.0,0.0,0.0
+2026-10-02,NJ,inperson,0.0,0.0,0.0,0.0
 2026-09-18,NJ,requested,875029.0,509613.0,167866.0,197550.0
 2026-09-21,NJ,requested,875767.0,509940.0,167955.0,197872.0
 2026-09-22,NJ,requested,876980.0,510550.0,168114.0,198316.0
@@ -570,6 +609,7 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,NJ,requested,883120.0,513542.0,169085.0,200493.0
 2026-09-30,NJ,requested,884467.0,514193.0,169301.0,200973.0
 2026-10-01,NJ,requested,886008.0,514883.0,169576.0,201549.0
+2026-10-02,NJ,requested,887154.0,515428.0,169730.0,201996.0
 2026-09-18,NJ,returned,9840.0,7354.0,1468.0,1018.0
 2026-09-21,NJ,returned,14226.0,10646.0,2104.0,1476.0
 2026-09-22,NJ,returned,28413.0,20685.0,4586.0,3142.0
@@ -580,12 +620,15 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,NJ,returned,99389.0,68501.0,18521.0,12367.0
 2026-09-30,NJ,returned,116590.0,79863.0,21847.0,14880.0
 2026-10-01,NJ,returned,134390.0,91944.0,25077.0,17369.0
+2026-10-02,NJ,returned,154812.0,105138.0,29425.0,20249.0
 2026-09-29,NV,requested,2078557.0,573688.0,569843.0,935026.0
 2026-09-30,NV,requested,2078701.0,573731.0,569729.0,935241.0
 2026-10-01,NV,requested,2078790.0,573696.0,569622.0,935472.0
+2026-10-02,NV,requested,2078735.0,573670.0,569515.0,935550.0
 2026-09-29,NV,returned,507.0,268.0,88.0,151.0
 2026-09-30,NV,returned,707.0,374.0,124.0,209.0
 2026-10-01,NV,returned,1064.0,591.0,166.0,307.0
+2026-10-02,NV,returned,1242.0,687.0,201.0,354.0
 2026-09-23,OH,inperson,0.0,,,
 2026-09-24,OH,inperson,0.0,,,
 2026-09-25,OH,inperson,0.0,,,
@@ -595,7 +638,8 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,OH,inperson,3.0,,,
 2026-09-30,OH,inperson,3.0,,,
 2026-10-01,OH,inperson,0.0,,,
-2026-10-02,OH,inperson,0.0,,,
+2026-10-02,OH,inperson,1.0,,,
+2026-10-03,OH,inperson,1.0,,,
 2026-09-23,OH,requested,472027.0,,,
 2026-09-24,OH,requested,492778.0,,,
 2026-09-25,OH,requested,512724.0,,,
@@ -605,7 +649,8 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,OH,requested,552932.0,,,
 2026-09-30,OH,requested,552932.0,,,
 2026-10-01,OH,requested,576808.0,,,
-2026-10-02,OH,requested,576808.0,,,
+2026-10-02,OH,requested,589285.0,,,
+2026-10-03,OH,requested,589285.0,,,
 2026-09-23,OH,returned,40.0,,,
 2026-09-24,OH,returned,58.0,,,
 2026-09-25,OH,returned,76.0,,,
@@ -615,7 +660,8 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,OH,returned,213.0,,,
 2026-09-30,OH,returned,213.0,,,
 2026-10-01,OH,returned,340.0,,,
-2026-10-02,OH,returned,340.0,,,
+2026-10-02,OH,returned,435.0,,,
+2026-10-03,OH,returned,435.0,,,
 2026-09-16,OK,requested,28812.0,11450.0,13936.0,3426.0
 2026-09-17,OK,requested,30098.0,11870.0,14565.0,3663.0
 2026-09-18,OK,requested,30098.0,11870.0,14565.0,3663.0
@@ -632,7 +678,8 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,OK,requested,44792.0,18399.0,20290.0,6103.0
 2026-09-30,OK,requested,45957.0,18954.0,20662.0,6341.0
 2026-10-01,OK,requested,46675.0,19273.0,20917.0,6485.0
-2026-10-02,OK,requested,46675.0,19273.0,20917.0,6485.0
+2026-10-02,OK,requested,47555.0,19653.0,21259.0,6643.0
+2026-10-03,OK,requested,47555.0,19653.0,21259.0,6643.0
 2026-09-16,OK,returned,63.0,28.0,26.0,9.0
 2026-09-17,OK,returned,330.0,142.0,151.0,37.0
 2026-09-18,OK,returned,330.0,142.0,151.0,37.0
@@ -649,7 +696,8 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,OK,returned,3496.0,1717.0,1404.0,375.0
 2026-09-30,OK,returned,4102.0,1997.0,1659.0,446.0
 2026-10-01,OK,returned,4782.0,2324.0,1951.0,507.0
-2026-10-02,OK,returned,4782.0,2324.0,1951.0,507.0
+2026-10-02,OK,returned,5376.0,2603.0,2200.0,573.0
+2026-10-03,OK,returned,5376.0,2603.0,2200.0,573.0
 2026-09-11,PA,requested,952634.0,633829.0,231405.0,87400.0
 2026-09-12,PA,requested,952634.0,633829.0,231405.0,87400.0
 2026-09-13,PA,requested,952634.0,633829.0,231405.0,87400.0
@@ -671,7 +719,8 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,PA,requested,1021316.0,678029.0,244537.0,98750.0
 2026-09-30,PA,requested,1028728.0,682845.0,245881.0,100002.0
 2026-10-01,PA,requested,1037220.0,688648.0,247205.0,101367.0
-2026-10-02,PA,requested,1037220.0,688648.0,247205.0,101367.0
+2026-10-02,PA,requested,1047093.0,695213.0,248939.0,102941.0
+2026-10-03,PA,requested,1047093.0,695213.0,248939.0,102941.0
 2026-09-11,PA,returned,29.0,17.0,10.0,2.0
 2026-09-12,PA,returned,29.0,17.0,10.0,2.0
 2026-09-13,PA,returned,29.0,17.0,10.0,2.0
@@ -693,7 +742,14 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,PA,returned,44480.0,35633.0,5548.0,3299.0
 2026-09-30,PA,returned,56554.0,44151.0,8125.0,4278.0
 2026-10-01,PA,returned,63476.0,49530.0,9176.0,4770.0
-2026-10-02,PA,returned,63476.0,49530.0,9176.0,4770.0
+2026-10-02,PA,returned,78237.0,60099.0,12276.0,5862.0
+2026-10-03,PA,returned,78237.0,60099.0,12276.0,5862.0
+2026-10-01,RI,inperson,0.0,0.0,0.0,0.0
+2026-10-02,RI,inperson,0.0,0.0,0.0,0.0
+2026-10-01,RI,requested,20532.0,11232.0,1313.0,7987.0
+2026-10-02,RI,requested,21081.0,11477.0,1350.0,8254.0
+2026-10-01,RI,returned,254.0,177.0,2.0,75.0
+2026-10-02,RI,returned,254.0,177.0,2.0,75.0
 2026-09-25,SD,requested,12625.0,3711.0,6621.0,2293.0
 2026-09-25,SD,returned,5134.0,1764.0,2525.0,845.0
 2026-09-10,VA,inperson,7.0,,,
@@ -718,7 +774,8 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,VA,inperson,144835.0,,,
 2026-09-30,VA,inperson,165181.0,,,
 2026-10-01,VA,inperson,182438.0,,,
-2026-10-02,VA,inperson,199660.0,,,
+2026-10-02,VA,inperson,200386.0,,,
+2026-10-03,VA,inperson,222627.0,,,
 2026-09-10,VA,requested,110951.0,,,
 2026-09-11,VA,requested,204377.0,,,
 2026-09-12,VA,requested,233838.0,,,
@@ -741,7 +798,8 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,VA,requested,424448.0,,,
 2026-09-30,VA,requested,424865.0,,,
 2026-10-01,VA,requested,425301.0,,,
-2026-10-02,VA,requested,425574.0,,,
+2026-10-02,VA,requested,425687.0,,,
+2026-10-03,VA,requested,426134.0,,,
 2026-09-10,VA,returned,11.0,,,
 2026-09-11,VA,returned,11.0,,,
 2026-09-12,VA,returned,13.0,,,
@@ -764,7 +822,8 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,VA,returned,78009.0,,,
 2026-09-30,VA,returned,94137.0,,,
 2026-10-01,VA,returned,102270.0,,,
-2026-10-02,VA,returned,114867.0,,,
+2026-10-02,VA,returned,115552.0,,,
+2026-10-03,VA,returned,127122.0,,,
 2026-09-21,VT,inperson,0.0,,,
 2026-09-28,VT,inperson,0.0,,,
 2026-09-21,VT,requested,457289.0,,,
@@ -781,6 +840,7 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,WI,inperson,0.0,,,
 2026-09-30,WI,inperson,0.0,,,
 2026-10-01,WI,inperson,0.0,,,
+2026-10-02,WI,inperson,0.0,,,
 2026-09-18,WI,requested,299849.0,,,
 2026-09-21,WI,requested,304051.0,,,
 2026-09-22,WI,requested,307359.0,,,
@@ -791,6 +851,7 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,WI,requested,319113.0,,,
 2026-09-30,WI,requested,321464.0,,,
 2026-10-01,WI,requested,323628.0,,,
+2026-10-02,WI,requested,325743.0,,,
 2026-09-18,WI,returned,4309.0,,,
 2026-09-21,WI,returned,5666.0,,,
 2026-09-22,WI,returned,9654.0,,,
@@ -801,15 +862,18 @@ date,state_po,category,total,dem,rep,other
 2026-09-29,WI,returned,51538.0,,,
 2026-09-30,WI,returned,56424.0,,,
 2026-10-01,WI,returned,64743.0,,,
+2026-10-02,WI,returned,72653.0,,,
 2026-09-24,WY,requested,493.0,159.0,239.0,95.0
 2026-09-25,WY,requested,496.0,161.0,239.0,96.0
 2026-09-28,WY,requested,501.0,162.0,240.0,99.0
 2026-09-29,WY,requested,505.0,162.0,243.0,100.0
 2026-09-30,WY,requested,515.0,164.0,246.0,105.0
 2026-10-01,WY,requested,518.0,165.0,248.0,105.0
+2026-10-02,WY,requested,539.0,171.0,255.0,113.0
 2026-09-24,WY,returned,2.0,0.0,2.0,0.0
 2026-09-25,WY,returned,3.0,0.0,3.0,0.0
 2026-09-28,WY,returned,3.0,0.0,3.0,0.0
 2026-09-29,WY,returned,6.0,2.0,3.0,1.0
 2026-09-30,WY,returned,11.0,3.0,5.0,3.0
 2026-10-01,WY,returned,11.0,3.0,5.0,3.0
+2026-10-02,WY,returned,13.0,3.0,5.0,5.0
