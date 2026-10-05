@@ -160,6 +160,11 @@ def main() -> None:
     ap.add_argument("--no-refresh", action="store_true", help="use cached data; only rerun the models")
     ap.add_argument("--push", action="store_true", help="commit and push the results to GitHub")
     args = ap.parse_args()
+    # The 7 a.m. task wakes the PC; ask Windows to stay awake until this run finishes (released when the
+    # process exits). Without it, an unattended wake can end mid-run and kill the site build and the push.
+    if sys.platform == "win32":
+        import ctypes
+        ctypes.windll.kernel32.SetThreadExecutionState(0x80000000 | 0x00000001)  # ES_CONTINUOUS | ES_SYSTEM_REQUIRED
     asof = pd.Timestamp(args.date) if args.date else pd.Timestamp.today().normalize()
     days_out = (ELECTION_DAY - asof).days
     refresh = not args.no_refresh
