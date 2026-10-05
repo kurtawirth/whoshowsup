@@ -1,9 +1,12 @@
 {
- "forecast_date": "2026-10-04",
- "finished_at": "2026-10-04 07:28",
+ "forecast_date": "2026-10-05",
+ "finished_at": "2026-10-05 07:30",
  "refresh": true,
- "failed_steps": [],
+ "failed_steps": [
+  "Website test build"
+ ],
  "warnings": [
-  "Poll check: GOV MA: recent VoteHub poll (MassINC Polling Group, Sep 22) without Maura Healey vs Mike Minogue: Maura Healy, Michael Minogue, Andrea James"
+  "Poll check: GOV MA: recent VoteHub poll (MassINC Polling Group, Sep 22) without Maura Healey vs Mike Minogue: Maura Healy, Michael Minogue, Andrea James",
+  "Website test build FAILED: RuntimeError('site build failed')"
  ]
 }
