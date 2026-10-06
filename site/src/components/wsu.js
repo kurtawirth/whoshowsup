@@ -397,7 +397,7 @@ export const RACE_SORTS = [
   {label: "State A–Z", value: (r) => `${r.state_name} ${String(r.district ?? 0).padStart(2, "0")}`, dir: 1}
 ];
 
-export function raceTable(rows, columns, {search = true, filters = [], pageSize = 50, sort, sorts = null, placeholder = "Search candidates, states, districts"} = {}) {
+export function raceTable(rows, columns, {search = true, filters = [], pageSize = 50, sort, sorts = null, placeholder = "Search candidates, states, districts", noun = "race"} = {}) {
   const root = document.createElement("div");
   const controls = document.createElement("div");
   controls.className = "table-controls";
@@ -494,7 +494,7 @@ export function raceTable(rows, columns, {search = true, filters = [], pageSize 
       }
       return tr;
     }));
-    count.textContent = `${data.length} race${data.length === 1 ? "" : "s"}`;
+    count.textContent = `${data.length.toLocaleString()} ${noun}${data.length === 1 ? "" : "s"}`;
     more.style.display = data.length > shown ? "" : "none";
   }
   render();

@@ -421,3 +421,10 @@ button.seg.i[aria-pressed=true] { background: var(--ind, #6b4fbb); border-color:
 .scn-mini span { overflow: hidden; text-overflow: ellipsis; }
 .scn-reset-mini { font: 600 12px var(--sans); padding: 4px 10px; border-radius: 999px; border: 1px solid currentColor; background: transparent; color: inherit; cursor: pointer; }
 @media (max-width: 640px) { .scn-mini { font-size: 12.5px; bottom: 10px; } }
+
+/* ---------- Data page ---------- */
+.downloads { display: grid; gap: 14px; margin: 18px 0; max-width: 760px; }
+.dl { padding: 14px 16px; background: var(--card); box-shadow: 0 0 0 1px var(--card-ring); border-radius: 10px; font-family: var(--sans); }
+.dl-name { font-weight: 700; font-size: 16px; }
+.dl-rows { margin-left: 10px; font-size: 13px; color: var(--ink-3); }
+.dl p { margin: 6px 0 0; font-size: 14px; color: var(--ink-2); }

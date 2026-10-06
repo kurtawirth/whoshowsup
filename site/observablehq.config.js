@@ -37,6 +37,7 @@ const nav = [
   ["/senate", "Senate"],
   ["/governors", "Governors"],
   ["/national", "National picture"],
+  ["/polls", "Polls"],
   ["/scenarios", "What if"],
   ["/specials", "Special elections"],
   ["/early-vote", "Early vote"],
@@ -169,7 +170,7 @@ document.addEventListener("click", (e) => {
   <a href="https://www.the-downballot.com">The Downballot</a>; historical polls from FiveThirtyEight's public archive; campaign finance from the
   <a href="https://www.fec.gov/data/">Federal Election Commission</a>; early-vote counts and election-night results from <a href="https://civicapi.org">civicAPI</a>; prediction-market prices (shown for comparison only) from <a href="https://www.predictit.org">PredictIt</a>; candidate ideology scores from Adam Bonica's
   <a href="https://data.stanford.edu/dime">Database on Ideology, Money in Politics, and Elections</a> (DIME, Stanford University Libraries, ODC-BY 1.0); hex layout adapted from
-  Pitch Interactive's Tilegrams. Full source: <a href="https://github.com/kurtawirth/whoshowsup">GitHub</a>.</p>
+  Pitch Interactive's Tilegrams. Full source: <a href="https://github.com/kurtawirth/whoshowsup">GitHub</a>. <a href="${base}data">Download the data</a>.</p>
   <p>Visits are counted with <a href="https://www.goatcounter.com">GoatCounter</a>, which uses no cookies and collects no personal information.</p>
 </div>`
 };

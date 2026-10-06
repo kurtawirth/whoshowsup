@@ -534,6 +534,11 @@ def run_simulation(races: pd.DataFrame, env: np.ndarray, nat_d0: float, nat_r0: 
     poll_now = live["poll_avg"].fillna(0).to_numpy(dtype=float)[:, None] + (E - E_bar)[None, :]
     mean = w_poll[:, None] * poll_now + (1 - w_poll[:, None]) * fund
     post_sd = np.where(has_poll, np.sqrt(fund_sd ** 2 * poll_sd ** 2 / (fund_sd ** 2 + poll_sd ** 2)), fund_sd)
+    # For the race pages: each ingredient's chance on its own (fundamentals alone; polls alone, with the
+    # polls' own historical error), before the shared state and regional errors. Display only; no draws.
+    from scipy.special import ndtr
+    live["p_fund"] = ndtr(fund / fund_sd[:, None]).mean(axis=1)
+    live["p_poll"] = np.where(has_poll, ndtr(poll_now / poll_sd[:, None]).mean(axis=1), np.nan)
 
     # ---- correlated error: state + region + race ----
     states = sorted(races["state_po"].unique())
@@ -610,7 +615,7 @@ def simulate(forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
     OUT.mkdir(parents=True, exist_ok=True)
     cols = ["office", "state_po", "district", "special", "race_type", "incumbent", "incumbent_party", "inc_side",
             "dem_candidate", "rep_candidate", "race_note", "pres24", "quality_diff", "prior_edge", "money_log_ratio", "money_adj", "quality_adj", "challenger_adj", "chal_rec", "ideology_gap", "ideology_adj", "poll_count", "poll_avg", "poll_undecided",
-            "poll_weight", "fundamentals_mean", "margin_median", "margin_p10", "margin_p90", "p_dem"]
+            "poll_weight", "fundamentals_mean", "margin_median", "margin_p10", "margin_p90", "p_dem", "p_fund", "p_poll"]
     out["race_id"] = out.apply(race_id, axis=1)
     out[["race_id"] + cols].sort_values(["office", "state_po", "district"]).to_csv(OUT / "race_forecasts.csv", index=False)
 

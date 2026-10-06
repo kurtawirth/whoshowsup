@@ -1,0 +1,71 @@
+=== Stage 1b: midterm counties (Sen/Gov 2018, 2022) ===
+year  state  office   
+2018  CA     GOVERNOR      58
+      CO     GOVERNOR      64
+      FL     GOVERNOR      67
+             US SENATE     67
+      PA     GOVERNOR      67
+             US SENATE     67
+2022  CA     GOVERNOR      58
+      CO     GOVERNOR      64
+             US SENATE     64
+      FL     GOVERNOR      67
+             US SENATE     67
+      IA     GOVERNOR      99
+             US SENATE     99
+      NC     US SENATE    100
+      PA     GOVERNOR      67
+             US SENATE     67
+--- weight=none ---
+[2018+2022] dev ~ lagswing + margin0                 n=1142 R2w=0.058  lagswing: b=-0.108 (clSE 0.056, HC1 0.024)  margin0: b=-0.020 (clSE 0.010, HC1 0.005)
+[2018+2022] dev ~ dreg                               n=1142 R2w=0.026  dreg: b=-0.262 (clSE 0.129, HC1 0.048)
+[2018+2022] dev ~ dreg + lagswing + margin0          n=1142 R2w=0.060  dreg: b=-0.085 (clSE 0.137, HC1 0.054)  lagswing: b=-0.094 (clSE 0.059, HC1 0.026)
+                                                     R2 gain from dreg: +0.002
+[2018+2022] dev ~ dtot + lagswing + margin0          n=1142 R2w=0.059  dtot: b=+0.032 (clSE 0.069, HC1 0.045)
+[2018] dev ~ lagswing + margin0                      n= 390 R2w=0.161  lagswing: b=-0.181 (clSE 0.048, HC1 0.032)  margin0: b=-0.018 (clSE 0.013, HC1 0.009)
+[2018] dev ~ dreg                                    n= 390 R2w=0.034  dreg: b=-0.298 (clSE 0.259, HC1 0.086)
+[2018] dev ~ dreg + lagswing + margin0               n= 390 R2w=0.163  dreg: b=+0.085 (clSE 0.237, HC1 0.095)  lagswing: b=-0.193 (clSE 0.046, HC1 0.034)
+                                                     R2 gain from dreg: +0.002
+[2018] dev ~ dtot + lagswing + margin0               n= 390 R2w=0.163  dtot: b=+0.064 (clSE 0.088, HC1 0.085)
+[2022] dev ~ lagswing + margin0                      n= 752 R2w=0.015  lagswing: b=+0.031 (clSE 0.089, HC1 0.036)  margin0: b=-0.016 (clSE 0.013, HC1 0.006)
+[2022] dev ~ dreg                                    n= 752 R2w=0.019  dreg: b=-0.232 (clSE 0.132, HC1 0.052)
+[2022] dev ~ dreg + lagswing + margin0               n= 752 R2w=0.033  dreg: b=-0.254 (clSE 0.145, HC1 0.063)  lagswing: b=+0.084 (clSE 0.100, HC1 0.039)
+                                                     R2 gain from dreg: +0.018
+[2022] dev ~ dtot + lagswing + margin0               n= 752 R2w=0.015  dtot: b=+0.034 (clSE 0.090, HC1 0.051)
+
+--- weight=votes0 ---
+[2018+2022] dev ~ lagswing + margin0                 n=1142 R2w=0.125  lagswing: b=-0.114 (clSE 0.079, HC1 0.057)  margin0: b=-0.036 (clSE 0.017, HC1 0.009)
+[2018+2022] dev ~ dreg                               n=1142 R2w=0.042  dreg: b=-0.483 (clSE 0.212, HC1 0.093)
+[2018+2022] dev ~ dreg + lagswing + margin0          n=1142 R2w=0.126  dreg: b=-0.054 (clSE 0.192, HC1 0.118)  lagswing: b=-0.108 (clSE 0.086, HC1 0.064)
+                                                     R2 gain from dreg: +0.000
+[2018+2022] dev ~ dtot + lagswing + margin0          n=1142 R2w=0.135  dtot: b=-0.187 (clSE 0.146, HC1 0.110)
+[2018] dev ~ lagswing + margin0                      n= 390 R2w=0.409  lagswing: b=-0.188 (clSE 0.035, HC1 0.042)  margin0: b=-0.058 (clSE 0.013, HC1 0.013)
+[2018] dev ~ dreg                                    n= 390 R2w=0.104  dreg: b=-0.895 (clSE 0.397, HC1 0.150)
+[2018] dev ~ dreg + lagswing + margin0               n= 390 R2w=0.409  dreg: b=+0.003 (clSE 0.454, HC1 0.172)  lagswing: b=-0.188 (clSE 0.089, HC1 0.057)
+                                                     R2 gain from dreg: +0.000
+[2018] dev ~ dtot + lagswing + margin0               n= 390 R2w=0.409  dtot: b=-0.041 (clSE 0.265, HC1 0.202)
+[2022] dev ~ lagswing + margin0                      n= 752 R2w=0.025  lagswing: b=+0.094 (clSE 0.074, HC1 0.054)  margin0: b=+0.006 (clSE 0.024, HC1 0.009)
+[2022] dev ~ dreg                                    n= 752 R2w=0.011  dreg: b=-0.213 (clSE 0.234, HC1 0.118)
+[2022] dev ~ dreg + lagswing + margin0               n= 752 R2w=0.083  dreg: b=-0.636 (clSE 0.230, HC1 0.136)  lagswing: b=+0.192 (clSE 0.065, HC1 0.048)
+                                                     R2 gain from dreg: +0.058
+[2022] dev ~ dtot + lagswing + margin0               n= 752 R2w=0.043  dtot: b=-0.221 (clSE 0.139, HC1 0.108)
+
+Within-group correlations (unweighted): dreg(pres->midterm) with prior pres swing vs. midterm deviation
+  2018: n=390  r(dreg, prior pres swing)=+0.525  r(dreg, midterm deviation)=-0.185  r(lagswing, deviation)=-0.391
+  2022: n=752  r(dreg, prior pres swing)=+0.398  r(dreg, midterm deviation)=-0.139  r(lagswing, deviation)=+0.024
+
+=== Midterm cross-year prediction of relative deviation (fit on one year, test on the other) ===
+  weight=none   train 2018 -> test 2022: RMSE zero=3.74  lag=3.81  lag+dreg=3.83  dreg only=3.71
+  weight=none   train 2022 -> test 2018: RMSE zero=4.55  lag=4.52  lag+dreg=4.65  dreg only=4.48
+  weight=votes0 train 2018 -> test 2022: RMSE zero=3.48  lag=3.91  lag+dreg=3.91  dreg only=3.68
+  weight=votes0 train 2022 -> test 2018: RMSE zero=4.75  lag=5.58  lag+dreg=6.23  dreg only=4.54
+
+=== Presidential panel, strictly forward (train on earlier cycles only) ===
+  weight=none   train 2008-2012+2012-2016            -> 2016-2020: zero=4.16 lag=5.32 lag+dreg=5.29 (b_dreg=+0.60) dreg only=4.84
+  weight=none   train 2008-2012+2012-2016+2016-2020  -> 2020-2024: zero=3.21 lag=3.46 lag+dreg=3.44 (b_dreg=+0.42) dreg only=3.15
+  weight=none   train 2016-2020                      -> 2020-2024: zero=3.21 lag=2.72 lag+dreg=2.71 (b_dreg=+0.25) dreg only=3.05
+  2020-24 RMSE by fixed dreg coefficient (no other terms): 0:3.21, 0.05:3.15, 0.1:3.10, 0.15:3.06, 0.2:3.05, 0.3:3.06, 0.5:3.29
+  weight=votes0 train 2008-2012+2012-2016            -> 2016-2020: zero=5.91 lag=8.42 lag+dreg=10.94 (b_dreg=+1.25) dreg only=10.68
+  weight=votes0 train 2008-2012+2012-2016+2016-2020  -> 2020-2024: zero=3.69 lag=3.25 lag+dreg=5.64 (b_dreg=+1.07) dreg only=4.63
+  weight=votes0 train 2016-2020                      -> 2020-2024: zero=3.69 lag=4.32 lag+dreg=4.02 (b_dreg=+0.87) dreg only=3.89
+  2020-24 RMSE by fixed dreg coefficient (no other terms): 0:3.69, 0.05:3.69, 0.1:3.70, 0.15:3.72, 0.2:3.75, 0.3:3.85, 0.5:4.14

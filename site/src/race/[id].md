@@ -110,6 +110,19 @@ if (!fixed) {
     ${hasPolls ? row(`Poll average (${r.poll_count} poll${r.poll_count === 1 ? "" : "s"})`, margin(r.poll_avg), `${sponsorNote ? `${sponsorNote} ` : ""}${undNote ? `${undNote} ` : ""}Polls get ${Math.round(r.poll_weight * 100)}% of the weight here, based on how many there are and how accurate race polling has been at this point in past elections.`) : row("Polls", "None", "No public polls, so this forecast rests on fundamentals.")}
     ${row("Final forecast (median)", margin(r.margin_median), "", "total")}
   </div>`);
+  if (hasPolls && r.p_fund != null && r.p_poll != null) {
+    const ch = (p) => (p >= 0.5 ? `${pct(p)} ${dTag}` : `${pct(1 - p)} ${rTag}`);
+    const agree = (r.p_fund >= 0.5) === (r.p_poll >= 0.5);
+    display(html`<h3>Fundamentals alone, polls alone, and both</h3>
+    <div class="stat-row">
+      <div class="s"><div class="k">Fundamentals alone</div><div class="v">${ch(r.p_fund)}</div></div>
+      <div class="s"><div class="k">Polls alone</div><div class="v">${ch(r.p_poll)}</div></div>
+      <div class="s"><div class="k">Our forecast</div><div class="v">${ch(r.p_dem)}</div></div>
+    </div>
+    <p class="caption">${agree
+      ? "The two reads point the same way here. Two independent reads that agree make the forecast more confident than either one alone, which is why ours can be higher than both."
+      : `The two reads disagree here. Our forecast lands between them, closer to the polls the more of them there are and the more accurate polling of races like this has been (they get ${Math.round(r.poll_weight * 100)}% of the weight).`} The chances shown for each read include our uncertainty about the national environment.</p>`);
+  }
 }
 ```
 

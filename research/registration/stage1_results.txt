@@ -1,0 +1,99 @@
+=== Stage 1: county panel ===
+cycle  2008-2012  2012-2016  2016-2020  2020-2024
+state                                            
+CA             0         58         58         58
+CO             0         64         64         64
+FL            67         67         67         67
+IA            99         99         99         99
+NC           100        100        100        100
+PA             0         67         67         67
+
+Within state-cycle SDs (vote-weighted not applied):
+swing       5.25
+dreg        5.07
+dtot        3.66
+lagswing    5.70
+
+--- ALL cycles | weight=none ---
+swing ~ lagswing + margin0 (no registration)               n=1631 R2w=0.028  lagswing: b=+0.148 (clSE 0.067, HC1 0.024)  margin0: b=+0.003 (clSE 0.019, HC1 0.006)
+swing ~ dreg                                               n=1631 R2w=0.123  dreg: b=+0.363 (clSE 0.096, HC1 0.034)
+swing ~ dreg + lagswing + margin0                          n=1631 R2w=0.126  dreg: b=+0.370 (clSE 0.102, HC1 0.041)  lagswing: b=+0.026 (clSE 0.073, HC1 0.028)
+                                                           R2 gain from dreg over base: +0.098
+swing ~ dreg_mid (t0->midterm only) + lagswing + margin0   n=1631 R2w=0.050  dreg_mid: b=+0.431 (clSE 0.153, HC1 0.062)  lagswing: b=+0.098 (clSE 0.069, HC1 0.025)
+swing ~ dtot (reg/CVAP growth) + lagswing + margin0        n=1631 R2w=0.029  dtot: b=-0.039 (clSE 0.061, HC1 0.038)
+--- 2016+ cycles (2016-20, 2020-24) | weight=none ---
+swing ~ lagswing + margin0 (no registration)               n= 910 R2w=0.230  lagswing: b=+0.275 (clSE 0.048, HC1 0.022)  margin0: b=-0.048 (clSE 0.010, HC1 0.005)
+swing ~ dreg                                               n= 910 R2w=0.125  dreg: b=+0.231 (clSE 0.065, HC1 0.029)
+swing ~ dreg + lagswing + margin0                          n= 910 R2w=0.300  dreg: b=+0.210 (clSE 0.057, HC1 0.029)  lagswing: b=+0.185 (clSE 0.063, HC1 0.026)
+                                                           R2 gain from dreg over base: +0.071
+swing ~ dreg_mid (t0->midterm only) + lagswing + margin0   n= 910 R2w=0.281  dreg_mid: b=+0.434 (clSE 0.128, HC1 0.056)  lagswing: b=+0.217 (clSE 0.059, HC1 0.023)
+swing ~ dtot (reg/CVAP growth) + lagswing + margin0        n= 910 R2w=0.238  dtot: b=-0.089 (clSE 0.069, HC1 0.038)
+  cycle 2008-2012: swing ~ dreg + lagswing + margin0       n= 266 R2w=0.141  dreg: b=-0.045 (clSE 0.164, HC1 0.067)
+  cycle 2012-2016: swing ~ dreg + lagswing + margin0       n= 455 R2w=0.301  dreg: b=+0.872 (clSE 0.216, HC1 0.114)
+  cycle 2016-2020: swing ~ dreg + lagswing + margin0       n= 455 R2w=0.284  dreg: b=+0.253 (clSE 0.085, HC1 0.044)
+  cycle 2020-2024: swing ~ dreg + lagswing + margin0       n= 455 R2w=0.426  dreg: b=+0.122 (clSE 0.078, HC1 0.032)
+  CA 2016+: swing ~ dreg + lagswing + margin0              n= 116 R2w=0.265  dreg: b=+0.906 (clSE 0.259, HC1 0.259)
+  CO 2016+: swing ~ dreg + lagswing + margin0              n= 128 R2w=0.451  dreg: b=+0.572 (clSE 0.121, HC1 0.121)
+  FL 2016+: swing ~ dreg + lagswing + margin0              n= 134 R2w=0.472  dreg: b=+0.192 (clSE 0.044, HC1 0.044)
+  IA 2016+: swing ~ dreg + lagswing + margin0              n= 198 R2w=0.430  dreg: b=+0.193 (clSE 0.035, HC1 0.035)
+  NC 2016+: swing ~ dreg + lagswing + margin0              n= 200 R2w=0.553  dreg: b=+0.553 (clSE 0.066, HC1 0.066)
+  PA 2016+: swing ~ dreg + lagswing + margin0              n= 134 R2w=0.446  dreg: b=+0.383 (clSE 0.043, HC1 0.043)
+
+--- ALL cycles | weight=votes0 ---
+swing ~ lagswing + margin0 (no registration)               n=1631 R2w=0.046  lagswing: b=+0.198 (clSE 0.086, HC1 0.058)  margin0: b=-0.023 (clSE 0.024, HC1 0.011)
+swing ~ dreg                                               n=1631 R2w=0.159  dreg: b=+0.659 (clSE 0.155, HC1 0.061)
+swing ~ dreg + lagswing + margin0                          n=1631 R2w=0.208  dreg: b=+0.818 (clSE 0.169, HC1 0.119)  lagswing: b=-0.024 (clSE 0.128, HC1 0.087)
+                                                           R2 gain from dreg over base: +0.162
+swing ~ dreg_mid (t0->midterm only) + lagswing + margin0   n=1631 R2w=0.085  dreg_mid: b=+0.905 (clSE 0.310, HC1 0.178)  lagswing: b=+0.113 (clSE 0.108, HC1 0.068)
+swing ~ dtot (reg/CVAP growth) + lagswing + margin0        n=1631 R2w=0.072  dtot: b=-0.271 (clSE 0.113, HC1 0.108)
+--- 2016+ cycles (2016-20, 2020-24) | weight=votes0 ---
+swing ~ lagswing + margin0 (no registration)               n= 910 R2w=0.227  lagswing: b=+0.185 (clSE 0.093, HC1 0.066)  margin0: b=-0.070 (clSE 0.025, HC1 0.012)
+swing ~ dreg                                               n= 910 R2w=0.087  dreg: b=+0.377 (clSE 0.083, HC1 0.059)
+swing ~ dreg + lagswing + margin0                          n= 910 R2w=0.372  dreg: b=+0.649 (clSE 0.189, HC1 0.164)  lagswing: b=-0.013 (clSE 0.155, HC1 0.115)
+                                                           R2 gain from dreg over base: +0.145
+swing ~ dreg_mid (t0->midterm only) + lagswing + margin0   n= 910 R2w=0.308  dreg_mid: b=+1.036 (clSE 0.246, HC1 0.189)  lagswing: b=+0.071 (clSE 0.118, HC1 0.081)
+swing ~ dtot (reg/CVAP growth) + lagswing + margin0        n= 910 R2w=0.265  dtot: b=-0.300 (clSE 0.185, HC1 0.157)
+  cycle 2008-2012: swing ~ dreg + lagswing + margin0       n= 266 R2w=0.211  dreg: b=-0.007 (clSE 0.114, HC1 0.218)
+  cycle 2012-2016: swing ~ dreg + lagswing + margin0       n= 455 R2w=0.468  dreg: b=+1.606 (clSE 0.209, HC1 0.170)
+  cycle 2016-2020: swing ~ dreg + lagswing + margin0       n= 455 R2w=0.517  dreg: b=+0.869 (clSE 0.144, HC1 0.234)
+  cycle 2020-2024: swing ~ dreg + lagswing + margin0       n= 455 R2w=0.521  dreg: b=+0.145 (clSE 0.112, HC1 0.066)
+  CA 2016+: swing ~ dreg + lagswing + margin0              n= 116 R2w=0.472  dreg: b=+1.445 (clSE 0.226, HC1 0.226)
+  CO 2016+: swing ~ dreg + lagswing + margin0              n= 128 R2w=0.601  dreg: b=+1.281 (clSE 0.225, HC1 0.225)
+  FL 2016+: swing ~ dreg + lagswing + margin0              n= 134 R2w=0.570  dreg: b=+0.818 (clSE 0.324, HC1 0.324)
+  IA 2016+: swing ~ dreg + lagswing + margin0              n= 198 R2w=0.514  dreg: b=+0.260 (clSE 0.045, HC1 0.045)
+  NC 2016+: swing ~ dreg + lagswing + margin0              n= 200 R2w=0.585  dreg: b=+0.704 (clSE 0.083, HC1 0.083)
+  PA 2016+: swing ~ dreg + lagswing + margin0              n= 134 R2w=0.559  dreg: b=+0.412 (clSE 0.087, HC1 0.087)
+
+=== Lag check: is registration change a lagging indicator of the vote? ===
+Within state-cycle correlations of dreg(t0->t1) with swings (unweighted):
+    cycle   n  r_prev_swing  r_concurrent  r_next_swing
+2008-2012 266         0.459         0.025         0.304
+2012-2016 455         0.056         0.529         0.210
+2016-2020 455         0.582         0.372         0.087
+2020-2024 455         0.434         0.318           NaN
+
+weight=none
+dreg ~ lagswing + swing (what registration change tracks)  n=1631 R2w=0.278  lagswing: b=+0.355 (clSE 0.058, HC1 0.019)  swing: b=+0.275 (clSE 0.041, HC1 0.018)
+  2016+ only                                               n= 910 R2w=0.323  lagswing: b=+0.424 (clSE 0.067, HC1 0.026)  swing: b=+0.291 (clSE 0.081, HC1 0.045)
+nextswing ~ dreg + swing (fwd one cycle)                   n=1176 R2w=0.067  dreg: b=+0.079 (clSE 0.085, HC1 0.026)  swing: b=+0.177 (clSE 0.066, HC1 0.026)
+swing ~ dreg_prev(t0-4->t0) + lagswing + margin0           n=1176 R2w=0.105  dreg_prev: b=+0.152 (clSE 0.087, HC1 0.030)  lagswing: b=+0.221 (clSE 0.058, HC1 0.024)
+swing ~ dreg_mid + dreg_late + lagswing + margin0          n=1631 R2w=0.152  dreg_mid: b=-0.152 (clSE 0.184, HC1 0.078)  dreg_late: b=+0.616 (clSE 0.155, HC1 0.074)
+
+weight=votes0
+dreg ~ lagswing + swing (what registration change tracks)  n=1631 R2w=0.382  lagswing: b=+0.272 (clSE 0.057, HC1 0.031)  swing: b=+0.188 (clSE 0.029, HC1 0.018)
+  2016+ only                                               n= 910 R2w=0.401  lagswing: b=+0.309 (clSE 0.065, HC1 0.039)  swing: b=+0.142 (clSE 0.059, HC1 0.037)
+nextswing ~ dreg + swing (fwd one cycle)                   n=1176 R2w=0.044  dreg: b=+0.077 (clSE 0.146, HC1 0.057)  swing: b=+0.156 (clSE 0.134, HC1 0.080)
+swing ~ dreg_prev(t0-4->t0) + lagswing + margin0           n=1176 R2w=0.131  dreg_prev: b=+0.295 (clSE 0.127, HC1 0.063)  lagswing: b=+0.161 (clSE 0.115, HC1 0.073)
+swing ~ dreg_mid + dreg_late + lagswing + margin0          n=1631 R2w=0.256  dreg_mid: b=-0.288 (clSE 0.497, HC1 0.240)  dreg_late: b=+1.445 (clSE 0.315, HC1 0.240)
+
+=== Leave-one-cycle-out: predict relative swing (swing minus state-cycle mean) ===
+Baseline predicts 0 relative swing; '+lag' uses lagswing+margin0 fit on other cycles; '+reg' adds dreg.
+weight  held_out   n  rmse_zero  rmse_dreg_only  rmse_lag  rmse_lag_plus_dreg
+  none 2008-2012 266      3.604           3.882     3.869               4.066
+  none 2012-2016 455      7.963           7.528     8.187               7.835
+  none 2016-2020 455      4.155           4.198     4.274               4.291
+  none 2020-2024 455      3.212           3.146     3.464               3.445
+votes0 2008-2012 266      3.869           4.128     3.922               4.379
+votes0 2012-2016 455      9.974           8.806    10.807               9.717
+votes0 2016-2020 455      5.911           8.415     8.414               9.332
+votes0 2020-2024 455      3.690           4.630     3.246               5.637

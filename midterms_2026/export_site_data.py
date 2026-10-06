@@ -25,6 +25,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "midterms_2026" / "models"))
 from race_model import race_id, two_party, PARTISAN_BIAS, partisan_side  # noqa: E402
+import race_model as rm  # noqa: E402
 
 PROC, RAW = ROOT / "data" / "processed", ROOT / "data" / "raw"
 OUT = ROOT / "midterms_2026" / "outputs"
@@ -461,6 +462,60 @@ def poll_miss() -> dict | None:
             "races": {rid: row.tolist() for rid, row in races.iterrows()}, "columns": races.columns.tolist()}
 
 
+def pollsters() -> list[dict]:
+    """Every firm with a 2026 race poll: how many polls, its track record, and the correction the model applies
+    to its polls (race_model.pollster_house_adj: the firm's lean in past cycles, shrunk toward zero and centered
+    on this year's polls; added to the Democratic margin, so a negative number means we move its polls toward
+    Republicans), plus how many of its polls count as a campaign's or party's (half weight, shifted)."""
+    sys.path.insert(0, str(ROOT / "core"))
+    from pollster_house_effects import house_key
+    polls = pd.read_csv(PROC / "polls_2026_races.csv", parse_dates=["end_date"])
+    polls = polls[(polls["end_date"] <= pd.Timestamp.today()) & ((polls["dem_pct"] + polls["rep_pct"]) >= 60)].copy()
+    key = polls["office"] + polls["state_po"] + polls["district"].astype(str) + polls["special"].astype(str)
+    polls["corr"] = rm.pollster_house_adj(polls["pollster"], races=key)
+    polls["side"] = rm.partisan_side(polls)
+    polls["firm"] = polls["pollster"].map(house_key)
+    rec = pd.read_csv(PROC / "pollster_track_record.csv").set_index("house")["n_polls"]
+    out = []
+    for firm, g in polls.groupby("firm"):
+        out.append({"firm": firm, "name": g["pollster"].value_counts().index[0], "polls": int(len(g)),
+                    "races": int(key[g.index].nunique()), "record": int(rec.get(firm, 0)),
+                    "correction": round(float(g["corr"].mean()), 2), "partisan": int((g["side"] != "").sum()),
+                    "latest": g["end_date"].max().strftime("%Y-%m-%d")})
+    return sorted(out, key=lambda r: -r["polls"])
+
+
+def downloads(f: pd.DataFrame, top: dict) -> dict:
+    """CSV copies of our own numbers for the Data page (site/src/data/downloads/). Raw polls are not included:
+    some sources' terms don't allow redistributing them. Returns each file's row count."""
+    d = SITE / "downloads"
+    d.mkdir(exist_ok=True)
+    out = {}
+    races = f[["race_id", "office", "state_po", "district", "special", "race_type", "dem_candidate", "rep_candidate",
+               "incumbent", "p_dem", "margin_median", "margin_p10", "margin_p90", "rating", "fundamentals_mean", "p_fund",
+               "poll_avg", "poll_count", "poll_weight", "p_poll", "tipping_point", "voter_power"]].copy()
+    races.insert(0, "forecast_date", top["forecast_date"])
+    out["races.csv"] = races.round(4)
+    hist = []
+    for snap in sorted((OUT / "history").glob("*/race_forecasts.csv")):
+        h = pd.read_csv(snap, usecols=lambda c: c in ("race_id", "p_dem", "margin_median"))
+        if "race_id" in h:
+            hist.append(h.assign(forecast_date=snap.parent.name))
+    if hist:
+        out["race_history.csv"] = pd.concat(hist)[["forecast_date", "race_id", "p_dem", "margin_median"]].round(4)
+    th = pd.read_csv(OUT / "forecast_history.csv")
+    keep = [c for c in ("forecast_date", "nat_median", "nat_p10", "nat_p90", "p_house_d", "house_median", "house_p10", "house_p90",
+                        "p_senate_d", "senate_median", "senate_p10", "senate_p90", "gov_median", "gov_p10", "gov_p90") if c in th]
+    out["topline_history.csv"] = th[keep].round(4)
+    sc = OUT / "poll_miss_scenarios.csv"
+    if sc.exists():
+        out["poll_miss_scenarios.csv"] = pd.read_csv(sc).round(4)
+    out["pollster_adjustments.csv"] = pd.DataFrame(pollsters()).drop(columns=["firm"])
+    for name, df in out.items():
+        df.to_csv(d / name, index=False)
+    return {k: len(v) for k, v in out.items()}
+
+
 SIMS_N = 10_000
 
 
@@ -503,7 +558,7 @@ def main() -> None:
     cols = ["race_id", "label", "office", "state_po", "state_name", "district", "special", "race_type", "race_note",
             "incumbent", "incumbent_party", "inc_side", "dem_candidate", "rep_candidate", "dem_name", "rep_name", "pres24", "pres20_margin",
             "lines_changed", "quality_diff", "prior_edge", "dem_money", "rep_money", "money_adj", "quality_adj", "ideology_adj", "poll_count", "poll_avg", "poll_undecided", "poll_weight",
-            "fundamentals_mean", "margin_median", "margin_p10", "margin_p90", "p_dem", "rating", "control_leverage", "tipping_point", "voter_power"]
+            "fundamentals_mean", "margin_median", "margin_p10", "margin_p90", "p_dem", "p_fund", "p_poll", "rating", "control_leverage", "tipping_point", "voter_power"]
     write("races.json", f[cols].to_dict("records"))
     write("race_detail.json", race_detail(f))
     write("national.json", national())
@@ -517,6 +572,8 @@ def main() -> None:
     write("changes.json", changes())
     write("counties.json", counties())
     write("poll_miss.json", poll_miss())
+    write("pollsters.json", pollsters())
+    write("downloads.json", {"date": top["forecast_date"], "rows": downloads(f, top)})
     meta = sims_export()
     if meta:
         write("sims_meta.json", meta)
