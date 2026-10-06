@@ -198,15 +198,30 @@ function makeUI(sims) {
     return d;
   }
   const picks = el("div", "scn-picks");
-  const group = (title, list, shown) => {
+  // each list starts short (with a fade and a full-width button, so it's clear there's more) and expands in place;
+  // a race you've picked stays visible when the list is collapsed
+  const group = (title, list, shown, noun) => {
     const box = el("div", "scn-group");
     box.append(el("h3", null, title));
-    const wrap = el("div");
-    list.forEach((r, i) => { const n = row(r); if (i >= shown) n.hidden = true; wrap.append(n); });
+    const wrap = el("div", "scn-list");
+    const nodes = list.map((r) => { const n = row(r); wrap.append(n); return [r, n]; });
     box.append(wrap);
     if (list.length > shown) {
-      const more = el("button", "scn-more", `Show all ${list.length}`);
-      more.addEventListener("click", () => { wrap.querySelectorAll(".scn-row").forEach((n) => (n.hidden = false)); more.remove(); });
+      let open = false;
+      const more = el("button", "scn-toggle");
+      const refresh = () => {
+        nodes.forEach(([r, n], i) => (n.hidden = !open && i >= shown && !state.picks.has(r.race_id)));
+        wrap.classList.toggle("clipped", !open);
+        more.textContent = open ? "Show fewer ▴" : `${noun.startsWith("Show") ? noun : `Show all ${list.length} ${noun}`} ▾`;
+      };
+      more.addEventListener("click", () => {
+        open = !open;
+        refresh();
+        if (!open) box.scrollIntoView({block: "nearest"});
+      });
+      box.addEventListener("click", (e) => { if (e.target.classList.contains("seg")) refresh(); });
+      reset.addEventListener("click", () => { open = false; refresh(); });
+      refresh();
       box.append(more);
     }
     return box;
@@ -214,9 +229,10 @@ function makeUI(sims) {
   const sen = stored.filter((r) => r.office === "SEN").sort((a, b) => close(a) - close(b));
   const gov = stored.filter((r) => r.office === "GOV").sort((a, b) => close(a) - close(b));
   const house = stored.filter((r) => r.office === "HOUSE").sort((a, b) => close(a) - close(b));
-  picks.append(group("Senate", sen, 12), group("Governors", gov, 8));
+  const phone = matchMedia("(max-width: 640px)").matches;  // phones start with shorter lists
+  picks.append(group("Senate", sen, phone ? 3 : 5, "Senate races"), group("Governors", gov, phone ? 3 : 4, "governor's races"));
   // House: the closest ten, plus a search for any other district that isn't a lock
-  const hBox = group("House", house.slice(0, 10), 10);
+  const hBox = group("House", house.slice(0, 12), phone ? 3 : 4, "Show the 12 closest districts");
   const search = Object.assign(document.createElement("input"), {type: "search", placeholder: "Add a House district: try a name, state or district (e.g. TX-34)"});
   search.className = "scn-search";
   const found = el("div");
@@ -228,11 +244,12 @@ function makeUI(sims) {
     house.filter((r) => !shownIds.has(r.race_id) && [r.label, r.state_name, r.dem_name, r.rep_name, r.incumbent].filter(Boolean).join(" ").toLowerCase().includes(t))
       .slice(0, 6).forEach((r) => {
         const b = el("button", "scn-add", `+ ${r.label}: ${sides(r).d} vs. ${sides(r).r}`);
-        b.addEventListener("click", () => { hBox.querySelector("div").append(row(r)); b.remove(); update(); });
+        b.addEventListener("click", () => { added.append(row(r)); b.remove(); update(); });
         found.append(b);
       });
   });
-  hBox.append(search, found);
+  const added = el("div");
+  hBox.append(added, search, found);
   picks.append(hBox);
 
   // ---- how the other races move ----

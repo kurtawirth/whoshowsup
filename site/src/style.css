@@ -428,3 +428,10 @@ button.seg.i[aria-pressed=true] { background: var(--ind, #6b4fbb); border-color:
 .dl-name { font-weight: 700; font-size: 16px; }
 .dl-rows { margin-left: 10px; font-size: 13px; color: var(--ink-3); }
 .dl p { margin: 6px 0 0; font-size: 14px; color: var(--ink-2); }
+.scn-list { position: relative; }
+.scn-list.clipped::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 44px; pointer-events: none;
+  background: linear-gradient(to bottom, transparent, var(--surface)); }
+.scn-toggle { display: block; width: 100%; margin-top: 6px; font: 600 14px var(--sans); padding: 9px 12px; border-radius: 8px;
+  border: 1px solid var(--axis); background: var(--card); color: var(--ink); cursor: pointer; }
+.scn-toggle:hover { border-color: var(--ink-3); }
+.scn-row[hidden] { display: none; }
