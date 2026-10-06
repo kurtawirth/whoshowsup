@@ -581,13 +581,15 @@ def run_simulation(races: pd.DataFrame, env: np.ndarray, nat_d0: float, nat_r0: 
 
 
 def midterm_dropoff() -> pd.Series:
-    """Each state's 2022 midterm vote as a share of its 2024 two-party presidential vote (the larger of its
-    2022 U.S. House total and Senate total, so uncontested House seats don't drag it down)."""
+    """Each state's 2022 midterm vote as a share of its 2024 two-party presidential vote. The 2022 vote is the
+    larger of the state's Senate and governor totals (our county results); states with neither on the 2022 ballot
+    use their U.S. House total (MEDSL), which runs low where seats went uncontested."""
+    c = pd.read_parquet(PROC / "county_results.parquet")
+    c = c[(c["year"] == 2022) & c["office"].isin(["SEN", "GOV"]) & ~c["special"].astype(bool)]
+    statewide = c.groupby(["state_po", "office"])["total"].sum().groupby("state_po").max()
     h = pd.read_csv(RAW / "medsl" / "house_1976_2024.tab", low_memory=False)
-    h = h[(h.year == 2022) & (h.stage == "GEN")].drop_duplicates(["state_po", "district"])
-    s = pd.read_csv(RAW / "medsl" / "senate_1976_2024.csv", encoding="latin-1")
-    s = s[(s.year == 2022) & (s.stage == "gen") & ~s.special.astype(bool)].drop_duplicates("state_po")
-    v22 = pd.concat([h.groupby("state_po")["totalvotes"].sum(), s.set_index("state_po")["totalvotes"]], axis=1).max(axis=1)
+    h = h[(h.year == 2022) & (h.stage.str.upper() == "GEN")].drop_duplicates(["state_po", "district"])
+    v22 = statewide.combine_first(h.groupby("state_po")["totalvotes"].sum())
     p = pd.read_csv(RAW / "medsl" / "president_1976_2024.csv", encoding="latin-1")
     p = p[(p.year == 2024) & p.party_simplified.isin(["DEMOCRAT", "REPUBLICAN"])].groupby("state_po")["candidatevotes"].sum()
     return (v22 / p).dropna()

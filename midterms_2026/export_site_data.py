@@ -83,10 +83,33 @@ def rating(p: float) -> str:
     return "Safe R"
 
 
+def people() -> pd.DataFrame:
+    """Each race in people, for the race pages and election night: expected votes (its 2024 presidential vote
+    scaled by its state's 2022 midterm drop-off, as for voter power; midterm turnout has swung about 25%
+    nationally from one cycle to the next, so this is a rough guide), and for statewide races the state's
+    eligible adults (citizens 18+, Census 2020-24 estimates) and its 2022 midterm vote."""
+    r = rm.load_races()
+    drop = rm.midterm_dropoff()
+    r["race_id"] = r.apply(race_id, axis=1)
+    r["expected_votes"] = ((r["d24"] + r["r24"]) * r["state_po"].map(drop).fillna(drop.median())).round(-2)
+    cv = pd.read_csv(RAW / "cvap" / "county_cvap_2020_2024.csv", encoding="latin-1")
+    cv = cv[cv["lnnumber"] == 1]
+    fips_to_st = {int(v): k for k, v in FIPS.items()}
+    eligible = cv.groupby(cv["geoid"].str[-5:-3].astype(int))["cvap_est"].sum().rename(index=fips_to_st)
+    p = pd.read_csv(RAW / "medsl" / "president_1976_2024.csv", encoding="latin-1")
+    p = p[(p.year == 2024) & p.party_simplified.isin(["DEMOCRAT", "REPUBLICAN"])].groupby("state_po")["candidatevotes"].sum()
+    votes22 = (drop * p).round()
+    sw = r["office"] != "HOUSE"
+    r["eligible"] = np.where(sw, r["state_po"].map(eligible), np.nan)
+    r["votes22"] = np.where(sw, r["state_po"].map(votes22), np.nan)
+    return r[["race_id", "expected_votes", "eligible", "votes22"]]
+
+
 def races() -> pd.DataFrame:
     f = pd.read_csv(OUT / "race_forecasts.csv")
     q = pd.read_csv(OUT / "race_quantiles.csv")
     f = f.merge(q[["race_id", "control_leverage", "tipping_point", "voter_power"]], on="race_id", how="left")
+    f = f.merge(people(), on="race_id", how="left")
     house = pd.read_csv(PROC / "races_2026_house.csv")[["state_po", "district", "lines_changed", "pres20_margin", "status_text"]]
     f = f.merge(house.assign(office="HOUSE"), on=["office", "state_po", "district"], how="left")
     money_path = PROC / "fec_money.csv"
@@ -514,6 +537,56 @@ def downloads(f: pd.DataFrame, top: dict) -> dict:
     return {k: len(v) for k, v in out.items()}
 
 
+def live_model() -> dict:
+    """What the Election night page needs for live odds and civicAPI's direct feed: the forecast's shared error
+    sizes (national environment, region, state; race_model), each state's region, the Senate seats not up
+    (34 Democratic-caucus), and civicAPI's id for each of our races (civic_results.map_races)."""
+    env = pd.read_csv(OUT / "national_env_2026_draws.csv")["dem_margin"]
+    civic_path = PROC / "civic_race_map.csv"
+    civic = pd.read_csv(civic_path).set_index("race_id")["civic_id"].astype(int).to_dict() if civic_path.exists() else {}
+    return {"env_sd": round(float(env.std()), 3), "region_sd": rm.REGION_SHOCK_SD, "state_sd": rm.STATE_SHOCK_SD,
+            "region": rm.REGION, "senate_base": 34, "civic": civic}
+
+
+def benchmarks(f: pd.DataFrame) -> dict:
+    """County benchmarks for every Senate and governor race: what each county would show if the race landed
+    exactly on our most likely margin. Each county starts from its 2024 presidential result and moves the way the
+    forecast moves a race (race_model: TURNOUT_SHARE_MEAN of the swing scales each party's vote counts, the rest
+    shifts every county's margin equally). Its share of the state's vote is its share of the state's 2022 Senate
+    or governor vote (2024 presidential where it had neither). Alaska (legislative districts) and Connecticut
+    (towns) report results by other units, so they're left out. Per race: [county name, fips, benchmark margin, 2024 pres margin, share of the state's vote]."""
+    c = pd.read_parquet(PROC / "county_results.parquet")
+    pres = c[(c["year"] == 2024) & (c["office"] == "PRES")].set_index("county_fips")
+    mid = c[(c["year"] == 2022) & c["office"].isin(["SEN", "GOV"]) & ~c["special"].astype(bool)]
+    mid = mid.groupby(["state_po", "office", "county_fips"])["total"].sum().reset_index()
+    best = mid.groupby(["state_po", "office"])["total"].sum().reset_index().sort_values("total").drop_duplicates("state_po", keep="last")
+    mid = mid.merge(best[["state_po", "office"]], on=["state_po", "office"]).set_index("county_fips")["total"]
+    cv = pd.read_csv(RAW / "cvap" / "county_cvap_2020_2024.csv", encoding="utf-8")
+    cv = cv[cv["lnnumber"] == 1]
+    names = pd.Series(cv["geoname"].str.split(",").str[0].values, index=cv["geoid"].str[-5:].astype(int))
+    names.loc[46102] = names.loc[46113] = "Oglala Lakota County"  # renamed from Shannon County (46113) in 2015
+    a = rm.TURNOUT_SHARE_MEAN
+    out = {}
+    for r in f[f["office"].isin(["SEN", "GOV"]) & (f["race_type"] != "same_party")].itertuples():
+        if r.state_po in ("AK", "CT"):  # Alaska reports by legislative district; Connecticut's results come by town
+            continue
+        g = pres[pres["state_po"] == r.state_po]
+        if g.empty:
+            continue
+        D, R = g["dem"].to_numpy(float), g["rep"].to_numpy(float)
+        st = two_party(D.sum(), R.sum())
+        s = (r.margin_median / 100 + 1) / 2
+        k = s / (1 - s) * R.sum() / D.sum()
+        m = a * two_party(k * D, R) + (1 - a) * (two_party(D, R) + (r.margin_median - st))
+        votes = mid.reindex(g.index)
+        share = (votes / votes.sum()) if votes.notna().all() else (g["total"] / g["total"].sum())
+        m = m + (r.margin_median - float(np.sum(share.to_numpy(float) * m)))  # counties add up to our margin exactly
+        rows = sorted(zip(names.reindex(g.index).fillna("").tolist(), g.index.tolist(), np.round(m, 1).tolist(),
+                          np.round(two_party(D, R), 1).tolist(), np.round(share.to_numpy(float), 4).tolist()), key=lambda x: -x[4])
+        out[r.race_id] = rows
+    return out
+
+
 SIMS_N = 10_000
 
 
@@ -556,7 +629,8 @@ def main() -> None:
     cols = ["race_id", "label", "office", "state_po", "state_name", "district", "special", "race_type", "race_note",
             "incumbent", "incumbent_party", "inc_side", "dem_candidate", "rep_candidate", "dem_name", "rep_name", "pres24", "pres20_margin",
             "lines_changed", "quality_diff", "prior_edge", "dem_money", "rep_money", "money_adj", "quality_adj", "ideology_adj", "poll_count", "poll_avg", "poll_undecided", "poll_weight",
-            "fundamentals_mean", "margin_median", "margin_p10", "margin_p90", "p_dem", "p_fund", "p_poll", "rating", "control_leverage", "tipping_point", "voter_power"]
+            "fundamentals_mean", "margin_median", "margin_p10", "margin_p90", "p_dem", "p_fund", "p_poll", "rating", "control_leverage", "tipping_point", "voter_power",
+            "expected_votes", "eligible", "votes22"]
     write("races.json", f[cols].to_dict("records"))
     write("race_detail.json", race_detail(f))
     write("national.json", national())
@@ -571,6 +645,8 @@ def main() -> None:
     write("counties.json", counties())
     write("poll_miss.json", poll_miss())
     write("pollsters.json", pollsters())
+    write("live_model.json", live_model())
+    write("benchmarks.json", benchmarks(f))
     write("downloads.json", {"date": top["forecast_date"], "rows": downloads(f, top)})
     meta = sims_export()
     if meta:

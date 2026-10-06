@@ -494,7 +494,8 @@ export function raceTable(rows, columns, {search = true, filters = [], pageSize 
       }
       return tr;
     }));
-    count.textContent = `${data.length.toLocaleString()} ${noun}${data.length === 1 ? "" : "s"}`;
+    const plural = /[^aeiou]y$/.test(noun) ? `${noun.slice(0, -1)}ies` : /(s|sh|ch|x)$/.test(noun) ? `${noun}es` : `${noun}s`;
+    count.textContent = `${data.length.toLocaleString()} ${data.length === 1 ? noun : plural}`;
     more.style.display = data.length > shown ? "" : "none";
   }
   render();

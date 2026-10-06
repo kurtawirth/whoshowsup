@@ -4,31 +4,17 @@ title: Election night
 
 ```js
 import {tokens, pct, date, sides, raceLink, raceTable, withSearch} from "./components/wsu.js";
+import {liveStream, liveOdds, votesLeft} from "./components/live.js";
+const liveModel = FileAttachment("data/live_model.json").json();
 const races = FileAttachment("data/races.json").json();
 const top = FileAttachment("data/topline.json").json();
 const liveFile = FileAttachment("data/live.json");
 ```
 
 ```js
-// The results file is republished every few minutes on election night. Rather than asking readers to
-// reload, check this page's own HTML for a newer copy of it (its name changes with each version).
-const live = Generators.observe((notify) => {
-  let href = liveFile.href, timer;
-  liveFile.json().then(notify);
-  async function check() {
-    if (document.visibilityState !== "visible") return;
-    try {
-      const page = await (await fetch(location.pathname, {cache: "no-store"})).text();
-      const m = page.match(/_file\/data\/live\.[0-9a-f]+\.json/);
-      if (!m) return;
-      const url = new URL(m[0], new URL("./", location.href)).href;
-      if (url !== new URL(href, location.href).href) { href = url; notify(await (await fetch(url)).json()); }
-    } catch (e) { /* offline or mid-deploy: try again next time */ }
-  }
-  timer = setInterval(check, 90_000);
-  document.addEventListener("visibilitychange", check);
-  return () => { clearInterval(timer); document.removeEventListener("visibilitychange", check); };
-});
+// Results: civicAPI directly during the night (every reader shares its cached answer), with the copy our poller
+// publishes every few minutes as the fallback (components/live.js). ?direct in the address turns the direct feed on early, for testing.
+const live = liveStream(liveFile, races, liveModel.civic, {Generators, force: new URLSearchParams(location.search).has("direct")});
 ```
 
 ```js
@@ -73,7 +59,7 @@ const inRange = settled.filter((d) => d.x.margin >= d.margin_p10 && d.x.margin <
 
 ${live.mode === "simulation" ? html`<div class="sim-banner"><b>Rehearsal.</b> These are made-up results for testing the page, not real votes.</div>` : live.mode === "practice" ? html`<div class="sim-banner"><b>Practice run.</b> Real counts from civicAPI, fetched to test the page; not published.</div>` : ""}
 
-<p class="kicker">Election night · November 3, 2026${asof && started ? ` · Updated ${etTime(asof)}` : ""}</p>
+<p class="kicker">Election night · November 3, 2026${asof && started ? ` · Updated ${etTime(asof)}${live.source === "direct" ? " · live from civicAPI" : ""}` : ""}</p>
 
 # ${started ? `${live.called} of ${live.total} races called` : "Results will appear here on election night"}
 
@@ -107,6 +93,20 @@ function tallyBar(label, c, need, total, note) {
     ${bar}
     <div class="tally-nums"><span>${chip("D")} ${c.Dc} won${c.Dl ? `, ${c.Dl} leading` : ""}</span>${c.Ic + c.Il ? html`<span>${chip("I")} ${c.Ic} won${c.Il ? `, ${c.Il} leading` : ""}</span>` : ""}<span class="muted">${c.open} not yet counted</span><span>${chip("R")} ${c.Rc} won${c.Rl ? `, ${c.Rl} leading` : ""}</span></div>
   </div>`;
+}
+// Live odds: what the races that have finished counting say about the ones still out (components/live.js)
+const odds = started ? liveOdds(races, liveModel, live.races) : null;
+if (odds) {
+  const party = (p) => (p >= 0.5 ? `D ${pct(p)}` : `R ${pct(1 - p)}`);
+  const shift = odds.shift, dir = shift >= 0 ? "Democratic" : "Republican";
+  display(html`<h2>Live odds</h2>
+  <div class="stat-row">
+    <div class="s"><div class="k">Senate control</div><div class="v">${party(odds.pSen)}</div><div class="muted">this morning: ${party(top.p_senate_d)}</div></div>
+    <div class="s"><div class="k">House control</div><div class="v">${party(odds.pHouse)}</div><div class="muted">this morning: ${party(top.p_house_d)}</div></div>
+  </div>
+  <p class="caption">${odds.used
+    ? `Based on the ${odds.used} race${odds.used === 1 ? "" : "s"} at least 95% counted, results so far are running about ${Math.abs(shift).toFixed(1)} points more ${dir} than our forecast nationally (more or less in some regions and states). We move every race still out by that much, count called races for their winners, and play out the rest of the night thousands of times.`
+    : "Until races finish counting, these are our forecast's odds with called races counted for their winners. Partial counts don't move them: early votes lean toward whichever party's voters cast that kind of ballot."} Not a call: an estimate that will swing as results come in.</p>`);
 }
 if (started) display(html`<div class="tallies">
   ${tallyBar("Senate", tally("SEN", {D: 34, R: 31}), 51, 100, "51 seats for control (50 plus the vice president for Republicans); includes the 65 seats not up this year")}
@@ -144,7 +144,15 @@ function rangeBar(d) {
 }
 function sideText(d, m) { const side = m >= 0 ? "D" : "R"; return `${lastName(d.nameOf(side))} +${Math.abs(m).toFixed(1)}`; }
 const status = (d) => (d.called ? html`<span class="res-called">${chip(d.tagOf(d.called))} ${lastName(d.nameOf(d.called))} wins</span>`
-  : d.counted ? html`<span>${sideText(d, d.x.margin)}</span>` : html`<span class="muted">No votes yet (polls close ${clock((CLOSE[d.state_po] ?? [21])[0])})</span>`);
+  : d.counted ? html`<span>${sideText(d, d.x.margin)}${leftText(d)}</span>` : html`<span class="muted">No votes yet (polls close ${clock((CLOSE[d.state_po] ?? [21])[0])})</span>`);
+// "about 150,000 votes left; Turek needs 54% of them" / "lead bigger than the votes left"
+function leftText(d) {
+  const v = votesLeft(d.x);
+  if (!v) return "";
+  const k = (n) => (n >= 1e6 ? `${(n / 1e6).toFixed(1)} million` : n >= 1e4 ? `${Math.round(n / 1000).toLocaleString()},000` : (Math.round(n / 100) * 100 || n).toLocaleString());
+  const trail = v.leader === "D" ? "R" : "D";
+  return html`<div class="adj">${v.locked ? `Lead of ${k(v.lead)} is bigger than the ~${k(v.left)} votes left` : `~${k(v.left)} votes left; ${lastName(d.nameOf(trail))} needs ${Math.round(v.need * 100)}% of them`}</div>`;
+}
 if (started) {
   const order = (d) => (d.called ? 2 : d.counted ? 0 : 1) * 10 + Math.abs(d.p_dem - 0.5);
   display(html`<h2>Every race</h2>`);

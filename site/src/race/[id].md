@@ -3,12 +3,15 @@ title: Race forecast
 ---
 
 ```js
-import {tokens, pct, pctPair, margin, date, probBar, ratingPill, favoriteText, raceLink, link, sides, shareBar, tpPct, powerText} from "../components/wsu.js";
+import {tokens, pct, pctPair, margin, date, probBar, ratingPill, favoriteText, raceLink, link, sides, shareBar, tpPct, powerText, raceTable} from "../components/wsu.js";
 import {marginRange, pollChart, probHistory, pastResults} from "../components/charts.js";
 const races = FileAttachment("../data/races.json").json();
 const details = FileAttachment("../data/race_detail.json").json();
 const top = FileAttachment("../data/topline.json").json();
 const markets = FileAttachment("../data/markets.json").json();
+const liveModel = FileAttachment("../data/live_model.json").json();
+const benchFile = FileAttachment("../data/benchmarks.json");
+import {raceLive, votesLeft, countyKey} from "../components/live.js";
 ```
 
 ```js
@@ -60,6 +63,19 @@ if (fixed) {
       ? html`<p class="caption"><b>Tipping point:</b> in ${tpPct(r.tipping_point)} of simulations, this is the race that hands a party control of the ${chamber}, the ${rank === 1 ? "" : `${ordinal(rank)} `}likeliest of ${peers.length}. A vote here is ${powerText(r.voter_power)} the average ${chamber} vote to decide control. ${more}.</p>`
       : html`<p class="caption"><b>Tipping point:</b> this race decides control of the ${chamber} in fewer than 1 in 200 simulations. ${more}.</p>`);
   }
+  // the margin in people: our most likely result as a number of votes, next to the people who could change it
+  if (r.expected_votes) {
+    const people = (n) => (n >= 1e6 ? `${(n / 1e6).toFixed(1)} million` : n >= 1e4 ? `${Math.round(n / 1000).toLocaleString()},000` : (Math.round(n / 100) * 100).toLocaleString());
+    const mv = (Math.abs(r.margin_median) / 100) * r.expected_votes;
+    const lead = r.margin_median >= 0 ? dName : rName;
+    const stay = r.eligible && r.votes22 ? r.eligible - r.votes22 : null;
+    const ratio = stay && mv >= 0.0025 * r.expected_votes ? stay / mv : null;  // no ratio for a near tie
+    display(html`<p class="caption"><b>In people:</b> ${mv < 0.0025 * r.expected_votes
+      ? `our most likely result is close to a tie among roughly ${people(r.expected_votes)} votes we expect cast.`
+      : `our most likely result is ${lead} by about ${people(mv)} votes, out of roughly ${people(r.expected_votes)} we expect cast.`}
+      ${stay ? `About ${people(stay)} eligible ${r.state_name} adults didn't vote in 2022${ratio && ratio >= 2 ? `, more than ${ratio >= 10 ? Math.floor(ratio).toLocaleString() : ratio.toFixed(0)} times that margin` : ""}.` : ""}
+      Expected turnout is a rough guide: midterm turnout has swung by a quarter from one cycle to the next.</p>`);
+  }
   const mk = markets.races[id];
   if (mk) {
     const mLead = mk.p >= 0.5;
@@ -75,6 +91,26 @@ display(shareBar({path: `/race/${id}`, text: fixed
   : `The Who Shows Up 2026 forecast gives ${favName} ${an} ${pct(favP)} chance ${goal}.`}));
 function oddsText(p) { return p >= 0.95 ? "a strong favorite" : p >= 0.8 ? "a clear favorite" : p >= 0.6 ? "a modest favorite" : "close to a coin flip"; }
 function ratingSentence(r) { return `We rate it <b>${r.rating}</b>.`.replace(/<\/?b>/g, ""); }
+```
+
+```js
+// Election night: this race's count straight from civicAPI (components/live.js), once a minute while the page is
+// visible; ?direct in the address turns it on early, for testing
+const night = fixed ? null : raceLive(r, liveModel.civic[id], {Generators, force: new URLSearchParams(location.search).has("direct")});
+```
+
+```js
+if (night?.x) {
+  const x = night.x, tot = x.d + x.r;
+  const v = votesLeft(x);
+  const k = (n) => (n >= 1e6 ? `${(n / 1e6).toFixed(2)} million` : n.toLocaleString());
+  const who = (s) => (s === "D" ? dName : rName);
+  display(html`<div class="callout live-box"><b>${x.called ? `${who(x.called)} wins` : tot ? "Counting" : "Election night"}</b>
+    ${tot ? html` · ${x.pct}% counted<br>${dName} ${k(x.d)} (${((100 * x.d) / tot).toFixed(1)}%) · ${rName} ${k(x.r)} (${((100 * x.r) / tot).toFixed(1)}%)
+      ${v && !x.called ? html`<br>${v.locked ? `${who(v.leader)}'s lead of ${k(v.lead)} is bigger than the roughly ${k(v.left)} votes left.` : `About ${k(v.left)} votes left; ${who(v.leader === "D" ? "R" : "D")} needs ${Math.round(v.need * 100)}% of them to catch up.`}` : ""}`
+      : " · No votes counted yet."}
+    <span class="muted"> Results from <a href="https://civicapi.org">civicAPI</a>, updated ${new Date(night.at).toLocaleTimeString("en-US", {timeZone: "America/New_York", hour: "numeric", minute: "2-digit"})} ET; calls are civicAPI's. "Votes left" is estimated from the share counted so far.</span></div>`);
+}
 ```
 
 ```js
@@ -148,6 +184,38 @@ if (polls.length) {
     </tr>`)}</tbody></table></div>`;
   display(tbl);
   if (polls.length > 60) display(html`<p class="caption">Showing the 60 most recent of ${polls.length} polls.</p>`);
+}
+```
+
+```js
+// County benchmarks (Senate and governor races): what each county would show if the race landed exactly on our
+// most likely margin (export_site_data.benchmarks); on election night, each county's count next to it
+const bench = !fixed && r.office !== "HOUSE" && r.state_po !== "AK" ? (await benchFile.json())[id] ?? null : null;
+```
+
+```js
+if (bench) {
+  const L = night?.counties;
+  const tag = (m) => (m >= 0 ? dTag : rTag);
+  const fm = (m) => (Math.abs(m) < 0.05 ? "Even" : `${tag(m)}+${Math.abs(m).toFixed(1)}`);
+  const rows = bench.map(([name, fips, b, p24, share]) => {
+    const c = L?.get(countyKey(name));
+    const tot = c ? c.d + c.r : 0;
+    const now = tot ? (100 * (c.d - c.r)) / tot : null;
+    return {name, b, p24, share, c, now, gap: now == null ? null : now - b, _search: name.toLowerCase()};
+  });
+  const unit = r.state_po === "LA" ? "parish" : "county";
+  display(html`<h2>County benchmarks</h2><p class="caption">What each ${unit} would show if the race landed exactly on our most likely result, ${fm(r.margin_median)} statewide: each starts from its 2024 presidential result and moves the way our forecast moves races (mostly through who turns out). ${L ? `On election night, compare the count so far with the benchmark: a candidate running ahead of the benchmark in most places is outrunning our forecast. Early counts can mislead, since mail and Election Day ballots are often counted at different times.` : "On election night, each one's count so far appears next to it."}</p>`);
+  const cols = [
+    {key: "name", label: unit === "parish" ? "Parish" : "County", sort: true},
+    {key: "share", label: "Share of the vote", num: true, sort: true, defaultDir: -1, render: (x) => `${(x.share * 100).toFixed(x.share < 0.01 ? 1 : 0)}%`},
+    {key: "p24", label: "2024 president", num: true, sort: true, render: (x) => fm(x.p24)},
+    {key: "b", label: "Benchmark", num: true, sort: true, render: (x) => fm(x.b)}
+  ];
+  if (L) cols.push(
+    {key: "now", label: "Count so far", num: true, sort: true, render: (x) => (x.now == null ? "–" : `${fm(x.now)} (${x.c.pct}%)`)},
+    {key: "gap", label: "vs. benchmark", num: true, sort: true, render: (x) => (x.gap == null ? "" : `${x.gap >= 0 ? dTag : rTag} ${Math.abs(x.gap).toFixed(1)} ahead`)});
+  display(raceTable(rows, cols, {search: rows.length > 15, placeholder: `Search ${unit === "parish" ? "parishes" : "counties"}`, noun: unit === "parish" ? "parish" : "county", pageSize: 15, sort: {key: "share", dir: -1}}));
 }
 ```
 
