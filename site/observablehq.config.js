@@ -152,6 +152,13 @@ document.addEventListener("click", (e) => {
   const from = location.pathname.split("/").filter(Boolean).join("-").replace(".html", "") || "home";
   try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({path: "race-from-" + from, title: a.pathname.replace(".html", ""), event: true}); } catch (err) {}
 });
+// Clicks on a link to The Turnout (the newsletter), counted as "newsletter-from-<page>"
+document.addEventListener("click", (e) => {
+  const a = e.target.closest ? e.target.closest('a[href*="theturnout.substack.com"]') : null;
+  if (!a) return;
+  const from = location.pathname.split("/").filter(Boolean).join("-").replace(".html", "") || "home";
+  try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({path: "newsletter-from-" + from, title: "The Turnout", event: true}); } catch (err) {}
+});
 </script>
 <!-- Visit counts (GoatCounter: no cookies, no personal data; local previews aren't counted) -->
 <script data-goatcounter="https://kurtawirth.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>`,
@@ -171,6 +178,7 @@ document.addEventListener("click", (e) => {
   <a href="https://www.fec.gov/data/">Federal Election Commission</a>; early-vote counts and election-night results from <a href="https://civicapi.org">civicAPI</a>; prediction-market prices (shown for comparison only) from <a href="https://www.predictit.org">PredictIt</a>; candidate ideology scores from Adam Bonica's
   <a href="https://data.stanford.edu/dime">Database on Ideology, Money in Politics, and Elections</a> (DIME, Stanford University Libraries, ODC-BY 1.0); hex layout adapted from
   Pitch Interactive's Tilegrams. Full source: <a href="https://github.com/kurtawirth/whoshowsup">GitHub</a>. <a href="${base}data">Download the data</a>.</p>
+  <p class="subscribe"><strong>The Turnout</strong>, our free weekly newsletter: what moved in the forecast and what's inside the polls, every Sunday. <a href="https://theturnout.substack.com/subscribe">Subscribe</a>.</p>
   <p>Visits are counted with <a href="https://www.goatcounter.com">GoatCounter</a>, which uses no cookies and collects no personal information.</p>
 </div>`
 };

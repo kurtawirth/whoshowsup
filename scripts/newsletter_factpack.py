@@ -48,6 +48,85 @@ def last(name) -> str:
     return words[-1] if words else str(name)
 
 
+def turnout_margin(x: float, base: float) -> float:
+    """National House margin if one party's voters turn out x better than expected (x > 0 Democrats, x < 0
+    Republicans), the same conversion as the site's turnout dial (site/src/components/sims.js)."""
+    s0 = (base / 100 + 1) / 2
+    d, r = s0 * (1 + max(x, 0)), (1 - s0) * (1 - min(x, 0))
+    return (2 * d / (d + r) - 1) * 100
+
+
+def site_sections(races: dict, t1, now: str) -> list[str]:
+    """The site's newer numbers (tipping points, vote's sway, the turnout dial, polling-miss scenarios,
+    fundamentals vs. polls) and what's new on the site since the last issue."""
+    import numpy as np
+    L = []
+    cur = pd.read_csv(ROOT / "midterms_2026" / "outputs" / "topline.csv").iloc[0]  # has the newer columns
+    t1 = t1 if "senate_tp_gap" in t1 else cur
+    R = [r for r in races.values() if r.get("race_type") != "same_party"]
+    name = lambda r: (f"{r['state_name']} Senate{' (special)' if r.get('special') else ''}" if r["office"] == "SEN"
+                      else f"{r['state_name']} governor" if r["office"] == "GOV" else r["label"])
+    link = lambda r: f"https://whoshowsup.net/race/{r['race_id']}"
+
+    L += ["## Tipping point and vote's sway (Senate and House pages; one line on each race page)",
+          "Tipping point = how often a race is the one that hands a party control, across 20,000 simulations. Vote's sway = that chance per expected vote, vs. the average voter (1x).",
+          f"- The seat that decides control runs about {abs(t1.senate_tp_gap):.0f} points {'more Republican' if t1.senate_tp_gap < 0 else 'more Democratic'} than the national House vote in the Senate "
+          f"and about {abs(t1.house_tp_gap):.0f} points in the House (so a national {lean(t1.nat_median)} is about {lean(t1.nat_median + t1.senate_tp_gap)} where the Senate is decided)",
+          f"- Simulations where an Osborn win leaves neither party a majority: {pct(t1.p_senate_no_majority)}"]
+    for off, label in (("SEN", "Senate"), ("HOUSE", "House")):
+        top = sorted([r for r in R if r["office"] == off and r.get("tipping_point")], key=lambda r: -r["tipping_point"])
+        L.append(f"- {label} likeliest tipping points: " + "; ".join(f"{name(r)} {r['tipping_point']:.1%} ({link(r)})" for r in top[:6]))
+        sway = sorted([r for r in top if r["tipping_point"] >= 0.01], key=lambda r: -r["voter_power"])
+        L.append(f"- {label} biggest vote's sway (races with 1%+ tipping chance): " + "; ".join(f"{name(r)} {r['voter_power']:.1f}x" for r in sway[:5]))
+    L.append("")
+
+    sims = ROOT / "midterms_2026" / "outputs" / "simulations.npz"
+    if sims.exists():
+        z = np.load(sims)
+        E, sen, house = z["E"], z["sen_d"], z["house_d"]
+        L += ["## The turnout dial (https://whoshowsup.net/scenarios): one party's voters turn out X% better than we expect",
+              "(simulations weighted toward the national vote that turnout edge implies; the same method as the site)"]
+        for x in (-0.05, -0.03, 0.03, 0.05):
+            m = turnout_margin(x, t1.nat_median)
+            w = np.exp(-0.5 * ((E - m) / 0.6) ** 2)
+            ps, ph = np.average(sen >= 51, weights=w), np.average(house >= 218, weights=w)
+            who = "Republican" if x < 0 else "Democratic"
+            L.append(f"- {who} voters {abs(x):.0%} better than expected -> national vote about {lean(m)}; Senate D {pct(ps)}, House D {pct(ph)}")
+        L.append("")
+
+    pm = ROOT / "midterms_2026" / "outputs" / "poll_miss_scenarios.csv"
+    if pm.exists():
+        s = pd.read_csv(pm)
+        L += ["## If 2026's polls miss the way a past year's did (https://whoshowsup.net/scenarios; full model reruns)",
+              "statewide_miss = how much that year's final statewide polls overstated Democrats (negative = overstated Republicans)"]
+        for x in s.itertuples():
+            miss = ("" if x.year == "forecast" else "; statewide polls were about right" if abs(x.statewide_miss) < 0.5
+                    else f"; statewide polls overstated {'Democrats' if x.statewide_miss > 0 else 'Republicans'} by {abs(x.statewide_miss):.1f}")
+            L.append(f"- {x.year}: Senate D {pct(x.p_senate_d)} ({x.senate_median:.0f} seats), House D {pct(x.p_house_d)} ({x.house_median:.0f} seats){miss}")
+        L.append("")
+
+    dis = sorted([r for r in R if r["office"] != "HOUSE" and r.get("p_fund") is not None and r.get("p_poll") is not None
+                  and min(r["p_dem"], 1 - r["p_dem"]) > 0.1], key=lambda r: -abs(r["p_fund"] - r["p_poll"]))
+    L += ["## Fundamentals alone vs. polls alone (race pages), biggest disagreements among competitive statewide races"]
+    for r in dis[:6]:
+        L.append(f"- {name(r)}: fundamentals alone {pct(r['p_fund'])} D, polls alone {pct(r['p_poll'])} D, our forecast {pct(r['p_dem'])} D "
+                 f"(polls get {round(100 * r['poll_weight'])}% of the weight) {link(r)}")
+    L.append("")
+
+    # what's new on the site since the last published issue (newsletter/site_news.md: "- YYYY-MM-DD | what | link")
+    news = ROOT / "newsletter" / "site_news.md"
+    issues = sorted(p.stem for p in (ROOT / "newsletter" / "issues").glob("*.html") if not p.stem.startswith("test"))
+    since = issues[-1] if issues else "2000-01-01"
+    if news.exists():
+        items = [l[2:].split(" | ") for l in news.read_text(encoding="utf-8").splitlines() if l.startswith("- ")]
+        items = [i for i in items if len(i) >= 3 and since < i[0] <= now]
+        if items:
+            L += [f"## New on the site since the last issue ({since}): give these a short 'New on the site' item, each linked"]
+            L += [f"- {i[1]} ({i[2]})" for i in items]
+            L.append("")
+    return L
+
+
 def main(days: int = 7) -> Path:
     snaps = sorted(p.name for p in HIST.iterdir() if (p / "race_forecasts.csv").exists())
     now = snaps[-1]
@@ -189,6 +268,8 @@ def main(days: int = 7) -> Path:
                  f"poll avg {lean(r['poll_avg'], last(dn), last(rn))} ({int(r['poll_count']) if pd.notna(r['poll_count']) else 0} polls); "
                  f"2024 pres {lean(x.get('pres24', float('nan')))}")
     L.append("")
+
+    L += site_sections(races, t1, now)
 
     OUT.mkdir(parents=True, exist_ok=True)
     out = OUT / f"{now}.md"
