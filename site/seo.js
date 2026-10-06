@@ -61,7 +61,9 @@ export function raceFacts(r) {
 
 export function racePage(r) {
   const {place, d, rep, dTag, rTag, same} = raceFacts(r);
-  const title = same ? `${place} 2026 forecast` : `${place} 2026 forecast: ${d} vs. ${rep}`;
+  // Search titles lead with what people search for: the candidates' names and "polls" (Search Console: "chris
+  // deluzio", "mullock vs van drew polls", "nj-2 polls"); the race follows. The page's own heading is unchanged.
+  const title = same ? `${place} 2026 forecast` : `${d} vs. ${rep} polls and 2026 forecast (${place})`;
   const desc = same
     ? `Only ${r.race_note === "D" ? "Democrats" : "Republicans"} are on the November 2026 ballot here. ${tail}`
     : `Our forecast: ${fav(r.p_dem, d, rep)} to win (updated ${updated}), with the polls, expected margin and past results. ${tail}`;
