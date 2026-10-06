@@ -154,7 +154,7 @@ function makeUI(sims) {
   slider.addEventListener("change", () => countEvent("whatif-dial", "What if: turnout dial"));
   const howRow = el("div", "scn-how");
   howRow.append(el("span", "k", "Where the swing comes from:"));
-  const howBtns = [["", "Any mix"], ["turnout", "Mostly turnout"], ["persuasion", "More persuasion"]].map(([v, t]) => {
+  const howBtns = [["", "Any mix"], ["turnout", "Mostly turnout"], ["persuasion", "Mostly persuasion"]].map(([v, t]) => {
     const b = el("button", "seg", t);
     b.dataset.how = v;
     b.setAttribute("aria-pressed", String(v === ""));
