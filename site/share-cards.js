@@ -20,6 +20,14 @@ const BROWSERS = [process.env.CHROME_PATH, "/usr/bin/google-chrome", "/usr/bin/g
   "/usr/bin/chromium", "C:/Program Files/Google/Chrome/Application/chrome.exe", "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"];
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 const pctText = (p) => (p >= 0.995 ? ">99%" : p <= 0.005 ? "<1%" : `${Math.round(p * 100)}%`);
+// both sides of a race, adding up to 100 (82.5% would otherwise show as 83% and 18%): the leader is rounded and
+// the other side gets the rest, the same rule as the race pages (components/wsu.js pctPair)
+const pctPair = (pD) => {
+  const lead = Math.max(pD, 1 - pD);
+  if (lead >= 0.995) return pD >= 0.5 ? [">99%", "<1%"] : ["<1%", ">99%"];
+  const L = Math.round(lead * 100), other = `${100 - L}%`;
+  return pD >= 0.5 ? [`${L}%`, other] : [other, `${L}%`];
+};
 const last = (s) => String(s ?? "").trim().split(/\s+/).filter((w) => !/^(Jr\.?|Sr\.?|I{2,3})$/.test(w)).pop();
 const day = new Date(`${top.forecast_date}T12:00:00`).toLocaleDateString("en-US", {month: "short", day: "numeric"});
 const lean = (m, d, r) => (Math.abs(m) < 0.05 ? "even" : m > 0 ? `${d} +${m.toFixed(1)}` : `${r} +${(-m).toFixed(1)}`);
@@ -39,9 +47,9 @@ function card(r) {
   const p = r.p_dem, cut = Math.round(1072 * p);
   const side = (name, tag, prob, right) => `<div class="cand${right ? " right" : ""}">
       <div class="name"><span class="fit">${esc(name)}</span> <span class="chip" style="background:${COLOR[tag]}">${tag}</span></div>
-      <div class="pct" style="color:${COLOR[tag]}">${pctText(prob)}</div></div>`;
+      <div class="pct" style="color:${COLOR[tag]}">${prob}</div></div>`;
   return `${head}<div class="place">${esc(place)}</div>
-    <div class="cands">${side(d, dTag, p, false)}<div class="vs">chance of<br>winning</div>${side(rep, rTag, 1 - p, true)}</div>
+    <div class="cands">${side(d, dTag, pctPair(p)[0], false)}<div class="vs">chance of<br>winning</div>${side(rep, rTag, pctPair(p)[1], true)}</div>
     <div class="bar"><div style="width:${cut}px;background:${COLOR[dTag]}"></div><div style="flex:1;background:${COLOR[rTag]}"></div></div>
     <div class="sub">Expected margin: ${esc(lean(r.margin_median, last(d), last(rep)))} · Rated ${esc(r.rating)}</div>${foot}`;
 }
