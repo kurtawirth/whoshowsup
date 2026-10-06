@@ -587,6 +587,53 @@ def benchmarks(f: pd.DataFrame) -> dict:
     return out
 
 
+NOT_POLL_SOURCES = ("politicalwire", "mainepublic", "pressherald", "centralmaine", "270towin", "realclearpol",
+                    "wikipedia", "nytimes.com", "washingtonpost", "wsj.com", "bloomberg", "x.com", "twitter.com")
+FINE_PRINT_GROUPS = [("independent", "Independents"), ("expect", "Who voters expect to win"), ("approv", "Approval"),
+                     ("favorab", "Favorability"), ("women", "Women and men"), ("men", "Women and men"),
+                     ("enthusias", "Enthusiasm"), ("against", "Voting against vs. for"), ("finances", "The economy"),
+                     ("econom", "The economy"), ("issue", "Issues")]
+
+
+def fine_print() -> list[dict]:
+    """The poll fine print: details beyond the topline (crosstabs, expectations, approval...) that The Turnout
+    recorded in its notebook (newsletter/notebook.md and notebook/*.md, one line per detail: date | race |
+    measure | value | poll | link | framing). Published: the facts only (not the framing notes), and a link only
+    when it goes to the poll itself rather than an outlet writing about it."""
+    nb = ROOT / "newsletter"
+    files = [nb / "notebook.md", *sorted((nb / "notebook").glob("*.md"))] if nb.exists() else []
+    out = []
+    for f in files:
+        for line in f.read_text(encoding="utf-8").splitlines():
+            parts = [x.strip() for x in line.lstrip("- ").split("|")]
+            if not line.startswith("- ") or len(parts) < 6:
+                continue
+            date_, race, measure, value, poll, link = parts[:6]
+            group = next((g for k, g in FINE_PRINT_GROUPS if k in measure.lower()), "Other details")
+            ok_link = link.startswith("http") and not any(d in link.lower() for d in NOT_POLL_SOURCES)
+            out.append({"date": date_, "race": race, "measure": measure, "value": value, "poll": poll,
+                        "link": link if ok_link else None, "group": group})
+    return sorted(out, key=lambda x: x["date"], reverse=True)
+
+
+def zip_lookup() -> int:
+    """The ZIP lookup's data (site/src/data/zip_lookup.csv, loaded only when someone looks up a ZIP): one line per
+    ZIP code tabulation area: zcta, lat, lon (Census internal point), and its 2026 House districts with each one's
+    share of the area's residents ("TX10:81|TX37:19"). From core/build_zip_districts.py."""
+    zd, zc = PROC / "zip_districts_2026.csv", PROC / "zcta_centroids.csv"
+    if not (zd.exists() and zc.exists()):
+        return 0
+    d = pd.read_csv(zd, dtype={"zcta": str})
+    d = d[d["share"] >= 0.005].sort_values(["zcta", "share"], ascending=[True, False])
+    d["cell"] = d["state_po"] + d["district"].astype(str) + np.where(d["share"] >= 0.995, "", ":" + (d["share"] * 100).round().astype(int).astype(str))
+    cells = d.groupby("zcta")["cell"].agg("|".join)
+    c = pd.read_csv(zc, dtype={"zcta": str}).set_index("zcta")
+    c = c.join(cells, how="inner")
+    lines = [f"{z},{r.lat:.2f},{r.lon:.2f},{r.cell}" for z, r in c.iterrows()]
+    (SITE / "zip_lookup.csv").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return len(lines)
+
+
 SIMS_N = 10_000
 
 
@@ -647,6 +694,8 @@ def main() -> None:
     write("pollsters.json", pollsters())
     write("live_model.json", live_model())
     write("benchmarks.json", benchmarks(f))
+    write("fine_print.json", fine_print())
+    zip_lookup()
     write("downloads.json", {"date": top["forecast_date"], "rows": downloads(f, top)})
     meta = sims_export()
     if meta:

@@ -10,6 +10,7 @@ const details = FileAttachment("../data/race_detail.json").json();
 const top = FileAttachment("../data/topline.json").json();
 const markets = FileAttachment("../data/markets.json").json();
 const liveModel = FileAttachment("../data/live_model.json").json();
+const finePrint = FileAttachment("../data/fine_print.json").json();
 const benchFile = FileAttachment("../data/benchmarks.json");
 import {raceLive, votesLeft, countyKey} from "../components/live.js";
 ```
@@ -184,6 +185,18 @@ if (polls.length) {
     </tr>`)}</tbody></table></div>`;
   display(tbl);
   if (polls.length > 60) display(html`<p class="caption">Showing the 60 most recent of ${polls.length} polls.</p>`);
+}
+```
+
+```js
+// The poll fine print: details from inside the polls that The Turnout has reported (export_site_data.fine_print)
+{
+  const notes = finePrint.filter((x) => x.race === id);
+  if (notes.length) {
+    const groups = d3.groups(notes, (x) => x.group);
+    display(html`<h2>Poll fine print</h2><p class="caption">Details from inside the polls, beyond the topline, as reported in <a href="https://theturnout.substack.com">The Turnout</a>, our weekly newsletter. Newest first.</p>
+    <div class="fine-print">${groups.map(([g, list]) => html`<h3>${g}</h3><ul class="tight">${list.map((x) => html`<li><b>${x.measure}:</b> ${x.value} <span class="muted">(${x.link ? html`<a href="${x.link}">${x.poll}</a>` : x.poll})</span></li>`)}</ul>`)}</div>`);
+  }
 }
 ```
 

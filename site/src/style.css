@@ -435,3 +435,16 @@ button.seg.i[aria-pressed=true] { background: var(--ind, #6b4fbb); border-color:
   border: 1px solid var(--axis); background: var(--card); color: var(--ink); cursor: pointer; }
 .scn-toggle:hover { border-color: var(--ink-3); }
 .scn-row[hidden] { display: none; }
+
+.fine-print h3 { margin: 14px 0 4px; font-size: 15px; }
+.fine-print li { font-family: var(--sans); font-size: 14.5px; margin: 4px 0; }
+
+/* ---------- Your races (ZIP lookup) ---------- */
+.zip-form { display: flex; gap: 8px; flex-wrap: wrap; margin: 6px 0 10px; }
+.zip-form input { font: 600 18px var(--sans); width: 9em; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--axis); background: var(--card); color: var(--ink); letter-spacing: .05em; }
+.zip-form button { font: 600 15px var(--sans); padding: 9px 16px; border-radius: 8px; border: 1px solid var(--ink); background: var(--ink); color: var(--surface); cursor: pointer; }
+.zip-out h3 { margin: 16px 0 6px; }
+.zip-races { list-style: none; padding: 0; margin: 0; max-width: 760px; }
+.zip-races li { font-family: var(--sans); font-size: 15px; padding: 8px 0; border-bottom: 1px solid var(--hair); }
+.zip-races li a { font-weight: 600; }
+.zip-races .muted { font-size: 13px; margin-top: 2px; }

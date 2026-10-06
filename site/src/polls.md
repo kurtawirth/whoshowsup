@@ -8,6 +8,7 @@ const races = FileAttachment("data/races.json").json();
 const details = FileAttachment("data/race_detail.json").json();
 const firms = FileAttachment("data/pollsters.json").json();
 const top = FileAttachment("data/topline.json").json();
+const finePrint = FileAttachment("data/fine_print.json").json();
 ```
 
 # Every poll we use, and how we count it
@@ -76,3 +77,20 @@ const top = FileAttachment("data/topline.json").json();
 ```
 
 <p class="caption">Poll data from <a href="https://votehub.com">VoteHub</a> (CC BY 4.0), <a href="https://votes.decisiondeskhq.com/polls">Decision Desk HQ</a> and Wikipedia. Links go to each poll's release where the source provides one.</p>
+
+## Poll fine print
+
+<p class="caption">Details from inside the polls, beyond the topline: independents, who voters expect to win, approval and more, as reported in <a href="https://theturnout.substack.com">The Turnout</a>, our weekly newsletter. Newest first; each race's own page lists its details too.</p>
+
+```js
+{
+  const byId = new Map(races.map((r) => [r.race_id, r]));
+  const rows = finePrint.map((x) => ({...x, r: byId.get(x.race), _search: `${x.race} ${x.measure} ${x.value} ${x.poll}`.toLowerCase()}));
+  display(raceTable(rows, [
+    {key: "date", label: "Reported", sort: true, defaultDir: -1, render: (x) => date(x.date).replace(", 2026", "")},
+    {key: "race", label: "Race", sort: true, render: (x) => (x.r ? raceLink(x.r, `${x.r.label}${x.r.office === "GOV" ? " (gov.)" : x.r.office === "SEN" && !x.r.special ? " (Sen.)" : ""}`) : x.race.replace(/^national/, "National"))},
+    {key: "measure", label: "Detail", render: (x) => html`<b>${x.measure}:</b> ${x.value}`},
+    {key: "poll", label: "Poll", render: (x) => (x.link ? html`<a href="${x.link}">${x.poll}</a>` : x.poll)}
+  ], {search: rows.length > 20, noun: "detail", pageSize: 20, sort: {key: "date", dir: -1}}));
+}
+```

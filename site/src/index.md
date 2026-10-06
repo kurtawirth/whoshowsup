@@ -12,6 +12,8 @@ const history = FileAttachment("data/history.json").json();
 const national = FileAttachment("data/national.json").json();
 const track = FileAttachment("data/track_record.json").json();
 const changes = FileAttachment("data/changes.json").json();
+const zipFile = FileAttachment("data/zip_lookup.csv");
+import {zipLookup} from "./components/zip.js";
 ```
 
 ```js
@@ -98,6 +100,14 @@ display(html`<div class="hero-grid">
   ${heroCard("Senate", top.p_senate_d, `Most likely: ${Math.round(top.senate_median)} Democratic seats (80% range ${Math.round(top.senate_p10)}–${Math.round(top.senate_p90)}). Democrats need 51; the vice president breaks ties.`, "senate")}
   ${govCard()}
 </div>`);
+```
+
+## Your races
+
+<p class="caption">Enter your ZIP code to see the House, Senate and governor races on your ballot, our odds in each, and where a single vote is likeliest to decide control. It uses the new district maps where states redrew them for 2026.</p>
+
+```js
+display(zipLookup(races, zipFile));
 ```
 
 ## How many seats each party wins
