@@ -576,10 +576,10 @@ def midterm_dropoff() -> pd.Series:
     return (v22 / p).dropna()
 
 
-def simulate(forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
-    """Run the 2026 forecast as of `forecast_date`; returns the chamber summary."""
+def prepare(forecast_date: pd.Timestamp = FORECAST_DATE):
+    """Everything the simulation needs as of `forecast_date`: the races with their polls and ingredients, the
+    national-environment draws, and the 2024 national presidential vote. (Also used by poll_miss_scenarios.py.)"""
     load_poll_error()
-    rng = np.random.default_rng(SEED)
     races = poll_summary(load_races(), forecast_date)
     races["inc_side"] = races.apply(incumbency_side, axis=1)
     races["quality_diff"] = quality_diff(races)
@@ -597,6 +597,13 @@ def simulate(forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
     nat = pd.read_csv(RAW / "medsl" / "president_1976_2024.csv", encoding="latin-1")
     nat = nat[(nat.year == 2024) & nat.party_simplified.isin(["DEMOCRAT", "REPUBLICAN"])]
     D0, R0 = (nat.loc[nat.party_simplified == p, "candidatevotes"].sum() for p in ("DEMOCRAT", "REPUBLICAN"))
+    return races, env, D0, R0
+
+
+def simulate(forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
+    """Run the 2026 forecast as of `forecast_date`; returns the chamber summary."""
+    races, env, D0, R0 = prepare(forecast_date)
+    rng = np.random.default_rng(SEED)
     live, fixed_r, margin, E, a = run_simulation(races, env, D0, R0, rng)
     office = live["office"].to_numpy()
     out = pd.concat([live, fixed_r], ignore_index=True)
@@ -626,6 +633,12 @@ def simulate(forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
     house_d = summ["HOUSE"]
     sen_d = 34 + summ["SEN"]                    # 32 D + 2 D-caucusing independents not up
     np.savez_compressed(OUT / "simulations.npz", house_d=house_d, sen_d=sen_d, gov_d=summ["GOV"], E=E, a=a)
+    # Every race's result in every simulation (for the site's what-if explorer, turnout dial and election-night
+    # odds, which filter these simulations; nothing here feeds back into the forecast)
+    np.savez_compressed(OUT / "simulations_races.npz", race_id=live.apply(race_id, axis=1).to_numpy(str),
+                        office=office.astype(str), margin=margin.astype(np.float16), E=E.astype(np.float32),
+                        a=a.astype(np.float32), independent=((live["race_type"] == "independent")
+                                                              & live["rep_candidate"].notna()).to_numpy())
 
     # ---- per-race detail for the website ----
     # Margin quantiles (for each race's distribution chart) and "leverage": how much

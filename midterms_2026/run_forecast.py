@@ -197,6 +197,8 @@ def main() -> None:
     step("National environment model")(national_env.main, False)
     step(f"Poll accuracy at {days_out} days out")(poll_average_error.main, max(days_out, 1))
     summary = step("Race simulation")(race_model.simulate, asof)
+    import poll_miss_scenarios  # display only: the forecast rerun as if polls miss like a past year's
+    step("Polling-miss scenarios (display only)")(poll_miss_scenarios.main)
 
     step("Checks")(check_freshness, asof)
     top = step("Snapshot + history")(record, asof)

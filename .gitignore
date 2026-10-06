@@ -11,3 +11,6 @@ secrets/
 
 # The Turnout newsletter workspace: style guide, fact packs and drafts (private until published on Substack)
 newsletter/
+
+# full per-race simulation draws (large; the site gets a compact copy in site/src/data/sims.bin)
+midterms_2026/outputs/simulations_races.npz

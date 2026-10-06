@@ -451,6 +451,43 @@ def seats() -> dict:
             "governor": dist(s["gov_d"], int(s["gov_d"].min()), int(s["gov_d"].max()))}
 
 
+def poll_miss() -> dict | None:
+    """The forecast rerun as if 2026's polls miss like a past year's (poll_miss_scenarios.py; display only)."""
+    sc, rc = OUT / "poll_miss_scenarios.csv", OUT / "poll_miss_races.csv"
+    if not (sc.exists() and rc.exists()):
+        return None
+    races = pd.read_csv(rc).set_index("race_id").round(3)
+    return {"scenarios": pd.read_csv(sc).to_dict("records"),
+            "races": {rid: row.tolist() for rid, row in races.iterrows()}, "columns": races.columns.tolist()}
+
+
+SIMS_N = 10_000
+
+
+def sims_export() -> dict | None:
+    """A compact copy of the simulations for the browser (sims.bin + sims_meta.json): the first 10,000 simulated
+    elections, each with its national House vote, turnout share, both chambers' totals and the winner of every
+    Senate and governor race and every House race that isn't a lock (each side wins in at least 0.5%).
+    The what-if explorer, the turnout dial and election-night odds keep the simulations that match a scenario
+    and recount. Layout (little-endian): E int16 (x100) | house_d uint16 | a uint8 (x255) | sen_d uint8 |
+    gov_d uint8 | one bit row per race (bit s set = the Democratic side, or the independent, won simulation s)."""
+    path = OUT / "simulations_races.npz"
+    if not path.exists():
+        return None
+    z, c = np.load(path), np.load(OUT / "simulations.npz")
+    n = min(SIMS_N, z["margin"].shape[1])
+    win = z["margin"][:, :n] > 0
+    p = win.mean(axis=1)
+    keep = (z["office"] != "HOUSE") | ((p >= 0.005) & (p <= 0.995))
+    parts = [np.round(z["E"][:n] * 100).astype("<i2").tobytes(), c["house_d"][:n].astype("<u2").tobytes(),
+             np.round(z["a"][:n] * 255).astype("u1").tobytes(), c["sen_d"][:n].astype("u1").tobytes(),
+             c["gov_d"][:n].astype("u1").tobytes()]
+    parts += [np.packbits(row, bitorder="little").tobytes() for row in win[keep]]
+    (SITE / "sims.bin").write_bytes(b"".join(parts))
+    return {"n": int(n), "races": z["race_id"][keep].tolist(), "independent": z["independent"][keep].astype(bool).tolist(),
+            "row_bytes": int((n + 7) // 8)}
+
+
 def main() -> None:
     top = pd.read_csv(OUT / "topline.csv").iloc[0].to_dict()
     top["election_day"] = "2026-11-03"
@@ -479,6 +516,10 @@ def main() -> None:
     write("markets.json", markets())
     write("changes.json", changes())
     write("counties.json", counties())
+    write("poll_miss.json", poll_miss())
+    meta = sims_export()
+    if meta:
+        write("sims_meta.json", meta)
     import share_card  # the preview image for shared links, with today's odds
     share_card.make()
     sizes = {p.name: f"{p.stat().st_size / 1024:.0f} KB" for p in sorted(SITE.glob("*.json"))}

@@ -37,6 +37,7 @@ const nav = [
   ["/senate", "Senate"],
   ["/governors", "Governors"],
   ["/national", "National picture"],
+  ["/scenarios", "What if"],
   ["/specials", "Special elections"],
   ["/early-vote", "Early vote"],
   ["/results", "Election night"],

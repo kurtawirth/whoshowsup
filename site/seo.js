@@ -34,6 +34,8 @@ export const PAGES = {
     `Democrats win about ${Math.round(top.gov_median)} of 36 governor's races in our forecast (updated ${updated}). Odds and polls for every race.`],
   "/national": ["2026 Generic Ballot and National Environment",
     `Our estimate of the 2026 national House vote: ${lean(top.nat_median)} (updated ${updated}), from the generic ballot, special elections and fundamentals.`],
+  "/scenarios": ["What If? Explore 2026 Midterm Scenarios",
+    "Pick winners or turn the turnout dial and watch the odds for the House and Senate change, using 10,000 of the Who Shows Up forecast’s simulated elections."],
   "/specials": ["Special Elections This Cycle: Results vs. Partisan Lean",
     "Every special election this cycle compared with how the same district voted for president: the turnout signal behind the forecast."],
   "/early-vote": ["2026 Early Vote Tracker by State",
