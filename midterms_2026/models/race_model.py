@@ -563,6 +563,19 @@ def run_simulation(races: pd.DataFrame, env: np.ndarray, nat_d0: float, nat_r0: 
     return live, fixed_r, margin, E, a
 
 
+def midterm_dropoff() -> pd.Series:
+    """Each state's 2022 midterm vote as a share of its 2024 two-party presidential vote (the larger of its
+    2022 U.S. House total and Senate total, so uncontested House seats don't drag it down)."""
+    h = pd.read_csv(RAW / "medsl" / "house_1976_2024.tab", low_memory=False)
+    h = h[(h.year == 2022) & (h.stage == "GEN")].drop_duplicates(["state_po", "district"])
+    s = pd.read_csv(RAW / "medsl" / "senate_1976_2024.csv", encoding="latin-1")
+    s = s[(s.year == 2022) & (s.stage == "gen") & ~s.special.astype(bool)].drop_duplicates("state_po")
+    v22 = pd.concat([h.groupby("state_po")["totalvotes"].sum(), s.set_index("state_po")["totalvotes"]], axis=1).max(axis=1)
+    p = pd.read_csv(RAW / "medsl" / "president_1976_2024.csv", encoding="latin-1")
+    p = p[(p.year == 2024) & p.party_simplified.isin(["DEMOCRAT", "REPUBLICAN"])].groupby("state_po")["candidatevotes"].sum()
+    return (v22 / p).dropna()
+
+
 def simulate(forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
     """Run the 2026 forecast as of `forecast_date`; returns the chamber summary."""
     load_poll_error()
@@ -628,6 +641,25 @@ def simulate(forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
         if ctrl is not None and 0.01 < w_.mean() < 0.99:
             lev[i] = ctrl[w_].mean() - ctrl[~w_].mean()
     qtab["control_leverage"] = lev
+    # Tipping points and voter power (tipping_point.py). Expected votes: each race's 2024 presidential vote,
+    # scaled by its state's midterm drop-off (2022 votes / 2024 presidential votes).
+    from tipping_point import tipping_point, voter_power
+    drop = midterm_dropoff()
+    exp_votes = lambda df: ((df["d24"] + df["r24"]) * df["state_po"].map(drop).fillna(drop.median())).to_numpy(float)
+    qtab["tipping_point"], qtab["voter_power"] = np.nan, np.nan
+    tp_stats = {}
+    n_sen = int((office == "SEN").sum() + (fixed_r["office"] == "SEN").sum())
+    for off, base_d, base_r, need_d, need_r in (("SEN", 34, 100 - 34 - n_sen, 51, 50), ("HOUSE", 0, 0, 218, 218)):
+        m = office == off
+        fx = fixed_r[fixed_r["office"] == off]
+        ind = ((live["race_type"] == "independent") & live["rep_candidate"].notna()).to_numpy()[m]
+        res = tipping_point(margin[m], np.ones(m.sum()), base_d + (fx["race_note"] == "D").sum(),
+                            base_r + (fx["race_note"] == "R").sum(), need_d, need_r, ind)
+        votes = np.concatenate([exp_votes(live[m]), exp_votes(fx)])
+        power = voter_power(np.concatenate([res["tipping"], np.zeros(len(fx))]), votes)[:m.sum()]
+        qtab.loc[m, "tipping_point"], qtab.loc[m, "voter_power"] = res["tipping"], power
+        # how far the tipping-point seat runs from the national House vote (+ = to the Democrats' left)
+        tp_stats[off] = (np.nanmedian(res["tp_margin"] - E), res["p_no_majority"])
     qtab.to_csv(OUT / "race_quantiles.csv", index=False)
     lines = [
         ("National House vote (D-R)", f"D{np.median(E):+.1f}", f"D{np.percentile(E, 10):+.1f} to D{np.percentile(E, 90):+.1f}"),
@@ -650,6 +682,8 @@ def simulate(forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
         "senate_median": np.median(sen_d), "senate_p10": np.percentile(sen_d, 10), "senate_p90": np.percentile(sen_d, 90),
         "p_senate_d": (sen_d >= 51).mean(), "p_osborn": summ["SEN_ind_win"], "p_house_ind": summ["HOUSE_ind_win"],
         "gov_median": np.median(summ["GOV"]), "gov_p10": np.percentile(summ["GOV"], 10), "gov_p90": np.percentile(summ["GOV"], 90),
+        "house_tp_gap": tp_stats["HOUSE"][0], "senate_tp_gap": tp_stats["SEN"][0],
+        "p_senate_no_majority": tp_stats["SEN"][1], "p_house_no_majority": tp_stats["HOUSE"][1],
     }]).to_csv(OUT / "topline.csv", index=False)
     return summary
 

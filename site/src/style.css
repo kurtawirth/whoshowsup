@@ -187,6 +187,13 @@ a.hero-card:hover { box-shadow: 0 0 0 1px var(--card-ring), 0 6px 22px rgba(0,0,
 .rating-pill { display: inline-block; font-family: var(--sans); font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
 .mini-bar { display: inline-block; width: 90px; height: 8px; border-radius: 4px; background: var(--rep); position: relative; vertical-align: middle; overflow: hidden; }
 .mini-bar > b { position: absolute; left: 0; top: 0; bottom: 0; background: var(--dem); border-right: 2px solid var(--surface); }
+.tp-bar { display: inline-block; width: 110px; height: 8px; border-radius: 4px; background: var(--hair); position: relative; vertical-align: middle; overflow: hidden; }
+.tp-bar > b { position: absolute; left: 0; top: 0; bottom: 0; background: var(--ink-2); border-radius: 4px; }
+@media (max-width: 640px) {
+  .wsu-table .c-tp_bar { display: none; }
+  .wsu-table th.c-tipping_point, .wsu-table th.c-voter_power { white-space: normal; }
+  .wsu-table td.c-tipping_point, .wsu-table td.c-voter_power, .wsu-table th.c-tipping_point, .wsu-table th.c-voter_power { padding-left: 6px; padding-right: 6px; }
+}
 
 /* ---------- tooltip ---------- */
 .wsu-tip { position: fixed; pointer-events: none; z-index: 20; background: var(--card); color: var(--ink); box-shadow: 0 0 0 1px var(--card-ring), 0 8px 24px rgba(0,0,0,.14); border-radius: 10px; padding: 10px 12px; font: 13px/1.45 var(--sans); max-width: 280px; opacity: 0; transition: opacity .08s; }

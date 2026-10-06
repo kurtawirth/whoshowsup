@@ -3,7 +3,7 @@ title: Senate forecast
 ---
 
 ```js
-import {tokens, pct, margin, date, stateMap, ratingLegend, ratingPill, raceTable, raceLink, miniBar, favoriteText, withSearch, RATINGS, RACE_SORTS, raceHref, tip, shareBar} from "./components/wsu.js";
+import {tokens, pct, margin, date, stateMap, ratingLegend, ratingPill, raceTable, raceLink, miniBar, favoriteText, withSearch, RATINGS, RACE_SORTS, raceHref, tip, shareBar, tippingTable, tpPct, powerText} from "./components/wsu.js";
 import {seatChart} from "./components/charts.js";
 const top = FileAttachment("data/topline.json").json();
 const seats = FileAttachment("data/seats.json").json();
@@ -90,6 +90,23 @@ display(pathTo51(width));
 const tipping = [...sen].sort((a, b) => b.p_dem - a.p_dem)[50 - 34];
 const who = tipping.race_type === "independent" ? "Osborn" : "Democrats";
 display(html`<p>The 51st seat, the one that decides control if every race breaks in order, is currently <strong>${tipping.label}</strong>. ${tipping.p_dem >= 0.5 ? `${who} win it in ${pct(tipping.p_dem)}` : `Republicans win it in ${pct(1 - tipping.p_dem)}`} of simulations.</p>`);
+```
+
+## The tipping point
+
+<p class="caption">Races don't break in order, so we also ask each of the 20,000 simulations: lining up the seats the winning party took from its safest to its closest, which one got it to a majority (51 for Democrats; 50 for Republicans, with Vance's tiebreak)? A race's tipping-point chance is how often it was that seat. "Vote's sway" divides that chance by the votes we expect in the race, so a 3× state is one where a vote is three times as likely to decide control as the average vote cast in this year's Senate races.</p>
+
+```js
+{
+  const ranked = sen.filter((r) => r.tipping_point > 0).sort((a, b) => b.tipping_point - a.tipping_point);
+  const [first, second] = ranked;
+  const sway = sen.filter((r) => r.tipping_point >= 0.01).sort((a, b) => b.voter_power - a.voter_power)[0];
+  const gap = top.senate_tp_gap;
+  const noMaj = top.p_senate_no_majority ?? 0;
+  display(html`<p>The likeliest tipping point is <strong>${raceLink(first)}</strong> (${tpPct(first.tipping_point)} of simulations), followed by ${raceLink(second)} (${tpPct(second.tipping_point)}). In the typical simulation the tipping-point state runs about ${Math.abs(gap).toFixed(0)} points ${gap < 0 ? "more Republican" : "more Democratic"} than the national House vote, so a national ${margin(top.nat_median)} is closer to ${margin(top.nat_median + gap)} where control is decided. A vote counts most in ${raceLink(sway, sway.state_name)}, where it is ${powerText(sway.voter_power)} the average Senate vote to decide control.</p>
+  ${noMaj >= 0.005 ? html`<p class="caption">In ${pct(noMaj)} of simulations, an Osborn win leaves neither party with a majority, and control turns on Nebraska's result and whom Osborn sides with. Nebraska counts as the tipping point in those simulations.</p>` : ""}`);
+  display(tippingTable(sen));
+}
 ```
 
 ## How the Senate could split

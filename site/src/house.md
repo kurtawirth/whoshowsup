@@ -3,7 +3,7 @@ title: House forecast
 ---
 
 ```js
-import {tokens, pct, margin, date, hexMap, ratingLegend, ratingPill, raceTable, raceLink, miniBar, favoriteText, withSearch, RATINGS, RACE_SORTS, shareBar} from "./components/wsu.js";
+import {tokens, pct, margin, date, hexMap, ratingLegend, ratingPill, raceTable, raceLink, miniBar, favoriteText, withSearch, RATINGS, RACE_SORTS, shareBar, tippingTable, tpPct, powerText} from "./components/wsu.js";
 import {seatChart} from "./components/charts.js";
 const top = FileAttachment("data/topline.json").json();
 const seats = FileAttachment("data/seats.json").json();
@@ -51,6 +51,22 @@ display(hexMap(races, layout, {width: Math.min(width, 1100)}));
 
 ```js
 display(seatChart(seats.house, 218, {width, label: "House", total: 435, height: 250, pControl: top.p_house_d}));
+```
+
+## The tipping point
+
+<p class="caption">In each of 20,000 simulations, we line up the districts the winning party took from its safest to its closest and find the one that gave it the 218th seat. A district's tipping-point chance is how often it was that seat; with 435 seats in play, no single district gets much of it. "Vote's sway" divides that chance by the votes we expect in the district, so a 10× district is one where a vote is ten times as likely to decide control as the average House vote.</p>
+
+```js
+{
+  const live = house.filter((r) => r.tipping_point > 0);
+  const ranked = [...live].sort((a, b) => b.tipping_point - a.tipping_point);
+  const top10 = d3.sum(ranked.slice(0, 10), (r) => r.tipping_point);
+  const sway = live.filter((r) => r.tipping_point >= 0.01).sort((a, b) => b.voter_power - a.voter_power)[0];
+  const gap = top.house_tp_gap;
+  display(html`<p>The majority line runs through districts like <strong>${raceLink(ranked[0])}</strong>, ${raceLink(ranked[1])} and ${raceLink(ranked[2])}, each the tipping point in about ${tpPct(ranked[2].tipping_point)} to ${tpPct(ranked[0].tipping_point)} of simulations; the ten likeliest together cover ${pct(top10)}. In the typical simulation the 218th seat runs about ${Math.abs(gap).toFixed(0)} points ${gap < 0 ? "more Republican" : "more Democratic"} than the national House vote, so a national ${margin(top.nat_median)} is closer to ${margin(top.nat_median + gap)} where the majority is decided. A vote counts most in ${raceLink(sway)}, where it is ${powerText(sway.voter_power)} the average House vote to decide control.</p>`);
+  display(tippingTable(house, {pageSize: 15}));
+}
 ```
 
 ## The most competitive districts

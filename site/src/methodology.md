@@ -60,6 +60,8 @@ How much a race's polls move it away from its fundamentals depends on how accura
 
 Each of the 20,000 simulated elections draws a national environment, a turnout/persuasion mix, a shared error for each state (a polling miss in Wisconsin hits every Wisconsin race), a shared error for each region, and each race's own error. That correlation is why the seat ranges are realistic rather than falsely narrow. Each race's own error has "fat tails": in past elections most races landed closer to the forecast than a bell curve would suggest, and a few missed by much more, so the model draws its errors that way too. That made the backtest's ranges more honest (its 80% ranges held 85% of results instead of 88%) and its probabilities slightly more accurate.
 
+The same simulations find each chamber's **tipping point**. In every simulation, line up the seats the winning party took from its safest to its closest; the one that gave it a majority (the 218th House seat; the 51st Senate seat for Democrats, the 50th for Republicans with the vice president's tiebreak) is that simulation's tipping point. A race's tipping-point chance is how often it plays that role. **Vote's sway** divides that chance by the votes we expect in the race (its 2024 presidential vote, scaled by the state's 2022 midterm drop-off) and compares it with the average voter's, so it shows where a single vote is likeliest to decide control. Neither number changes any forecast; they summarize what the simulations already say.
+
 ## What the model does not use
 
 No pundit ratings (Cook, Sabato, Inside Elections), no other forecasters' models, and no prediction markets. PredictIt's prices appear on the Compare page and race pages for comparison, never as an input.

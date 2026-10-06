@@ -446,6 +446,7 @@ export function raceTable(rows, columns, {search = true, filters = [], pageSize 
     const th = document.createElement("th");
     th.textContent = c.label;
     if (c.num) th.className = "num";
+    th.classList.add(`c-${c.key}`);
     if (c.sort) {
       th.dataset.sort = c.key;
       th.addEventListener("click", () => {
@@ -499,6 +500,39 @@ export function raceTable(rows, columns, {search = true, filters = [], pageSize 
   render();
   root.append(controls, wrap, more);
   return root;
+}
+
+/** Tipping-point chance, with a decimal below 10% (House seats share it thinly): "3.2%", "12%". */
+export const tpPct = (p) => (p == null ? "–" : p < 0.0005 ? "0%" : p < 0.1 ? `${(p * 100).toFixed(1)}%` : `${Math.round(p * 100)}%`);
+/** Voter power as a multiple of the average voter: "26×", "1.9×", "0.4×". */
+export const powerX = (v) => (v == null ? "–" : v >= 9.5 ? `${Math.round(v)}×` : `${v.toFixed(1)}×`);
+/** "about 26 times as likely as", "about as likely as", "about 40% as likely as" */
+export function powerText(v) {
+  if (v >= 1.15) return `about ${v >= 9.5 ? Math.round(v) : v.toFixed(1)} times as likely as`;
+  if (v >= 0.87) return "about as likely as";
+  return `about ${Math.max(1, Math.round(v * 100))}% as likely as`;
+}
+
+/** The tipping-point table for a chamber: each race's chance of being the seat that hands a party control,
+ *  and how much a vote there counts toward control next to the average voter's. */
+export function tippingTable(rows, {pageSize = 12} = {}) {
+  const list = rows.filter((r) => r.race_type !== "same_party" && r.tipping_point > 0);
+  const max = Math.max(...list.map((r) => r.tipping_point));
+  const bar = (p) => {
+    const s = document.createElement("span");
+    s.className = "tp-bar";
+    const b = document.createElement("b");
+    b.style.width = `${(p / max) * 100}%`;
+    s.append(b);
+    return s;
+  };
+  return raceTable(withSearch(list), [
+    {key: "label", label: "Race", sort: true, render: (r) => raceLink(r)},
+    {key: "p_dem", label: "Forecast", num: true, sort: true, defaultDir: -1, render: (r) => favoriteText(r)},
+    {key: "tipping_point", label: "Tipping point", num: true, sort: true, defaultDir: -1, render: (r) => tpPct(r.tipping_point)},
+    {key: "tp_bar", label: "", render: (r) => bar(r.tipping_point)},
+    {key: "voter_power", label: "Vote's sway", num: true, sort: true, defaultDir: -1, render: (r) => powerX(r.voter_power)}
+  ], {search: false, pageSize, sort: {key: "tipping_point", dir: -1}});
 }
 
 export function raceLink(r, text) {

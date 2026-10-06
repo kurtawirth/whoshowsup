@@ -3,7 +3,7 @@ title: Race forecast
 ---
 
 ```js
-import {tokens, pct, pctPair, margin, date, probBar, ratingPill, favoriteText, raceLink, link, sides, shareBar} from "../components/wsu.js";
+import {tokens, pct, pctPair, margin, date, probBar, ratingPill, favoriteText, raceLink, link, sides, shareBar, tpPct, powerText} from "../components/wsu.js";
 import {marginRange, pollChart, probHistory, pastResults} from "../components/charts.js";
 const races = FileAttachment("../data/races.json").json();
 const details = FileAttachment("../data/race_detail.json").json();
@@ -51,6 +51,15 @@ if (fixed) {
   </div>`);
   display(probBar(pD, {dLabel: dName, rLabel: rName, dColor: dTag === "I" ? t.ind : t.dem, rColor: rTag === "I" ? t.ind : t.rep}));
   display(html`<p class="dek" style="margin-top:18px">${lead ? dName : rName} wins in ${pct(Math.max(pD, 1 - pD))} of our simulations, ${oddsText(Math.max(pD, 1 - pD))}. The most likely result is ${margin(r.margin_median).replace("D+", `${dTag}+`)}. ${ratingSentence(r)}</p>`);
+  if (r.tipping_point != null && (r.office === "SEN" || r.office === "HOUSE")) {
+    const chamber = r.office === "SEN" ? "Senate" : "House";
+    const peers = races.filter((x) => x.office === r.office && x.tipping_point != null);
+    const rank = 1 + peers.filter((x) => x.tipping_point > r.tipping_point).length;
+    const more = html`<a href="${link(r.office === "SEN" ? "senate#the-tipping-point" : "house#the-tipping-point")}">How this works</a>`;
+    display(r.tipping_point >= 0.005
+      ? html`<p class="caption"><b>Tipping point:</b> in ${tpPct(r.tipping_point)} of simulations, this is the race that hands a party control of the ${chamber}, the ${ordinal(rank)} likeliest of ${peers.length}. A vote here is ${powerText(r.voter_power)} the average ${chamber} vote to decide control. ${more}.</p>`
+      : html`<p class="caption"><b>Tipping point:</b> this race decides control of the ${chamber} in fewer than 1 in 200 simulations. ${more}.</p>`);
+  }
   const mk = markets.races[id];
   if (mk) {
     const mLead = mk.p >= 0.5;

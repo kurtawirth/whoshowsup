@@ -85,7 +85,7 @@ def rating(p: float) -> str:
 def races() -> pd.DataFrame:
     f = pd.read_csv(OUT / "race_forecasts.csv")
     q = pd.read_csv(OUT / "race_quantiles.csv")
-    f = f.merge(q[["race_id", "control_leverage"]], on="race_id", how="left")
+    f = f.merge(q[["race_id", "control_leverage", "tipping_point", "voter_power"]], on="race_id", how="left")
     house = pd.read_csv(PROC / "races_2026_house.csv")[["state_po", "district", "lines_changed", "pres20_margin", "status_text"]]
     f = f.merge(house.assign(office="HOUSE"), on=["office", "state_po", "district"], how="left")
     money_path = PROC / "fec_money.csv"
@@ -170,7 +170,7 @@ def race_detail(f: pd.DataFrame) -> dict:
                        "sponsors": x.sponsors if isinstance(x.sponsors, str) and not x.sponsors.startswith("(") else "", "d": x.dem_pct,
                        "r": x.rep_pct, "margin": x.margin, "adj": x.adj, "url": x.url, "source": x.source}
                       for x in p.itertuples()],
-            "quantiles": q.loc[rid].drop("control_leverage").tolist() if rid in q.index else None,
+            "quantiles": q.loc[rid].drop(["control_leverage", "tipping_point", "voter_power"], errors="ignore").tolist() if rid in q.index else None,
             "history": hist[hist["race_id"] == rid][["date", "p_dem", "margin_median"]].to_dict("records"),
             "past": past.get((r["office"], r["state_po"], int(r["district"])), []),
         }
@@ -466,7 +466,7 @@ def main() -> None:
     cols = ["race_id", "label", "office", "state_po", "state_name", "district", "special", "race_type", "race_note",
             "incumbent", "incumbent_party", "inc_side", "dem_candidate", "rep_candidate", "dem_name", "rep_name", "pres24", "pres20_margin",
             "lines_changed", "quality_diff", "prior_edge", "dem_money", "rep_money", "money_adj", "quality_adj", "ideology_adj", "poll_count", "poll_avg", "poll_undecided", "poll_weight",
-            "fundamentals_mean", "margin_median", "margin_p10", "margin_p90", "p_dem", "rating", "control_leverage"]
+            "fundamentals_mean", "margin_median", "margin_p10", "margin_p90", "p_dem", "rating", "control_leverage", "tipping_point", "voter_power"]
     write("races.json", f[cols].to_dict("records"))
     write("race_detail.json", race_detail(f))
     write("national.json", national())
