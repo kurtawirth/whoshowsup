@@ -121,8 +121,8 @@ export function pollChart(polls, {width, height = 260, halfLife = 14, dLabel = "
     .map((p) => ({...p, date: new Date(`${p.end}T12:00:00`), sponsored: !!p.partisan, adj: p.adj ?? p.margin}));
   if (!data.length) return null;
   const fmt = (v) => (Math.abs(v) < 0.05 ? "Even" : margin(v).replace(".0", "").replace("D+", `${dLabel}+`));
-  // Trend: at each day, the average of corrected polls to date, weight halving every 14 days
-  // and half weight for sponsored polls (as the model does).
+  // Trend: at each day, the average of corrected polls to date, each poll's weight halving every 14 days times
+  // its quality (sample size, likely voters, half for sponsored polls), exactly as the model averages them.
   const first = d3.min(data, (d) => d.date), last = d3.max(data, (d) => d.date);
   const raw = [];
   for (let d = new Date(first); d <= last; d.setDate(d.getDate() + 2)) {
@@ -130,7 +130,7 @@ export function pollChart(polls, {width, height = 260, halfLife = 14, dLabel = "
     for (const p of data) {
       const age = (d - p.date) / 864e5;
       if (age < 0) continue;
-      const wi = Math.pow(0.5, age / halfLife) * (p.sponsored ? 0.5 : 1);
+      const wi = Math.pow(0.5, age / halfLife) * (p.quality ?? (p.sponsored ? 0.5 : 1));
       w += wi; s += wi * p.adj;
     }
     if (w > 0.15) raw.push({date: new Date(d), margin: s / w});
@@ -151,7 +151,14 @@ export function pollChart(polls, {width, height = 260, halfLife = 14, dLabel = "
   });
   const segDem = d3.rollup(trend, (v) => d3.mean(v, (d) => d.margin) >= 0, (d) => d.seg);
   const ext = Math.max(8, ...data.map((d) => Math.max(Math.abs(d.margin), Math.abs(d.adj)))) + 2;
-  const sponsored = data.filter((d) => d.sponsored);
+  // polls whose published number differs from how we count them by half a point or more
+  const sponsored = data.filter((d) => Math.abs(d.adj - d.margin) >= 0.5);
+  const fixes = (d) => {
+    if (!d.fix) return d.sponsored ? "after sponsor correction" : "";
+    const parts = [["sponsor", d.fix[0]], ["firm's track record", d.fix[1]], ["undecided voters", d.fix[2]]]
+      .filter(([, v]) => Math.abs(v) >= 0.1).map(([k, v]) => `${k} ${v > 0 ? dLabel : "R"} +${Math.abs(v).toFixed(1)}`);
+    return parts.length ? `(${parts.join(", ")})` : "";
+  };
   const plot = Plot.plot({
     width, height, marginLeft: 44, marginRight: 12,
     x: {label: null, type: "utc"},
@@ -170,7 +177,7 @@ export function pollChart(polls, {width, height = 260, halfLife = 14, dLabel = "
         strokeWidth: 2.5, curve: "monotone-x", strokeLinejoin: "round"}),
       Plot.tip(data, Plot.pointer({x: "date", y: "adj",
         title: (d) => `${d.pollster}${d.sponsored ? ` (${d.partisan}-sponsored)` : ""}\n${date(d.end)}${d.n ? ` · ${Math.round(d.n)} ${String(d.pop || "").toUpperCase()}` : ""}\n` +
-          (d.sponsored ? `Published: ${fmt(d.margin)}\nCounted as: ${fmt(d.adj)} after sponsor correction` : fmt(d.margin)) +
+          (Math.abs(d.adj - d.margin) >= 0.05 ? `Published: ${fmt(d.margin)}\nCounted as: ${fmt(d.adj)} ${fixes(d)}` : fmt(d.margin)) +
           (d.url ? "\nClick to open the poll" : "")}))
     ]
   });

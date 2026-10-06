@@ -400,7 +400,10 @@ def ideology_gap(races: pd.DataFrame, year: int = 2026) -> pd.Series:
     return pd.Series(g.reindex(idx).to_numpy(), index=races.index).fillna(0.0)
 
 
-def poll_summary(races: pd.DataFrame, forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
+def adjusted_polls(forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
+    """Every race poll the model counts as of `forecast_date`, with how it counts it: `adj` (the corrected
+    two-party margin), `quality`, `w` (weight within the average) and `q` (worth of the average). Also used by
+    the website so its poll charts match. The adj_* columns split the correction into its parts (display only)."""
     polls = pd.read_csv(PROC / "polls_2026_races.csv", parse_dates=["end_date"])
     polls = polls[polls["end_date"] <= forecast_date]
     # Multi-candidate primary polls (e.g. California's all-party primary) can list both
@@ -430,6 +433,15 @@ def poll_summary(races: pd.DataFrame, forecast_date: pd.Timestamp = FORECAST_DAT
     #    old would treat them as worthless -- Vermont's governor race did exactly that.
     polls["w"] = 0.5 ** (age / POLL_HALF_LIFE_DAYS) * quality
     polls["q"] = np.where(age <= POLL_WINDOW_DAYS, 1.0, 0.5 ** ((age - POLL_WINDOW_DAYS) / 30)) * quality
+    polls["quality"] = quality
+    polls["adj_sponsor"] = -bias
+    polls["adj_house"] = pollster_house_adj(polls["pollster"], races=race_key)
+    polls["adj_undecided"] = polls["adj"] - polls["margin"] + bias - polls["adj_house"]
+    return polls
+
+
+def poll_summary(races: pd.DataFrame, forecast_date: pd.Timestamp = FORECAST_DATE) -> pd.DataFrame:
+    polls = adjusted_polls(forecast_date)
     g = polls.groupby(["office", "state_po", "district", "special"])
     summ = pd.DataFrame({
         "poll_avg": g.apply(lambda x: np.average(x["adj"], weights=x["w"]), include_groups=False),

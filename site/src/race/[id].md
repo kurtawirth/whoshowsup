@@ -57,7 +57,7 @@ if (fixed) {
     const rank = 1 + peers.filter((x) => x.tipping_point > r.tipping_point).length;
     const more = html`<a href="${link(r.office === "SEN" ? "senate#the-tipping-point" : "house#the-tipping-point")}">How this works</a>`;
     display(r.tipping_point >= 0.005
-      ? html`<p class="caption"><b>Tipping point:</b> in ${tpPct(r.tipping_point)} of simulations, this is the race that hands a party control of the ${chamber}, the ${ordinal(rank)} likeliest of ${peers.length}. A vote here is ${powerText(r.voter_power)} the average ${chamber} vote to decide control. ${more}.</p>`
+      ? html`<p class="caption"><b>Tipping point:</b> in ${tpPct(r.tipping_point)} of simulations, this is the race that hands a party control of the ${chamber}, the ${rank === 1 ? "" : `${ordinal(rank)} `}likeliest of ${peers.length}. A vote here is ${powerText(r.voter_power)} the average ${chamber} vote to decide control. ${more}.</p>`
       : html`<p class="caption"><b>Tipping point:</b> this race decides control of the ${chamber} in fewer than 1 in 200 simulations. ${more}.</p>`);
   }
   const mk = markets.races[id];
@@ -133,8 +133,8 @@ if (polls.length) {
   const bySide = {D: sp.filter((p) => p.partisan === "D").length, R: sp.filter((p) => p.partisan === "R").length};
   const shift = sp.length ? Math.abs(sp[0].margin - sp[0].adj) : 0;
   const sideText = [bySide.D ? `${bySide.D} ${bySide.D === 1 ? "was" : "were"} paid for by Democrats` : "", bySide.R ? `${bySide.R} by Republicans` : ""].filter(Boolean).join(" and ");
-  display(html`<h2>Polls</h2><p class="caption">Two-party margin of each general-election poll. The line is our polling average: each poll's weight halves every 14 days, and it turns blue or red with whoever leads.</p>`);
-  if (sp.length) display(html`<div class="callout"><b>Why our average can differ from the polls you see.</b> ${sp.length === polls.length ? `${polls.length === 1 ? "The only poll here was" : `All ${polls.length} polls here were`} paid for by ${bySide.D && bySide.R ? "the campaigns or parties" : bySide.D ? "Democrats" : "Republicans"}.` : `Of these ${polls.length} polls, ${sideText}.`} Polls released by a campaign or party have historically made their side look about ${shift.toFixed(0)} points better than the result, so we shift each one by that much before counting it, and count it at half weight. On the chart, the hollow diamond is the poll as published and the solid dot is how we count it.</div>`);
+  display(html`<h2>Polls</h2><p class="caption">Two-party margin of each general-election poll, as we count it after our corrections for who paid for it, the firm's track record and undecided voters (hover a poll for details; a hollow diamond marks a published number that differs by half a point or more). The line is our polling average, the same one the forecast uses: each poll's weight halves every 14 days, larger and likely-voter samples count more, and the line turns blue or red with whoever leads.</p>`);
+  if (sp.length) display(html`<div class="callout"><b>Why our average can differ from the polls you see.</b> ${sp.length === polls.length ? `${polls.length === 1 ? "The only poll here was" : `All ${polls.length} polls here were`} paid for by ${bySide.D && bySide.R ? "the campaigns or parties" : bySide.D ? "Democrats" : "Republicans"}.` : `Of these ${polls.length} polls, ${sideText}.`} Polls released by a campaign or party have historically made their side look about ${shift.toFixed(0)} points better than the result, so we shift each one by that much before counting it, and count it at half weight. On the chart, a hollow diamond is a poll as published and the solid dot is how we count it.</div>`);
   display(pollChart(polls, {width: Math.min(width, 1000), dLabel: dTag}));
   const tbl = html`<div class="table-wrap"><table class="wsu-table"><thead><tr>
     <th>Pollster</th><th>Dates</th><th class="num hide-sm">Sample</th><th class="num">${dName}</th><th class="num">${rName}</th><th class="num">Margin</th><th class="hide-sm">Source</th></tr></thead>
@@ -143,7 +143,7 @@ if (polls.length) {
       <td>${p.start && p.start !== p.end ? `${date(p.start).replace(/, \d{4}/, "")}–` : ""}${date(p.end)}</td>
       <td class="num hide-sm">${p.n ? `${Math.round(p.n).toLocaleString()} ${String(p.pop ?? "").toUpperCase()}` : "–"}</td>
       <td class="num">${p.d}%</td><td class="num">${p.r}%</td>
-      <td class="num">${margin(p.margin).replace("D+", `${dTag}+`).replace("R+", `${rTag}+`)}${p.partisan ? html`<div class="adj">counted as ${margin(p.adj).replace("D+", `${dTag}+`).replace("R+", `${rTag}+`)}</div>` : ""}</td>
+      <td class="num">${margin(p.margin).replace("D+", `${dTag}+`).replace("R+", `${rTag}+`)}${Math.abs(p.adj - p.margin) >= 0.5 ? html`<div class="adj">counted as ${margin(p.adj).replace("D+", `${dTag}+`).replace("R+", `${rTag}+`)}</div>` : ""}</td>
       <td class="hide-sm">${p.url ? html`<a href="${p.url}" target="_blank" rel="noopener">${p.url.includes("wikipedia.org") ? "List" : "Source"}</a>` : ""}</td>
     </tr>`)}</tbody></table></div>`;
   display(tbl);

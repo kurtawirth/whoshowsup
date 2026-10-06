@@ -142,15 +142,12 @@ def poll_label(pollster: str, sponsors) -> str:
 
 
 def race_detail(f: pd.DataFrame) -> dict:
-    polls = pd.read_csv(PROC / "polls_2026_races.csv", parse_dates=["end_date", "start_date"])
+    # Every poll exactly as the model counts it (race_model.adjusted_polls): which side sponsored it, its
+    # corrected margin and the parts of that correction, and its quality weight, so the race pages' poll
+    # charts and averages match the forecast's
+    polls = rm.adjusted_polls(pd.Timestamp.today().normalize())
+    polls["start_date"] = pd.to_datetime(polls["start_date"], errors="coerce")
     polls["race_id"] = polls.apply(race_id, axis=1)
-    polls["margin"] = two_party(polls["dem_pct"], polls["rep_pct"])
-    # Which polls the model treats as a party's side, decided exactly as the model decides it
-    # (race_model.partisan_side: the source's label, checked against each firm's track record),
-    # and the same correction it applies (measured historical lean toward the sponsor)
-    polls["partisan"] = partisan_side(polls)
-    polls["bias"] = polls.apply(lambda x: PARTISAN_BIAS[x["office"]].get(x["partisan"], 0.0), axis=1)
-    polls["adj"] = polls["margin"] - polls["bias"]
     q = pd.read_csv(OUT / "race_quantiles.csv").set_index("race_id")
     # forecast history per race from the dated snapshots
     snaps = []
@@ -169,7 +166,8 @@ def race_detail(f: pd.DataFrame) -> dict:
                        "pop": x.population, "partisan": x.partisan if isinstance(x.partisan, str) else "",
                        # Wikipedia's lettered footnote only says someone sponsored the poll (often a news outlet)
                        "sponsors": x.sponsors if isinstance(x.sponsors, str) and not x.sponsors.startswith("(") else "", "d": x.dem_pct,
-                       "r": x.rep_pct, "margin": x.margin, "adj": x.adj, "url": x.url, "source": x.source}
+                       "r": x.rep_pct, "margin": round(x.margin, 2), "adj": round(x.adj, 2), "url": x.url, "source": x.source,
+                       "quality": round(x.quality, 3), "fix": [round(x.adj_sponsor, 1), round(x.adj_house, 1), round(x.adj_undecided, 1)]}
                       for x in p.itertuples()],
             "quantiles": q.loc[rid].drop(["control_leverage", "tipping_point", "voter_power"], errors="ignore").tolist() if rid in q.index else None,
             "history": hist[hist["race_id"] == rid][["date", "p_dem", "margin_median"]].to_dict("records"),
