@@ -70,9 +70,10 @@ export function summarize(sims, w) {
   };
 }
 
-/** National House margin if Democratic turnout runs x (e.g. -0.05) relative to Republican turnout, from a baseline margin. */
+/** National House margin if one party's voters turn out x better than expected relative to the other's:
+ *  x > 0 scales Democratic votes by (1 + x), x < 0 scales Republican votes by (1 - x), so each step means the same for either side. */
 export function turnoutToMargin(x, base) {
   const s0 = (base / 100 + 1) / 2;
-  const s = (s0 * (1 + x)) / (s0 * (1 + x) + (1 - s0));
-  return (2 * s - 1) * 100;
+  const d = s0 * (x > 0 ? 1 + x : 1), r = (1 - s0) * (x < 0 ? 1 - x : 1);
+  return (2 * (d / (d + r)) - 1) * 100;
 }

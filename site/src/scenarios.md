@@ -23,7 +23,7 @@ display(ui.bar);
 
 ## Turn the turnout dial
 
-<p class="caption">Suppose Democrats turn out better or worse than our forecast expects, relative to Republicans. The dial converts that into a national House vote and leans on the simulations that land near it. In our model, part of every national swing comes from turnout and part from persuasion: a turnout-driven swing moves close races more than lopsided ones, while persuasion moves every race by about the same amount.</p>
+<p class="caption">Suppose one party's voters turn out better than our forecast expects, relative to the other party's. Slide toward the party whose voters show up. The dial converts that into a national House vote and leans on the simulations that land near it. In our model, part of every national swing comes from turnout and part from persuasion: a turnout-driven swing moves close races more than lopsided ones, while persuasion moves every race by about the same amount.</p>
 
 ```js
 display(ui.dial);
@@ -145,11 +145,18 @@ function makeUI(sims) {
     if (m <= hi) xmax = Math.floor(x * 100 + 1e-9);
   }
   const dial = el("div", "scn-dial");
-  const slider = Object.assign(document.createElement("input"), {type: "range", min: xmin, max: xmax, step: 1, value: 0});
-  slider.setAttribute("aria-label", "Democratic turnout relative to Republican turnout, compared with our forecast");
+  // the same reach both ways, so "as we expect" sits in the middle (as far as the simulations support on both sides)
+  const reach = Math.min(-xmin, xmax);
+  const slider = Object.assign(document.createElement("input"), {type: "range", min: -reach, max: reach, step: 1, value: 0});
+  slider.setAttribute("aria-label", "Which party's voters turn out better than our forecast expects, and by how much");
   const dialText = el("p", "scn-dial-text");
   const ends = el("div", "scn-ends");
-  ends.append(el("span", null, `← Democratic turnout ${-xmin}% weaker`), el("span", null, `${xmax}% stronger →`));
+  ends.append(el("span", null, "← Republican voters turn out better"), el("span", null, "Democratic voters turn out better →"));
+  // a tick mark at "as we expect"
+  const ticks = el("datalist");
+  ticks.id = "scn-dial-ticks";
+  ticks.append(Object.assign(document.createElement("option"), {value: 0, label: "As expected"}));
+  slider.setAttribute("list", ticks.id);
   slider.addEventListener("input", () => { state.x = +slider.value / 100; schedule(); });
   slider.addEventListener("change", () => countEvent("whatif-dial", "What if: turnout dial"));
   const howRow = el("div", "scn-how");
@@ -166,7 +173,7 @@ function makeUI(sims) {
     howRow.append(b);
     return b;
   });
-  dial.append(slider, ends, dialText, howRow);
+  dial.append(slider, ticks, ends, dialText, howRow);
 
   // ---- pick the winners ----
   const stored = sims.races.map((id) => byId.get(id)).filter(Boolean);
@@ -291,7 +298,9 @@ function makeUI(sims) {
       ? `Dial not set: every national outcome counts, centered on our forecast of ${margin(top.nat_median)}.`
       : state.x === 0
         ? `Turnout lands right where we expect: a national House vote near ${margin(target)}, with the uncertainty about the national mood taken away.`
-        : `Democrats turn out ${Math.abs(Math.round(state.x * 100))}% ${state.x > 0 ? "better" : "worse"} than we expect, relative to Republicans: a national House vote near ${margin(target)}.`;
+        : state.x > 0
+          ? `Democratic voters turn out ${Math.round(state.x * 100)}% better than we expect, relative to Republican voters: a national House vote near ${margin(target)}.`
+          : `Republican voters turn out ${Math.round(-state.x * 100)}% better than we expect, relative to Democratic voters: a national House vote near ${margin(target)}.`;
     for (const x of rows) {
       const p = S.p[x.r.race_id];
       x.now.textContent = state.picks.has(x.r.race_id) ? "picked" : chance(x.r, p);
