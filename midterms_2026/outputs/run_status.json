@@ -1,12 +1,7 @@
 {
  "forecast_date": "2026-10-07",
- "finished_at": "2026-10-07 07:28",
- "refresh": true,
- "failed_steps": [
-  "VoteHub + Wikipedia + DDHQ polls"
- ],
- "warnings": [
-  "VoteHub + Wikipedia + DDHQ polls FAILED: ValueError('NaTType does not support strftime')",
-  "Poll check: GOV MA: recent VoteHub poll (MassINC Polling Group, Sep 22) without Maura Healey vs Mike Minogue: Maura Healy, Michael Minogue, Andrea James"
- ]
+ "finished_at": "2026-10-07 12:43",
+ "refresh": false,
+ "failed_steps": [],
+ "warnings": []
 }

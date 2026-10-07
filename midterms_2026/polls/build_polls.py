@@ -454,7 +454,7 @@ def new_polls_report(before: pd.DataFrame | None, after: pd.DataFrame) -> None:
     print(f"New race polls this run: {len(new)}")
     for _, r in new.sort_values("end_date").iterrows():
         m = r["dem_pct"] - r["rep_pct"]
-        print(f"  {_label(r):<16} {str(r['pollster'])[:40]:<40} ends {r['end_date']:%b %d}  "
+        print(f"  {_label(r):<16} {str(r['pollster'])[:40]:<40} ends {(f"{r['end_date']:%b %d}" if pd.notna(r['end_date']) else "(no date)")}  "
               f"{'D' if m >= 0 else 'R'}+{abs(m):.0f}  ({r['source']})")
 
 

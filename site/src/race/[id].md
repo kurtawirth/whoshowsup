@@ -55,6 +55,7 @@ if (fixed) {
   </div>`);
   display(probBar(pD, {dLabel: dName, rLabel: rName, dColor: dTag === "I" ? t.ind : t.dem, rColor: rTag === "I" ? t.ind : t.rep}));
   display(html`<p class="dek" style="margin-top:18px">${lead ? dName : rName} wins in ${pct(Math.max(pD, 1 - pD))} of our simulations, ${oddsText(Math.max(pD, 1 - pD))}. The most likely result is ${margin(r.margin_median).replace("D+", `${dTag}+`)}. ${ratingSentence(r)}</p>`);
+  if (r.race_type === "jungle" && r.state_po === "LA") display(html`<div class="callout"><b>How this race works.</b> Louisiana's House races have no party primaries this year: every candidate, from every party, is on the November 3 ballot. If no one wins a majority, the top two finishers, who can be from the same party, meet in a runoff on December 12. Our forecast is for which party ends up with the seat; each party's chance counts all of its candidates together.</div>`);
   if (r.tipping_point != null && (r.office === "SEN" || r.office === "HOUSE")) {
     const chamber = r.office === "SEN" ? "Senate" : "House";
     const peers = races.filter((x) => x.office === r.office && x.tipping_point != null);

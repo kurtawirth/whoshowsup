@@ -223,4 +223,4 @@ function watchTable() {
 if (!started) display(watchTable());
 ```
 
-<p class="caption">Election-night results from <a href="https://civicapi.org">civicAPI</a>, which compiles them from state and local election offices. They are shown for comparison only and are not official; official results come from each state after its canvass.</p>
+<p class="caption">Election-night results from <a href="https://civicapi.org">civicAPI</a>, which compiles them from state and local election offices. They are shown for comparison only and are not official; official results come from each state after its canvass. Louisiana's six House races put every candidate on the November 3 ballot; where no one wins a majority, the top two meet in a December 12 runoff, so some may stay uncalled until then.</p>

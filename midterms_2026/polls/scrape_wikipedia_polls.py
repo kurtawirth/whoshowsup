@@ -135,12 +135,18 @@ def last_name(full: str) -> str:
     return parts[-1].lower() if parts else ""
 
 
+# Misspellings of a nominee's last name seen in poll sources (VoteHub listed "Maura Healy", Oct 2026)
+SPELLINGS = {"healey": ["healy"]}
+
+
 def name_hits(options, name: str) -> list:
-    """Options (column headers, answer labels) naming this candidate. Matched on last name; when
-    two share it (Alaska 2026 has Dan S. Sullivan and Dan J. Sullivan), on the full name."""
+    """Options (column headers, answer labels) naming this candidate. Matched on last name (or a known
+    misspelling of it, SPELLINGS); when two share it (Alaska 2026 has Dan S. Sullivan and Dan J. Sullivan),
+    on the full name."""
     ln = last_name(name)
+    lns = [ln, *SPELLINGS.get(ln, [])] if ln else []
     # a hyphenated name wrapped across lines reads "Mucarsel- Powell"
-    hits = [o for o in options if ln and ln in re.sub(r"-\s+", "-", str(o).lower())]
+    hits = [o for o in options if any(x in re.sub(r"-\s+", "-", str(o).lower()) for x in lns)]
     if len(hits) > 1:
         full = re.sub(r"\s+", " ", name.lower()).strip()
         hits = [o for o in hits if full in re.sub(r"\s+", " ", str(o).lower())]
@@ -156,7 +162,7 @@ MONTHS = "January|February|March|April|May|June|July|August|September|October|No
 
 
 def parse_dates(s: str):
-    s = clean(s).replace("—", "–")
+    s = clean(s).replace("—", "–").replace("−", "–")  # some tables separate dates with a minus sign (−)
     parts = [p.strip() for p in re.split(r"\s*[–-]\s*", s)]
     end = parts[-1]
     start = parts[0]
