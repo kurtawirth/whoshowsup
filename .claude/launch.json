@@ -1,6 +1,30 @@
 {
   "version": "0.0.1",
   "configurations": [
-    {"name": "site", "runtimeExecutable": "npm", "runtimeArgs": ["--prefix", "site", "run", "dev"], "port": 3000}
+    {
+      "name": "site",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "site",
+        "run",
+        "dev"
+      ],
+      "port": 3000
+    },
+    {
+      "name": "dist",
+      "runtimeExecutable": ".venv/Scripts/python.exe",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8099",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "site/dist"
+      ],
+      "port": 8099
+    }
   ]
 }
