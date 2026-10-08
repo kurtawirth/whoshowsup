@@ -1,160 +1,161 @@
 name,polls,races,record,correction,partisan,latest
-YouGov,57,23,441,-0.11,1,2026-10-05
-University of New Hampshire,46,15,177,-0.87,0,2026-09-21
-Public Policy Polling,46,42,403,0.53,43,2026-10-02
-The New York Times/Siena University,43,20,284,1.01,0,2026-10-01
-Emerson College,32,22,289,0.85,1,2026-09-29
+YouGov,57,23,441,-0.1,1,2026-10-05
+Public Policy Polling,47,43,403,0.54,43,2026-10-02
+University of New Hampshire,46,15,177,-0.86,0,2026-09-21
+The New York Times/Siena University,43,20,284,1.02,0,2026-10-01
+Emerson College,33,23,289,0.85,1,2026-10-05
 co/efficient,30,27,22,2.32,9,2026-10-01
-Impact Research,28,17,87,-0.13,28,2026-10-01
-Beacon Research/Shaw & Co. Research,23,14,71,-1.63,0,2026-09-28
-Quantus Insights,22,18,0,-0.44,7,2026-09-30
-Global Strategy Group,19,14,103,1.8,19,2026-09-16
+Impact Research,28,17,87,-0.12,28,2026-10-01
+Beacon Research/Shaw & Co. Research,23,14,71,-1.62,0,2026-09-28
+Quantus Insights,23,18,0,-0.43,8,2026-10-06
+GBAO,19,12,50,2.23,19,2026-10-04
+Global Strategy Group,19,14,103,1.81,19,2026-09-16
 "Fabrizio, Lee & Associates/Impact Research",18,17,40,0.72,2,2026-09-22
-Change Research,17,8,99,-1.2,6,2026-09-27
-Wedgewood Polls,17,16,0,-0.44,2,2026-10-03
-GBAO,16,12,50,2.23,16,2026-09-22
-InsiderAdvantage,16,12,108,0.91,0,2026-09-29
-SurveyUSA,16,13,949,-0.06,0,2026-09-30
-Alaska Survey Research,14,2,28,-2.33,0,2026-09-12
-Hart Research Associates,14,11,0,-0.44,12,2026-09-24
+Change Research,17,8,99,-1.19,6,2026-09-27
+Wedgewood Polls,17,16,0,-0.43,2,2026-10-03
+Alaska Survey Research,16,3,28,-2.33,0,2026-10-03
+InsiderAdvantage,16,12,108,0.92,0,2026-09-29
+SurveyUSA,16,13,949,-0.05,0,2026-09-30
+Hart Research Associates,14,11,0,-0.43,12,2026-09-24
 Saint Anselm,14,3,30,0.44,0,2026-09-29
 Trafalgar Group,13,11,114,0.5,13,2026-10-01
-Tulchin Research,13,10,15,2.12,13,2026-09-30
-Cygnal,12,10,63,-1.3,10,2026-09-27
+Tulchin Research,13,10,15,2.13,13,2026-09-30
+Cygnal,12,10,63,-1.29,10,2026-09-27
 Marist University,12,11,163,0.5,0,2026-10-04
 Glengariff Group,11,2,26,-0.04,0,2026-09-03
 Mitchell Research & Communications,11,2,53,1.53,0,2026-10-01
-TIPP Insights,11,8,2,-0.33,9,2026-09-02
-Lake Research Partners,10,6,32,-1.99,10,2026-09-14
-Tavern Research,10,9,0,-0.44,4,2026-08-12
-Big Data Poll,9,9,0,-0.44,1,2026-09-30
-Noble Predictive Insights,9,2,30,-0.21,0,2026-09-26
-Ragnar Research Partners,9,9,4,-0.46,9,2026-06-16
-Slingshot Strategies,9,2,4,-1.79,1,2026-09-22
-Suffolk University,9,8,112,-0.22,0,2026-09-27
-Texas Southern University Barbara Jordan Public Policy Research and Survey Center,9,5,0,-0.44,0,2026-09-19
+Suffolk University,11,8,112,-0.21,0,2026-10-04
+TIPP Insights,11,8,2,-0.32,9,2026-09-02
+Lake Research Partners,10,6,32,-1.98,10,2026-09-14
+Tavern Research,10,9,0,-0.43,4,2026-08-12
+Big Data Poll,9,9,0,-0.43,1,2026-09-30
+Noble Predictive Insights,9,2,30,-0.2,0,2026-09-26
+Ragnar Research Partners,9,9,4,-0.45,9,2026-06-16
+Slingshot Strategies,9,2,4,-1.78,1,2026-09-22
+Texas Southern University Barbara Jordan Public Policy Research and Survey Center,9,5,0,-0.43,0,2026-09-19
 Echelon Insights,8,8,8,0.65,0,2026-04-09
-GQR,8,6,90,0.6,8,2026-09-30
-Harper Polling,8,2,15,-2.18,1,2026-09-15
-Data for Progress,7,5,92,0.83,4,2026-08-15
-McLaughlin & Associates,7,6,55,0.33,7,2026-09-30
-GBAO Strategies,6,6,0,-0.44,6,2026-09-21
-Targoz Market Research,6,3,20,-0.38,0,2026-08-26
-Abacus Data,5,5,0,-0.44,0,2026-08-28
-EPIC-MRA,5,2,70,0.54,0,2026-08-28
-FM3 Research,5,5,26,-2.23,5,2026-07-12
-Franklin & Marshall College,5,3,43,0.6,0,2026-09-20
-Mason-Dixon,5,5,462,0.11,0,2026-10-01
+GQR,8,6,90,0.61,8,2026-09-30
+Harper Polling,8,2,15,-2.17,1,2026-09-15
+Data for Progress,7,5,92,0.84,4,2026-08-15
+McLaughlin & Associates,7,6,55,0.34,7,2026-09-30
+GBAO Strategies,6,6,0,-0.43,6,2026-09-21
+Quinnipiac University,6,3,249,1.04,0,2026-10-05
+Targoz Market Research,6,3,20,-0.37,0,2026-08-26
+Abacus Data,5,5,0,-0.43,0,2026-08-28
+EPIC-MRA,5,2,70,0.55,0,2026-08-28
+FM3 Research,5,5,26,-2.22,5,2026-07-12
+Franklin & Marshall College,5,3,43,0.61,0,2026-09-20
+Guidant Polling & Strategy,5,5,1,-0.62,1,2026-09-28
+Mason-Dixon,5,5,462,0.12,0,2026-10-01
 "Normington, Petts & Associates",5,4,51,0.12,5,2026-09-28
-University of North Florida,5,2,17,-2.29,1,2026-07-17
-Quinnipiac University,5,3,249,1.03,0,2026-09-20
-SoCal Strategies,5,3,4,-1.35,4,2026-09-13
-Bravo Group,4,1,0,-0.44,0,2026-09-22
+University of North Florida,5,2,17,-2.28,1,2026-07-17
+SoCal Strategies,5,3,4,-1.34,4,2026-09-13
+Bravo Group,4,1,0,-0.43,0,2026-09-22
 The Bullfinch Group,4,3,5,-1.94,0,2026-09-06
-DCCC Targeting Team,4,4,41,1.36,4,2026-09-23
-Grayhouse,4,4,0,-0.44,4,2026-08-11
-Lighthouse Research,4,4,10,-0.92,0,2026-09-24
-Public Opinion Strategies,4,4,179,-1.25,4,2026-09-14
-The Public Sentiment Institute,4,2,0,-0.44,1,2026-06-16
+CNN/SSRS,4,4,8,-0.75,0,2026-10-05
+DCCC Targeting Team,4,4,41,1.37,4,2026-09-23
+Grayhouse,4,4,0,-0.43,4,2026-08-11
+Lighthouse Research,4,4,10,-0.91,0,2026-09-24
+Public Opinion Strategies,4,4,179,-1.24,4,2026-09-14
+The Public Sentiment Institute,4,2,0,-0.43,1,2026-06-16
 SSRS,4,4,38,-2.95,0,2026-09-06
 Stetson University,4,2,3,-2.28,0,2026-09-21
-The Washington Post/George Mason University School of Policy and Government,4,4,17,0.14,0,2026-09-28
-Z to A Research,4,4,0,-0.44,4,2026-07-27
-DHM Research,3,2,15,1.26,0,2026-09-27
-Opinion Diagnostics,3,2,1,-0.58,1,2026-09-25
+Susquehanna Polling & Research,4,2,62,-1.6,1,2026-09-30
+The Washington Post/George Mason University School of Policy and Government,4,4,17,0.15,0,2026-09-28
+Z to A Research,4,4,0,-0.43,4,2026-07-27
+DHM Research,3,2,15,1.27,0,2026-09-27
+Opinion Diagnostics,3,2,1,-0.57,1,2026-09-25
 Hendrix College,3,3,25,-2.79,0,2026-08-13
-J.L. Partners,3,3,1,0.08,1,2026-08-18
-Kreate Strategies,3,2,0,-0.44,2,2026-08-16
-Peak Insights,3,3,0,-0.44,2,2026-08-25
-Public Policy Research/Texas Southern University,3,3,0,-0.44,0,2026-08-22
+J.L. Partners,3,3,1,0.09,1,2026-08-18
+Kreate Strategies,3,2,0,-0.43,2,2026-08-16
+Peak Insights,3,3,0,-0.43,2,2026-08-25
+Public Policy Research/Texas Southern University,3,3,0,-0.43,0,2026-08-22
 RMG Research,3,3,38,-1.15,2,2026-09-25
-St. Pete Polls,3,3,43,0.06,0,2026-09-17
-Susquehanna Polling & Research,3,2,62,-1.61,1,2026-08-17
-UC Berkeley Institute of Governmental Studies,3,1,0,-0.44,0,2026-09-20
-Victory Insights,3,3,19,1.04,0,2025-11-24
-yes. every kid.,3,3,0,-0.44,0,2026-07-11
-Zenith Research,3,3,0,-0.44,2,2026-08-03
-2040 Strategy Group,2,2,0,-0.44,2,2026-07-25
-American Pulse Research & Polling,2,2,10,-1.65,0,2026-09-24
-Bendixen & Amandi International,2,2,5,0.34,2,2026-08-30
-Blueprint Polling,2,2,3,-0.3,2,2026-07-28
+St. Pete Polls,3,3,43,0.07,0,2026-09-17
+UC Berkeley Institute of Governmental Studies,3,1,0,-0.43,0,2026-09-20
+Victory Insights,3,3,19,1.05,0,2025-11-24
+yes. every kid.,3,3,0,-0.43,0,2026-07-11
+Zenith Research,3,3,0,-0.43,2,2026-08-03
+2040 Strategy Group,2,2,0,-0.43,2,2026-07-25
+American Pulse Research & Polling,2,2,10,-1.64,0,2026-09-24
+Bendixen & Amandi International,2,2,5,0.35,2,2026-08-30
+Blueprint Polling,2,2,3,-0.29,2,2026-07-28
 Braun Research/Vermont Public,2,2,11,-2.18,0,2026-09-21
-BSP Research,2,2,5,-0.25,0,2026-09-04
-Concord Public Opinion Partners,2,2,1,-0.0,2,2026-08-21
-Crosby for Congress,2,1,0,-0.44,2,2026-09-23
-David Jay Wolfson / Steve Hilton,2,1,0,-0.44,2,2026-10-02
-DCCC,2,2,0,-0.44,2,2026-07-30
-EMC Research,2,2,26,-1.28,2,2026-02-22
+BSP Research,2,2,5,-0.24,0,2026-09-04
+Concord Public Opinion Partners,2,2,1,0.01,2,2026-08-21
+Crosby for Congress,2,1,0,-0.43,2,2026-09-23
+David Jay Wolfson / Steve Hilton,2,1,0,-0.43,2,2026-10-02
+DCCC,2,2,0,-0.43,2,2026-07-30
+EMC Research,2,2,26,-1.27,2,2026-02-22
 Expedition Strategies,2,1,5,0.89,2,2026-09-24
-GreatBlue Research,2,1,4,0.49,0,2026-09-08
+GreatBlue Research,2,1,4,0.5,0,2026-09-08
 High Point University Survey Research Center,2,1,8,0.23,0,2026-09-16
-MAD Global Strategy,2,2,0,-0.44,1,2026-06-11
-Marquette University Law School,2,1,28,-0.83,0,2026-09-23
+MAD Global Strategy,2,2,0,-0.43,1,2026-06-11
+Maine People's Resource Center,2,2,9,-2.06,0,2026-09-29
+Marquette University Law School,2,1,28,-0.82,0,2026-09-23
 MassINC Polling Group,2,2,35,1.23,0,2026-09-22
-MDW Communications,2,2,0,-0.44,1,2026-07-29
-Overton Insights,2,2,0,-0.44,2,2026-08-26
-PPIC,2,1,0,-0.44,0,2026-09-10
-Pulse Decision Science,2,2,0,-0.44,2,2026-09-27
+MDW Communications,2,2,0,-0.43,1,2026-07-29
+Overton Insights,2,2,0,-0.43,2,2026-08-26
+PPIC,2,1,0,-0.43,0,2026-09-10
+Pulse Decision Science,2,2,0,-0.43,2,2026-09-27
 Research & Polling Inc.,2,2,70,0.69,0,2026-08-28
-Rosetta Stone Communications,2,2,0,-0.44,1,2025-10-25
-Rutgers University Eagleton Institute of Politics,2,2,15,1.45,0,2026-09-07
-SEA Polling,2,2,0,-0.44,1,2026-08-30
-Stratus Intelligence,2,2,0,-0.44,2,2026-09-24
-Target Insyght,2,1,10,-0.22,0,2025-03-06
-The Tarrance Group,2,2,76,-2.56,2,2026-07-30
-University of Texas/Texas Politics Project,2,2,0,-0.44,0,2026-04-20
-University of Texas at Tyler,2,2,6,-0.24,0,2026-02-22
-Torchlight Strategies,2,2,0,-0.44,2,2026-09-19
-Wick,2,2,21,2.2,0,2026-06-30
-1892 Polling,1,1,5,-0.79,0,2025-09-04
-20/20 Insight,1,1,3,-0.61,1,2026-08-26
-A2 Insights,1,1,0,-0.44,0,2026-06-28
-Advanced Targeting Research,1,1,0,-0.44,0,2026-09-16
-Applecart,1,1,0,-0.44,1,2026-05-25
-Bedrock Polling,1,1,0,-0.44,1,2026-08-10
-Bowling Green State University,1,1,0,-0.44,0,2025-10-14
-Center for Excellence in Polling,1,1,0,-0.44,0,2026-01-24
+Rosetta Stone Communications,2,2,0,-0.43,1,2025-10-25
+Rutgers University Eagleton Institute of Politics,2,2,15,1.46,0,2026-09-07
+SEA Polling,2,2,0,-0.43,1,2026-08-30
+State Navigate,2,2,0,-0.43,0,2026-10-04
+Stratus Intelligence,2,2,0,-0.43,2,2026-09-24
+Target Insyght,2,1,10,-0.21,0,2025-03-06
+The Tarrance Group,2,2,76,-2.55,2,2026-07-30
+University of Texas/Texas Politics Project,2,2,0,-0.43,0,2026-04-20
+University of Texas at Tyler,2,2,6,-0.23,0,2026-02-22
+Torchlight Strategies,2,2,0,-0.43,2,2026-09-19
+Wick,2,2,21,2.21,0,2026-06-30
+1892 Polling,1,1,5,-0.78,0,2025-09-04
+20/20 Insight,1,1,3,-0.6,1,2026-08-26
+A2 Insights,1,1,0,-0.43,0,2026-06-28
+Advanced Targeting Research,1,1,0,-0.43,0,2026-09-16
+Applecart,1,1,0,-0.43,1,2026-05-25
+Bedrock Polling,1,1,0,-0.43,1,2026-08-10
+Bowling Green State University,1,1,0,-0.43,0,2025-10-14
+Center for Excellence in Polling,1,1,0,-0.43,0,2026-01-24
 Cherry Communications,1,1,11,-0.65,1,2026-05-09
-CHS & Associates,1,1,0,-0.44,0,2026-08-06
-Data Targeting,1,1,7,-0.05,0,2025-12-08
-Deep Root Analytics,1,1,0,-0.44,1,2026-08-18
-East Carolina University,1,1,16,-0.17,0,2026-09-03
-FirstStrategic,1,1,0,-0.44,0,2026-10-01
-Grassroots Targeting,1,1,0,-0.44,1,2026-07-06
-Guidant Polling and Strategy,1,1,1,-0.63,1,2025-12-11
-HighGround,1,1,10,0.29,0,2026-08-18
-Hoffman Research Group,1,1,3,0.31,1,2026-05-12
-University of Houston/Texas Southern University,1,1,0,-0.44,0,2025-10-01
-Independent Voter Project,1,1,0,-0.44,0,2026-10-02
-Inquire LLC,1,1,0,-0.44,1,2026-07-29
-John Zogby Strategies,1,1,0,-0.44,0,2026-01-08
-Keating Research,1,1,11,1.52,1,2026-07-23
-Maine People's Resource Center,1,1,9,-2.07,0,2026-09-29
-University of Maryland Baltimore County Institute of Politics,1,1,1,0.14,0,2026-09-27
-The Mellman Group,1,1,43,-2.37,1,2025-06-10
-Miller Consulting Services,1,1,0,-0.44,0,2026-09-11
-Moxie Strategies,1,1,0,-0.44,0,2026-07-28
-National Public Affairs,1,1,0,-0.44,1,2026-07-30
-NextGen Polling,1,1,0,-0.44,0,2026-08-19
-NextGen P,1,1,0,-0.44,0,2025-12-17
-Nexus Strategies/Strategic Partners Solutions,1,1,0,-0.44,0,2026-03-09
+CHS & Associates,1,1,0,-0.43,0,2026-08-06
+Data Targeting,1,1,7,-0.04,0,2025-12-08
+Deep Root Analytics,1,1,0,-0.43,1,2026-08-18
+East Carolina University,1,1,16,-0.16,0,2026-09-03
+FirstStrategic,1,1,0,-0.43,0,2026-10-01
+Grassroots Targeting,1,1,0,-0.43,1,2026-07-06
+HighGround,1,1,10,0.3,0,2026-08-18
+Hoffman Research Group,1,1,3,0.32,1,2026-05-12
+University of Houston/Texas Southern University,1,1,0,-0.43,0,2025-10-01
+Independent Voter Project,1,1,0,-0.43,0,2026-10-02
+Inquire LLC,1,1,0,-0.43,1,2026-07-29
+John Zogby Strategies,1,1,0,-0.43,0,2026-01-08
+Keating Research,1,1,11,1.53,1,2026-07-23
+University of Maryland Baltimore County Institute of Politics,1,1,1,0.15,0,2026-09-27
+The Mellman Group,1,1,43,-2.36,1,2025-06-10
+Miller Consulting Services,1,1,0,-0.43,0,2026-09-11
+Moxie Strategies,1,1,0,-0.43,0,2026-07-28
+National Public Affairs,1,1,0,-0.43,1,2026-07-30
+NextGen Polling,1,1,0,-0.43,0,2026-08-19
+NextGen P,1,1,0,-0.43,0,2025-12-17
+Nexus Strategies/Strategic Partners Solutions,1,1,0,-0.43,0,2026-03-09
 OnMessage,1,1,37,-0.48,1,2026-03-08
-PennLive,1,1,0,-0.44,0,2026-06-25
-Platform Communications,1,1,0,-0.44,0,2026-08-13
-Polity Research Consulting,1,1,0,-0.44,0,2026-05-07
-Pollfinity,1,1,0,-0.44,0,2026-06-14
+PennLive,1,1,0,-0.43,0,2026-06-25
+Platform Communications,1,1,0,-0.43,0,2026-08-13
+Polity Research Consulting,1,1,0,-0.43,0,2026-05-07
+Pollfinity,1,1,0,-0.43,0,2026-06-14
 Praecones Analytica,1,1,3,0.34,0,2025-12-28
-Pulse Science Decision,1,1,0,-0.44,1,2026-06-23
-Red Oak Strategic,1,1,0,-0.44,1,2026-07-12
-Remington Research Group,1,1,49,-1.07,0,2026-09-15
-Resonance Media,1,1,0,-0.44,0,2026-10-03
-State Navigate,1,1,0,-0.44,0,2026-07-13
-Stealth Analytics,1,1,0,-0.44,0,2026-08-13
-StimSight Research,1,1,0,-0.44,0,2026-09-12
+Pulse Science Decision,1,1,0,-0.43,1,2026-06-23
+Red Oak Strategic,1,1,0,-0.43,1,2026-07-12
+Remington Research Group,1,1,49,-1.06,0,2026-09-15
+Resonance Media,1,1,0,-0.43,0,2026-10-03
+Stealth Analytics,1,1,0,-0.43,0,2026-08-13
+StimSight Research,1,1,0,-0.43,0,2026-09-12
 Strategies 360,1,1,13,0.61,0,2026-08-26
 TargetSmart,1,1,4,-1.14,1,2026-09-12
-Unknown (Reported by NOTUS),1,1,0,-0.44,1,2026-07-30
-Upswing Research,1,1,1,-0.37,1,2026-05-05
-Vote TXT,1,1,0,-0.44,0,2023-05-19
-Voter Sciences,1,1,0,-0.44,1,2025-08-01
-WPA Intelligence,1,1,47,-2.02,1,2025-01-15
+Unknown (Reported by NOTUS),1,1,0,-0.43,1,2026-07-30
+Upswing Research,1,1,1,-0.36,1,2026-05-05
+Vote TXT,1,1,0,-0.43,0,2023-05-19
+Voter Sciences,1,1,0,-0.43,1,2025-08-01
+WPA Intelligence,1,1,47,-2.01,1,2025-01-15

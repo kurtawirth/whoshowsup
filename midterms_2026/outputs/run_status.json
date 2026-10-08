@@ -1,7 +1,11 @@
 {
- "forecast_date": "2026-10-07",
- "finished_at": "2026-10-07 12:43",
- "refresh": false,
- "failed_steps": [],
- "warnings": []
+ "forecast_date": "2026-10-08",
+ "finished_at": "2026-10-08 07:31",
+ "refresh": true,
+ "failed_steps": [
+  "Website test build"
+ ],
+ "warnings": [
+  "Website test build FAILED: RuntimeError('site build failed')"
+ ]
 }
