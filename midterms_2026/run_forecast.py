@@ -130,12 +130,34 @@ def record(asof: pd.Timestamp) -> pd.DataFrame:
     return top
 
 
+# Windows sometimes refuses to start a new program for a while ("couldn't start": exit code 0xC0000142), as on the
+# mornings of Oct 5 and Oct 8, which cost those days' site build and push. Programs that fail to START are retried
+# a few minutes apart; a real failure (the program ran and reported an error) is not.
+NO_START = 0xC0000142
+
+
+def run_cmd(args: list, retries: int = 6, wait: int = 60, check: bool = False, **kw) -> subprocess.CompletedProcess:
+    for k in range(retries):
+        r = subprocess.run(args, **kw)
+        if r.returncode != NO_START:
+            break
+        print(f"    {args[0]} couldn't start (0xC0000142); trying again in {wait}s ({k + 1}/{retries})", flush=True)
+        time.sleep(wait)
+    if check and r.returncode != 0:
+        raise subprocess.CalledProcessError(r.returncode, args)
+    return r
+
+
 def build_site() -> None:
     """Test-build the website so a broken page is caught here, not after deploy."""
     npm = shutil.which("npm") or shutil.which("npm.cmd")
     if npm is None:
         raise RuntimeError("npm not found; skipped the site build")
-    r = subprocess.run([npm, "run", "build"], cwd=ROOT / "site", capture_output=True, text=True)
+    r = run_cmd([npm, "run", "build"], cwd=ROOT / "site", capture_output=True, text=True)
+    if r.returncode == NO_START:
+        # couldn't run the check at all: still publish; GitHub rebuilds the site, and a broken build there
+        # leaves yesterday's site up
+        raise RuntimeError("site test build couldn't start (0xC0000142); published anyway, GitHub builds it again")
     if r.returncode != 0:
         print(r.stdout[-3000:], r.stderr[-3000:])
         raise RuntimeError("site build failed")
@@ -145,12 +167,12 @@ def push(asof: pd.Timestamp) -> None:
     gh_msg = f"Forecast update {asof.date()}\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
     live = ROOT / "site" / "src" / "data" / "live.json"  # never publish an election-night rehearsal's made-up results
     if live.exists() and json.loads(live.read_text(encoding="utf-8")).get("mode") in ("simulation", "practice"):
-        subprocess.run(["git", "checkout", "--", "site/src/data/live.json"], cwd=ROOT)
+        run_cmd(["git", "checkout", "--", "site/src/data/live.json"], cwd=ROOT)
         warnings.append("live.json held rehearsal results; restored the published version before pushing")
-    subprocess.run(["git", "add", "-A"], cwd=ROOT, check=True)
-    if subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=ROOT).returncode != 0:
-        subprocess.run(["git", "commit", "-q", "-m", gh_msg], cwd=ROOT, check=True)
-        subprocess.run(["git", "push", "-q"], cwd=ROOT, check=True)
+    run_cmd(["git", "add", "-A"], cwd=ROOT, check=True)
+    if run_cmd(["git", "diff", "--cached", "--quiet"], cwd=ROOT).returncode != 0:
+        run_cmd(["git", "commit", "-q", "-m", gh_msg], cwd=ROOT, check=True)
+        run_cmd(["git", "push", "-q"], cwd=ROOT, check=True)
         print("Pushed to GitHub.")
 
 
