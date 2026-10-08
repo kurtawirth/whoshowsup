@@ -90,14 +90,43 @@ export default {
     try {
       const html = await (await fetch(location.href, {cache: "no-store"})).text();
       if (!(html.match(RE) ?? []).some((f) => !ours.has(f))) return;
-      // at most one automatic reload per page per minute, so a slow-to-update server can't cause a loop
+      // at most one automatic reload per page per minute, so a slow-to-update server can't cause a loop; only an
+      // actual reload counts toward that (a check that finds the page stale but waits doesn't restart the clock)
       const key = "wsu-reloaded:" + location.pathname;
       let then = 0;
-      try { then = Number(sessionStorage.getItem(key)) || 0; sessionStorage.setItem(key, String(Date.now())); } catch {}
-      if (Date.now() - then < 60000) return;
+      try { then = Number(sessionStorage.getItem(key)) || 0; } catch {}
+      if (Date.now() - then < 60000) { offer(); return; }
+      try { sessionStorage.setItem(key, String(Date.now())); } catch {}
       await fetch(location.href, {cache: "reload"}).catch(() => {});  // replace the browser's cached copy
-      location.reload();
+      fresh();
     } catch {} finally { busy = false; }
+  }
+  // Load a guaranteed-new copy: a one-time "_r" parameter gets past any cached copy (a tab the browser put to
+  // sleep can come back from an old one); the parameter is taken off the address once the page loads.
+  function fresh() {
+    const u = new URL(location.href);
+    u.searchParams.set("_r", String(Date.now()));
+    location.replace(u.href);
+  }
+  // If it can't reload on its own right now, say so instead of leaving broken charts unexplained.
+  function offer() {
+    if (document.getElementById("wsu-stale")) return;
+    const bar = document.createElement("div");
+    bar.id = "wsu-stale";
+    bar.setAttribute("role", "status");
+    bar.style.cssText = "position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:9999;background:var(--ink,#111);color:var(--surface,#fff);font:600 14px/1.3 Inter,system-ui,sans-serif;padding:10px 14px;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.25);display:flex;gap:12px;align-items:center;max-width:calc(100vw - 32px)";
+    bar.textContent = "This page is out of date. ";
+    const b = document.createElement("button");
+    b.textContent = "Reload";
+    b.style.cssText = "font:inherit;padding:4px 12px;border-radius:999px;border:1px solid currentColor;background:transparent;color:inherit;cursor:pointer";
+    b.onclick = fresh;
+    bar.append(b);
+    document.body.append(bar);
+  }
+  if (location.search.indexOf("_r=") >= 0) {
+    const u = new URL(location.href);
+    u.searchParams.delete("_r");
+    history.replaceState(history.state, "", u.pathname + u.search + u.hash);
   }
   document.addEventListener("DOMContentLoaded", () => {
     snapshot();
