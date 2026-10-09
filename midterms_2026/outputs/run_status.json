@@ -1,11 +1,11 @@
 {
- "forecast_date": "2026-10-08",
- "finished_at": "2026-10-08 07:31",
+ "forecast_date": "2026-10-09",
+ "finished_at": "2026-10-09 07:37",
  "refresh": true,
  "failed_steps": [
   "Website test build"
  ],
  "warnings": [
-  "Website test build FAILED: RuntimeError('site build failed')"
+  "Website test build FAILED: RuntimeError(\"site test build couldn't start (0xC0000142); published anyway, GitHub builds it again\")"
  ]
 }

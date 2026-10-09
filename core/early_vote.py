@@ -75,6 +75,11 @@ def main() -> pd.DataFrame:
     today = pd.Timestamp.today().normalize()
     keep_before = today - pd.Timedelta(days=REFRESH_DAYS)
     have = set(zip(old["date"], old["state_po"], old["category"])) if len(old) else set()
+    # Days already asked about, including ones with nothing new (before a state began reporting, or a day it
+    # skipped, when civicAPI answers with nothing or an earlier snapshot): without this, every such day was asked
+    # about again each morning, and the step grew from 13 to 17 minutes as early voting went on.
+    checked_path = RAW / "early_vote_checked.json"
+    checked = set(json.loads(checked_path.read_text(encoding="utf-8"))) if checked_path.exists() else set()
     caps = capabilities()
     rows = []
     for st, c in caps.items():
@@ -82,12 +87,16 @@ def main() -> pd.DataFrame:
             if cat not in c.get("categories", {}):
                 continue
             for day in pd.date_range(START, today):
-                if day < keep_before and (f"{day:%Y-%m-%d}", st, cat) in have:
+                key = f"{day:%Y-%m-%d}|{st}|{cat}"
+                if day < keep_before and ((f"{day:%Y-%m-%d}", st, cat) in have or key in checked):
                     continue
                 s = snapshot(st, cat, day)
                 time.sleep(0.15)
                 if s:
                     rows.append(s)
+                if day < keep_before:
+                    checked.add(key)
+    checked_path.write_text(json.dumps(sorted(checked)), encoding="utf-8")
     new = pd.DataFrame(rows)
     out = pd.concat([old, new], ignore_index=True) if len(new) else old
     out = out.drop_duplicates(["date", "state_po", "category"], keep="last").sort_values(["state_po", "category", "date"])
