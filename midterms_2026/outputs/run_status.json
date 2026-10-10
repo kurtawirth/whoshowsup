@@ -1,11 +1,9 @@
 {
- "forecast_date": "2026-10-09",
- "finished_at": "2026-10-09 07:37",
+ "forecast_date": "2026-10-10",
+ "finished_at": "2026-10-10 07:20",
  "refresh": true,
- "failed_steps": [
-  "Website test build"
- ],
+ "failed_steps": [],
  "warnings": [
-  "Website test build FAILED: RuntimeError(\"site test build couldn't start (0xC0000142); published anyway, GitHub builds it again\")"
+  "Poll check: GOV MN: recent VoteHub poll (GQR, Oct 04) without Amy Klobuchar vs Lisa Demuth: Peggy Flanagan, Michele Tafoya"
  ]
 }

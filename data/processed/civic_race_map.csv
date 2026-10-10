@@ -398,7 +398,6 @@ governor-ri,87397,Rhode Island Governor
 house-ri-1,87394,Rhode Island US House 1
 house-ri-2,87395,Rhode Island US House 2
 senate-ri,87396,Rhode Island US Senate
-governor-sc,87410,South Carolina Governor
 house-sc-1,87402,South Carolina US House 1
 house-sc-2,87403,South Carolina US House 2
 house-sc-3,87404,South Carolina US House 3
@@ -407,6 +406,7 @@ house-sc-5,87406,South Carolina US House 5
 house-sc-6,87407,South Carolina US House 6
 house-sc-7,87408,South Carolina US House 7
 senate-sc,87409,South Carolina US Senate
+governor-sc,87410,South Carolina Governor
 governor-sd,87447,South Dakota Governor
 house-sd-al,87445,South Dakota US House At-Large
 senate-sd,87446,South Dakota US Senate
