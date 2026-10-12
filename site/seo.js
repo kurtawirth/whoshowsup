@@ -21,6 +21,13 @@ const last = (s) => String(s ?? "").trim().split(/\s+/).filter((w) => !/^(Jr\.?|
 const nth = (n) => n + (["th", "st", "nd", "rd"][(n % 100 - 20) % 10] || ["th", "st", "nd", "rd"][n % 100] || "th");
 const urlOf = (path) => `${SITE_URL}${path === "/index" || path === "/" ? "/" : path}`;
 const tail = "A turnout-first forecast of every House, Senate and governor race.";
+// The early-vote page's search listing carries the latest count, so it reads as fresh to people searching
+// "early vote tracker" (Search Console, Oct 2026: the most-shown queries, with almost no clicks)
+const ev = (() => { try { return load("early_vote.json"); } catch { return null; } })();
+const evCast = ev ? ev.states.reduce((s, x) => s + (x.cast || 0), 0) : 0;
+const evStates = ev ? ev.states.filter((x) => (x.cast || 0) > 0).length : 0;
+const evDate = ev ? new Date(`${ev.as_of}T12:00:00`).toLocaleDateString("en-US", {month: "short", day: "numeric"}) : updated;
+const evCount = evCast >= 1e6 ? `${(evCast / 1e6).toFixed(1)} Million` : evCast.toLocaleString("en-US");
 
 // The site's main pages: title (as shown in search results) and description
 export const PAGES = {
@@ -42,8 +49,9 @@ export const PAGES = {
     "Pick winners or turn the turnout dial and watch the odds for the House and Senate change, using 10,000 of the Who Shows Up forecast’s simulated elections."],
   "/specials": ["Special Elections This Cycle: Results vs. Partisan Lean",
     "Every special election this cycle compared with how the same district voted for president: the turnout signal behind the forecast."],
-  "/early-vote": ["2026 Early Vote Tracker by State",
-    "Ballots cast before Election Day 2026, state by state: who is turning out early."],
+  "/early-vote": [evCast ? `2026 Early Vote Tracker: ${evCount} Ballots Cast (Updated ${evDate})` : "2026 Early Vote Tracker by State",
+    evCast ? `Early and mail ballots already cast in ${evStates} states as of ${evDate}, state by state, by party where states report it, and compared with 2022 turnout. Updated every morning.`
+      : "Ballots cast before Election Day 2026, state by state: who is turning out early."],
   "/results": ["2026 Election Night Results, Live",
     "Live 2026 midterm results on election night, race by race, compared with our forecast."],
   "/past-results": ["County Election Results 2000-2025: Maps for Every County",
