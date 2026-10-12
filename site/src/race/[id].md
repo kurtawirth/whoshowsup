@@ -116,6 +116,15 @@ if (night?.x) {
 ```
 
 ```js
+// The newsletter, offered once on every race page, right after the forecast (a link to Substack's own sign-up
+// page, so no outside code loads here; clicks are counted as newsletter-from-<page>)
+display(html`<aside class="subscribe-box">
+  <div><b>The Turnout</b>, our free weekly newsletter: what moved in the forecast and what's inside the polls, every Sunday.</div>
+  <a class="subscribe-btn" href="https://theturnout.substack.com/subscribe?utm_source=whoshowsup&utm_medium=race-page">Subscribe</a>
+</aside>`);
+```
+
+```js
 if (!fixed && det.quantiles) {
   display(html`<h2>The range of outcomes</h2><p class="caption">Where the final margin lands across 20,000 simulations. The darker band holds the middle half of outcomes; the lighter band holds 90%.</p>`);
   display(marginRange(det.quantiles, {width: Math.min(width, 900)}));

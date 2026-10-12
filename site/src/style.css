@@ -448,3 +448,11 @@ button.seg.i[aria-pressed=true] { background: var(--ind, #6b4fbb); border-color:
 .zip-races li { font-family: var(--sans); font-size: 15px; padding: 8px 0; border-bottom: 1px solid var(--hair); }
 .zip-races li a { font-weight: 600; }
 .zip-races .muted { font-size: 13px; margin-top: 2px; }
+
+/* ---------- newsletter box on race pages ---------- */
+.subscribe-box { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; max-width: 760px; margin: 22px 0 6px; padding: 14px 16px;
+  background: var(--card); box-shadow: 0 0 0 1px var(--card-ring); border-radius: 12px; font-family: var(--sans); font-size: 15px; line-height: 1.45; color: var(--ink-2); }
+.subscribe-box > div { flex: 1 1 320px; }
+.subscribe-box b { color: var(--ink); }
+.subscribe-btn { flex: none; font: 600 15px var(--sans); padding: 9px 18px; border-radius: 8px; background: var(--ink); color: var(--surface) !important; text-decoration: none !important; }
+.subscribe-btn:hover { opacity: .9; }
