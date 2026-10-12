@@ -4057,7 +4057,7 @@ HOUSE,IN,5,False,R,Victoria Spartz,True,2026,2.0,"Victoria Spartz , incumbent U.
 HOUSE,IN,6,False,D,Cinde Wirth,False,2026,0.0,"Cinde Wirth, anthropologist and nominee for this district in 2022 and 2024"
 HOUSE,IN,6,False,R,Jefferson Shreve,True,2026,2.0,"Jefferson Shreve , incumbent U.S. representative"
 HOUSE,IN,7,False,D,André Carson,True,2026,2.0,"André Carson , incumbent U.S. representative"
-HOUSE,IN,7,False,R,Patrick McAuley,False,2026,,
+HOUSE,IN,7,False,R,Patrick McAuley,False,2026,0.0,"Patrick McAuley, real estate associate"
 HOUSE,IN,8,False,D,Mary Allen,False,2026,1.0,"Mary Allen, at-large Evansville city councilor (2023–present)"
 HOUSE,IN,8,False,R,Mark Messmer,True,2026,2.0,"Mark Messmer , incumbent U.S. representative"
 HOUSE,IN,9,False,D,Brad Meyer,False,2026,0.0,"Brad Meyer, retired civil engineer"
@@ -4300,7 +4300,7 @@ HOUSE,NV,4,False,D,Steven Horsford,True,2026,2.0,"Steven Horsford , incumbent U.
 HOUSE,NV,4,False,R,Cody Whipple,False,2026,0.0,"Cody Whipple, telecommunications business owner"
 HOUSE,NY,1,False,D,Chris Gallant,False,2026,2.0,"Chris Gallant, air traffic controller"
 HOUSE,NY,1,False,R,Nick LaLota,True,2026,2.0,"Nick LaLota , incumbent U.S. representative"
-HOUSE,NY,2,False,D,Patrick Halpin,False,2026,1.0,"Patrick Halpin , former Suffolk County Executive (1988–1991)"
+HOUSE,NY,2,False,D,Patrick Halpin,False,2026,1.0,"Patrick Halpin , former Suffolk County executive (1988–1991)"
 HOUSE,NY,2,False,R,Andrew Garbarino,True,2026,2.0,"Andrew Garbarino , incumbent U.S. representative"
 HOUSE,NY,3,False,D,Tom Suozzi,True,2026,2.0,"Tom Suozzi , incumbent U.S. representative"
 HOUSE,NY,3,False,R,Mike LiPetri,False,2026,1.0,"Mike LiPetri , former state assemblyman from the 9th district (2019–2021), candidate for the 2nd district in 2020 , and nominee for this district in 2024"
@@ -4312,11 +4312,11 @@ HOUSE,NY,6,False,D,Grace Meng,True,2026,2.0,"Grace Meng , incumbent U.S. represe
 HOUSE,NY,6,False,R,Joseph Chou,False,2026,,
 HOUSE,NY,7,False,D,Claire Valdez,False,2026,1.0,"Claire Valdez , state assemblymember from the 37th district (2025–present)"
 HOUSE,NY,7,False,R,Melvin Rivera,False,2026,0.0,"Melvin Rivera, activist and tenant organizer"
-HOUSE,NY,8,False,D,Hakeem Jeffries,True,2026,2.0,"Hakeem Jeffries , incumbent U.S. representative and House Minority Leader"
+HOUSE,NY,8,False,D,Hakeem Jeffries,True,2026,2.0,"Hakeem Jeffries , incumbent U.S. representative and House minority leader"
 HOUSE,NY,8,False,R,Lewis Mizrahi,False,2026,0.0,"Lewis Mizrahi, data analyst"
 HOUSE,NY,9,False,D,Yvette Clarke,True,2026,2.0,"Yvette Clarke , incumbent U.S. representative"
 HOUSE,NY,9,False,R,Joel Azumah,False,2026,0.0,"Joel Anabilah-Azumah, bus company owner and perennial candidate"
-HOUSE,NY,10,False,D,Brad Lander,False,2026,2.0,"Brad Lander , New York City Comptroller (2022–2025) and candidate for mayor of New York City in 2025"
+HOUSE,NY,10,False,D,Brad Lander,False,2026,2.0,"Brad Lander , New York City comptroller (2022–2025) and candidate for mayor of New York City in 2025"
 HOUSE,NY,10,False,R,Jennifer Moore,False,2026,0.0,"Jennifer Moore, activist"
 HOUSE,NY,11,False,D,Michael DeCillis,False,2026,0.0,"Michael DeCillis, retired police officer and candidate for this district in 2018 and 2022"
 HOUSE,NY,11,False,R,Nicole Malliotakis,True,2026,2.0,"Nicole Malliotakis , incumbent U.S. representative"
@@ -4587,7 +4587,7 @@ HOUSE,WA,2,False,D,Rick Larsen,True,2026,2.0,"Rick Larsen (Democratic), incumben
 HOUSE,WA,2,False,R,Edwin Feller,False,2026,,
 HOUSE,WA,3,False,D,Marie Gluesenkamp Perez,True,2026,2.0,"Marie Gluesenkamp Perez (Democratic), incumbent U.S. representative"
 HOUSE,WA,3,False,R,John Braun,False,2026,,
-HOUSE,WA,4,False,D,John Duresky,False,2026,0.0,"John Duresky (Democratic), combat veteran, retired Air Force Major and project manager"
+HOUSE,WA,4,False,D,John Duresky,False,2026,0.0,"John Duresky (Democratic), combat veteran, retired Air Force major and project manager"
 HOUSE,WA,4,False,R,Amanda McKinney,False,2026,1.0,"Amanda McKinney (Republican), Yakima County commissioner (2020–present)"
 HOUSE,WA,5,False,D,Carmela Conroy,False,2026,0.0,"Carmela Conroy (Democratic), former chair of the Spokane County Democratic Party and runner-up for this district in 2024"
 HOUSE,WA,5,False,R,Michael Baumgartner,True,2026,2.0,

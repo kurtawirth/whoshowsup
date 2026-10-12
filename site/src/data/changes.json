@@ -1,1 +1,1 @@
-{"date":"2026-10-11","prev":"2026-10-10","nat0":6.806,"nat1":6.683,"house0":0.946,"house1":0.945,"senate0":0.692,"senate1":0.694,"moved":0,"races":[]}
+{"date":"2026-10-12","prev":"2026-10-11","nat0":6.683,"nat1":6.576,"house0":0.945,"house1":0.94,"senate0":0.694,"senate1":0.691,"moved":1,"races":[{"race_id":"senate-ak","p0":0.377,"p1":0.401,"m0":-1.267,"m1":-0.961,"new_polls":1,"pollsters":["InsiderAdvantage"],"parts":{"polls":0.32,"national":-0.03,"money":-0.0,"candidates":0.0,"other":0.02}}]}
