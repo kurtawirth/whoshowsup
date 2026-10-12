@@ -124,6 +124,24 @@ def site_sections(races: dict, t1, now: str) -> list[str]:
             L += [f"## New on the site since the last issue ({since}): give these a short 'New on the site' item, each linked"]
             L += [f"- {i[1]} ({i[2]})" for i in items]
             L.append("")
+
+    # how readers find the site (newsletter/reader_notes.md: "## YYYY-MM-DD | source" blocks of aggregate numbers)
+    notes = ROOT / "newsletter" / "reader_notes.md"
+    if notes.exists():
+        blocks, cur = [], None
+        for line in notes.read_text(encoding="utf-8").splitlines():
+            if line.startswith("## "):
+                cur = [line]
+                blocks.append(cur)
+            elif cur is not None:
+                cur.append(line)
+        fresh = [b for b in blocks if since < b[0][3:13] <= now]
+        if fresh:
+            L += ["## How readers find the site (aggregate search and visit data since the last issue): "
+                  "give these a short 'How people find us' item, per STYLE.md"]
+            for b in fresh:
+                L += b
+            L.append("")
     return L
 
 
