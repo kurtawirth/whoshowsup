@@ -3,7 +3,7 @@ title: 2026 Midterm Forecast
 ---
 
 ```js
-import {tokens, pct, margin, date, oddsPhrase, probBar, raceLink, favoriteText, miniBar, ratingPill, link, sides, shareBar} from "./components/wsu.js";
+import {tokens, pct, margin, date, oddsPhrase, probBar, raceLink, favoriteText, miniBar, ratingPill, link, sides, shareBar, tpPct} from "./components/wsu.js";
 import {seatChart} from "./components/charts.js";
 const top = FileAttachment("data/topline.json").json();
 const seats = FileAttachment("data/seats.json").json();
@@ -129,19 +129,19 @@ display(html`<div class="grid-2">
 
 ## The races most likely to decide the Senate
 
-<p class="caption">Ranked by how much the chance of controlling the Senate changes with each race's winner, across all simulations.</p>
+<p class="caption">Ranked by tipping point: how often, across all simulations, each race is the seat that hands a party control of the Senate. <a href="./senate#the-tipping-point">How this works</a>.</p>
 
 ```js
-const pivotal = races.filter((r) => r.office === "SEN" && r.control_leverage != null)
-  .sort((a, b) => b.control_leverage - a.control_leverage).slice(0, 8);
+const pivotal = races.filter((r) => r.office === "SEN" && r.tipping_point > 0)
+  .sort((a, b) => b.tipping_point - a.tipping_point).slice(0, 8);
 display(html`<div class="table-wrap"><table class="wsu-table">
-  <thead><tr><th>Race</th><th>Matchup</th><th class="num">Forecast</th><th class="hide-sm"></th><th class="num">Swing in control</th></tr></thead>
+  <thead><tr><th>Race</th><th>Matchup</th><th class="num">Forecast</th><th class="hide-sm"></th><th class="num">Decides control</th></tr></thead>
   <tbody>${pivotal.map((r) => html`<tr>
     <td>${raceLink(r)}</td>
     <td>${sides(r).d} vs. ${sides(r).r}</td>
     <td class="num">${favoriteText(r)}</td>
     <td class="hide-sm">${miniBar(r.p_dem)}</td>
-    <td class="num">${Math.round(r.control_leverage * 100)} pts</td>
+    <td class="num">${tpPct(r.tipping_point)}</td>
   </tr>`)}</tbody></table></div>`);
 ```
 

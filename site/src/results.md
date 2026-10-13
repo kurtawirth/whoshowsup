@@ -192,9 +192,11 @@ display(html`<div class="table-wrap"><table class="wsu-table waves">
 <p class="caption">When each state's first polls close. <sup>*</sup>States that span two time zones, where the rest close an hour later (hover for the time); results often wait until all of a state's polls have closed. Alaska's and Hawaii's polls close at midnight Eastern, and the far western Aleutian Islands at 1 a.m. Poll-closing times from <a href="https://www.thegreenpapers.com/G26/closing.phtml?format=gc">The Green Papers</a>.</p>
 
 ```js
-const watch = [...contested].filter((r) => r.office !== "HOUSE" || Math.abs(r.p_dem - 0.5) < 0.2)
-  .sort((a, b) => (b.control_leverage ?? 0) - (a.control_leverage ?? 0) || Math.abs(a.p_dem - 0.5) - Math.abs(b.p_dem - 0.5))
-  .filter((r) => Math.abs(r.p_dem - 0.5) < 0.35).slice(0, 12)
+// the races likeliest to be the tipping point, per chamber (a House district's chance is one of 435, so the two
+// chambers can't share one ranking): the top 7 Senate races and the top 5 House districts
+const topTipping = (office, n) => contested.filter((r) => r.office === office && r.tipping_point > 0)
+  .sort((a, b) => b.tipping_point - a.tipping_point).slice(0, n);
+const watch = [...topTipping("SEN", 7), ...topTipping("HOUSE", 5)]
   // in the order results start coming in: first poll closing, then last, then importance (kept from above)
   .map((r, i) => ({r, i, when: CLOSE[r.state_po] ?? [21, 21]}))
   .sort((a, b) => a.when[0] - b.when[0] || a.when[1] - b.when[1] || a.i - b.i)
