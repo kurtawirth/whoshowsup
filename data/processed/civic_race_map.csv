@@ -1,4 +1,5 @@
 race_id,civic_id,civic_name
+governor-ak,148898,Alaska Governor
 house-ak-al,86915,Alaska US House At-Large
 senate-ak,86916,Alaska US Senate
 governor-al,86908,Alabama Governor
@@ -16,7 +17,6 @@ house-ar-2,86946,Arkansas US House 2
 house-ar-3,86947,Arkansas US House 3
 house-ar-4,86948,Arkansas US House 4
 senate-ar,86949,Arkansas US Senate
-governor-az,86928,Arizona Governor
 house-az-1,86917,Arizona US House 1
 house-az-2,86918,Arizona US House 2
 house-az-3,86919,Arizona US House 3
@@ -26,6 +26,7 @@ house-az-6,86922,Arizona US House 6
 house-az-7,86923,Arizona US House 7
 house-az-8,86924,Arizona US House 8
 house-az-9,86925,Arizona US House 9
+governor-az,86928,Arizona Governor
 governor-ca,86952,California Governor
 house-ca-10,86958,California US House 10
 house-ca-11,86959,California US House 11
@@ -96,7 +97,6 @@ house-ct-2,87027,Connecticut US House 2
 house-ct-3,87028,Connecticut US House 3
 house-de-al,87035,Delaware US House At-Large
 senate-de,87036,Delaware US Senate
-senate-fl-special,87068,Florida US Senate Special
 governor-fl,87069,Florida Governor
 house-fl-1,87040,Florida US House 1
 house-fl-2,87041,Florida US House 2
@@ -126,6 +126,7 @@ house-fl-25,87064,Florida US House 25
 house-fl-26,87065,Florida US House 26
 house-fl-27,87066,Florida US House 27
 house-fl-28,87067,Florida US House 28
+senate-fl-special,87068,Florida US Senate Special
 governor-ga,87088,Georgia Governor
 house-ga-1,87073,Georgia US House 1
 house-ga-2,87074,Georgia US House 2
