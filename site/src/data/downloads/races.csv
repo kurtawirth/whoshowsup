@@ -1,507 +1,507 @@
 forecast_date,race_id,office,state_po,district,special,race_type,dem_candidate,rep_candidate,incumbent,p_dem,margin_median,margin_p10,margin_p90,rating,fundamentals_mean,p_fund,poll_avg,poll_count,poll_weight,p_poll,tipping_point,voter_power
-2026-10-15,governor-ak,GOV,AK,0,False,rcv_bloc,Jonathan Kreiss-Tomkins,Dave Bronson; Treg Taylor; Bernadette Wilson,Mike Dunleavy,0.6466,1.6468,-4.2449,7.6819,Lean D,-7.5735,0.1922,5.3461,5.0,0.7114,0.8248,,
-2026-10-15,governor-al,GOV,AL,0,False,standard,Doug Jones,Tommy Tuberville,Kay Ivey,0.0096,-17.6396,-25.691,-9.6269,Safe R,-22.8958,0.0042,-10.6119,3.0,0.419,0.1489,,
-2026-10-15,governor-ar,GOV,AR,0,False,standard,Fredrick Love,Sarah Huckabee Sanders,Sarah Huckabee Sanders,0.0388,-14.3942,-23.7911,-4.7734,Safe R,-24.6486,0.0309,-7.7261,1.0,0.6068,0.2351,,
-2026-10-15,governor-az,GOV,AZ,0,False,standard,Katie Hobbs,Andy Biggs,Katie Hobbs,0.9705,9.7267,3.472,16.0443,Safe D,17.9757,0.9132,8.3089,27.0,0.8601,0.9312,,
-2026-10-15,governor-ca,GOV,CA,0,False,standard,Xavier Becerra,Steve Hilton,Gavin Newsom,0.999,20.2065,14.2809,26.1297,Safe D,28.8551,0.9995,16.6779,11.0,0.7144,0.9983,,
-2026-10-15,governor-co,GOV,CO,0,False,standard,Phil Weiser,Victor Marx,Jared Polis,0.9852,19.9234,10.1815,29.9407,Safe D,19.9195,0.989,,,0.0,,,
-2026-10-15,governor-ct,GOV,CT,0,False,standard,Ned Lamont,Ryan Fazio,Ned Lamont,0.998,19.6087,13.2695,25.8993,Safe D,30.8517,0.9903,17.6874,8.0,0.8579,0.9991,,
-2026-10-15,governor-fl,GOV,FL,0,False,standard,David Jolly,Byron Donalds,Ron DeSantis,0.138,-4.8733,-10.632,0.8624,Likely R,-4.8865,0.2874,-4.9245,31.0,0.7471,0.1764,,
-2026-10-15,governor-ga,GOV,GA,0,False,standard,Keisha Lance Bottoms,Rick Jackson,Brian Kemp,0.6066,1.1263,-4.4077,6.7772,Lean D,10.3137,0.8819,-1.6122,13.0,0.7668,0.3754,,
-2026-10-15,governor-hi,GOV,HI,0,False,standard,Josh Green,Gary Cordery,Josh Green,0.995,42.8041,28.2461,57.24,Safe D,42.8022,0.9994,,,0.0,,,
-2026-10-15,governor-ia,GOV,IA,0,False,standard,Rob Sand,Zach Lahn,Kim Reynolds,0.906,5.7506,0.1513,11.3042,Likely D,-0.6084,0.4721,7.6101,22.0,0.7697,0.9354,,
-2026-10-15,governor-id,GOV,ID,0,False,standard,Terri Pickens,Brad Little,Brad Little,0.0056,-27.191,-37.2713,-17.1861,Safe R,-47.4438,0.0002,-11.4713,2.0,0.5621,0.1634,,
-2026-10-15,governor-il,GOV,IL,0,False,standard,JB Pritzker,Darren Bailey,JB Pritzker,0.9872,24.3818,12.9336,35.7738,Safe D,29.9421,0.9883,16.3024,2.0,0.4148,0.8515,,
-2026-10-15,governor-ks,GOV,KS,0,False,standard,Cindy Holscher,Ty Masterson,Laura Kelly,0.1383,-5.0677,-11.0961,0.9344,Likely R,-8.1127,0.1757,-3.8728,7.0,0.7058,0.2527,,
-2026-10-15,governor-ma,GOV,MA,0,False,standard,Maura Healey,Mike Minogue,Maura Healey,0.9987,24.8445,17.5634,32.2592,Safe D,44.2041,0.9996,19.5993,10.0,0.7884,0.9973,,
-2026-10-15,governor-md,GOV,MD,0,False,standard,Wes Moore,Dan Cox,Wes Moore,0.9985,37.5913,27.8525,47.2922,Safe D,51.4217,1.0,27.1552,2.0,0.5702,0.9909,,
-2026-10-15,governor-me,GOV,ME,0,False,standard,Hannah Pingree,Robert B. Charles,Janet Mills,0.9934,12.939,6.973,18.9868,Safe D,15.9161,0.9663,11.7897,16.0,0.7151,0.9809,,
-2026-10-15,governor-mi,GOV,MI,0,False,standard,Jocelyn Benson,John James,Gretchen Whitmer,0.9458,7.1053,1.5086,12.62,Likely D,6.9312,0.787,7.1326,38.0,0.7576,0.9165,,
-2026-10-15,governor-mn,GOV,MN,0,False,standard,Amy Klobuchar,Lisa Demuth,Tim Walz,0.9702,9.5937,3.3463,15.8801,Safe D,14.4482,0.9515,7.2079,10.0,0.6687,0.8749,,
-2026-10-15,governor-ne,GOV,NE,0,False,standard,Lynne Walz,Jim Pillen,Jim Pillen,0.1004,-7.0873,-14.3838,0.0209,Likely R,-18.8189,0.0771,-4.1144,11.0,0.7913,0.2779,,
-2026-10-15,governor-nh,GOV,NH,0,False,standard,Cinde Warmington,Kelly Ayotte,Kelly Ayotte,0.0376,-9.1991,-15.5309,-2.8669,Safe R,-10.9161,0.2042,-8.9493,11.0,0.8574,0.057,,
-2026-10-15,governor-nm,GOV,NM,0,False,standard,Deb Haaland,Gregg Hull,Michelle Lujan Grisham,0.9688,10.0228,3.4709,16.5583,Safe D,14.4599,0.9517,7.2421,5.0,0.6229,0.854,,
-2026-10-15,governor-nv,GOV,NV,0,False,standard,Aaron Ford,Joe Lombardo,Joe Lombardo,0.4574,-0.6406,-8.7196,7.3843,Toss-up,-2.4298,0.427,0.0277,13.0,0.7318,0.5017,,
-2026-10-15,governor-ny,GOV,NY,0,False,standard,Kathy Hochul,Bruce Blakeman,Kathy Hochul,0.9902,12.1775,6.0092,18.3107,Safe D,20.3596,0.9385,10.992,27.0,0.87,0.9792,,
-2026-10-15,governor-oh,GOV,OH,0,False,standard,Amy Acton,Vivek Ramaswamy,Mike DeWine,0.7219,2.5447,-3.1284,8.1912,Lean D,-2.961,0.3669,4.4298,27.0,0.7395,0.795,,
-2026-10-15,governor-ok,GOV,OK,0,False,standard,Cyndi Munson,Mike Mazzei,Kevin Stitt,0.0058,-27.006,-36.7704,-17.1213,Safe R,-27.0864,0.0009,,,0.0,,,
-2026-10-15,governor-or,GOV,OR,0,False,standard,Tina Kotek,Christine Drazan,Tina Kotek,0.8778,6.5013,-0.6948,13.8457,Likely D,26.0074,0.9756,1.4229,7.0,0.7934,0.5817,,
-2026-10-15,governor-pa,GOV,PA,0,False,standard,Josh Shapiro,Stacy Garrity,Josh Shapiro,0.9991,24.2675,17.7337,30.7232,Safe D,33.9083,0.9949,22.5013,20.0,0.8462,0.9999,,
-2026-10-15,governor-ri,GOV,RI,0,False,standard,Helena Foulkes,Aaron Guckian,Dan McKee,0.9972,23.2575,15.394,31.0553,Safe D,22.3551,0.9949,24.2343,4.0,0.4153,0.9909,,
-2026-10-15,governor-sc,GOV,SC,0,False,standard,Jermaine Johnson,Alan Wilson,Henry McMaster,0.046,-10.9625,-18.7133,-2.9645,Safe R,-11.2257,0.0987,-10.3797,3.0,0.3984,0.1642,,
-2026-10-15,governor-sd,GOV,SD,0,False,standard,Dan Ahlers,Larry Rhoden,Larry Rhoden,0.0031,-29.7236,-39.7132,-20.1186,Safe R,-29.8467,0.0003,,,0.0,,,
-2026-10-15,governor-tn,GOV,TN,0,False,standard,Jerri Green,Marsha Blackburn,Bill Lee,0.008,-18.8711,-26.8482,-10.9009,Safe R,-22.2942,0.0052,-13.6955,4.0,0.4,0.0979,,
-2026-10-15,governor-tx,GOV,TX,0,False,standard,Gina Hinojosa,Greg Abbott,Greg Abbott,0.2494,-2.9758,-8.654,2.6853,Lean R,-13.8203,0.1477,-1.724,46.0,0.8972,0.3606,,
-2026-10-15,governor-vt,GOV,VT,0,False,standard,Amanda Janoo,Phil Scott,Phil Scott,0.0234,-12.3014,-19.7056,-5.0368,Safe R,-45.8059,0.0003,-3.4557,5.0,0.7921,0.3101,,
-2026-10-15,governor-wi,GOV,WI,0,False,standard,David Crowley,Tom Tiffany,Tony Evers,0.7405,3.0253,-3.1649,9.1417,Lean D,5.6711,0.7426,1.8508,8.0,0.6888,0.6213,,
-2026-10-15,governor-wy,GOV,WY,0,False,standard,Kenneth Casner,Eric Barlow,Mark Gordon,0.0012,-39.6223,-49.3394,-29.7738,Safe R,-39.6104,0.0,,,0.0,,,
-2026-10-15,house-ak-al,HOUSE,AK,0,False,independent,Eric Hafner,Nick Begich III,Nick Begich III,0.107,-5.681,-11.5374,0.2069,Likely R,-0.6992,0.4626,-8.9075,11.0,0.6068,0.0724,0.0004,0.1471
-2026-10-15,house-al-1,HOUSE,AL,1,False,standard,Clyde Jones Jr.,Jerry Carl,None (new seat),0.0018,-28.408,-36.5887,-20.2043,Safe R,-28.5541,0.0,,,0.0,,0.0001,0.0537
-2026-10-15,house-al-2,HOUSE,AL,2,False,standard,Shomari Figures,Rhett Marques,Shomari Figures,0.2708,-2.7462,-8.6666,3.2215,Lean R,-2.1076,0.3688,-3.7347,3.0,0.4252,0.303,0.007,4.1748
-2026-10-15,house-al-3,HOUSE,AL,3,False,standard,Lee McInnis,Mike Rogers,Mike Rogers,0.0002,-41.9722,-49.3553,-34.7229,Safe R,-42.0304,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-al-4,HOUSE,AL,4,False,standard,Amanda Pusczek,Robert Aderholt,Robert Aderholt,0.0,-63.0855,-70.3006,-55.8636,Safe R,-63.11,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-al-5,HOUSE,AL,5,False,standard,Andrew Sneed,Dale Strong,Dale Strong,0.0014,-23.8564,-31.0933,-16.4562,Safe R,-23.8236,0.0001,,,0.0,,0.0,0.0
-2026-10-15,house-al-6,HOUSE,AL,6,False,standard,Maurice Mercer,Gary Palmer,Gary Palmer,0.0009,-28.4609,-35.7785,-21.1935,Safe R,-28.4901,0.0,,,0.0,,0.0,0.0254
-2026-10-15,house-al-7,HOUSE,AL,7,False,standard,Terri Sewell,Ammie Akin,Terri Sewell,0.999,28.7268,21.4151,36.0717,Safe D,28.6591,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ar-1,HOUSE,AR,1,False,standard,Terri Green,Rick Crawford,Rick Crawford,0.0001,-41.1645,-48.5305,-33.8393,Safe R,-41.0897,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-ar-2,HOUSE,AR,2,False,standard,Chris Jones,French Hill,French Hill,0.0904,-6.342,-12.3289,-0.2996,Likely R,-11.6669,0.0319,1.102,2.0,0.4201,0.5604,0.0016,0.7059
-2026-10-15,house-ar-3,HOUSE,AR,3,False,standard,Robb Ryerse,Steve Womack,Steve Womack,0.0025,-22.673,-30.0614,-15.3028,Safe R,-22.6712,0.0002,,,0.0,,0.0001,0.0471
-2026-10-15,house-ar-4,HOUSE,AR,4,False,standard,James Russell,Bruce Westerman,Bruce Westerman,0.0004,-36.5459,-43.9283,-29.3216,Safe R,-36.5379,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-az-1,HOUSE,AZ,1,False,standard,Amish Shah,Jay Feely,David Schweikert,0.8162,4.6518,-2.1259,11.3978,Likely D,6.1052,0.8001,2.3915,1.0,0.4038,0.6085,0.0264,8.5265
-2026-10-15,house-az-2,HOUSE,AZ,2,False,standard,Jonathan Nez,Eli Crane,Eli Crane,0.1377,-5.117,-11.0667,1.0082,Likely R,-4.8859,0.2186,-5.4382,3.0,0.4079,0.2337,0.0028,0.9793
-2026-10-15,house-az-3,HOUSE,AZ,3,False,same_party,Yassamin Ansari,,Yassamin Ansari,1.0,,,,Safe D,,,,,,,,
-2026-10-15,house-az-4,HOUSE,AZ,4,False,standard,Greg Stanton,Zuhdi Jasser,Greg Stanton,0.9928,17.4517,10.1472,24.7961,Safe D,17.4212,0.9972,,,0.0,,0.001,0.4419
-2026-10-15,house-az-5,HOUSE,AZ,5,False,standard,Elizabeth Lee,Mark Lamb,Andy Biggs,0.0305,-13.0711,-21.4482,-4.8115,Safe R,-13.1288,0.0351,,,0.0,,0.0006,0.1965
-2026-10-15,house-az-6,HOUSE,AZ,6,False,standard,JoAnna Mendoza,Juan Ciscomani,Juan Ciscomani,0.8144,4.2934,-2.0157,10.8131,Likely D,7.3178,0.8776,-3.0543,3.0,0.2962,0.3734,0.0289,9.5724
-2026-10-15,house-az-7,HOUSE,AZ,7,False,standard,Adelita Grijalva,Daniel Butierez,Adelita Grijalva,0.9996,32.7815,25.4765,40.0384,Safe D,32.6909,1.0,,,0.0,,0.0,0.0259
-2026-10-15,house-az-8,HOUSE,AZ,8,False,standard,Bernadette Greene-Placentia,Abraham Hamadeh,Abraham Hamadeh,0.049,-9.9605,-17.2832,-2.5301,Safe R,-9.9946,0.0561,,,0.0,,0.0011,0.4084
-2026-10-15,house-az-9,HOUSE,AZ,9,False,standard,Dani Sterbinsky,Paul Gosar,Paul Gosar,0.0016,-23.6824,-31.0947,-16.3302,Safe R,-23.6342,0.0001,,,0.0,,0.0,0.0181
-2026-10-15,house-ca-1,HOUSE,CA,1,False,standard,Mike McGuire,James Gallagher,James Gallagher,0.995,18.7124,11.4496,25.9072,Safe D,18.7009,0.9985,,,0.0,,0.0008,0.4001
-2026-10-15,house-ca-2,HOUSE,CA,2,False,standard,Jared Huffman,Robin Littau,Jared Huffman,0.9996,32.5632,25.2321,39.7388,Safe D,32.4906,1.0,,,0.0,,0.0,0.0206
-2026-10-15,house-ca-3,HOUSE,CA,3,False,standard,Ami Bera,Robb Tucker,Ami Bera,0.9968,20.6726,13.3572,28.0551,Safe D,20.6917,0.9995,,,0.0,,0.0003,0.132
-2026-10-15,house-ca-4,HOUSE,CA,4,False,same_party,Eric Jones; Mike Thompson,,Mike Thompson,1.0,,,,Safe D,,,,,,,,
-2026-10-15,house-ca-5,HOUSE,CA,5,False,standard,Michael Masuda,Tom McClintock,Tom McClintock,0.0078,-16.8759,-24.1898,-9.4691,Safe R,-16.8861,0.0036,,,0.0,,0.0002,0.1101
-2026-10-15,house-ca-6,HOUSE,CA,6,False,independent,Richard Pan,,Kevin Kiley,0.967,11.445,3.9926,19.0443,Safe D,17.5001,0.9828,2.333,1.0,0.4022,0.5924,0.0066,3.1569
-2026-10-15,house-ca-7,HOUSE,CA,7,False,same_party,Doris Matsui; Mai Vang,,Doris Matsui,1.0,,,,Safe D,,,,,,,,
-2026-10-15,house-ca-8,HOUSE,CA,8,False,standard,John Garamendi,Rudy Recile,John Garamendi,0.9999,45.1952,37.78,52.4221,Safe D,45.1457,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ca-9,HOUSE,CA,9,False,standard,Josh Harder,John McBride,Josh Harder,0.9986,24.2149,16.8705,31.5015,Safe D,24.1814,0.9999,,,0.0,,0.0001,0.0599
-2026-10-15,house-ca-10,HOUSE,CA,10,False,standard,Mark DeSaulnier,Jeff Frese,Mark DeSaulnier,0.9998,42.0189,34.7381,49.3358,Safe D,41.9584,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ca-11,HOUSE,CA,11,False,same_party,Connie Chan; Scott Wiener,,Nancy Pelosi,1.0,,,,Safe D,,,,,,,,
-2026-10-15,house-ca-12,HOUSE,CA,12,False,same_party,Jamie Joyce; Lateefah Simon,,Lateefah Simon,1.0,,,,Safe D,,,,,,,,
-2026-10-15,house-ca-13,HOUSE,CA,13,False,standard,Adam Gray,Kevin Lincoln,Adam Gray,0.992,16.2587,8.9011,23.5586,Safe D,16.2762,0.9951,,,0.0,,0.0018,1.3808
-2026-10-15,house-ca-14,HOUSE,CA,14,False,same_party,Melissa Hernandez; Aisha Wahab,,Aisha Wahab,1.0,,,,Safe D,,,,,,,,
-2026-10-15,house-ca-15,HOUSE,CA,15,False,standard,Kevin Mullin,Charles Hoelter,Kevin Mullin,0.9999,55.381,48.2578,62.5813,Safe D,55.4017,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ca-16,HOUSE,CA,16,False,standard,Sam Liccardo,Peter Soulé,Sam Liccardo,1.0,59.0183,51.8055,66.3278,Safe D,59.0217,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ca-17,HOUSE,CA,17,False,standard,Ro Khanna,Ritesh Tandon,Ro Khanna,0.9998,46.5153,39.2383,53.8425,Safe D,46.4584,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ca-18,HOUSE,CA,18,False,standard,Zoe Lofgren,Shane Lewis,Zoe Lofgren,0.9996,37.3626,29.9346,44.6522,Safe D,37.294,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ca-19,HOUSE,CA,19,False,standard,Jimmy Panetta,Peter Coe Verbica,Jimmy Panetta,0.9998,45.6628,38.4392,52.7473,Safe D,45.5924,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ca-20,HOUSE,CA,20,False,standard,Sandra Van Scotter,Vince Fong,Vince Fong,0.001,-27.3614,-34.6558,-20.0397,Safe R,-27.3881,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-ca-21,HOUSE,CA,21,False,standard,Jim Costa,Kyle Kirkland,Jim Costa,0.9934,17.5162,10.2483,24.9291,Safe D,17.4846,0.9973,,,0.0,,0.0008,0.5944
-2026-10-15,house-ca-22,HOUSE,CA,22,False,standard,Randy Villegas,David Valadao,David Valadao,0.793,3.9841,-2.3368,10.2653,Lean D,5.5289,0.8103,0.8294,1.0,0.3323,0.5383,0.0307,28.6646
-2026-10-15,house-ca-23,HOUSE,CA,23,False,standard,Tessa Lynn Hodge,Jay Obernolte,Jay Obernolte,0.011,-15.4948,-22.7627,-8.2152,Safe R,-15.5105,0.0069,,,0.0,,0.0002,0.1154
-2026-10-15,house-ca-24,HOUSE,CA,24,False,standard,Salud Carbajal,Bob Smith,Salud Carbajal,0.9992,34.2624,26.9886,41.5442,Safe D,34.2058,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ca-25,HOUSE,CA,25,False,standard,Raul Ruiz,Joe Males,Raul Ruiz,0.9969,21.5533,14.2247,28.9088,Safe D,21.5103,0.9997,,,0.0,,0.0005,0.2945
-2026-10-15,house-ca-26,HOUSE,CA,26,False,standard,Jacqui Irwin,Sam Gallucci,Julia Brownley,0.9962,24.0034,15.7064,32.2049,Safe D,24.0332,0.9995,,,0.0,,0.0005,0.2331
-2026-10-15,house-ca-27,HOUSE,CA,27,False,standard,George Whitesides,Jason Gibbs,George T. Whitesides,0.9913,19.0282,10.7072,27.4121,Safe D,19.0087,0.9956,,,0.0,,0.0008,0.4607
-2026-10-15,house-ca-28,HOUSE,CA,28,False,standard,Judy Chu,April Verlato,Judy Chu,1.0,36.0223,28.769,43.2763,Safe D,35.9595,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ca-29,HOUSE,CA,29,False,same_party,Angelica Dueñas; Luz Rivas,,Luz Rivas,1.0,,,,Safe D,,,,,,,,
-2026-10-15,house-ca-30,HOUSE,CA,30,False,standard,Laura Friedman,Scott Meyers,Laura Friedman,0.9998,48.3995,41.176,55.6501,Safe D,48.3473,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ca-31,HOUSE,CA,31,False,standard,Gil Cisneros,Eric Ching,Gil Cisneros,0.9987,24.944,17.5997,32.1229,Safe D,24.9082,1.0,,,0.0,,0.0002,0.11
-2026-10-15,house-ca-32,HOUSE,CA,32,False,standard,Brad Sherman,Larry Thompson,Brad Sherman,0.9996,34.5578,27.2761,41.8848,Safe D,34.5436,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ca-33,HOUSE,CA,33,False,standard,Pete Aguilar,Stephanie Vargas,Pete Aguilar,0.9982,24.3732,17.0784,31.7801,Safe D,24.3218,0.9999,,,0.0,,0.0001,0.0968
-2026-10-15,house-ca-34,HOUSE,CA,34,False,same_party,Jimmy Gomez; Angela Gonzales-Torres,,Jimmy Gomez,1.0,,,,Safe D,,,,,,,,
-2026-10-15,house-ca-35,HOUSE,CA,35,False,standard,Norma Torres,Mike Cargile,Norma Torres,0.9972,21.5644,14.2203,28.8483,Safe D,21.4952,0.9997,,,0.0,,0.0002,0.1236
-2026-10-15,house-ca-36,HOUSE,CA,36,False,standard,Ted Lieu,Houston Brignano,Ted Lieu,0.9998,46.8926,39.7452,54.1776,Safe D,46.9067,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ca-37,HOUSE,CA,37,False,same_party,Sydney Kamlager-Dove; Samantha Mota,,Sydney Kamlager-Dove,1.0,,,,Safe D,,,,,,,,
-2026-10-15,house-ca-38,HOUSE,CA,38,False,standard,Hilda Solis,Pedro Casas,None (new seat),0.9942,21.2032,12.9542,29.5742,Safe D,21.1593,0.9983,,,0.0,,0.0008,0.4924
-2026-10-15,house-ca-39,HOUSE,CA,39,False,standard,Mark Takano,Steve Manos,Mark Takano,0.997,21.1793,13.8866,28.4845,Safe D,21.1086,0.9996,,,0.0,,0.0004,0.2727
-2026-10-15,house-ca-40,HOUSE,CA,40,False,same_party,,Ken Calvert; Young Kim,Young Kim,0.0,,,,Safe R,,,,,,,,
-2026-10-15,house-ca-41,HOUSE,CA,41,False,standard,Linda Sánchez,Mitch Clemmons,Linda Sánchez,0.9984,25.6069,18.3184,32.9322,Safe D,25.4909,1.0,,,0.0,,0.0001,0.0517
-2026-10-15,house-ca-42,HOUSE,CA,42,False,standard,Robert Garcia,Brian Burley,Robert Garcia,0.9982,24.2653,16.9411,31.5302,Safe D,24.2577,0.9999,,,0.0,,0.0001,0.069
-2026-10-15,house-ca-43,HOUSE,CA,43,False,standard,Maxine Waters,Cristian Morales,Maxine Waters,0.9998,57.9635,50.7781,65.2031,Safe D,57.934,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ca-44,HOUSE,CA,44,False,standard,Nanette Barragán,Genevieve Angel,Nanette Barragán,1.0,48.9909,41.6504,56.2143,Safe D,48.9313,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ca-45,HOUSE,CA,45,False,standard,Derek Tran,Chuong Vo,Derek Tran,0.9916,16.1379,8.8716,23.3595,Safe D,16.1304,0.9948,,,0.0,,0.0016,0.8276
-2026-10-15,house-ca-46,HOUSE,CA,46,False,standard,Lou Correa,David Pan,Lou Correa,0.9992,27.2355,19.7872,34.5786,Safe D,27.224,1.0,,,0.0,,0.0,0.0353
-2026-10-15,house-ca-47,HOUSE,CA,47,False,standard,Dave Min,Jenny Le Roux,Dave Min,0.997,21.2337,13.9758,28.5926,Safe D,21.25,0.9996,,,0.0,,0.0003,0.1356
-2026-10-15,house-ca-48,HOUSE,CA,48,False,standard,Marni von Wilpert,Jim Desmond,Darrell Issa,0.9492,8.8544,2.0428,15.4679,Likely D,12.9788,0.9633,2.9531,1.0,0.421,0.6374,0.0136,6.6374
-2026-10-15,house-ca-49,HOUSE,CA,49,False,standard,Mike Levin,Armen Kurdian,Mike Levin,0.996,20.008,12.7153,27.3909,Safe D,19.9955,0.9993,,,0.0,,0.0006,0.2282
-2026-10-15,house-ca-50,HOUSE,CA,50,False,standard,Scott Peters,Steve Cohen,Scott Peters,0.9982,26.6545,19.3629,33.9103,Safe D,26.6066,1.0,,,0.0,,0.0002,0.0862
-2026-10-15,house-ca-51,HOUSE,CA,51,False,standard,Sara Jacobs,Ricardo Cabrera,Sara Jacobs,0.9986,26.2431,18.9773,33.4346,Safe D,26.1946,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ca-52,HOUSE,CA,52,False,standard,Juan Vargas,Jeff Belle,Juan Vargas,0.9993,32.9752,25.825,40.3483,Safe D,32.9628,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-co-1,HOUSE,CO,1,False,standard,Melat Kiros,Christy Peterson,Diana DeGette,1.0,64.004,55.9112,72.2518,Safe D,63.9934,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-co-2,HOUSE,CO,2,False,standard,Joe Neguse,Kelley Dennison,Joe Neguse,0.9998,48.7944,41.5593,56.012,Safe D,48.8039,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-co-3,HOUSE,CO,3,False,standard,Dwayne Romero,Jeff Hurd,Jeff Hurd,0.1967,-4.1173,-10.304,2.1831,Likely R,-3.8025,0.2728,-4.7466,1.0,0.3345,0.2924,0.0051,1.7649
-2026-10-15,house-co-4,HOUSE,CO,4,False,standard,Eileen Laubacher,Lauren Boebert,Lauren Boebert,0.1242,-5.7914,-12.3017,0.6735,Likely R,-4.175,0.2533,-10.2592,1.0,0.2751,0.1508,0.0028,0.8387
-2026-10-15,house-co-5,HOUSE,CO,5,False,standard,Jessica Killin,Jeff Crank,Jeff Crank,0.1694,-4.6716,-11.0371,1.7425,Likely R,-4.8187,0.2219,-4.4275,2.0,0.3115,0.3139,0.0042,1.5786
-2026-10-15,house-co-6,HOUSE,CO,6,False,standard,Jason Crow,Jason Clark,Jason Crow,0.9992,29.6335,22.3112,36.9505,Safe D,29.6125,1.0,,,0.0,,0.0,0.0196
-2026-10-15,house-co-7,HOUSE,CO,7,False,standard,Brittany Pettersen,Tim Bennett,Brittany Pettersen,0.9978,24.1877,16.7686,31.5451,Safe D,24.1778,0.9999,,,0.0,,0.0001,0.0317
-2026-10-15,house-co-8,HOUSE,CO,8,False,standard,Manny Rutinel,Gabe Evans,Gabe Evans,0.8694,5.4851,-0.83,11.6217,Likely D,6.3674,0.8443,3.7983,1.0,0.3566,0.6771,0.0268,10.9537
-2026-10-15,house-ct-1,HOUSE,CT,1,False,standard,Luke Bronin,Amy Chai,John B. Larson,0.9984,31.197,22.8923,39.5154,Safe D,31.2467,1.0,,,0.0,,0.0002,0.0894
-2026-10-15,house-ct-2,HOUSE,CT,2,False,standard,Joe Courtney,George Austin,Joe Courtney,0.9976,22.0128,14.8852,29.4592,Safe D,22.1419,0.9998,,,0.0,,0.0005,0.1979
-2026-10-15,house-ct-3,HOUSE,CT,3,False,standard,Rosa DeLauro,Chris Lancia,Rosa DeLauro,0.9989,26.3946,19.0446,33.7673,Safe D,26.4105,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ct-4,HOUSE,CT,4,False,standard,Jim Himes,Michael Goldstein,Jim Himes,0.9996,32.6512,25.2785,40.0791,Safe D,32.705,1.0,,,0.0,,0.0,0.0227
-2026-10-15,house-ct-5,HOUSE,CT,5,False,standard,Jahana Hayes,Chris Shea,Jahana Hayes,0.991,15.422,8.1098,22.7909,Safe D,15.4432,0.993,,,0.0,,0.0018,0.7778
-2026-10-15,house-de-al,HOUSE,DE,0,False,standard,Sarah McBride,Joseph Arminio,Sarah McBride,0.9986,26.4886,19.106,33.8068,Safe D,26.4623,1.0,,,0.0,,0.0001,0.0345
-2026-10-15,house-fl-1,HOUSE,FL,1,False,standard,Gay Valimont,Jimmy Patronis,Jimmy Patronis,0.0005,-32.1146,-39.4695,-24.6932,Safe R,-32.1348,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-fl-2,HOUSE,FL,2,False,standard,Amanda Green,Austin Rogers,Neal Dunn,0.0569,-10.6341,-19.1184,-2.4838,Likely R,-10.6886,0.0702,,,0.0,,0.0016,0.6256
-2026-10-15,house-fl-3,HOUSE,FL,3,False,standard,Seth Harp,Kat Cammack,Kat Cammack,0.01,-15.9045,-23.1483,-8.5374,Safe R,-15.8415,0.0059,,,0.0,,0.0002,0.0972
-2026-10-15,house-fl-4,HOUSE,FL,4,False,standard,LaShonda Holloway,Aaron Bean,Aaron Bean,0.0409,-10.4481,-17.8412,-3.0164,Safe R,-10.3677,0.0497,,,0.0,,0.0007,0.2741
-2026-10-15,house-fl-5,HOUSE,FL,5,False,standard,Rachel Grage,John Rutherford,John Rutherford,0.007,-17.1293,-24.4755,-9.8164,Safe R,-17.1876,0.0032,,,0.0,,0.0001,0.0535
-2026-10-15,house-fl-6,HOUSE,FL,6,False,standard,Eric Yonce,Randy Fine,Randy Fine,0.0022,-24.6278,-31.8876,-17.2157,Safe R,-24.6627,0.0,,,0.0,,0.0,0.0176
-2026-10-15,house-fl-7,HOUSE,FL,7,False,standard,Bale Dalton,Ryan Elijah,Cory Mills,0.3844,-1.8356,-10.1855,6.4593,Lean R,-1.8632,0.3986,,,0.0,,0.0124,4.5424
-2026-10-15,house-fl-8,HOUSE,FL,8,False,standard,Jennifer Jenkins,Mike Haridopolos,Mike Haridopolos,0.0194,-10.6854,-16.9835,-4.4884,Safe R,-12.7964,0.021,-7.0151,2.0,0.3601,0.1969,0.0006,0.217
-2026-10-15,house-fl-9,HOUSE,FL,9,False,standard,Darren Soto,Dan Green,Darren Soto,0.3146,-2.4326,-8.9103,4.2275,Lean R,-1.3855,0.4128,-5.5195,1.0,0.2366,0.3072,0.009,3.7152
-2026-10-15,house-fl-10,HOUSE,FL,10,False,same_party,Maxwell Frost,,Maxwell Frost,1.0,,,,Safe D,,,,,,,,
-2026-10-15,house-fl-11,HOUSE,FL,11,False,standard,James Pericola,Joe Strada,Daniel Webster,0.0544,-8.9518,-15.958,-2.0394,Likely R,-10.8076,0.0681,-5.5617,1.0,0.3506,0.2837,0.0008,0.2943
-2026-10-15,house-fl-12,HOUSE,FL,12,False,standard,Kimberly Overman,Gus Bilirakis,Gus Bilirakis,0.0188,-13.2385,-20.6447,-5.8745,Safe R,-13.2842,0.0174,,,0.0,,0.0004,0.1829
-2026-10-15,house-fl-13,HOUSE,FL,13,False,standard,Leela Gray,Anna Paulina Luna,Anna Paulina Luna,0.1529,-4.7929,-10.8082,1.2737,Likely R,-4.6247,0.2311,-5.1225,5.0,0.3991,0.2505,0.0024,0.9348
-2026-10-15,house-fl-14,HOUSE,FL,14,False,standard,Kathy Castor,Mike Beltran,Kathy Castor,0.866,5.5692,-0.9329,11.8408,Likely D,4.3323,0.7545,8.1285,1.0,0.3214,0.8191,0.0291,11.6772
-2026-10-15,house-fl-15,HOUSE,FL,15,False,standard,Robert People,Laurel Lee,Laurel Lee,0.0136,-14.678,-22.0495,-7.3424,Safe R,-14.6595,0.0099,,,0.0,,0.0003,0.1173
-2026-10-15,house-fl-16,HOUSE,FL,16,False,standard,Kelly Kirschner,Sydney Gruters,Vern Buchanan,0.1136,-6.4083,-13.3455,0.4406,Likely R,-6.8871,0.1711,-5.8685,2.0,0.3859,0.2582,0.0032,1.1339
-2026-10-15,house-fl-17,HOUSE,FL,17,False,standard,Matthew Montavon,Greg Steube,Greg Steube,0.0064,-17.1651,-24.3694,-9.7882,Safe R,-17.1833,0.0032,,,0.0,,0.0002,0.0686
-2026-10-15,house-fl-18,HOUSE,FL,18,False,standard,Curtis Gibson,Scott Franklin,Scott Franklin,0.0142,-14.0989,-21.4378,-6.7938,Safe R,-14.0592,0.0127,,,0.0,,0.0004,0.1885
-2026-10-15,house-fl-19,HOUSE,FL,19,False,standard,Victor Arias,Jim Schwartzel,Byron Donalds,0.004,-22.5376,-30.9542,-14.3063,Safe R,-22.5703,0.0009,,,0.0,,0.0001,0.0367
-2026-10-15,house-fl-20,HOUSE,FL,20,False,standard,Debbie Wasserman Schultz,Brent Andersen,Debbie Wasserman Schultz,1.0,47.7342,40.5463,55.0072,Safe D,47.7185,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-fl-21,HOUSE,FL,21,False,standard,James Martin,Brian Mast,Brian Mast,0.0177,-13.5629,-20.995,-6.1583,Safe R,-13.5786,0.0155,,,0.0,,0.0003,0.1038
-2026-10-15,house-fl-22,HOUSE,FL,22,False,standard,Pia Dandiya,Casey Askar,None (new seat),0.4002,-1.1611,-7.3936,4.89,Toss-up,-1.5224,0.4169,-0.9204,2.0,0.5279,0.4472,0.013,5.1602
-2026-10-15,house-fl-23,HOUSE,FL,23,False,standard,Lois Frankel,Deborah Adeimy,Lois Frankel,0.9986,25.4499,18.0912,32.884,Safe D,25.4407,1.0,,,0.0,,0.0002,0.1152
-2026-10-15,house-fl-24,HOUSE,FL,24,False,standard,Oliver Gilbert,Te Mayonna Brown,Frederica Wilson,0.9998,46.4769,38.1484,54.5776,Safe D,46.4315,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-fl-25,HOUSE,FL,25,False,standard,Jared Moskowitz,Scott Singer,Jared Moskowitz,0.8432,5.3483,-1.6672,12.3328,Likely D,4.8435,0.7793,8.5844,1.0,0.1443,0.7201,0.0254,10.4565
-2026-10-15,house-fl-26,HOUSE,FL,26,False,standard,Nicole Locklin,Mario Díaz-Balart,Mario Díaz-Balart,0.0084,-16.0017,-23.4788,-8.7687,Safe R,-16.0084,0.0055,,,0.0,,0.0002,0.0952
-2026-10-15,house-fl-27,HOUSE,FL,27,False,standard,Eliott Rodriguez,María Elvira Salazar,María Elvira Salazar,0.038,-8.7434,-14.7625,-2.6095,Safe R,-11.5474,0.0333,-4.4281,3.0,0.4023,0.2792,0.0004,0.2071
-2026-10-15,house-fl-28,HOUSE,FL,28,False,standard,Phil Ehr,Carlos Giménez,Carlos A. Giménez,0.0103,-17.9564,-26.377,-9.7001,Safe R,-17.9207,0.0067,,,0.0,,0.0003,0.1385
-2026-10-15,house-ga-1,HOUSE,GA,1,False,standard,Amanda Hollowell,Jim Kingston,Buddy Carter,0.065,-10.0778,-18.4633,-1.6073,Likely R,-10.0999,0.0818,,,0.0,,0.0018,0.7476
-2026-10-15,house-ga-2,HOUSE,GA,2,False,standard,Sanford Bishop,Matt Day,Sanford Bishop,0.9963,20.5353,12.9797,27.8058,Safe D,20.4424,0.9994,,,0.0,,0.0004,0.1623
-2026-10-15,house-ga-3,HOUSE,GA,3,False,standard,Maura Keller,Brian Jack,Brian Jack,0.0012,-20.5553,-26.9122,-14.3397,Safe R,-26.0444,0.0,-10.7912,1.0,0.3544,0.0974,0.0,0.0
-2026-10-15,house-ga-4,HOUSE,GA,4,False,standard,Hank Johnson,James Duffie,Hank Johnson,1.0,59.3283,52.1974,66.5273,Safe D,59.475,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ga-5,HOUSE,GA,5,False,standard,Nikema Williams,John Oscar Salvesen,Nikema Williams,1.0,79.9886,72.8116,87.1552,Safe D,79.9877,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ga-6,HOUSE,GA,6,False,standard,Lucy McBath,Kevin Martin,Lucy McBath,1.0,57.4354,50.1254,64.7289,Safe D,57.427,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ga-7,HOUSE,GA,7,False,standard,Tony Kozycki,Rich McCormick,Rich McCormick,0.008,-13.3273,-19.4791,-7.157,Safe R,-18.9772,0.0013,-4.3942,2.0,0.3895,0.2856,0.0001,0.0512
-2026-10-15,house-ga-8,HOUSE,GA,8,False,standard,Kelly Esti,Austin Scott,Austin Scott,0.0012,-27.2862,-34.6217,-19.9501,Safe R,-27.3419,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-ga-9,HOUSE,GA,9,False,standard,Caitlyn Gegen,Andrew Clyde,Andrew Clyde,0.0007,-29.1322,-36.5927,-21.8492,Safe R,-29.1624,0.0,,,0.0,,0.0,0.0183
-2026-10-15,house-ga-10,HOUSE,GA,10,False,standard,Pam Delancy,Houston Gaines,Mike Collins,0.0228,-14.3483,-22.5707,-6.1157,Safe R,-14.3104,0.0242,,,0.0,,0.0005,0.1774
-2026-10-15,house-ga-11,HOUSE,GA,11,False,standard,Chris Harden,John Cowan,Barry Loudermilk,0.0434,-9.6379,-16.6781,-2.704,Safe R,-16.3152,0.0122,1.6761,1.0,0.3717,0.5719,0.0009,0.3161
-2026-10-15,house-ga-12,HOUSE,GA,12,False,standard,Ceretta Smith,Rick Allen,Rick Allen,0.0266,-12.1735,-19.6271,-4.7421,Safe R,-12.1802,0.0265,,,0.0,,0.0003,0.1262
-2026-10-15,house-ga-13,HOUSE,GA,13,False,standard,Jasmine Clark,Jonathan Chavez,Everton Blair,1.0,49.9103,41.7289,58.0306,Safe D,49.9347,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ga-14,HOUSE,GA,14,False,standard,Shawn Harris,Clay Fuller,Clay Fuller,0.0006,-31.5577,-38.9069,-24.1192,Safe R,-31.5363,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-hi-1,HOUSE,HI,1,False,standard,Ed Case,Adriel Lam,Ed Case,0.9997,44.11,36.8293,51.3829,Safe D,44.0716,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-hi-2,HOUSE,HI,2,False,standard,Jill Tokuda,Brenton Awa,Jill Tokuda,0.9996,39.4385,32.1423,46.7072,Safe D,39.4014,1.0,,,0.0,,0.0,0.0259
-2026-10-15,house-ia-1,HOUSE,IA,1,False,standard,Christina Bohannan,Mariannette Miller-Meeks,Mariannette Miller-Meeks,0.794,4.0892,-2.4549,10.5696,Lean D,4.3149,0.7536,3.3093,2.0,0.2755,0.631,0.0282,10.0506
-2026-10-15,house-ia-2,HOUSE,IA,2,False,standard,Lindsay James,Joe Mitchell,Ashley Hinson,0.3678,-1.7466,-8.5232,5.0031,Lean R,-1.3414,0.4266,-2.4633,2.0,0.423,0.3849,0.0132,4.7107
-2026-10-15,house-ia-3,HOUSE,IA,3,False,standard,Sarah Trone Garriott,Zach Nunn,Zach Nunn,0.8214,5.0721,-2.1765,12.1929,Likely D,5.4497,0.8068,-0.8992,1.0,0.0652,0.4844,0.0266,9.4485
-2026-10-15,house-ia-4,HOUSE,IA,4,False,standard,David Dawson,Chris McGowan,Randy Feenstra,0.0034,-23.9342,-32.2727,-15.493,Safe R,-23.9936,0.0005,,,0.0,,0.0001,0.0383
-2026-10-15,house-id-1,HOUSE,ID,1,False,standard,Kaylee Peterson,Russ Fulcher,Russ Fulcher,0.0003,-33.8123,-40.2421,-27.5914,Safe R,-40.0518,0.0,-19.3882,2.0,0.2979,0.0197,0.0,0.0
-2026-10-15,house-id-2,HOUSE,ID,2,False,standard,Ellie Gilbreath,Mike Simpson,Mike Simpson,0.0016,-23.2441,-30.5478,-15.9048,Safe R,-23.2432,0.0001,,,0.0,,0.0,0.0202
-2026-10-15,house-il-1,HOUSE,IL,1,False,standard,Jonathan Jackson,Christian Maxwell,Jonathan Jackson,0.9999,40.4504,33.1309,47.7714,Safe D,40.5092,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-il-2,HOUSE,IL,2,False,standard,Donna Miller,Michael Noack,Robin Kelly,0.9996,41.241,32.9277,49.4253,Safe D,41.1909,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-il-3,HOUSE,IL,3,False,standard,Delia Ramirez,Angel Oakley,Delia Ramirez,0.9999,41.8017,34.3977,49.1179,Safe D,41.8327,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-il-4,HOUSE,IL,4,False,standard,Patty Garcia,Lupe Castillo,Chuy García,0.9995,36.5735,28.1968,44.8758,Safe D,36.5458,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-il-5,HOUSE,IL,5,False,standard,Mike Quigley,Tommy Hanson,Mike Quigley,1.0,46.0887,38.8931,53.2553,Safe D,46.0292,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-il-6,HOUSE,IL,6,False,standard,Sean Casten,Niki Conforti,Sean Casten,0.9928,17.6263,10.2952,25.0354,Safe D,17.5899,0.9974,,,0.0,,0.0008,0.3093
-2026-10-15,house-il-7,HOUSE,IL,7,False,standard,La Shawn Ford,Chad Koppie,Danny Davis,1.0,71.835,63.5819,80.1943,Safe D,71.9666,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-il-8,HOUSE,IL,8,False,standard,Melissa Bean,Jennifer Davis,Raja Krishnamoorthi,0.9824,16.2276,7.7499,24.5177,Safe D,16.1306,0.987,,,0.0,,0.0026,1.2975
-2026-10-15,house-il-9,HOUSE,IL,9,False,standard,Daniel Biss,John Elleson,Jan Schakowsky,0.9995,44.4718,36.2213,52.5557,Safe D,44.4592,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-il-10,HOUSE,IL,10,False,standard,Brad Schneider,Carl Lambrecht,Brad Schneider,0.9992,29.7908,22.4135,37.0622,Safe D,29.8522,1.0,,,0.0,,0.0,0.0229
-2026-10-15,house-il-11,HOUSE,IL,11,False,standard,Bill Foster,Jeff Walter,Bill Foster,0.9965,20.8671,13.4228,28.2571,Safe D,20.8607,0.9995,,,0.0,,0.0006,0.2297
-2026-10-15,house-il-12,HOUSE,IL,12,False,standard,Julie Fortier,Mike Bost,Mike Bost,0.0002,-39.671,-46.9191,-32.2473,Safe R,-39.6355,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-il-13,HOUSE,IL,13,False,standard,Nikki Budzinski,Jeff Wilson,Nikki Budzinski,0.9981,23.1887,15.9269,30.4564,Safe D,23.2283,0.9999,,,0.0,,0.0002,0.1141
-2026-10-15,house-il-14,HOUSE,IL,14,False,standard,Lauren Underwood,James Marter,Lauren Underwood,0.9951,18.6258,11.2991,25.9442,Safe D,18.6079,0.9984,,,0.0,,0.0008,0.3377
-2026-10-15,house-il-15,HOUSE,IL,15,False,standard,Jennifer Todd,Mary Miller,Mary Miller,0.0004,-35.0688,-42.4457,-27.7807,Safe R,-35.0901,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-il-16,HOUSE,IL,16,False,standard,Paul Nolley,Darin LaHood,Darin LaHood,0.0067,-17.8883,-25.1812,-10.5756,Safe R,-17.9573,0.0022,,,0.0,,0.0001,0.0581
-2026-10-15,house-il-17,HOUSE,IL,17,False,standard,Eric Sorensen,Dillan Vancil,Eric Sorensen,0.994,17.5818,10.3797,24.7846,Safe D,17.6288,0.9975,,,0.0,,0.0008,0.3591
-2026-10-15,house-in-1,HOUSE,IN,1,False,standard,Frank Mrvan,Barb Regnitz,Frank J. Mrvan,0.9371,10.2548,2.0231,18.569,Likely D,10.3426,0.9231,,,0.0,,0.0107,5.7393
-2026-10-15,house-in-2,HOUSE,IN,2,False,standard,Jamee Decio,Rudy Yakym,Rudy Yakym,0.0032,-20.8396,-28.2308,-13.5026,Safe R,-20.7802,0.0005,,,0.0,,0.0001,0.0874
-2026-10-15,house-in-3,HOUSE,IN,3,False,standard,Kelly Thompson,Marlin Stutzman,Marlin Stutzman,0.001,-28.1315,-35.3857,-20.8286,Safe R,-28.1315,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-in-4,HOUSE,IN,4,False,standard,Drew Cox,Jim Baird,Jim Baird,0.0014,-25.5036,-32.8544,-18.2616,Safe R,-25.6154,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-in-5,HOUSE,IN,5,False,standard,J. D. Ford,Victoria Spartz,Victoria Spartz,0.0242,-9.9279,-16.1424,-3.7714,Safe R,-11.2936,0.0363,-7.4567,1.0,0.3566,0.1841,0.0005,0.2372
-2026-10-15,house-in-6,HOUSE,IN,6,False,standard,Cinde Wirth,Jefferson Shreve,Jefferson Shreve,0.001,-28.1807,-35.5315,-20.823,Safe R,-28.1702,0.0,,,0.0,,0.0,0.0269
-2026-10-15,house-in-7,HOUSE,IN,7,False,standard,André Carson,Patrick McAuley,André Carson,0.9999,49.2681,41.8908,56.4421,Safe D,49.2847,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-in-8,HOUSE,IN,8,False,standard,Mary Allen,Mark Messmer,Mark Messmer,0.0004,-32.9645,-40.4137,-25.6456,Safe R,-33.0011,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-in-9,HOUSE,IN,9,False,standard,Brad Meyer,Erin Houchin,Erin Houchin,0.0014,-24.3509,-31.573,-16.9724,Safe R,-24.3447,0.0001,,,0.0,,0.0,0.0
-2026-10-15,house-ks-1,HOUSE,KS,1,False,standard,Lauren Reinhold,Tracey Mann,Tracey Mann,0.001,-28.1165,-35.5414,-20.7328,Safe R,-28.1203,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-ks-2,HOUSE,KS,2,False,standard,Don Coover,Derek Schmidt,Derek Schmidt,0.0135,-14.4614,-21.821,-6.9553,Safe R,-14.4444,0.0108,,,0.0,,0.0004,0.166
-2026-10-15,house-ks-3,HOUSE,KS,3,False,standard,Sharice Davids,Eric Jenkins,Sharice Davids,0.9954,18.8017,11.4286,26.0502,Safe D,18.7033,0.9985,,,0.0,,0.0008,0.2751
-2026-10-15,house-ks-4,HOUSE,KS,4,False,standard,Katy Tyndell,Ron Estes,Ron Estes,0.0044,-19.9598,-27.3025,-12.5847,Safe R,-20.024,0.0007,,,0.0,,0.0001,0.0468
-2026-10-15,house-ky-1,HOUSE,KY,1,False,standard,Drew Williams,James Comer,James Comer,0.0002,-42.1065,-49.4863,-34.6522,Safe R,-42.1185,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-ky-2,HOUSE,KY,2,False,standard,Megan Wingfield,Brett Guthrie,Brett Guthrie,0.0006,-37.2852,-44.7766,-29.844,Safe R,-37.3727,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-ky-3,HOUSE,KY,3,False,standard,Morgan McGarvey,Maria Rodriquez,Morgan McGarvey,0.9995,30.7224,23.3819,38.0691,Safe D,30.738,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ky-4,HOUSE,KY,4,False,standard,Melissa Strange,Ed Gallrein,Thomas Massie,0.0022,-28.3744,-36.6695,-20.037,Safe R,-28.3689,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-ky-5,HOUSE,KY,5,False,standard,Ned Pillersdorf,Hal Rogers,Hal Rogers,0.0001,-60.7432,-67.9627,-53.5731,Safe R,-60.6926,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-ky-6,HOUSE,KY,6,False,standard,Zach Dembo,Ralph Alvarado,Andy Barr,0.218,-3.8213,-10.3323,2.6895,Lean R,-6.8248,0.1733,-0.2679,8.0,0.4581,0.4868,0.0063,2.7656
-2026-10-15,house-la-1,HOUSE,LA,1,False,jungle,Lauren Jewett,Randall Arrington; Steve Scalise,Steve Scalise,0.0002,-38.6543,-45.9151,-31.3557,Safe R,-38.5979,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-la-2,HOUSE,LA,2,False,jungle,Troy Carter; Renada Collins,Peter Williams,Troy Carter,1.0,61.54,54.1727,68.7351,Safe D,61.5209,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-la-3,HOUSE,LA,3,False,jungle,John Day; Priscilla Gonzalez; Tia LeBrun; Caleb Walker,Kate Cotten; Clay Higgins,Clay Higgins,0.0006,-31.4715,-38.7401,-24.1016,Safe R,-31.4294,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-la-4,HOUSE,LA,4,False,jungle,Conrad Cable; Matt Gromlich,Gordon Heslop; Mike Johnson; Mike Nichols,Mike Johnson,0.0007,-29.1388,-36.3771,-21.8191,Safe R,-29.1086,0.0,,,0.0,,0.0,0.025
-2026-10-15,house-la-5,HOUSE,LA,5,False,jungle,Dan McKay; Patricia Moore; Antonio Wilson,Stewart Cathey Jr.; Misti Cordell; Omar Dantzler; Michael Echols; Gabe Firment; Austin Magee,Julia Letlow,0.0024,-26.6353,-35.0017,-18.3429,Safe R,-26.5899,0.0001,,,0.0,,0.0,0.0
-2026-10-15,house-la-6,HOUSE,LA,6,False,jungle,Pat Forbes; Lindsay Garcia,Monique Appeaning; Larry Davis; Rick Edmonds; Chris Johnson; Michael Mebruer; Blake Miguez; Stephen Wagley,Cleo Fields,0.0045,-22.6226,-30.9786,-14.2399,Safe R,-22.6351,0.0009,,,0.0,,0.0002,0.1118
-2026-10-15,house-ma-1,HOUSE,MA,1,False,same_party,Richard Neal,,Richard Neal,1.0,,,,Safe D,,,,,,,,
-2026-10-15,house-ma-2,HOUSE,MA,2,False,same_party,Jim McGovern,,Jim McGovern,1.0,,,,Safe D,,,,,,,,
-2026-10-15,house-ma-3,HOUSE,MA,3,False,standard,Lori Trahan,Gary Grossi,Lori Trahan,0.9994,29.7498,22.5874,37.0197,Safe D,29.7981,1.0,,,0.0,,0.0,0.0216
-2026-10-15,house-ma-4,HOUSE,MA,4,False,standard,Jake Auchincloss,Thomas Stalcup,Jake Auchincloss,0.9992,30.5099,23.1777,37.8407,Safe D,30.5116,1.0,,,0.0,,0.0001,0.0571
-2026-10-15,house-ma-5,HOUSE,MA,5,False,same_party,Katherine Clark,,Katherine Clark,1.0,,,,Safe D,,,,,,,,
-2026-10-15,house-ma-6,HOUSE,MA,6,False,standard,Dan Koh,Micah Jones,Seth Moulton,0.9984,29.0474,20.8413,37.6102,Safe D,29.1397,1.0,,,0.0,,0.0001,0.0357
-2026-10-15,house-ma-7,HOUSE,MA,7,False,same_party,Ayanna Pressley,,Ayanna Pressley,1.0,,,,Safe D,,,,,,,,
-2026-10-15,house-ma-8,HOUSE,MA,8,False,standard,Stephen Lynch,Robert Burke,Stephen Lynch,0.9998,43.4847,36.3165,50.8382,Safe D,43.4442,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ma-9,HOUSE,MA,9,False,standard,Bill Keating,Tyler MacAllister,Bill Keating,0.9976,21.8502,14.5009,29.1483,Safe D,21.9191,0.9998,,,0.0,,0.0001,0.0335
-2026-10-15,house-md-1,HOUSE,MD,1,False,standard,Dan Schwartz,Andy Harris,Andy Harris,0.0052,-15.3795,-21.8017,-8.9842,Safe R,-13.7255,0.0146,-18.6966,1.0,0.3328,0.0159,0.0,0.0
-2026-10-15,house-md-2,HOUSE,MD,2,False,standard,Johnny Olszewski,Dave Wallace,Johnny Olszewski,0.999,29.8469,22.5327,37.1024,Safe D,29.9092,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-md-3,HOUSE,MD,3,False,standard,Sarah Elfreth,Berney Flowers,Sarah Elfreth,0.9993,33.8431,26.5411,41.0081,Safe D,33.8491,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-md-4,HOUSE,MD,4,False,standard,Glenn Ivey,George McDermott,Glenn Ivey,1.0,83.052,75.7896,90.3485,Safe D,83.0629,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-md-5,HOUSE,MD,5,False,standard,Adrian Boafo,Chris Chaffee,Steny Hoyer,0.9998,41.6375,33.4794,49.9561,Safe D,41.6451,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-md-6,HOUSE,MD,6,False,standard,April McClain Delaney,Robin Ficker,April McClain Delaney,0.9936,18.7106,11.4148,26.0064,Safe D,18.7504,0.9986,,,0.0,,0.0008,0.3656
-2026-10-15,house-md-7,HOUSE,MD,7,False,standard,Kweisi Mfume,Scott Collier,Kweisi Mfume,1.0,69.8143,62.4689,76.9021,Safe D,69.8471,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-md-8,HOUSE,MD,8,False,standard,Jamie Raskin,Cheryl Riley,Jamie Raskin,1.0,65.1028,57.8576,72.3408,Safe D,65.1452,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-me-1,HOUSE,ME,1,False,standard,Chellie Pingree,Ronald Russell,Chellie Pingree,0.9998,27.3805,21.4615,33.365,Safe D,31.6618,1.0,21.021,1.0,0.4045,0.9974,0.0,0.0
-2026-10-15,house-me-2,HOUSE,ME,2,False,standard,Matthew Dunlap,Paul LePage,Jared Golden,0.5172,0.1891,-5.8262,6.0641,Toss-up,-1.2131,0.4336,0.9941,8.0,0.5846,0.5642,0.019,6.5353
-2026-10-15,house-mi-1,HOUSE,MI,1,False,standard,Callie Barr,Jack Bergman,Jack Bergman,0.0124,-14.8669,-22.177,-7.5367,Safe R,-14.7895,0.0094,,,0.0,,0.0004,0.0965
-2026-10-15,house-mi-2,HOUSE,MI,2,False,standard,Ben Ambrose,John Moolenaar,John Moolenaar,0.0012,-25.4685,-32.6452,-18.2419,Safe R,-25.4796,0.0,,,0.0,,0.0,0.0152
-2026-10-15,house-mi-3,HOUSE,MI,3,False,standard,Hillary Scholten,Terri DeBoer,Hillary Scholten,0.9952,19.0021,11.8444,26.4162,Safe D,19.0906,0.9988,,,0.0,,0.001,0.3298
-2026-10-15,house-mi-4,HOUSE,MI,4,False,standard,Sean McCann,Bill Huizenga,Bill Huizenga,0.3824,-1.3395,-7.4643,4.7449,Lean R,-0.8846,0.4441,-2.0761,4.0,0.3886,0.3949,0.0136,4.1984
-2026-10-15,house-mi-5,HOUSE,MI,5,False,standard,Christian Vukasovich,Tim Walberg,Tim Walberg,0.0017,-23.4108,-30.717,-16.1758,Safe R,-23.4166,0.0001,,,0.0,,0.0,0.0
-2026-10-15,house-mi-6,HOUSE,MI,6,False,standard,Debbie Dingell,Heather Smiley,Debbie Dingell,0.9995,34.864,27.6219,42.099,Safe D,34.845,1.0,,,0.0,,0.0,0.0146
-2026-10-15,house-mi-7,HOUSE,MI,7,False,standard,William Lawrence,Tom Barrett,Tom Barrett,0.5616,0.679,-5.0889,6.5939,Toss-up,2.648,0.6632,-1.6912,2.0,0.4444,0.4045,0.0225,6.5213
-2026-10-15,house-mi-8,HOUSE,MI,8,False,standard,Kristen McDonald Rivet,Thomas Smith,Kristen McDonald Rivet,0.9924,16.4191,9.1214,23.9707,Safe D,16.4307,0.9955,,,0.0,,0.0015,0.463
-2026-10-15,house-mi-9,HOUSE,MI,9,False,standard,Ray Pooley,Lisa McClain,Lisa McClain,0.0008,-28.8347,-36.1217,-21.574,Safe R,-28.7983,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-mi-10,HOUSE,MI,10,False,standard,Christina Hines,Mike Bouchard Jr.,John James,0.5107,0.1405,-6.5976,6.8797,Toss-up,2.5955,0.6398,-3.4498,2.0,0.4055,0.3459,0.018,5.577
-2026-10-15,house-mi-11,HOUSE,MI,11,False,standard,Jeremy Moss,Ethan Baker,Haley Stevens,0.9967,24.7124,16.2973,32.9381,Safe D,24.6835,0.9997,,,0.0,,0.0005,0.1464
-2026-10-15,house-mi-12,HOUSE,MI,12,False,standard,Rashida Tlaib,James Hooper,Rashida Tlaib,1.0,51.6853,44.5695,58.909,Safe D,51.688,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-mi-13,HOUSE,MI,13,False,standard,Donavan McKinney,T. P. Nykoriak,Shri Thanedar,0.9997,49.3277,41.0241,57.5833,Safe D,49.2421,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-mn-1,HOUSE,MN,1,False,standard,Jake Johnson,Brad Finstad,Brad Finstad,0.2093,-3.7328,-9.7254,2.2918,Lean R,-6.9014,0.1363,0.8174,4.0,0.403,0.5435,0.0048,1.7486
-2026-10-15,house-mn-2,HOUSE,MN,2,False,standard,Matt Little,Eric Pratt,Angie Craig,0.9786,11.3818,4.746,17.8547,Safe D,15.3275,0.9828,6.6005,2.0,0.4568,0.7996,0.0064,2.1391
-2026-10-15,house-mn-3,HOUSE,MN,3,False,standard,Kelly Morrison,Tyler Bass,Kelly Morrison,0.999,29.9234,22.6196,37.1401,Safe D,29.9086,1.0,,,0.0,,0.0001,0.0509
-2026-10-15,house-mn-4,HOUSE,MN,4,False,standard,Betty McCollum,Paul Wikstrom,Betty McCollum,1.0,43.8647,36.6346,51.2215,Safe D,43.8166,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-mn-5,HOUSE,MN,5,False,standard,Ilhan Omar,John Nagel,Ilhan Omar,1.0,63.0975,55.8606,70.3072,Safe D,63.0868,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-mn-6,HOUSE,MN,6,False,standard,Doug Chapin,Tom Emmer,Tom Emmer,0.0086,-16.2225,-23.5658,-8.8409,Safe R,-16.2609,0.0049,,,0.0,,0.0002,0.0665
-2026-10-15,house-mn-7,HOUSE,MN,7,False,standard,Erik Osberg,Michelle Fischbach,Michelle Fischbach,0.0005,-32.1056,-39.443,-24.9579,Safe R,-32.1683,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-mn-8,HOUSE,MN,8,False,standard,Trina Swanson,Pete Stauber,Pete Stauber,0.0508,-9.7955,-17.2126,-2.4238,Likely R,-9.834,0.059,,,0.0,,0.001,0.3147
-2026-10-15,house-mo-1,HOUSE,MO,1,False,standard,Wesley Bell,Paul Berry,Wesley Bell,1.0,68.8819,61.5355,76.0651,Safe D,68.8665,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-mo-2,HOUSE,MO,2,False,standard,Fred Wellman,Ann Wagner,Ann Wagner,0.2338,-3.4613,-9.7601,2.7495,Lean R,-4.2886,0.2477,-2.0269,2.0,0.3436,0.4062,0.0054,2.0212
-2026-10-15,house-mo-3,HOUSE,MO,3,False,standard,Bethany Mann,Bob Onder,Bob Onder,0.0028,-21.6839,-29.0296,-14.3706,Safe R,-21.7462,0.0003,,,0.0,,0.0,0.0198
-2026-10-15,house-mo-4,HOUSE,MO,4,False,standard,Jordan Herrera,Mark Alford,Mark Alford,0.0002,-37.6816,-44.9903,-30.4469,Safe R,-37.5945,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-mo-5,HOUSE,MO,5,False,standard,Emanuel Cleaver,Rick Brattin,Emanuel Cleaver,0.9994,32.8997,25.6263,40.0113,Safe D,32.8864,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-mo-6,HOUSE,MO,6,False,standard,Josh Smead,Chris Stigall,Sam Graves,0.001,-31.5636,-39.7961,-23.2313,Safe R,-31.6323,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-mo-7,HOUSE,MO,7,False,standard,Missi Hesketh,Eric Burlison,Eric Burlison,0.0002,-38.013,-45.2479,-30.6342,Safe R,-38.0066,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-mo-8,HOUSE,MO,8,False,standard,Chris Reichard,Jason Smith,Jason Smith,0.0,-48.845,-56.0458,-41.6987,Safe R,-48.8303,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-ms-1,HOUSE,MS,1,False,standard,Cliff Johnson,Trent Kelly,Trent Kelly,0.0006,-31.6023,-38.8378,-24.272,Safe R,-31.5941,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-ms-2,HOUSE,MS,2,False,standard,Bennie Thompson,Ron Eller,Bennie Thompson,0.9992,31.3313,23.9903,38.585,Safe D,31.3467,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ms-3,HOUSE,MS,3,False,standard,Michael Chiaradio,Michael Guest,Michael Guest,0.0018,-23.8091,-31.2123,-16.4632,Safe R,-23.8054,0.0001,,,0.0,,0.0,0.0296
-2026-10-15,house-ms-4,HOUSE,MS,4,False,standard,Jeffrey Hulum III,Mike Ezell,Mike Ezell,0.0004,-38.8568,-46.1457,-31.5582,Safe R,-38.829,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-mt-1,HOUSE,MT,1,False,standard,Sam Forstag,Aaron Flint,Ryan Zinke,0.3104,-2.4012,-8.7709,3.873,Lean R,-2.9689,0.3411,-1.8688,6.0,0.487,0.4011,0.0104,4.6324
-2026-10-15,house-mt-2,HOUSE,MT,2,False,standard,Brian Miller,Troy Downing,Troy Downing,0.0003,-24.4903,-31.0571,-18.0368,Safe R,-25.9906,0.0,-20.1781,1.0,0.2496,0.0282,0.0,0.0
-2026-10-15,house-nc-1,HOUSE,NC,1,False,standard,Don Davis,Laurie Buckhout,Don Davis,0.8038,4.1056,-2.0814,10.1451,Likely D,2.2146,0.6376,6.903,7.0,0.4021,0.8198,0.03,11.9905
-2026-10-15,house-nc-2,HOUSE,NC,2,False,standard,Deborah Ross,Eugene Douglass,Deborah Ross,1.0,43.3509,36.1252,50.606,Safe D,43.3743,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-nc-3,HOUSE,NC,3,False,standard,Raymond Smith Jr.,Greg Murphy,Greg Murphy,0.0372,-9.4897,-15.9931,-2.9161,Safe R,-10.9067,0.0415,-6.0141,1.0,0.2911,0.2647,0.0006,0.2648
-2026-10-15,house-nc-4,HOUSE,NC,4,False,standard,Valerie Foushee,Max Ganorkar,Valerie Foushee,1.0,54.2672,47.0992,61.4932,Safe D,54.246,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-nc-5,HOUSE,NC,5,False,standard,Chuck Hubbard,Virginia Foxx,Virginia Foxx,0.0172,-13.4062,-20.7225,-6.0526,Safe R,-13.3428,0.017,,,0.0,,0.0006,0.266
-2026-10-15,house-nc-6,HOUSE,NC,6,False,standard,Cyril Jefferson,Addison McDowell,Addison McDowell,0.0223,-12.6004,-19.9188,-5.1814,Safe R,-12.5463,0.0231,,,0.0,,0.0003,0.1283
-2026-10-15,house-nc-7,HOUSE,NC,7,False,standard,Kimberly Hardy,David Rouzer,David Rouzer,0.0251,-10.3084,-16.8065,-3.9038,Safe R,-10.2552,0.0516,-10.5745,1.0,0.2783,0.1416,0.0007,0.2628
-2026-10-15,house-nc-8,HOUSE,NC,8,False,standard,Colby Watson,Mark Harris,Mark Harris,0.0124,-14.8203,-22.2778,-7.5223,Safe R,-14.7704,0.0095,,,0.0,,0.0002,0.1019
-2026-10-15,house-nc-9,HOUSE,NC,9,False,standard,Richard Ojeda,Richard Hudson,Richard Hudson,0.0209,-10.8773,-17.2817,-4.4224,Safe R,-10.6935,0.0446,-11.1852,1.0,0.2975,0.1175,0.0001,0.0655
-2026-10-15,house-nc-10,HOUSE,NC,10,False,standard,Ashley Bell,Pat Harrigan,Pat Harrigan,0.013,-14.1405,-21.3944,-7.0335,Safe R,-14.5361,0.0105,-9.8662,1.0,0.0602,0.3392,0.0002,0.1003
-2026-10-15,house-nc-11,HOUSE,NC,11,False,standard,Jamie Ager,Jennifer Balkcom,Chuck Edwards,0.4285,-0.9507,-7.7948,5.8578,Toss-up,-0.4758,0.4738,-1.7366,1.0,0.3868,0.4239,0.015,5.7141
-2026-10-15,house-nc-12,HOUSE,NC,12,False,standard,Alma Adams,Jack Codiga,Alma Adams,1.0,55.4266,48.2454,62.5993,Safe D,55.4055,1.0,,,0.0,,0.0,0.0238
-2026-10-15,house-nc-13,HOUSE,NC,13,False,standard,Paul Barringer,Brad Knott,Brad Knott,0.032,-11.2142,-18.595,-3.8452,Safe R,-11.2897,0.0364,,,0.0,,0.0008,0.3336
-2026-10-15,house-nc-14,HOUSE,NC,14,False,standard,Lakesha Womack,Tim Moore,Tim Moore,0.0225,-12.3391,-19.5388,-5.1506,Safe R,-12.9299,0.02,-2.8528,1.0,0.058,0.4533,0.0001,0.0613
-2026-10-15,house-nd-al,HOUSE,ND,0,False,standard,Trygve Hammer,Julie Fedorchak,Julie Fedorchak,0.0004,-33.1669,-40.4918,-25.7729,Safe R,-33.1646,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-ne-1,HOUSE,NE,1,False,standard,Chris Backemeyer,Mike Flood,Mike Flood,0.1013,-5.984,-11.8489,0.0306,Likely R,-10.6901,0.0447,0.3844,3.0,0.4303,0.5218,0.002,0.9658
-2026-10-15,house-ne-2,HOUSE,NE,2,False,standard,Denise Powell,Brinker Harding,Don Bacon,0.9858,12.3265,5.9043,18.9096,Safe D,14.1865,0.9748,10.0403,2.0,0.4503,0.8965,0.0041,2.0396
-2026-10-15,house-ne-3,HOUSE,NE,3,False,standard,Becky Stille,Adrian Smith,Adrian Smith,0.0001,-51.692,-58.8468,-44.4012,Safe R,-51.6815,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-nh-1,HOUSE,NH,1,False,standard,Stefany Shaheen,Anthony DiLorenzo,Chris Pappas,0.9326,7.9184,1.326,14.5048,Likely D,11.6833,0.9465,3.119,1.0,0.4391,0.6497,0.0172,6.107
-2026-10-15,house-nh-2,HOUSE,NH,2,False,standard,Maggie Goodlander,Lily Tang Williams,Maggie Goodlander,0.9986,18.3497,12.3279,24.2787,Safe D,17.5315,0.9973,19.3267,8.0,0.4209,0.996,0.0004,0.1611
-2026-10-15,house-nj-1,HOUSE,NJ,1,False,standard,Donald Norcross,Damon Galdo,Donald Norcross,0.9988,27.6437,20.2658,35.0346,Safe D,27.5504,1.0,,,0.0,,0.0001,0.048
-2026-10-15,house-nj-2,HOUSE,NJ,2,False,standard,Zack Mullock,Jeff Van Drew,Jeff Van Drew,0.0596,-9.2577,-16.5223,-1.7723,Likely R,-9.2318,0.0712,,,0.0,,0.0013,0.6068
-2026-10-15,house-nj-3,HOUSE,NJ,3,False,standard,Herb Conaway,Michael McGuire,Herb Conaway,0.9968,20.51,13.1888,27.8802,Safe D,20.5127,0.9994,,,0.0,,0.0008,0.3404
-2026-10-15,house-nj-4,HOUSE,NJ,4,False,standard,Rachel Peace,Chris Smith,Chris Smith,0.0016,-26.3143,-33.5105,-18.9319,Safe R,-26.3073,0.0,,,0.0,,0.0,0.0217
-2026-10-15,house-nj-5,HOUSE,NJ,5,False,standard,Josh Gottheimer,Sean Kirrane,Josh Gottheimer,0.9956,18.4786,11.1478,25.8757,Safe D,18.4015,0.9983,,,0.0,,0.0004,0.1576
-2026-10-15,house-nj-6,HOUSE,NJ,6,False,standard,Frank Pallone,Hillary Herzig,Frank Pallone,0.9974,22.1369,14.8022,29.4893,Safe D,22.0615,0.9998,,,0.0,,0.0001,0.0567
-2026-10-15,house-nj-7,HOUSE,NJ,7,False,standard,Rebecca Bennett,Thomas Kean Jr.,Thomas Kean Jr.,0.8146,4.3475,-1.952,10.5016,Likely D,4.0952,0.7425,4.5135,2.0,0.3737,0.7142,0.0322,13.1047
-2026-10-15,house-nj-8,HOUSE,NJ,8,False,same_party,Rob Menendez,,Rob Menendez,1.0,,,,Safe D,,,,,,,,
-2026-10-15,house-nj-9,HOUSE,NJ,9,False,standard,Nellie Pou,Rosie Pino,Nellie Pou,0.99,15.9338,8.5125,23.1782,Safe D,15.8431,0.9941,,,0.0,,0.0023,1.4699
-2026-10-15,house-nj-10,HOUSE,NJ,10,False,standard,LaMonica McIver,Carmen Bucco,LaMonica McIver,1.0,62.4911,55.2828,69.7611,Safe D,62.4431,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-nj-11,HOUSE,NJ,11,False,standard,Analilia Mejia,Joe Hathaway,Analilia Mejia,0.9964,20.0194,12.754,27.3077,Safe D,19.9802,0.9993,,,0.0,,0.0006,0.2648
-2026-10-15,house-nj-12,HOUSE,NJ,12,False,standard,Adam Hamawy,Gregg Mele,Bonnie Watson Coleman,0.999,32.5283,24.2558,40.9031,Safe D,32.473,1.0,,,0.0,,0.0002,0.1079
-2026-10-15,house-nm-1,HOUSE,NM,1,False,standard,Melanie Stansbury,Didi Okpareke,Melanie Stansbury,0.997,22.2517,14.9198,29.5428,Safe D,22.1858,0.9998,,,0.0,,0.0001,0.0613
-2026-10-15,house-nm-2,HOUSE,NM,2,False,standard,Gabe Vasquez,Greg Cunningham,Gabe Vasquez,0.9666,8.8732,2.8563,14.7802,Safe D,12.5468,0.9769,3.6726,3.0,0.4232,0.694,0.0124,6.5985
-2026-10-15,house-nm-3,HOUSE,NM,3,False,standard,Teresa Leger Fernández,Martin Zamora,Teresa Leger Fernandez,0.9786,14.9833,6.7481,23.3251,Safe D,14.9738,0.9806,,,0.0,,0.0028,1.3308
-2026-10-15,house-nv-1,HOUSE,NV,1,False,standard,Dina Titus,Carrie Buck,Dina Titus,0.9901,15.7788,8.4203,23.109,Safe D,15.7361,0.9938,,,0.0,,0.0017,0.8168
-2026-10-15,house-nv-2,HOUSE,NV,2,False,standard,Teresa Benitez-Thompson,David Flippo,Mark Amodei,0.161,-5.0766,-11.764,1.6523,Likely R,-7.4015,0.1537,-1.8895,3.0,0.4147,0.4127,0.0045,1.731
-2026-10-15,house-nv-3,HOUSE,NV,3,False,standard,Susie Lee,Martin O'Donnell,Susie Lee,0.9798,12.5732,5.2931,19.9092,Safe D,12.5562,0.977,,,0.0,,0.0049,2.0466
-2026-10-15,house-nv-4,HOUSE,NV,4,False,standard,Steven Horsford,Cody Whipple,Steven Horsford,0.9928,16.5151,9.2073,23.8669,Safe D,16.5356,0.9957,,,0.0,,0.0018,0.8688
-2026-10-15,house-ny-1,HOUSE,NY,1,False,standard,Chris Gallant,Nick LaLota,Nick LaLota,0.136,-6.2206,-13.4495,1.0941,Likely R,-6.1676,0.1635,-7.4725,1.0,0.0043,0.4673,0.0046,1.6632
-2026-10-15,house-ny-2,HOUSE,NY,2,False,standard,Patrick Halpin,Andrew Garbarino,Andrew Garbarino,0.0254,-12.3824,-19.776,-5.0872,Safe R,-12.4137,0.0243,,,0.0,,0.0008,0.3169
-2026-10-15,house-ny-3,HOUSE,NY,3,False,standard,Tom Suozzi,Mike LiPetri,Tom Suozzi,0.9824,13.3264,6.0237,20.6242,Safe D,13.2829,0.9826,,,0.0,,0.004,1.6059
-2026-10-15,house-ny-4,HOUSE,NY,4,False,standard,Laura Gillen,Jeanine Driscoll,Laura Gillen,0.9916,15.8175,8.6065,23.1827,Safe D,15.8375,0.9941,,,0.0,,0.002,0.769
-2026-10-15,house-ny-5,HOUSE,NY,5,False,standard,Gregory Meeks,George Marsh,Gregory Meeks,0.9999,54.5655,47.3474,61.7506,Safe D,54.5744,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ny-6,HOUSE,NY,6,False,standard,Grace Meng,Joseph Chou,Grace Meng,0.9986,25.704,18.3919,32.9943,Safe D,25.7115,1.0,,,0.0,,0.0001,0.1105
-2026-10-15,house-ny-7,HOUSE,NY,7,False,standard,Claire Valdez,Melvin Rivera,Nydia Velázquez,0.9999,54.2287,45.7935,62.3506,Safe D,54.1739,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ny-8,HOUSE,NY,8,False,standard,Hakeem Jeffries,Lewis Mizrahi,Hakeem Jeffries,0.9999,55.904,48.7187,63.2774,Safe D,55.9624,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ny-9,HOUSE,NY,9,False,standard,Yvette Clarke,Joel Azumah,Yvette Clarke,1.0,53.3338,46.1187,60.554,Safe D,53.4143,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ny-10,HOUSE,NY,10,False,standard,Brad Lander,Jennifer Moore,Dan Goldman,1.0,67.9917,59.7545,76.1613,Safe D,67.9959,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ny-11,HOUSE,NY,11,False,standard,Michael DeCillis,Nicole Malliotakis,Nicole Malliotakis,0.0046,-19.6436,-27.0157,-12.3167,Safe R,-19.6289,0.0009,,,0.0,,0.0001,0.0848
-2026-10-15,house-ny-12,HOUSE,NY,12,False,standard,Micah Lasher,Caroline Shinkle,Jerry Nadler,1.0,70.789,62.6629,79.0276,Safe D,70.7981,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ny-13,HOUSE,NY,13,False,standard,Darializa Avila Chevalier,Jomo Williams,Adriano Espaillat,1.0,66.3387,58.2427,74.6064,Safe D,66.4834,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ny-14,HOUSE,NY,14,False,standard,Alexandria Ocasio-Cortez,Diamant Hysenaj,Alexandria Ocasio-Cortez,0.9999,44.105,36.9004,51.4748,Safe D,44.1505,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ny-15,HOUSE,NY,15,False,standard,Ritchie Torres,Stylo Sapaskis,Ritchie Torres,1.0,60.9426,53.7634,68.2166,Safe D,60.8642,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ny-16,HOUSE,NY,16,False,standard,George Latimer,Joseph Cinquemani,George Latimer,1.0,49.1634,41.9385,56.3694,Safe D,49.1237,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-ny-17,HOUSE,NY,17,False,standard,Cait Conley,Mike Lawler,Mike Lawler,0.7664,3.2017,-2.61,8.9683,Lean D,3.8944,0.7321,2.4971,4.0,0.4802,0.6495,0.0315,12.341
-2026-10-15,house-ny-18,HOUSE,NY,18,False,standard,Pat Ryan,Jacqueline Auringer,Pat Ryan,0.9988,20.2567,14.0941,26.4624,Safe D,21.8882,0.9997,17.4012,2.0,0.369,0.9845,0.0002,0.1026
-2026-10-15,house-ny-19,HOUSE,NY,19,False,standard,Josh Riley,Peter Oberacker,Josh Riley,0.9894,14.8465,7.6851,22.2191,Safe D,14.8961,0.991,,,0.0,,0.0022,0.8534
-2026-10-15,house-ny-20,HOUSE,NY,20,False,standard,Paul Tonko,Ralph Ambrosio,Paul Tonko,0.9986,27.8359,20.3836,35.2134,Safe D,27.8317,1.0,,,0.0,,0.0001,0.0615
-2026-10-15,house-ny-21,HOUSE,NY,21,False,standard,Blake Gendebien,Anthony Constantino,Elise Stefanik,0.0715,-7.2284,-13.6156,-0.8973,Likely R,-13.6022,0.0303,-0.945,7.0,0.4989,0.4487,0.0017,0.7245
-2026-10-15,house-ny-22,HOUSE,NY,22,False,standard,John Mannion,Kailee Buller,John Mannion,0.9968,20.4186,13.0622,27.7612,Safe D,20.3946,0.9994,,,0.0,,0.0002,0.084
-2026-10-15,house-ny-23,HOUSE,NY,23,False,standard,Aaron Gies,Nick Langworthy,Nick Langworthy,0.0012,-19.6765,-25.9281,-13.489,Safe R,-19.8128,0.0008,-19.5369,2.0,0.3474,0.0103,0.0,0.0
-2026-10-15,house-ny-24,HOUSE,NY,24,False,standard,Alissa Ellman,Claudia Tenney,Claudia Tenney,0.0036,-20.4348,-27.6989,-13.0551,Safe R,-20.404,0.0006,,,0.0,,0.0001,0.0608
-2026-10-15,house-ny-25,HOUSE,NY,25,False,standard,Joseph Morelle,Virginia McIntyre,Joseph Morelle,0.9994,29.2722,21.9646,36.6545,Safe D,29.2374,1.0,,,0.0,,0.0,0.0204
-2026-10-15,house-ny-26,HOUSE,NY,26,False,standard,Tim Kennedy,Dennis Hannon,Tim Kennedy,0.9998,36.2633,28.9445,43.5655,Safe D,36.3453,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-oh-1,HOUSE,OH,1,False,standard,Greg Landsman,Eric Conroy,Greg Landsman,0.9472,7.6872,1.7718,13.7279,Likely D,10.9834,0.9595,2.7563,1.0,0.4021,0.6427,0.02,7.7864
-2026-10-15,house-oh-2,HOUSE,OH,2,False,standard,Jennifer Mazzuckelli,David Taylor,David Taylor,0.0004,-37.0695,-44.3194,-29.6476,Safe R,-37.1025,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-oh-3,HOUSE,OH,3,False,standard,Joyce Beatty,Cleophus Dulaney,Joyce Beatty,1.0,49.3233,42.0407,56.5139,Safe D,49.2259,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-oh-4,HOUSE,OH,4,False,standard,Joshua Kolasinski,Jim Jordan,Jim Jordan,0.0004,-36.0806,-43.3341,-28.7745,Safe R,-36.0625,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-oh-5,HOUSE,OH,5,False,standard,Brian Shaver,Bob Latta,Bob Latta,0.0048,-18.5274,-26.0649,-11.2747,Safe R,-18.657,0.0015,,,0.0,,0.0,0.0199
-2026-10-15,house-oh-6,HOUSE,OH,6,False,standard,Elizabeth Kirtley,Michael Rulli,Michael Rulli,0.001,-29.3738,-36.7115,-22.1423,Safe R,-29.4362,0.0,,,0.0,,0.0,0.0211
-2026-10-15,house-oh-7,HOUSE,OH,7,False,standard,Brian Poindexter,Max Miller,Max Miller,0.3263,-2.0602,-8.1194,4.0514,Lean R,-9.225,0.0713,9.3421,5.0,0.3842,0.8838,0.0096,3.4636
-2026-10-15,house-oh-8,HOUSE,OH,8,False,standard,Vanessa Enoch,Warren Davidson,Warren Davidson,0.0249,-12.1635,-19.4602,-4.8231,Safe R,-12.1861,0.0264,,,0.0,,0.0007,0.2689
-2026-10-15,house-oh-9,HOUSE,OH,9,False,standard,Marcy Kaptur,Derek Merrin,Marcy Kaptur,0.5925,1.0443,-4.983,7.0969,Toss-up,4.4422,0.7599,-4.0134,2.0,0.4037,0.2974,0.0246,9.9614
-2026-10-15,house-oh-10,HOUSE,OH,10,False,standard,Kristina Knickerbocker,Mike Turner,Mike Turner,0.019,-10.2611,-16.3638,-4.2733,Safe R,-9.3992,0.0676,-11.805,2.0,0.3839,0.066,0.0002,0.102
-2026-10-15,house-oh-11,HOUSE,OH,11,False,standard,Shontel Brown,Mike Kirchner,Shontel Brown,1.0,65.2305,58.1167,72.444,Safe D,65.2271,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-oh-12,HOUSE,OH,12,False,standard,Jerrad Christian,Troy Balderson,Troy Balderson,0.0014,-25.3553,-32.5544,-18.0355,Safe R,-25.3109,0.0,,,0.0,,0.0,0.0188
-2026-10-15,house-oh-13,HOUSE,OH,13,False,standard,Emilia Sykes,Carey Coleman,Emilia Sykes,0.9898,15.879,8.5182,23.3237,Safe D,15.844,0.9941,,,0.0,,0.0016,0.6535
-2026-10-15,house-oh-14,HOUSE,OH,14,False,standard,Maria Jukic,David Joyce,David Joyce,0.0051,-18.4053,-25.7798,-11.0985,Safe R,-18.5009,0.0017,,,0.0,,0.0001,0.0374
-2026-10-15,house-oh-15,HOUSE,OH,15,False,standard,Don Leonard,Mike Carey,Mike Carey,0.0906,-6.3996,-12.5134,-0.272,Likely R,-7.2628,0.1242,-5.1643,3.0,0.3888,0.2531,0.0018,0.7507
-2026-10-15,house-ok-1,HOUSE,OK,1,False,standard,John Croisant,Mark Tedford,Kevin Hern,0.0207,-14.9032,-23.1927,-6.5547,Safe R,-14.8377,0.0203,,,0.0,,0.0004,0.2155
-2026-10-15,house-ok-2,HOUSE,OK,2,False,standard,Brandon Wade,Josh Brecheen,Josh Brecheen,0.0001,-49.5806,-56.8809,-42.4741,Safe R,-49.6133,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-ok-3,HOUSE,OK,3,False,standard,Suzie Byrd,Frank Lucas,Frank Lucas,0.0001,-41.3179,-48.7797,-34.2088,Safe R,-41.3438,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-ok-4,HOUSE,OK,4,False,standard,Mitchell Jacob,Tom Cole,Tom Cole,0.0006,-29.7306,-37.0565,-22.5986,Safe R,-29.7908,0.0,,,0.0,,0.0,0.0243
-2026-10-15,house-ok-5,HOUSE,OK,5,False,standard,Jena Nelson,Stephanie Bice,Stephanie Bice,0.0148,-11.4454,-17.8071,-5.2303,Safe R,-13.186,0.0181,-8.0383,1.0,0.3345,0.1772,0.0001,0.0438
-2026-10-15,house-or-1,HOUSE,OR,1,False,standard,Suzanne Bonamici,Barbara Kahl,Suzanne Bonamici,0.9998,48.8597,41.5876,56.0633,Safe D,48.8313,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-or-2,HOUSE,OR,2,False,standard,Chris Beck,Cliff Bentz,Cliff Bentz,0.0022,-22.9722,-30.3133,-15.7227,Safe R,-22.9804,0.0001,,,0.0,,0.0,0.0
-2026-10-15,house-or-3,HOUSE,OR,3,False,standard,Maxine Dexter,Loran Ayles,Maxine Dexter,0.9998,56.3057,49.0601,63.5047,Safe D,56.2991,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-or-4,HOUSE,OR,4,False,standard,Val Hoyle,Monique DeSpain,Val Hoyle,0.9958,19.378,12.122,26.6784,Safe D,19.4093,0.999,,,0.0,,0.001,0.3091
-2026-10-15,house-or-5,HOUSE,OR,5,False,standard,Janelle Bynum,Patti Adair,Janelle Bynum,0.9938,17.4948,10.2241,24.8124,Safe D,17.542,0.9974,,,0.0,,0.0009,0.2763
-2026-10-15,house-or-6,HOUSE,OR,6,False,standard,Andrea Salinas,David Russ,Andrea Salinas,0.9962,18.8522,11.6421,26.1985,Safe D,18.7991,0.9986,,,0.0,,0.0009,0.3265
-2026-10-15,house-pa-1,HOUSE,PA,1,False,standard,Bob Harvie,Brian Fitzpatrick,Brian Fitzpatrick,0.1894,-4.1189,-10.2057,2.0336,Likely R,-3.3208,0.2987,-5.3495,6.0,0.4025,0.2396,0.0048,1.4738
-2026-10-15,house-pa-2,HOUSE,PA,2,False,standard,Brendan Boyle,Jessica Arriaga,Brendan Boyle,0.9999,48.2213,40.8426,55.5185,Safe D,48.199,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-pa-3,HOUSE,PA,3,False,same_party,Chris Rabb,,Dwight Evans,1.0,,,,Safe D,,,,,,,,
-2026-10-15,house-pa-4,HOUSE,PA,4,False,standard,Madeleine Dean,Aurora Stuski,Madeleine Dean,0.999,26.3064,18.83,33.6599,Safe D,26.2375,1.0,,,0.0,,0.0001,0.0466
-2026-10-15,house-pa-5,HOUSE,PA,5,False,standard,Mary Gay Scanlon,Nicholas Manganaro,Mary Gay Scanlon,0.9998,38.4178,31.1044,45.7369,Safe D,38.4333,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-pa-6,HOUSE,PA,6,False,standard,Chrissy Houlahan,Marty Young,Chrissy Houlahan,0.9972,21.4829,14.2373,28.921,Safe D,21.5016,0.9997,,,0.0,,0.0004,0.1539
-2026-10-15,house-pa-7,HOUSE,PA,7,False,standard,Bob Brooks,Ryan Mackenzie,Ryan Mackenzie,0.8498,5.0176,-1.282,11.2885,Likely D,4.8123,0.7779,5.5433,2.0,0.3382,0.7406,0.0282,9.9815
-2026-10-15,house-pa-8,HOUSE,PA,8,False,standard,Paige Cognetti,Rob Bresnahan,Rob Bresnahan,0.4842,-0.1835,-6.3716,6.125,Toss-up,2.4717,0.6528,-4.9405,3.0,0.3559,0.2759,0.0192,7.1343
-2026-10-15,house-pa-9,HOUSE,PA,9,False,standard,Rachel Wallace,Dan Meuser,Dan Meuser,0.0004,-32.7351,-40.185,-25.5243,Safe R,-32.7332,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-pa-10,HOUSE,PA,10,False,standard,Janelle Stelson,Scott Perry,Scott Perry,0.8736,5.5137,-0.6509,11.7127,Likely D,6.7621,0.8587,3.5287,4.0,0.3686,0.6692,0.0261,9.2277
-2026-10-15,house-pa-11,HOUSE,PA,11,False,standard,Nancy Mannion,Lloyd Smucker,Lloyd Smucker,0.0074,-17.005,-24.3139,-9.705,Safe R,-17.0345,0.0034,,,0.0,,0.0004,0.1585
-2026-10-15,house-pa-12,HOUSE,PA,12,False,standard,Summer Lee,James Hayes,Summer Lee,0.9985,24.8081,17.4772,31.9678,Safe D,24.7242,1.0,,,0.0,,0.0002,0.0846
-2026-10-15,house-pa-13,HOUSE,PA,13,False,standard,Beth Farnham,John Joyce,John Joyce,0.0002,-40.5726,-47.8809,-33.3355,Safe R,-40.5484,0.0,,,0.0,,0.0,0.0176
-2026-10-15,house-pa-14,HOUSE,PA,14,False,standard,Alan Bradstock,Guy Reschenthaler,Guy Reschenthaler,0.0014,-26.1803,-33.4402,-18.791,Safe R,-26.1568,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-pa-15,HOUSE,PA,15,False,standard,Ray Bilger,Glenn Thompson,Glenn Thompson,0.0004,-33.7539,-41.0283,-26.4658,Safe R,-33.7848,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-pa-16,HOUSE,PA,16,False,standard,Justin Wagner,Mike Kelly,Mike Kelly,0.0058,-18.4356,-25.8693,-11.129,Safe R,-18.4712,0.0017,,,0.0,,0.0,0.0174
-2026-10-15,house-pa-17,HOUSE,PA,17,False,standard,Chris Deluzio,Tony Guy,Chris Deluzio,0.9934,17.4592,10.0526,24.8598,Safe D,17.4558,0.9972,,,0.0,,0.0014,0.4291
-2026-10-15,house-ri-1,HOUSE,RI,1,False,standard,Gabe Amo,Kellie Keenan,Gabe Amo,0.9998,36.129,29.6747,42.5414,Safe D,38.9174,1.0,28.9405,1.0,0.2895,0.9987,0.0,0.0
-2026-10-15,house-ri-2,HOUSE,RI,2,False,standard,Seth Magaziner,Vic Mellor,Seth Magaziner,0.9996,19.897,13.9895,25.9125,Safe D,22.1803,0.9998,16.7049,1.0,0.4131,0.988,0.0002,0.1434
-2026-10-15,house-sc-1,HOUSE,SC,1,False,standard,Nancy Lacore,Jenny Costa Honeycutt,Nancy Mace,0.3818,-1.5383,-8.0538,5.166,Lean R,-2.4819,0.3661,-0.391,4.0,0.4638,0.4803,0.0127,5.2484
-2026-10-15,house-sc-2,HOUSE,SC,2,False,standard,Zyon Khalifa,Joe Wilson,Joe Wilson,0.0248,-12.5371,-19.9764,-5.106,Safe R,-12.5646,0.023,,,0.0,,0.0008,0.3616
-2026-10-15,house-sc-3,HOUSE,SC,3,False,standard,Eunice Lehmacher,Sheri Biggs,Sheri Biggs,0.0002,-41.0026,-48.4765,-33.8559,Safe R,-41.0476,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-sc-4,HOUSE,SC,4,False,standard,Courtney McClain,William Timmons,William Timmons,0.008,-16.8439,-24.2707,-9.4249,Safe R,-16.8351,0.0037,,,0.0,,0.0002,0.0935
-2026-10-15,house-sc-5,HOUSE,SC,5,False,standard,Mallory Dittmer,Wes Climer,Ralph Norman,0.0174,-15.491,-23.7359,-7.2311,Safe R,-15.5059,0.0162,,,0.0,,0.0004,0.155
-2026-10-15,house-sc-6,HOUSE,SC,6,False,standard,Jim Clyburn,John Peterson,Jim Clyburn,0.9994,32.2152,24.9475,39.4963,Safe D,32.1776,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-sc-7,HOUSE,SC,7,False,standard,John Vincent,Russell Fry,Russell Fry,0.0034,-18.2323,-24.6929,-11.6153,Safe R,-21.109,0.0004,-9.2835,1.0,0.2452,0.1929,0.0001,0.0428
-2026-10-15,house-sd-al,HOUSE,SD,0,False,standard,Nikki Gronli,Marty Jackley,Dusty Johnson,0.0042,-17.5492,-24.3632,-10.7722,Safe R,-21.9738,0.0012,-11.2284,1.0,0.4041,0.0988,0.0,0.0158
-2026-10-15,house-tn-1,HOUSE,TN,1,False,standard,Kristi Burke,Diana Harshbarger,Diana Harshbarger,0.0001,-53.4082,-60.6262,-46.1747,Safe R,-53.3933,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-tn-2,HOUSE,TN,2,False,standard,Michaela Barnett,Tim Burchett,Tim Burchett,0.0007,-29.4376,-36.8132,-22.1342,Safe R,-29.4309,0.0,,,0.0,,0.0,0.0266
-2026-10-15,house-tn-3,HOUSE,TN,3,False,standard,Anna Golladay,Chuck Fleischmann,Chuck Fleischmann,0.0006,-30.7212,-38.1034,-23.4244,Safe R,-30.7411,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-tn-4,HOUSE,TN,4,False,standard,Victoria Broderick,Scott DesJarlais,Scott DesJarlais,0.0059,-17.58,-25.0275,-10.1456,Safe R,-17.5625,0.0026,,,0.0,,0.0,0.0321
-2026-10-15,house-tn-5,HOUSE,TN,5,False,standard,Chaz Molder,Charlie Hatcher,Andy Ogles,0.013,-13.0608,-19.7124,-6.3556,Safe R,-14.773,0.0208,-10.685,2.0,0.4224,0.1019,0.0004,0.2798
-2026-10-15,house-tn-6,HOUSE,TN,6,False,standard,Mike Croley,Johnny Garrett,John Rose,0.0091,-19.1707,-27.5632,-10.9037,Safe R,-19.2128,0.004,,,0.0,,0.0003,0.1618
-2026-10-15,house-tn-7,HOUSE,TN,7,False,standard,Darden Copeland,Matt Van Epps,Matt Van Epps,0.0066,-17.1196,-24.5678,-9.6908,Safe R,-17.1227,0.0033,,,0.0,,0.0,0.027
-2026-10-15,house-tn-8,HOUSE,TN,8,False,standard,Heidi Kuhn,David Kustoff,David Kustoff,0.007,-16.8724,-24.2543,-9.5676,Safe R,-16.9197,0.0036,,,0.0,,0.0002,0.1216
-2026-10-15,house-tn-9,HOUSE,TN,9,False,standard,Justin Pearson,Brent Taylor,Steve Cohen,0.021,-11.7198,-18.409,-4.9005,Safe R,-12.9738,0.0367,-9.727,1.0,0.4062,0.1312,0.0006,0.3942
-2026-10-15,house-tx-1,HOUSE,TX,1,False,standard,Yolanda Prince,Nathaniel Moran,Nathaniel Moran,0.0001,-45.0112,-52.3012,-37.5496,Safe R,-45.0065,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-tx-2,HOUSE,TX,2,False,standard,Shaun Finnie,Steve Toth,Dan Crenshaw,0.0126,-14.127,-21.2788,-6.9914,Safe R,-14.0832,0.026,-14.2074,1.0,0.3353,0.0786,0.0004,0.1846
-2026-10-15,house-tx-3,HOUSE,TX,3,False,standard,Evan Hunt,Keith Self,Keith Self,0.0044,-19.037,-26.3644,-11.6285,Safe R,-19.0853,0.0012,,,0.0,,0.0,0.0213
-2026-10-15,house-tx-4,HOUSE,TX,4,False,standard,Jason Pearce,Pat Fallon,Pat Fallon,0.0033,-20.3108,-27.6248,-13.0128,Safe R,-20.2782,0.0006,,,0.0,,0.0001,0.064
-2026-10-15,house-tx-5,HOUSE,TX,5,False,standard,Chelsey Hockett,Lance Gooden,Lance Gooden,0.0095,-15.8609,-23.3266,-8.5313,Safe R,-15.857,0.0059,,,0.0,,0.0004,0.1857
-2026-10-15,house-tx-6,HOUSE,TX,6,False,standard,Danny Minton,Jake Ellzey,Jake Ellzey,0.0059,-17.4834,-24.84,-10.2132,Safe R,-17.3862,0.0029,,,0.0,,0.0002,0.1261
-2026-10-15,house-tx-7,HOUSE,TX,7,False,standard,Lizzie Fletcher,Alexander Hale,Lizzie Fletcher,0.9994,33.3169,25.9468,40.6412,Safe D,33.3552,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-tx-8,HOUSE,TX,8,False,standard,Laura Jones,Jessica Hart Steinmann,Morgan Luttrell,0.007,-20.2286,-28.5352,-11.9418,Safe R,-20.2736,0.0026,,,0.0,,0.0002,0.1262
-2026-10-15,house-tx-9,HOUSE,TX,9,False,standard,Leticia Gutierrez,Alex Mealer,None (new seat),0.029,-10.1616,-16.5786,-3.6971,Safe R,-13.6303,0.03,-6.2204,2.0,0.4681,0.2098,0.0003,0.2353
-2026-10-15,house-tx-10,HOUSE,TX,10,False,standard,Caitlin Rourk,Chris Gober,Michael McCaul,0.0175,-12.2456,-18.9308,-5.5901,Safe R,-15.4373,0.0166,-8.2177,1.0,0.445,0.1537,0.0002,0.0883
-2026-10-15,house-tx-11,HOUSE,TX,11,False,standard,Claire Reynolds,August Pfluger,August Pfluger,0.0006,-29.2297,-36.6404,-22.0582,Safe R,-29.2278,0.0,,,0.0,,0.0,0.0266
-2026-10-15,house-tx-12,HOUSE,TX,12,False,standard,Angela Rodriguez Prilliman,Craig Goldman,Craig Goldman,0.0032,-20.9112,-28.2524,-13.596,Safe R,-20.9381,0.0004,,,0.0,,0.0,0.0247
-2026-10-15,house-tx-13,HOUSE,TX,13,False,standard,Mark Nair,Ronny Jackson,Ronny Jackson,0.0001,-41.6205,-48.9071,-34.3142,Safe R,-41.5978,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-tx-14,HOUSE,TX,14,False,standard,Thurman Bartie,Randy Weber,Randy Weber,0.0048,-19.0488,-26.3699,-11.5065,Safe R,-19.0904,0.0012,,,0.0,,0.0,0.0
-2026-10-15,house-tx-15,HOUSE,TX,15,False,standard,Bobby Pulido,Monica De La Cruz,Monica De La Cruz,0.3752,-1.4027,-7.3342,4.3586,Lean R,-8.747,0.0821,6.3486,6.0,0.4813,0.8356,0.0112,7.5794
-2026-10-15,house-tx-16,HOUSE,TX,16,False,standard,Veronica Escobar,Adam Bauman,Veronica Escobar,0.9991,27.1828,19.6742,34.3855,Safe D,27.163,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-tx-17,HOUSE,TX,17,False,standard,Casey Shepard,Pete Sessions,Pete Sessions,0.0068,-17.1416,-24.6752,-9.7954,Safe R,-17.1325,0.0032,,,0.0,,0.0001,0.073
-2026-10-15,house-tx-18,HOUSE,TX,18,False,standard,Christian Menefee,Ronald Whitfield,Christian Menefee,1.0,64.5594,57.3647,71.8842,Safe D,64.5181,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-tx-19,HOUSE,TX,19,False,standard,Kyle Rable,Tom Sell,Jodey Arrington,0.0002,-45.1027,-53.338,-36.7404,Safe R,-45.0915,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-tx-20,HOUSE,TX,20,False,standard,Joaquin Castro,Edgardo Rafael Baez,Joaquin Castro,0.9998,38.9909,31.6197,46.3083,Safe D,38.9706,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-tx-21,HOUSE,TX,21,False,standard,Kristin Hook,Mark Teixeira,Chip Roy,0.0182,-15.3516,-23.5949,-6.8489,Safe R,-15.2246,0.0179,,,0.0,,0.0004,0.15
-2026-10-15,house-tx-22,HOUSE,TX,22,False,standard,Marquette Greene-Scott,Trever Nehls,Troy Nehls,0.0173,-15.8267,-24.3302,-7.4994,Safe R,-15.8516,0.0144,,,0.0,,0.0004,0.211
-2026-10-15,house-tx-23,HOUSE,TX,23,False,standard,Katy Padilla Stout,Brandon Herrera,Vacant,0.1246,-7.4746,-15.7001,0.9458,Likely R,-7.4504,0.1521,-6.5394,1.0,0.0446,0.4202,0.0026,1.267
-2026-10-15,house-tx-24,HOUSE,TX,24,False,standard,Kevin Burge,Beth Van Duyne,Beth Van Duyne,0.02,-13.0582,-20.5449,-5.6257,Safe R,-13.1162,0.0186,,,0.0,,0.0003,0.1258
-2026-10-15,house-tx-25,HOUSE,TX,25,False,standard,Dione Sims,Roger Williams,Roger Williams,0.0051,-18.4934,-25.9237,-11.0835,Safe R,-18.4856,0.0017,,,0.0,,0.0002,0.1005
-2026-10-15,house-tx-26,HOUSE,TX,26,False,standard,Steven Shook,Brandon Gill,Brandon Gill,0.0031,-20.9081,-28.2672,-13.4811,Safe R,-20.8814,0.0005,,,0.0,,0.0002,0.0804
-2026-10-15,house-tx-27,HOUSE,TX,27,False,standard,Tanya Lloyd,Michael Cloud,Michael Cloud,0.0074,-16.2422,-23.59,-8.9388,Safe R,-16.1993,0.005,,,0.0,,0.0001,0.048
-2026-10-15,house-tx-28,HOUSE,TX,28,False,standard,Henry Cuellar,Tano Tijerina,Henry Cuellar,0.9736,10.0039,3.6702,16.3943,Safe D,9.8218,0.9407,10.5045,3.0,0.3244,0.8822,0.0106,8.2062
-2026-10-15,house-tx-29,HOUSE,TX,29,False,standard,Sylvia Garcia,Martha Fierro,Sylvia Garcia,0.9998,44.5496,37.2173,51.8581,Safe D,44.5255,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-tx-30,HOUSE,TX,30,False,standard,Frederick Haynes III,Everett Jackson,None (new seat),1.0,54.7583,46.4562,63.0593,Safe D,54.7558,1.0,,,0.0,,0.0,0.032
-2026-10-15,house-tx-31,HOUSE,TX,31,False,standard,Justin Early,John Carter,John Carter,0.0058,-18.2025,-25.6424,-10.7934,Safe R,-18.2184,0.0019,,,0.0,,0.0,0.0
-2026-10-15,house-tx-32,HOUSE,TX,32,False,standard,Dan Barrios,Jace Yarbrough,None (new seat),0.0461,-11.4669,-19.7928,-3.1196,Safe R,-11.475,0.0567,,,0.0,,0.0008,0.3634
-2026-10-15,house-tx-33,HOUSE,TX,33,False,standard,Colin Allred,Patrick Gillespie,Jasmine Crockett,0.9998,40.9924,32.6817,49.237,Safe D,40.964,1.0,,,0.0,,0.0001,0.0751
-2026-10-15,house-tx-34,HOUSE,TX,34,False,standard,Vicente Gonzalez,Eric Flores,Vicente Gonzalez,0.8427,4.7722,-1.4077,10.9422,Likely D,6.1641,0.8364,2.5727,4.0,0.3865,0.6297,0.027,17.436
-2026-10-15,house-tx-35,HOUSE,TX,35,False,standard,Johnny Garcia,Carlos De La Cruz,None (new seat),0.2518,-3.4346,-10.2905,3.3221,Lean R,-1.7367,0.4054,-6.1094,1.0,0.3858,0.2497,0.0074,3.837
-2026-10-15,house-tx-36,HOUSE,TX,36,False,standard,Rhonda Hart,Brian Babin,Brian Babin,0.0048,-19.0783,-26.3947,-11.7446,Safe R,-19.118,0.0012,,,0.0,,0.0001,0.0498
-2026-10-15,house-tx-37,HOUSE,TX,37,False,standard,Greg Casar,Lauren Peña,Greg Casar,0.9999,64.7877,57.6661,71.9823,Safe D,64.9052,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-tx-38,HOUSE,TX,38,False,standard,Melissa McDonough,Jon Bonck,Wesley Hunt,0.0207,-14.6622,-23.0869,-6.4811,Safe R,-14.6277,0.0218,,,0.0,,0.0006,0.287
-2026-10-15,house-ut-1,HOUSE,UT,1,False,standard,Ben McAdams,Riley Owen,None (new seat),0.9996,35.5703,28.8202,42.3728,Safe D,32.2687,1.0,40.5859,1.0,0.3939,1.0,0.0,0.0
-2026-10-15,house-ut-2,HOUSE,UT,2,False,standard,Peter Crosby,Blake Moore,Blake Moore,0.0007,-22.5554,-29.0342,-16.0598,Safe R,-29.1876,0.0,-4.6414,3.0,0.2698,0.3224,0.0,0.0
-2026-10-15,house-ut-3,HOUSE,UT,3,False,standard,Kent Udell,Celeste Maloy,Celeste Maloy,0.0001,-34.786,-41.3194,-28.241,Safe R,-40.1986,0.0,-18.5859,1.0,0.2487,0.0398,0.0,0.0
-2026-10-15,house-ut-4,HOUSE,UT,4,False,standard,Jonny Larsen,Mike Kennedy,Mike Kennedy,0.0006,-28.4217,-34.838,-21.899,Safe R,-35.2752,0.0,-9.4083,1.0,0.2663,0.1769,0.0,0.0
-2026-10-15,house-va-1,HOUSE,VA,1,False,standard,Shannon Taylor,Rob Wittman,Rob Wittman,0.4568,-0.4689,-6.3409,5.3197,Toss-up,-2.7174,0.3329,2.0824,3.0,0.4617,0.6216,0.0165,5.535
-2026-10-15,house-va-2,HOUSE,VA,2,False,standard,Elaine Luria,Jen Kiggans,Jen Kiggans,0.8558,5.0208,-1.1119,11.0309,Likely D,7.0259,0.868,1.7881,2.0,0.3921,0.5921,0.0294,11.5464
-2026-10-15,house-va-3,HOUSE,VA,3,False,standard,Bobby Scott,Edwin Rivera,Bobby Scott,0.9998,45.1063,37.8269,52.3244,Safe D,45.0207,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-va-4,HOUSE,VA,4,False,standard,Jennifer McClellan,Robert Murray,Jennifer McClellan,1.0,44.526,37.1923,51.8899,Safe D,44.5671,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-va-5,HOUSE,VA,5,False,standard,Tom Perriello,John McGuire,John McGuire,0.0854,-6.2181,-12.0475,-0.4183,Likely R,-7.0665,0.1307,-5.1816,3.0,0.472,0.2173,0.0013,0.4762
-2026-10-15,house-va-6,HOUSE,VA,6,False,standard,Beth Macy,Ben Cline,Ben Cline,0.0008,-22.3252,-28.5818,-16.3103,Safe R,-19.2993,0.0011,-27.647,1.0,0.3678,0.0003,0.0,0.0
-2026-10-15,house-va-7,HOUSE,VA,7,False,standard,Eugene Vindman,Doug Ollivant,Eugene Vindman,0.9916,15.89,8.6238,23.3386,Safe D,15.9765,0.9944,,,0.0,,0.0024,0.9542
-2026-10-15,house-va-8,HOUSE,VA,8,False,standard,Don Beyer,Tony Sabio,Don Beyer,1.0,57.3176,50.049,64.5015,Safe D,57.293,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-va-9,HOUSE,VA,9,False,standard,Joy Powers,Morgan Griffith,Morgan Griffith,0.0004,-39.2675,-46.5194,-31.9869,Safe R,-39.2568,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-va-10,HOUSE,VA,10,False,standard,Suhas Subramanyam,Dave Beckwith,Suhas Subramanyam,0.9943,18.6609,11.297,26.0261,Safe D,18.6458,0.9985,,,0.0,,0.0009,0.3543
-2026-10-15,house-va-11,HOUSE,VA,11,False,standard,James Walkinshaw,Arthur Purves,James Walkinshaw,0.9998,45.1043,37.8146,52.4364,Safe D,45.1356,1.0,,,0.0,,0.0,0.0198
-2026-10-15,house-vt-al,HOUSE,VT,0,False,standard,Becca Balint,Gerald Malloy,Becca Balint,1.0,35.9426,29.9341,42.0374,Safe D,42.7159,1.0,25.5891,4.0,0.3946,0.9996,0.0,0.0193
-2026-10-15,house-wa-1,HOUSE,WA,1,False,standard,Suzan DelBene,Mary Silva,Suzan DelBene,0.9997,36.5082,29.1737,43.8853,Safe D,36.4137,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-wa-2,HOUSE,WA,2,False,standard,Rick Larsen,Edwin Feller,Rick Larsen,0.9998,35.1859,27.8571,42.4153,Safe D,35.1798,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-wa-3,HOUSE,WA,3,False,standard,Marie Gluesenkamp Perez,John Braun,Marie Gluesenkamp Perez,0.9036,6.2468,0.1275,12.4645,Likely D,11.8114,0.9697,-2.2311,4.0,0.3946,0.3859,0.0245,8.2168
-2026-10-15,house-wa-4,HOUSE,WA,4,False,standard,John Duresky,Amanda McKinney,Dan Newhouse,0.0264,-13.8674,-22.2359,-5.4162,Safe R,-13.8164,0.0283,,,0.0,,0.0008,0.3411
-2026-10-15,house-wa-5,HOUSE,WA,5,False,standard,Carmela Conroy,Michael Baumgartner,Michael Baumgartner,0.0152,-11.8694,-18.0947,-5.4848,Safe R,-11.8266,0.0301,-11.8993,1.0,0.3444,0.0807,0.0004,0.1581
-2026-10-15,house-wa-6,HOUSE,WA,6,False,standard,Emily Randall,Teresa Fox,Emily Randall,0.9986,27.3103,20.0547,34.6568,Safe D,27.3197,1.0,,,0.0,,0.0,0.0164
-2026-10-15,house-wa-7,HOUSE,WA,7,False,standard,Pramila Jayapal,Nirav Sheth,Pramila Jayapal,1.0,78.3053,71.1756,85.4777,Safe D,78.251,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-wa-8,HOUSE,WA,8,False,standard,Kim Schrier,Spencer Meline,Kim Schrier,0.9931,17.7432,10.3469,25.1531,Safe D,17.7163,0.9976,,,0.0,,0.0012,0.3837
-2026-10-15,house-wa-9,HOUSE,WA,9,False,standard,Adam Smith,Doug Basler,Adam Smith,0.9999,52.2514,44.8853,59.5274,Safe D,52.206,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-wa-10,HOUSE,WA,10,False,standard,Marilyn Strickland,Chris Chung,Marilyn Strickland,0.9987,26.9074,19.4091,34.3323,Safe D,26.8798,1.0,,,0.0,,0.0002,0.0995
-2026-10-15,house-wi-1,HOUSE,WI,1,False,standard,Mitchell Berman,Bryan Steil,Bryan Steil,0.2323,-3.299,-9.2199,2.564,Lean R,-2.4725,0.3472,-4.3768,4.0,0.4592,0.2596,0.006,2.1038
-2026-10-15,house-wi-2,HOUSE,WI,2,False,same_party,Mark Pocan,,Mark Pocan,1.0,,,,Safe D,,,,,,,,
-2026-10-15,house-wi-3,HOUSE,WI,3,False,standard,Rebecca Cooke,Derrick Van Orden,Derrick Van Orden,0.6129,1.294,-4.6705,7.2509,Lean D,4.4357,0.7596,-3.1481,4.0,0.4126,0.3357,0.0258,8.7425
-2026-10-15,house-wi-4,HOUSE,WI,4,False,standard,Gwen Moore,Tim Rogers,Gwen Moore,1.0,60.7222,53.538,67.8293,Safe D,60.7417,1.0,,,0.0,,0.0,0.0
-2026-10-15,house-wi-5,HOUSE,WI,5,False,standard,Andrew Beck,Scott Fitzgerald,Scott Fitzgerald,0.0044,-18.8792,-26.2757,-11.6095,Safe R,-18.8846,0.0014,,,0.0,,0.0001,0.0445
-2026-10-15,house-wi-6,HOUSE,WI,6,False,standard,Brad Smith,Glenn Grothman,Glenn Grothman,0.0026,-17.7934,-24.1405,-11.5186,Safe R,-12.8171,0.0208,-27.8993,1.0,0.3345,0.0007,0.0,0.0
-2026-10-15,house-wi-7,HOUSE,WI,7,False,standard,Fred Clark,Michael Alfonso,Tom Tiffany,0.0194,-15.0369,-23.2882,-6.6965,Safe R,-15.0636,0.0188,,,0.0,,0.0006,0.1778
-2026-10-15,house-wi-8,HOUSE,WI,8,False,standard,Rick Crosson,Tony Wied,Tony Wied,0.0369,-10.7727,-18.0766,-3.4543,Safe R,-10.7859,0.0432,,,0.0,,0.0009,0.298
-2026-10-15,house-wv-1,HOUSE,WV,1,False,standard,Vince George,Carol Miller,Carol Miller,0.0002,-37.5269,-44.8178,-30.2692,Safe R,-37.485,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-wv-2,HOUSE,WV,2,False,standard,Ace Parsi,Riley Moore,Riley Moore,0.0002,-36.0325,-43.4021,-28.6881,Safe R,-36.0044,0.0,,,0.0,,0.0,0.0
-2026-10-15,house-wy-al,HOUSE,WY,0,False,standard,Lisa Kinney,Chuck Gray,Harriet Hageman,0.0006,-39.6013,-47.8839,-31.3114,Safe R,-39.6105,0.0,,,0.0,,0.0,0.0
-2026-10-15,senate-ak,SEN,AK,0,False,rcv_bloc,Mary Peltola,Gerald Heikes; Dan J. Sullivan; Dan S. Sullivan,Dan Sullivan,0.4178,-0.8421,-5.9026,4.3152,Toss-up,-6.2818,0.1801,1.5358,23.0,0.6939,0.6269,0.0993,26.3697
-2026-10-15,senate-al,SEN,AL,0,False,standard,Everett Wess,Barry Moore,Tommy Tuberville,0.0062,-20.1252,-28.3322,-11.9187,Safe R,-22.8958,0.02,-18.3496,2.0,0.6005,0.0227,0.0008,0.0369
-2026-10-15,senate-ar,SEN,AR,0,False,standard,Hallie Shoffner,Tom Cotton,Tom Cotton,0.0088,-14.3392,-21.2542,-7.5463,Safe R,-25.1012,0.0122,-10.8445,5.0,0.752,0.0501,0.0012,0.097
-2026-10-15,senate-co,SEN,CO,0,False,standard,John Hickenlooper,Mark Baisley,John Hickenlooper,0.9949,21.0329,13.1162,29.0594,Safe D,21.0039,0.9989,,,0.0,,0.0014,0.0391
-2026-10-15,senate-de,SEN,DE,0,False,standard,Chris Coons,Michael Katz,Chris Coons,0.9979,26.3146,18.3059,34.2755,Safe D,26.2141,0.9999,,,0.0,,0.0002,0.0544
-2026-10-15,senate-fl-special,SEN,FL,0,True,standard,Angie Nixon,Ashley Moody,Ashley Moody,0.0386,-8.5091,-14.5099,-2.5275,Safe R,-16.8124,0.066,-6.797,16.0,0.8262,0.1038,0.0068,0.0617
-2026-10-15,senate-ga,SEN,GA,0,False,standard,Jon Ossoff,Mike Collins,Jon Ossoff,0.9834,10.3597,4.5438,16.1683,Safe D,15.6548,0.9196,9.3812,18.0,0.8417,0.9662,0.0114,0.202
-2026-10-15,senate-ia,SEN,IA,0,False,standard,Josh Turek,Ashley Hinson,Joni Ernst,0.474,-0.3009,-6.1507,5.6524,Toss-up,-7.7041,0.245,1.1815,28.0,0.8324,0.5891,0.1124,6.4431
-2026-10-15,senate-id,SEN,ID,0,False,same_party,,Jim Risch,Jim Risch,0.0,,,,Safe R,,,,,,,,
-2026-10-15,senate-il,SEN,IL,0,False,standard,Juliana Stratton,Don Tracy,Dick Durbin,0.9676,16.077,6.0662,26.1053,Safe D,19.6787,0.9611,10.17,1.0,0.3793,0.7632,0.0078,0.1339
-2026-10-15,senate-ks,SEN,KS,0,False,standard,Adam Hamilton,Roger Marshall,Roger Marshall,0.2909,-2.3894,-7.9003,3.2071,Lean R,-9.367,0.0862,1.9682,13.0,0.6175,0.6397,0.0674,4.6822
-2026-10-15,senate-ky,SEN,KY,0,False,standard,Charles Booker,Andy Barr,Mitch McConnell,0.0204,-17.9972,-27.6003,-8.331,Safe R,-23.3367,0.0182,-10.6176,2.0,0.423,0.207,0.0028,0.1327
-2026-10-15,senate-la,SEN,LA,0,False,standard,Jamie Davis,Julia Letlow,Bill Cassidy,0.0581,-11.2013,-20.0209,-2.4996,Likely R,-15.456,0.083,-7.8733,2.0,0.5488,0.2192,0.01,0.5089
-2026-10-15,senate-ma,SEN,MA,0,False,standard,Ed Markey,John Deaton,Ed Markey,0.9997,30.2513,24.0734,36.4654,Safe D,35.5628,1.0,24.0345,11.0,0.4595,0.9994,0.0,0.0014
-2026-10-15,senate-me,SEN,ME,0,False,standard,Troy Jackson,Susan Collins,Susan Collins,0.8438,4.0178,-1.1646,9.2603,Likely D,8.2964,0.8868,2.0156,23.0,0.6825,0.6609,0.0956,9.915
-2026-10-15,senate-mi,SEN,MI,0,False,standard,Abdul El-Sayed,Mike Rogers,Gary Peters,0.8249,4.0326,-1.5577,9.7025,Likely D,7.6992,0.7548,3.3651,49.0,0.8479,0.7489,0.0991,1.4881
-2026-10-15,senate-mn,SEN,MN,0,False,standard,Peggy Flanagan,Michele Tafoya,Tina Smith,0.8478,5.0287,-1.2836,11.3443,Likely D,12.9931,0.8778,2.9519,15.0,0.7935,0.6914,0.0756,2.1076
-2026-10-15,senate-ms,SEN,MS,0,False,standard,Scott Colom,Cindy Hyde-Smith,Cindy Hyde-Smith,0.025,-9.5785,-15.6566,-3.6118,Safe R,-15.0395,0.0142,-4.8344,4.0,0.5297,0.2288,0.0042,0.4099
-2026-10-15,senate-mt,SEN,MT,0,False,standard,Alani Bankhead,Kurt Alme,Steve Daines,0.0042,-21.8771,-29.9133,-14.0003,Safe R,-17.1445,0.0622,-24.7705,10.0,0.6355,0.0019,0.0005,0.0755
-2026-10-15,senate-nc,SEN,NC,0,False,standard,Roy Cooper,Michael Whatley,Thom Tillis,0.9776,10.0258,4.0687,16.0064,Safe D,9.4639,0.8017,10.1733,44.0,0.8342,0.9735,0.0127,0.2367
-2026-10-15,senate-ne,SEN,NE,0,False,independent,,Pete Ricketts,Pete Ricketts,0.3618,-1.6466,-7.7223,4.5416,Lean R,-2.6123,0.4183,-1.4952,16.0,0.8547,0.3934,0.052,5.4621
-2026-10-15,senate-nh,SEN,NH,0,False,standard,Chris Pappas,John E. Sununu,Jeanne Shaheen,0.9524,8.0321,2.0031,14.1344,Safe D,13.7765,0.8915,6.8384,26.0,0.8246,0.8969,0.0302,3.412
-2026-10-15,senate-nj,SEN,NJ,0,False,standard,Cory Booker,Justin Murphy,Cory Booker,0.9925,18.6459,10.723,26.5602,Safe D,18.6061,0.9966,,,0.0,,0.0022,0.0577
-2026-10-15,senate-nm,SEN,NM,0,False,standard,Ben Ray Luján,Larry Marker,Ben Ray Luján,0.9942,17.3907,10.2846,24.5433,Safe D,18.3664,0.9501,16.9371,3.0,0.7307,0.9927,0.0018,0.1728
-2026-10-15,senate-oh-special,SEN,OH,0,True,standard,Sherrod Brown,Jon Husted,Jon Husted,0.7625,3.2467,-2.6971,9.2166,Lean D,-0.621,0.4778,3.9973,32.0,0.8271,0.7721,0.112,1.898
-2026-10-15,senate-ok,SEN,OK,0,False,standard,N'Kiyla Jasmine Thomas,Kevin Hern,Alan Armstrong,0.0058,-26.0063,-35.9838,-16.0871,Safe R,-27.1711,0.0074,-24.0664,1.0,0.381,0.0445,0.0006,0.0334
-2026-10-15,senate-or,SEN,OR,0,False,standard,Jeff Merkley,David Brock Smith,Jeff Merkley,0.9978,25.722,17.758,33.5518,Safe D,25.7575,0.9999,,,0.0,,0.0006,0.0233
-2026-10-15,senate-ri,SEN,RI,0,False,standard,Jack Reed,Raymond McKay,Jack Reed,0.9996,29.2325,23.0992,35.3849,Safe D,28.28,1.0,30.2461,5.0,0.466,1.0,0.0,0.0098
-2026-10-15,senate-sc,SEN,SC,0,False,standard,Annie Andrews,Darline Graham,Darline Graham,0.3158,-2.165,-8.1577,3.6781,Lean R,-4.1709,0.2717,-0.4871,9.0,0.5391,0.4701,0.076,3.1122
-2026-10-15,senate-sd,SEN,SD,0,False,same_party,,Mike Rounds,Mike Rounds,0.0,,,,Safe R,,,,,,,,
-2026-10-15,senate-tn,SEN,TN,0,False,standard,Marquita Bradshaw,Bill Hagerty,Bill Hagerty,0.0014,-23.5512,-30.4451,-16.39,Safe R,-24.801,0.0002,-20.2158,1.0,0.2764,0.0312,0.0002,0.0101
-2026-10-15,senate-tx,SEN,TX,0,False,standard,James Talarico,Ken Paxton,John Cornyn,0.7328,2.7877,-3.0311,8.5862,Lean D,1.9022,0.5677,2.9323,52.0,0.8467,0.72,0.1136,0.9819
-2026-10-15,senate-va,SEN,VA,0,False,standard,Mark Warner,Bert Mizusawa,Mark Warner,0.9956,18.4814,11.3657,25.6902,Safe D,18.7591,0.9969,17.5828,2.0,0.2308,0.9254,0.001,0.0241
-2026-10-15,senate-wv,SEN,WV,0,False,standard,Rachel Fetty Anderson,Shelley Moore Capito,Shelley Moore Capito,0.0008,-37.9343,-45.7571,-29.896,Safe R,-37.8709,0.0,,,0.0,,0.0,0.0
-2026-10-15,senate-wy,SEN,WY,0,False,standard,James W. Byrd,Harriet Hageman,Cynthia Lummis,0.0039,-39.5639,-51.9829,-27.3077,Safe R,-39.6106,0.0002,,,0.0,,0.0002,0.0903
+2026-10-16,governor-ak,GOV,AK,0,False,rcv_bloc,Jonathan Kreiss-Tomkins,Dave Bronson; Treg Taylor; Bernadette Wilson,Mike Dunleavy,0.6468,1.646,-4.253,7.7249,Lean D,-7.5169,0.1941,5.3472,5.0,0.7107,0.8243,,
+2026-10-16,governor-al,GOV,AL,0,False,standard,Doug Jones,Tommy Tuberville,Kay Ivey,0.01,-17.6652,-25.7127,-9.5945,Safe R,-22.8302,0.0044,-10.6108,3.0,0.4145,0.1512,,
+2026-10-16,governor-ar,GOV,AR,0,False,standard,Fredrick Love,Sarah Huckabee Sanders,Sarah Huckabee Sanders,0.0393,-14.4517,-23.8965,-4.7333,Safe R,-24.5849,0.0313,-7.725,1.0,0.6023,0.2373,,
+2026-10-16,governor-az,GOV,AZ,0,False,standard,Katie Hobbs,Andy Biggs,Katie Hobbs,0.9702,9.7356,3.4598,16.0212,Safe D,18.0384,0.9139,8.31,27.0,0.8612,0.9318,,
+2026-10-16,governor-ca,GOV,CA,0,False,standard,Xavier Becerra,Steve Hilton,Gavin Newsom,0.9991,20.1977,14.2505,26.1586,Safe D,28.9187,0.9996,16.679,11.0,0.716,0.9983,,
+2026-10-16,governor-co,GOV,CO,0,False,standard,Phil Weiser,Victor Marx,Jared Polis,0.9853,19.9788,10.1878,29.9631,Safe D,19.9788,0.9891,,,0.0,,,
+2026-10-16,governor-ct,GOV,CT,0,False,standard,Ned Lamont,Ryan Fazio,Ned Lamont,0.9976,18.5268,12.1385,24.8845,Safe D,30.9169,0.9904,16.34,9.0,0.8531,0.9977,,
+2026-10-16,governor-fl,GOV,FL,0,False,standard,David Jolly,Byron Donalds,Ron DeSantis,0.157,-4.5307,-10.294,1.2294,Likely R,-4.8188,0.2901,-4.4642,31.0,0.7462,0.2006,,
+2026-10-16,governor-ga,GOV,GA,0,False,standard,Keisha Lance Bottoms,Rick Jackson,Brian Kemp,0.6057,1.1333,-4.4027,6.7749,Lean D,10.3572,0.8827,-1.6111,13.0,0.768,0.3753,,
+2026-10-16,governor-hi,GOV,HI,0,False,standard,Josh Green,Gary Cordery,Josh Green,0.9951,42.8627,28.2536,57.2751,Safe D,42.8656,0.9994,,,0.0,,,
+2026-10-16,governor-ia,GOV,IA,0,False,standard,Rob Sand,Zach Lahn,Kim Reynolds,0.9084,5.7738,0.2448,11.3311,Likely D,-0.5192,0.4762,7.5981,22.0,0.7731,0.9364,,
+2026-10-16,governor-id,GOV,ID,0,False,standard,Terri Pickens,Brad Little,Brad Little,0.0054,-27.3069,-37.404,-17.2402,Safe R,-47.3798,0.0002,-11.4702,2.0,0.5588,0.1651,,
+2026-10-16,governor-il,GOV,IL,0,False,standard,JB Pritzker,Darren Bailey,JB Pritzker,0.987,24.4848,13.0408,35.9686,Safe D,30.0079,0.9885,16.3035,2.0,0.4085,0.8484,,
+2026-10-16,governor-ks,GOV,KS,0,False,standard,Cindy Holscher,Ty Masterson,Laura Kelly,0.1401,-5.0449,-11.0641,0.963,Likely R,-8.0452,0.1779,-3.8717,7.0,0.706,0.2529,,
+2026-10-16,governor-ma,GOV,MA,0,False,standard,Maura Healey,Mike Minogue,Maura Healey,0.9988,24.8816,17.5541,32.3457,Safe D,44.2669,0.9996,19.6004,10.0,0.7876,0.9973,,
+2026-10-16,governor-md,GOV,MD,0,False,standard,Wes Moore,Dan Cox,Wes Moore,0.9986,37.7026,27.9311,47.4833,Safe D,51.4834,1.0,27.1563,2.0,0.5661,0.9904,,
+2026-10-16,governor-me,GOV,ME,0,False,standard,Hannah Pingree,Robert B. Charles,Janet Mills,0.9931,12.9574,7.0047,18.9759,Safe D,15.9754,0.9667,11.7908,16.0,0.7172,0.9812,,
+2026-10-16,governor-mi,GOV,MI,0,False,standard,Jocelyn Benson,John James,Gretchen Whitmer,0.9455,7.1317,1.5389,12.6294,Likely D,6.9988,0.7891,7.1337,38.0,0.76,0.9174,,
+2026-10-16,governor-mn,GOV,MN,0,False,standard,Amy Klobuchar,Lisa Demuth,Tim Walz,0.9708,9.6057,3.3677,15.8871,Safe D,14.4944,0.9519,7.209,10.0,0.6688,0.8748,,
+2026-10-16,governor-ne,GOV,NE,0,False,standard,Lynne Walz,Jim Pillen,Jim Pillen,0.1011,-7.0541,-14.3863,0.0364,Likely R,-18.7609,0.0777,-4.1133,11.0,0.7914,0.2781,,
+2026-10-16,governor-nh,GOV,NH,0,False,standard,Cinde Warmington,Kelly Ayotte,Kelly Ayotte,0.0372,-9.1663,-15.5187,-2.8954,Safe R,-10.8741,0.2052,-8.9482,11.0,0.858,0.0568,,
+2026-10-16,governor-nm,GOV,NM,0,False,standard,Deb Haaland,Gregg Hull,Michelle Lujan Grisham,0.969,10.0549,3.5091,16.5933,Safe D,14.5267,0.9523,7.2432,5.0,0.6217,0.8534,,
+2026-10-16,governor-nv,GOV,NV,0,False,standard,Aaron Ford,Joe Lombardo,Joe Lombardo,0.4591,-0.6228,-8.7097,7.3997,Toss-up,-2.3614,0.4291,0.0288,13.0,0.7303,0.5018,,
+2026-10-16,governor-ny,GOV,NY,0,False,standard,Kathy Hochul,Bruce Blakeman,Kathy Hochul,0.9939,13.5274,7.251,19.7479,Safe D,20.4193,0.939,12.4716,28.0,0.8654,0.9883,,
+2026-10-16,governor-oh,GOV,OH,0,False,standard,Amy Acton,Vivek Ramaswamy,Mike DeWine,0.723,2.5786,-3.1216,8.2264,Lean D,-2.8932,0.3699,4.4309,27.0,0.7409,0.7956,,
+2026-10-16,governor-ok,GOV,OK,0,False,standard,Cyndi Munson,Mike Mazzei,Kevin Stitt,0.0058,-26.9446,-36.7406,-17.0104,Safe R,-27.0217,0.0009,,,0.0,,,
+2026-10-16,governor-or,GOV,OR,0,False,standard,Tina Kotek,Christine Drazan,Tina Kotek,0.8781,6.5498,-0.6855,13.9445,Likely D,26.0716,0.9759,1.424,7.0,0.7921,0.5815,,
+2026-10-16,governor-pa,GOV,PA,0,False,standard,Josh Shapiro,Stacy Garrity,Josh Shapiro,0.9992,24.2802,17.746,30.7169,Safe D,33.9758,0.9949,22.5024,20.0,0.847,0.9999,,
+2026-10-16,governor-ri,GOV,RI,0,False,standard,Helena Foulkes,Aaron Guckian,Dan McKee,0.9972,23.2749,15.4204,31.1065,Safe D,22.4206,0.995,24.2354,4.0,0.4132,0.9907,,
+2026-10-16,governor-sc,GOV,SC,0,False,standard,Jermaine Johnson,Alan Wilson,Henry McMaster,0.0472,-10.9407,-18.7416,-2.9039,Safe R,-11.171,0.0999,-10.3786,3.0,0.3945,0.1663,,
+2026-10-16,governor-sd,GOV,SD,0,False,standard,Dan Ahlers,Larry Rhoden,Larry Rhoden,0.0031,-29.6654,-39.6683,-20.0222,Safe R,-29.7812,0.0003,,,0.0,,,
+2026-10-16,governor-tn,GOV,TN,0,False,standard,Jerri Green,Marsha Blackburn,Bill Lee,0.0081,-18.8551,-26.8477,-10.8757,Safe R,-22.2321,0.0053,-13.6944,4.0,0.3956,0.1,,
+2026-10-16,governor-tx,GOV,TX,0,False,standard,Gina Hinojosa,Greg Abbott,Greg Abbott,0.2422,-3.0618,-8.6763,2.5639,Lean R,-13.7755,0.1485,-1.87,47.0,0.9009,0.347,,
+2026-10-16,governor-vt,GOV,VT,0,False,standard,Amanda Janoo,Phil Scott,Phil Scott,0.0238,-12.3246,-19.7114,-5.0314,Safe R,-45.7453,0.0003,-3.4546,5.0,0.7914,0.3106,,
+2026-10-16,governor-wi,GOV,WI,0,False,standard,David Crowley,Tom Tiffany,Tony Evers,0.7412,3.0394,-3.1336,9.1883,Lean D,5.7514,0.7454,1.8519,8.0,0.6884,0.6212,,
+2026-10-16,governor-wy,GOV,WY,0,False,standard,Kenneth Casner,Eric Barlow,Mark Gordon,0.0012,-39.5791,-49.3004,-29.726,Safe R,-39.5494,0.0,,,0.0,,,
+2026-10-16,house-ak-al,HOUSE,AK,0,False,independent,Eric Hafner,Nick Begich III,Nick Begich III,0.1066,-5.6887,-11.5458,0.174,Likely R,-0.6315,0.4663,-8.9064,11.0,0.6109,0.0711,0.0004,0.1471
+2026-10-16,house-al-1,HOUSE,AL,1,False,standard,Clyde Jones Jr.,Jerry Carl,None (new seat),0.0018,-28.331,-36.5881,-20.1335,Safe R,-28.4874,0.0,,,0.0,,0.0,0.0269
+2026-10-16,house-al-2,HOUSE,AL,2,False,standard,Shomari Figures,Rhett Marques,Shomari Figures,0.3064,-2.2461,-8.2148,3.7313,Lean R,-1.2655,0.4203,-3.7336,3.0,0.4256,0.3031,0.0077,4.6253
+2026-10-16,house-al-3,HOUSE,AL,3,False,standard,Lee McInnis,Mike Rogers,Mike Rogers,0.0002,-41.9049,-49.3211,-34.6426,Safe R,-41.9694,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-al-4,HOUSE,AL,4,False,standard,Amanda Pusczek,Robert Aderholt,Robert Aderholt,0.0,-63.0577,-70.2868,-55.7739,Safe R,-63.0587,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-al-5,HOUSE,AL,5,False,standard,Andrew Sneed,Dale Strong,Dale Strong,0.0014,-23.7817,-31.0135,-16.381,Safe R,-23.753,0.0001,,,0.0,,0.0,0.0251
+2026-10-16,house-al-6,HOUSE,AL,6,False,standard,Maurice Mercer,Gary Palmer,Gary Palmer,0.0009,-28.3937,-35.7151,-21.1193,Safe R,-28.4259,0.0,,,0.0,,0.0001,0.0508
+2026-10-16,house-al-7,HOUSE,AL,7,False,standard,Terri Sewell,Ammie Akin,Terri Sewell,0.9991,28.8026,21.4659,36.1516,Safe D,28.7233,1.0,,,0.0,,0.0,0.0292
+2026-10-16,house-ar-1,HOUSE,AR,1,False,standard,Terri Green,Rick Crawford,Rick Crawford,0.0001,-41.0949,-48.4651,-33.7646,Safe R,-41.0284,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-ar-2,HOUSE,AR,2,False,standard,Chris Jones,French Hill,French Hill,0.0982,-6.1414,-12.1342,-0.0641,Likely R,-11.3478,0.0358,1.1031,2.0,0.4215,0.5606,0.0016,0.7514
+2026-10-16,house-ar-3,HOUSE,AR,3,False,standard,Robb Ryerse,Steve Womack,Steve Womack,0.0024,-22.6145,-29.9965,-15.2053,Safe R,-22.6084,0.0002,,,0.0,,0.0,0.0236
+2026-10-16,house-ar-4,HOUSE,AR,4,False,standard,James Russell,Bruce Westerman,Bruce Westerman,0.0004,-36.4946,-43.895,-29.2783,Safe R,-36.4748,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-az-1,HOUSE,AZ,1,False,standard,Amish Shah,Jay Feely,David Schweikert,0.8171,4.7041,-2.0585,11.4756,Likely D,6.1766,0.8027,2.3926,1.0,0.4033,0.6084,0.0264,8.5103
+2026-10-16,house-az-2,HOUSE,AZ,2,False,standard,Jonathan Nez,Eli Crane,Eli Crane,0.133,-5.2282,-11.1913,0.8798,Likely R,-5.094,0.2092,-5.4371,3.0,0.4083,0.2337,0.0022,0.787
+2026-10-16,house-az-3,HOUSE,AZ,3,False,same_party,Yassamin Ansari,,Yassamin Ansari,1.0,,,,Safe D,,,,,,,,
+2026-10-16,house-az-4,HOUSE,AZ,4,False,standard,Greg Stanton,Zuhdi Jasser,Greg Stanton,0.9928,17.5171,10.1641,24.8467,Safe D,17.4569,0.9972,,,0.0,,0.0012,0.505
+2026-10-16,house-az-5,HOUSE,AZ,5,False,standard,Elizabeth Lee,Mark Lamb,Andy Biggs,0.0328,-12.7915,-21.139,-4.549,Safe R,-12.8476,0.0383,,,0.0,,0.0007,0.2293
+2026-10-16,house-az-6,HOUSE,AZ,6,False,standard,JoAnna Mendoza,Juan Ciscomani,Juan Ciscomani,0.813,4.2736,-2.1062,10.8515,Likely D,7.1867,0.8732,-3.0532,3.0,0.2892,0.3755,0.0293,9.7049
+2026-10-16,house-az-7,HOUSE,AZ,7,False,standard,Adelita Grijalva,Daniel Butierez,Adelita Grijalva,0.9996,32.8378,25.5623,40.1471,Safe D,32.7546,1.0,,,0.0,,0.0001,0.0518
+2026-10-16,house-az-8,HOUSE,AZ,8,False,standard,Bernadette Greene-Placentia,Abraham Hamadeh,Abraham Hamadeh,0.0361,-11.061,-18.3768,-3.5958,Safe R,-11.0899,0.0391,,,0.0,,0.0009,0.3342
+2026-10-16,house-az-9,HOUSE,AZ,9,False,standard,Dani Sterbinsky,Paul Gosar,Paul Gosar,0.0016,-23.6133,-31.0273,-16.2348,Safe R,-23.5618,0.0001,,,0.0,,0.0,0.0181
+2026-10-16,house-ca-1,HOUSE,CA,1,False,standard,Mike McGuire,James Gallagher,James Gallagher,0.995,18.7908,11.4973,25.9889,Safe D,18.7676,0.9986,,,0.0,,0.0009,0.4236
+2026-10-16,house-ca-2,HOUSE,CA,2,False,standard,Jared Huffman,Robin Littau,Jared Huffman,0.9996,32.6268,25.3021,39.848,Safe D,32.5534,1.0,,,0.0,,0.0,0.0206
+2026-10-16,house-ca-3,HOUSE,CA,3,False,standard,Ami Bera,Robb Tucker,Ami Bera,0.9967,20.7159,13.4216,28.0873,Safe D,20.7486,0.9995,,,0.0,,0.0002,0.11
+2026-10-16,house-ca-4,HOUSE,CA,4,False,same_party,Eric Jones; Mike Thompson,,Mike Thompson,1.0,,,,Safe D,,,,,,,,
+2026-10-16,house-ca-5,HOUSE,CA,5,False,standard,Michael Masuda,Tom McClintock,Tom McClintock,0.0078,-16.7747,-24.088,-9.405,Safe R,-16.7805,0.0039,,,0.0,,0.0002,0.1101
+2026-10-16,house-ca-6,HOUSE,CA,6,False,independent,Richard Pan,,Kevin Kiley,0.9668,11.456,4.02,19.0854,Safe D,17.5666,0.983,2.3341,1.0,0.4028,0.5926,0.0072,3.4439
+2026-10-16,house-ca-7,HOUSE,CA,7,False,same_party,Doris Matsui; Mai Vang,,Doris Matsui,1.0,,,,Safe D,,,,,,,,
+2026-10-16,house-ca-8,HOUSE,CA,8,False,standard,John Garamendi,Rudy Recile,John Garamendi,0.9999,45.2753,37.8273,52.461,Safe D,45.2056,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ca-9,HOUSE,CA,9,False,standard,Josh Harder,John McBride,Josh Harder,0.9986,24.2826,16.885,31.5522,Safe D,24.2452,0.9999,,,0.0,,0.0001,0.0599
+2026-10-16,house-ca-10,HOUSE,CA,10,False,standard,Mark DeSaulnier,Jeff Frese,Mark DeSaulnier,0.9998,42.0918,34.7945,49.3761,Safe D,42.0184,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ca-11,HOUSE,CA,11,False,same_party,Connie Chan; Scott Wiener,,Nancy Pelosi,1.0,,,,Safe D,,,,,,,,
+2026-10-16,house-ca-12,HOUSE,CA,12,False,same_party,Jamie Joyce; Lateefah Simon,,Lateefah Simon,1.0,,,,Safe D,,,,,,,,
+2026-10-16,house-ca-13,HOUSE,CA,13,False,standard,Adam Gray,Kevin Lincoln,Adam Gray,0.992,16.3379,8.9822,23.6027,Safe D,16.3404,0.9952,,,0.0,,0.0016,1.2274
+2026-10-16,house-ca-14,HOUSE,CA,14,False,same_party,Melissa Hernandez; Aisha Wahab,,Aisha Wahab,1.0,,,,Safe D,,,,,,,,
+2026-10-16,house-ca-15,HOUSE,CA,15,False,standard,Kevin Mullin,Charles Hoelter,Kevin Mullin,0.9999,55.4286,48.3474,62.641,Safe D,55.4558,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ca-16,HOUSE,CA,16,False,standard,Sam Liccardo,Peter Soulé,Sam Liccardo,1.0,59.0658,51.8259,66.3829,Safe D,59.0758,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ca-17,HOUSE,CA,17,False,standard,Ro Khanna,Ritesh Tandon,Ro Khanna,0.9998,46.5766,39.2521,53.9095,Safe D,46.5163,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ca-18,HOUSE,CA,18,False,standard,Zoe Lofgren,Shane Lewis,Zoe Lofgren,0.9996,37.4249,29.9564,44.6956,Safe D,37.3558,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ca-19,HOUSE,CA,19,False,standard,Jimmy Panetta,Peter Coe Verbica,Jimmy Panetta,0.9998,45.7205,38.5052,52.7864,Safe D,45.6521,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ca-20,HOUSE,CA,20,False,standard,Sandra Van Scotter,Vince Fong,Vince Fong,0.001,-27.3002,-34.5844,-20.0043,Safe R,-27.3238,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-ca-21,HOUSE,CA,21,False,standard,Jim Costa,Kyle Kirkland,Jim Costa,0.9935,17.5768,10.3153,24.9903,Safe D,17.5405,0.9973,,,0.0,,0.001,0.7529
+2026-10-16,house-ca-22,HOUSE,CA,22,False,standard,Randy Villegas,David Valadao,David Valadao,0.7952,4.0528,-2.2849,10.383,Lean D,5.6047,0.8133,0.8305,1.0,0.3267,0.5379,0.03,27.9643
+2026-10-16,house-ca-23,HOUSE,CA,23,False,standard,Tessa Lynn Hodge,Jay Obernolte,Jay Obernolte,0.0111,-15.4322,-22.6987,-8.1187,Safe R,-15.4643,0.0071,,,0.0,,0.0002,0.1154
+2026-10-16,house-ca-24,HOUSE,CA,24,False,standard,Salud Carbajal,Bob Smith,Salud Carbajal,0.9991,34.3318,27.0238,41.6347,Safe D,34.2686,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ca-25,HOUSE,CA,25,False,standard,Raul Ruiz,Joe Males,Raul Ruiz,0.9968,21.5985,14.2572,28.9824,Safe D,21.5704,0.9997,,,0.0,,0.0004,0.2651
+2026-10-16,house-ca-26,HOUSE,CA,26,False,standard,Jacqui Irwin,Sam Gallucci,Julia Brownley,0.9963,24.0388,15.7448,32.1928,Safe D,24.0684,0.9996,,,0.0,,0.0003,0.1399
+2026-10-16,house-ca-27,HOUSE,CA,27,False,standard,George Whitesides,Jason Gibbs,George T. Whitesides,0.9914,19.0989,10.7646,27.4749,Safe D,19.0762,0.9957,,,0.0,,0.0012,0.6504
+2026-10-16,house-ca-28,HOUSE,CA,28,False,standard,Judy Chu,April Verlato,Judy Chu,1.0,36.0899,28.8064,43.3483,Safe D,36.0222,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ca-29,HOUSE,CA,29,False,same_party,Angelica Dueñas; Luz Rivas,,Luz Rivas,1.0,,,,Safe D,,,,,,,,
+2026-10-16,house-ca-30,HOUSE,CA,30,False,standard,Laura Friedman,Scott Meyers,Laura Friedman,0.9998,48.4491,41.2432,55.6632,Safe D,48.4049,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ca-31,HOUSE,CA,31,False,standard,Gil Cisneros,Eric Ching,Gil Cisneros,0.9988,25.0092,17.67,32.2113,Safe D,24.9771,1.0,,,0.0,,0.0001,0.0825
+2026-10-16,house-ca-32,HOUSE,CA,32,False,standard,Brad Sherman,Larry Thompson,Brad Sherman,0.9996,34.648,27.3257,41.9565,Safe D,34.6063,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ca-33,HOUSE,CA,33,False,standard,Pete Aguilar,Stephanie Vargas,Pete Aguilar,0.9982,24.4489,17.1243,31.842,Safe D,24.3878,0.9999,,,0.0,,0.0001,0.0645
+2026-10-16,house-ca-34,HOUSE,CA,34,False,same_party,Jimmy Gomez; Angela Gonzales-Torres,,Jimmy Gomez,1.0,,,,Safe D,,,,,,,,
+2026-10-16,house-ca-35,HOUSE,CA,35,False,standard,Norma Torres,Mike Cargile,Norma Torres,0.9972,21.6019,14.2652,28.9559,Safe D,21.5553,0.9997,,,0.0,,0.0001,0.0927
+2026-10-16,house-ca-36,HOUSE,CA,36,False,standard,Ted Lieu,Houston Brignano,Ted Lieu,0.9998,46.9641,39.7935,54.1942,Safe D,46.9647,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ca-37,HOUSE,CA,37,False,same_party,Sydney Kamlager-Dove; Samantha Mota,,Sydney Kamlager-Dove,1.0,,,,Safe D,,,,,,,,
+2026-10-16,house-ca-38,HOUSE,CA,38,False,standard,Hilda Solis,Pedro Casas,None (new seat),0.9943,21.301,12.991,29.596,Safe D,21.225,0.9983,,,0.0,,0.0006,0.4001
+2026-10-16,house-ca-39,HOUSE,CA,39,False,standard,Mark Takano,Steve Manos,Mark Takano,0.9972,21.4648,14.1462,28.7749,Safe D,21.3978,0.9997,,,0.0,,0.0004,0.2386
+2026-10-16,house-ca-40,HOUSE,CA,40,False,same_party,,Ken Calvert; Young Kim,Young Kim,0.0,,,,Safe R,,,,,,,,
+2026-10-16,house-ca-41,HOUSE,CA,41,False,standard,Linda Sánchez,Mitch Clemmons,Linda Sánchez,0.9983,25.6697,18.3697,32.9989,Safe D,25.5549,1.0,,,0.0,,0.0,0.0258
+2026-10-16,house-ca-42,HOUSE,CA,42,False,standard,Robert Garcia,Brian Burley,Robert Garcia,0.9982,24.3128,17.0065,31.6067,Safe D,24.3213,0.9999,,,0.0,,0.0002,0.092
+2026-10-16,house-ca-43,HOUSE,CA,43,False,standard,Maxine Waters,Cristian Morales,Maxine Waters,0.9998,58.0297,50.8607,65.266,Safe D,57.9877,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ca-44,HOUSE,CA,44,False,standard,Nanette Barragán,Genevieve Angel,Nanette Barragán,1.0,49.054,41.7124,56.2776,Safe D,48.9908,1.0,,,0.0,,0.0,0.0366
+2026-10-16,house-ca-45,HOUSE,CA,45,False,standard,Derek Tran,Chuong Vo,Derek Tran,0.9912,16.0421,8.767,23.2655,Safe D,16.0272,0.9945,,,0.0,,0.0012,0.6407
+2026-10-16,house-ca-46,HOUSE,CA,46,False,standard,Lou Correa,David Pan,Lou Correa,0.9993,27.3086,19.7923,34.6533,Safe D,27.288,1.0,,,0.0,,0.0,0.0353
+2026-10-16,house-ca-47,HOUSE,CA,47,False,standard,Dave Min,Jenny Le Roux,Dave Min,0.997,21.2817,14.0261,28.6436,Safe D,21.2935,0.9996,,,0.0,,0.0002,0.113
+2026-10-16,house-ca-48,HOUSE,CA,48,False,standard,Marni von Wilpert,Jim Desmond,Darrell Issa,0.9486,8.8091,1.9806,15.438,Likely D,12.9043,0.9623,2.9542,1.0,0.421,0.6374,0.0146,7.0993
+2026-10-16,house-ca-49,HOUSE,CA,49,False,standard,Mike Levin,Armen Kurdian,Mike Levin,0.996,20.0704,12.7527,27.4546,Safe D,20.056,0.9993,,,0.0,,0.0004,0.1452
+2026-10-16,house-ca-50,HOUSE,CA,50,False,standard,Scott Peters,Steve Cohen,Scott Peters,0.9982,26.7606,19.4452,34.0403,Safe D,26.7072,1.0,,,0.0,,0.0001,0.0431
+2026-10-16,house-ca-51,HOUSE,CA,51,False,standard,Sara Jacobs,Ricardo Cabrera,Sara Jacobs,0.9986,26.3015,19.0214,33.5022,Safe D,26.2582,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ca-52,HOUSE,CA,52,False,standard,Juan Vargas,Jeff Belle,Juan Vargas,0.9993,33.0573,25.8533,40.4115,Safe D,33.0276,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-co-1,HOUSE,CO,1,False,standard,Melat Kiros,Christy Peterson,Diana DeGette,1.0,64.0622,55.947,72.314,Safe D,64.0438,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-co-2,HOUSE,CO,2,False,standard,Joe Neguse,Kelley Dennison,Joe Neguse,0.9998,48.8552,41.5783,56.0498,Safe D,48.8616,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-co-3,HOUSE,CO,3,False,standard,Dwayne Romero,Jeff Hurd,Jeff Hurd,0.1994,-4.0926,-10.3103,2.2634,Likely R,-3.737,0.2764,-4.7455,1.0,0.3317,0.2936,0.0058,2.0245
+2026-10-16,house-co-4,HOUSE,CO,4,False,standard,Eileen Laubacher,Lauren Boebert,Lauren Boebert,0.1274,-5.704,-12.2093,0.8071,Likely R,-4.0851,0.2581,-10.2581,1.0,0.2722,0.1526,0.0034,1.0216
+2026-10-16,house-co-5,HOUSE,CO,5,False,standard,Jessica Killin,Jeff Crank,Jeff Crank,0.184,-4.3841,-10.816,2.003,Likely R,-4.4345,0.2406,-4.4264,2.0,0.3086,0.3152,0.0044,1.6726
+2026-10-16,house-co-6,HOUSE,CO,6,False,standard,Jason Crow,Jason Clark,Jason Crow,0.9992,29.7038,22.3554,37.0222,Safe D,29.6768,1.0,,,0.0,,0.0001,0.0392
+2026-10-16,house-co-7,HOUSE,CO,7,False,standard,Brittany Pettersen,Tim Bennett,Brittany Pettersen,0.9978,24.2592,16.8572,31.5643,Safe D,24.2411,0.9999,,,0.0,,0.0002,0.0792
+2026-10-16,house-co-8,HOUSE,CO,8,False,standard,Manny Rutinel,Gabe Evans,Gabe Evans,0.863,5.336,-1.0128,11.4895,Likely D,6.1206,0.8345,3.7994,1.0,0.3533,0.676,0.0294,12.0388
+2026-10-16,house-ct-1,HOUSE,CT,1,False,standard,Luke Bronin,Amy Chai,John B. Larson,0.9984,31.2376,22.9646,39.587,Safe D,31.31,1.0,,,0.0,,0.0002,0.1118
+2026-10-16,house-ct-2,HOUSE,CT,2,False,standard,Joe Courtney,George Austin,Joe Courtney,0.9976,22.0839,14.9495,29.5354,Safe D,22.2148,0.9998,,,0.0,,0.0003,0.1187
+2026-10-16,house-ct-3,HOUSE,CT,3,False,standard,Rosa DeLauro,Chris Lancia,Rosa DeLauro,0.9989,26.4604,19.0906,33.8656,Safe D,26.4751,1.0,,,0.0,,0.0,0.0225
+2026-10-16,house-ct-4,HOUSE,CT,4,False,standard,Jim Himes,Michael Goldstein,Jim Himes,0.9996,32.7037,25.3718,40.1464,Safe D,32.7682,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ct-5,HOUSE,CT,5,False,standard,Jahana Hayes,Chris Shea,Jahana Hayes,0.991,15.4408,8.1105,22.7542,Safe D,15.4562,0.9929,,,0.0,,0.0018,0.8222
+2026-10-16,house-de-al,HOUSE,DE,0,False,standard,Sarah McBride,Joseph Arminio,Sarah McBride,0.9986,26.5573,19.1648,33.9199,Safe D,26.5268,1.0,,,0.0,,0.0,0.0172
+2026-10-16,house-fl-1,HOUSE,FL,1,False,standard,Gay Valimont,Jimmy Patronis,Jimmy Patronis,0.0006,-32.0602,-39.4234,-24.6545,Safe R,-32.0708,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-fl-2,HOUSE,FL,2,False,standard,Amanda Green,Austin Rogers,Neal Dunn,0.0545,-10.7921,-19.2317,-2.5382,Likely R,-10.8444,0.0675,,,0.0,,0.0011,0.417
+2026-10-16,house-fl-3,HOUSE,FL,3,False,standard,Seth Harp,Kat Cammack,Kat Cammack,0.0104,-15.8566,-23.1152,-8.4661,Safe R,-15.788,0.0061,,,0.0,,0.0002,0.0972
+2026-10-16,house-fl-4,HOUSE,FL,4,False,standard,LaShonda Holloway,Aaron Bean,Aaron Bean,0.0418,-10.4179,-17.8036,-3.0015,Safe R,-10.3251,0.0506,,,0.0,,0.0006,0.2154
+2026-10-16,house-fl-5,HOUSE,FL,5,False,standard,Rachel Grage,John Rutherford,John Rutherford,0.0074,-16.9827,-24.3528,-9.6207,Safe R,-17.0296,0.0034,,,0.0,,0.0001,0.0357
+2026-10-16,house-fl-6,HOUSE,FL,6,False,standard,Eric Yonce,Randy Fine,Randy Fine,0.0022,-24.5593,-31.8361,-17.0855,Safe R,-24.5903,0.0,,,0.0,,0.0001,0.0351
+2026-10-16,house-fl-7,HOUSE,FL,7,False,standard,Bale Dalton,Ryan Elijah,Cory Mills,0.4307,-1.1005,-9.4339,7.2305,Toss-up,-1.1301,0.4381,,,0.0,,0.0141,5.1444
+2026-10-16,house-fl-8,HOUSE,FL,8,False,standard,Jennifer Jenkins,Mike Haridopolos,Mike Haridopolos,0.021,-10.5412,-16.816,-4.3718,Safe R,-12.5932,0.0228,-7.014,2.0,0.36,0.1972,0.0005,0.1808
+2026-10-16,house-fl-9,HOUSE,FL,9,False,standard,Darren Soto,Dan Green,Darren Soto,0.3148,-2.4311,-8.9416,4.2228,Lean R,-1.4071,0.4115,-5.5184,1.0,0.2333,0.3089,0.009,3.7152
+2026-10-16,house-fl-10,HOUSE,FL,10,False,same_party,Maxwell Frost,,Maxwell Frost,1.0,,,,Safe D,,,,,,,,
+2026-10-16,house-fl-11,HOUSE,FL,11,False,standard,James Pericola,Joe Strada,Daniel Webster,0.0548,-8.9534,-15.9557,-2.0251,Likely R,-10.7638,0.069,-5.5606,1.0,0.3482,0.2848,0.001,0.3635
+2026-10-16,house-fl-12,HOUSE,FL,12,False,standard,Kimberly Overman,Gus Bilirakis,Gus Bilirakis,0.0184,-13.3513,-20.7035,-5.9709,Safe R,-13.4142,0.0166,,,0.0,,0.0003,0.1219
+2026-10-16,house-fl-13,HOUSE,FL,13,False,standard,Leela Gray,Anna Paulina Luna,Anna Paulina Luna,0.178,-4.2949,-10.3223,1.7772,Likely R,-3.7783,0.2742,-5.1214,5.0,0.4015,0.2497,0.0038,1.4307
+2026-10-16,house-fl-14,HOUSE,FL,14,False,standard,Kathy Castor,Mike Beltran,Kathy Castor,0.8836,6.03,-0.4797,12.313,Likely D,5.0199,0.7873,8.1296,1.0,0.3212,0.8189,0.0257,10.3129
+2026-10-16,house-fl-15,HOUSE,FL,15,False,standard,Robert People,Laurel Lee,Laurel Lee,0.014,-14.6339,-21.9964,-7.2756,Safe R,-14.6121,0.0102,,,0.0,,0.0004,0.1759
+2026-10-16,house-fl-16,HOUSE,FL,16,False,standard,Kelly Kirschner,Sydney Gruters,Vern Buchanan,0.1307,-5.9508,-12.8506,0.9011,Likely R,-6.1269,0.1992,-5.8674,2.0,0.3867,0.258,0.0024,0.8819
+2026-10-16,house-fl-17,HOUSE,FL,17,False,standard,Matthew Montavon,Greg Steube,Greg Steube,0.0067,-17.0588,-24.3379,-9.6769,Safe R,-17.1049,0.0033,,,0.0,,0.0,0.0
+2026-10-16,house-fl-18,HOUSE,FL,18,False,standard,Curtis Gibson,Scott Franklin,Scott Franklin,0.0144,-14.0532,-21.4037,-6.7268,Safe R,-14.0163,0.0131,,,0.0,,0.0004,0.1885
+2026-10-16,house-fl-19,HOUSE,FL,19,False,standard,Victor Arias,Jim Schwartzel,Byron Donalds,0.004,-22.4898,-30.8819,-14.2325,Safe R,-22.5078,0.001,,,0.0,,0.0001,0.0551
+2026-10-16,house-fl-20,HOUSE,FL,20,False,standard,Debbie Wasserman Schultz,Brent Andersen,Debbie Wasserman Schultz,1.0,47.7866,40.6103,55.0602,Safe D,47.7776,1.0,,,0.0,,0.0,0.0239
+2026-10-16,house-fl-21,HOUSE,FL,21,False,standard,James Martin,Brian Mast,Brian Mast,0.0185,-13.3947,-20.8258,-6.0026,Safe R,-13.4186,0.0166,,,0.0,,0.0002,0.0865
+2026-10-16,house-fl-22,HOUSE,FL,22,False,standard,Pia Dandiya,Casey Askar,None (new seat),0.3606,-1.6321,-7.8641,4.4294,Lean R,-2.5237,0.364,-0.9193,2.0,0.5292,0.4473,0.0098,3.9099
+2026-10-16,house-fl-23,HOUSE,FL,23,False,standard,Lois Frankel,Deborah Adeimy,Lois Frankel,0.9986,25.4854,18.1488,32.9704,Safe D,25.5016,1.0,,,0.0,,0.0002,0.0922
+2026-10-16,house-fl-24,HOUSE,FL,24,False,standard,Oliver Gilbert,Te Mayonna Brown,Frederica Wilson,0.9998,46.5227,38.2361,54.6849,Safe D,46.49,1.0,,,0.0,,0.0,0.0279
+2026-10-16,house-fl-25,HOUSE,FL,25,False,standard,Jared Moskowitz,Scott Singer,Jared Moskowitz,0.8544,5.6525,-1.4092,12.6743,Likely D,5.2198,0.7964,8.5855,1.0,0.1383,0.7154,0.023,9.5077
+2026-10-16,house-fl-26,HOUSE,FL,26,False,standard,Nicole Locklin,Mario Díaz-Balart,Mario Díaz-Balart,0.0088,-15.8333,-23.2802,-8.6311,Safe R,-15.8333,0.006,,,0.0,,0.0002,0.0952
+2026-10-16,house-fl-27,HOUSE,FL,27,False,standard,Eliott Rodriguez,María Elvira Salazar,María Elvira Salazar,0.0384,-8.7539,-14.8001,-2.5789,Safe R,-11.572,0.0331,-4.427,3.0,0.4026,0.2793,0.0004,0.1611
+2026-10-16,house-fl-28,HOUSE,FL,28,False,standard,Phil Ehr,Carlos Giménez,Carlos A. Giménez,0.0105,-17.9139,-26.3495,-9.6455,Safe R,-17.8763,0.0069,,,0.0,,0.0001,0.0692
+2026-10-16,house-ga-1,HOUSE,GA,1,False,standard,Amanda Hollowell,Jim Kingston,Buddy Carter,0.0634,-10.2132,-18.5729,-1.7772,Likely R,-10.2439,0.079,,,0.0,,0.0011,0.4445
+2026-10-16,house-ga-2,HOUSE,GA,2,False,standard,Sanford Bishop,Matt Day,Sanford Bishop,0.9965,20.6228,13.0706,27.8753,Safe D,20.5148,0.9994,,,0.0,,0.0002,0.116
+2026-10-16,house-ga-3,HOUSE,GA,3,False,standard,Maura Keller,Brian Jack,Brian Jack,0.0012,-20.5714,-26.9232,-14.3089,Safe R,-25.9755,0.0,-10.7901,1.0,0.3505,0.0993,0.0,0.0
+2026-10-16,house-ga-4,HOUSE,GA,4,False,standard,Hank Johnson,James Duffie,Hank Johnson,1.0,59.3723,52.2311,66.5723,Safe D,59.5276,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ga-5,HOUSE,GA,5,False,standard,Nikema Williams,John Oscar Salvesen,Nikema Williams,1.0,80.04,72.8459,87.1957,Safe D,80.0302,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ga-6,HOUSE,GA,6,False,standard,Lucy McBath,Kevin Martin,Lucy McBath,1.0,57.4915,50.169,64.7801,Safe D,57.4809,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ga-7,HOUSE,GA,7,False,standard,Tony Kozycki,Rich McCormick,Rich McCormick,0.0079,-13.3025,-19.436,-7.147,Safe R,-18.9408,0.0013,-4.3931,2.0,0.3893,0.2859,0.0001,0.0341
+2026-10-16,house-ga-8,HOUSE,GA,8,False,standard,Kelly Esti,Austin Scott,Austin Scott,0.0013,-27.2398,-34.5391,-19.8983,Safe R,-27.277,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-ga-9,HOUSE,GA,9,False,standard,Caitlyn Gegen,Andrew Clyde,Andrew Clyde,0.0007,-29.0664,-36.5471,-21.7878,Safe R,-29.0982,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-ga-10,HOUSE,GA,10,False,standard,Pam Delancy,Houston Gaines,Mike Collins,0.0227,-14.2908,-22.5209,-6.0635,Safe R,-14.2629,0.0247,,,0.0,,0.0004,0.1419
+2026-10-16,house-ga-11,HOUSE,GA,11,False,standard,Chris Harden,John Cowan,Barry Loudermilk,0.0443,-9.6035,-16.6587,-2.6462,Safe R,-16.2316,0.0126,1.6772,1.0,0.3712,0.5718,0.0012,0.4039
+2026-10-16,house-ga-12,HOUSE,GA,12,False,standard,Ceretta Smith,Rick Allen,Rick Allen,0.0273,-12.1529,-19.5801,-4.6765,Safe R,-12.1344,0.027,,,0.0,,0.0009,0.3785
+2026-10-16,house-ga-13,HOUSE,GA,13,False,standard,Jasmine Clark,Jonathan Chavez,Everton Blair,1.0,49.9672,41.7913,58.1054,Safe D,49.9917,1.0,,,0.0,,0.0,0.0202
+2026-10-16,house-ga-14,HOUSE,GA,14,False,standard,Shawn Harris,Clay Fuller,Clay Fuller,0.0006,-31.4762,-38.8666,-24.0503,Safe R,-31.4722,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-hi-1,HOUSE,HI,1,False,standard,Ed Case,Adriel Lam,Ed Case,0.9997,44.1545,36.8953,51.4944,Safe D,44.1346,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-hi-2,HOUSE,HI,2,False,standard,Jill Tokuda,Brenton Awa,Jill Tokuda,0.9996,39.5102,32.1806,46.7946,Safe D,39.4652,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ia-1,HOUSE,IA,1,False,standard,Christina Bohannan,Mariannette Miller-Meeks,Mariannette Miller-Meeks,0.8008,4.2232,-2.3336,10.7356,Likely D,4.5124,0.7632,3.3104,2.0,0.276,0.6312,0.0282,10.0506
+2026-10-16,house-ia-2,HOUSE,IA,2,False,standard,Lindsay James,Joe Mitchell,Ashley Hinson,0.4036,-1.2703,-8.0554,5.469,Toss-up,-0.5359,0.4706,-2.4622,2.0,0.4207,0.3855,0.0127,4.5674
+2026-10-16,house-ia-3,HOUSE,IA,3,False,standard,Sarah Trone Garriott,Zach Nunn,Zach Nunn,0.8441,5.6507,-1.6275,12.7679,Likely D,6.0329,0.831,-0.8981,1.0,0.0608,0.485,0.0247,8.7902
+2026-10-16,house-ia-4,HOUSE,IA,4,False,standard,David Dawson,Chris McGowan,Randy Feenstra,0.0036,-23.8709,-32.2174,-15.4253,Safe R,-23.9202,0.0005,,,0.0,,0.0001,0.0383
+2026-10-16,house-id-1,HOUSE,ID,1,False,standard,Kaylee Peterson,Russ Fulcher,Russ Fulcher,0.0003,-33.7663,-40.1923,-27.5074,Safe R,-39.9906,0.0,-19.3871,2.0,0.299,0.0195,0.0,0.0
+2026-10-16,house-id-2,HOUSE,ID,2,False,standard,Ellie Gilbreath,Mike Simpson,Mike Simpson,0.0016,-23.1559,-30.4799,-15.7763,Safe R,-23.1655,0.0001,,,0.0,,0.0,0.0202
+2026-10-16,house-il-1,HOUSE,IL,1,False,standard,Jonathan Jackson,Christian Maxwell,Jonathan Jackson,0.9999,40.5198,33.206,47.8117,Safe D,40.57,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-il-2,HOUSE,IL,2,False,standard,Donna Miller,Michael Noack,Robin Kelly,0.9996,41.2789,32.9683,49.5198,Safe D,41.2513,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-il-3,HOUSE,IL,3,False,standard,Delia Ramirez,Angel Oakley,Delia Ramirez,0.9999,41.8753,34.479,49.1933,Safe D,41.8937,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-il-4,HOUSE,IL,4,False,standard,Patty Garcia,Lupe Castillo,Chuy García,0.9995,36.6243,28.2119,44.9406,Safe D,36.6077,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-il-5,HOUSE,IL,5,False,standard,Mike Quigley,Tommy Hanson,Mike Quigley,1.0,46.1359,38.9601,53.3454,Safe D,46.0882,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-il-6,HOUSE,IL,6,False,standard,Sean Casten,Niki Conforti,Sean Casten,0.993,17.6987,10.3555,25.1151,Safe D,17.6566,0.9975,,,0.0,,0.0013,0.5361
+2026-10-16,house-il-7,HOUSE,IL,7,False,standard,La Shawn Ford,Chad Koppie,Danny Davis,1.0,71.8825,63.6581,80.2687,Safe D,72.0126,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-il-8,HOUSE,IL,8,False,standard,Melissa Bean,Jennifer Davis,Raja Krishnamoorthi,0.9826,16.2785,7.8102,24.5707,Safe D,16.198,0.9872,,,0.0,,0.0021,1.0282
+2026-10-16,house-il-9,HOUSE,IL,9,False,standard,Daniel Biss,John Elleson,Jan Schakowsky,0.9995,44.5284,36.2552,52.6018,Safe D,44.5184,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-il-10,HOUSE,IL,10,False,standard,Brad Schneider,Carl Lambrecht,Brad Schneider,0.9992,29.8396,22.4633,37.1288,Safe D,29.9156,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-il-11,HOUSE,IL,11,False,standard,Bill Foster,Jeff Walter,Bill Foster,0.9966,20.8939,13.459,28.3261,Safe D,20.9071,0.9996,,,0.0,,0.0006,0.2297
+2026-10-16,house-il-12,HOUSE,IL,12,False,standard,Julie Fortier,Mike Bost,Mike Bost,0.0002,-39.5968,-46.8828,-32.2018,Safe R,-39.5735,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-il-13,HOUSE,IL,13,False,standard,Nikki Budzinski,Jeff Wilson,Nikki Budzinski,0.9981,23.2294,15.9501,30.5208,Safe D,23.2838,0.9999,,,0.0,,0.0003,0.1369
+2026-10-16,house-il-14,HOUSE,IL,14,False,standard,Lauren Underwood,James Marter,Lauren Underwood,0.995,18.6483,11.3252,25.9551,Safe D,18.634,0.9984,,,0.0,,0.0006,0.2477
+2026-10-16,house-il-15,HOUSE,IL,15,False,standard,Jennifer Todd,Mary Miller,Mary Miller,0.0004,-35.0146,-42.3772,-27.7397,Safe R,-35.0268,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-il-16,HOUSE,IL,16,False,standard,Paul Nolley,Darin LaHood,Darin LaHood,0.0067,-17.8219,-25.127,-10.5072,Safe R,-17.9034,0.0022,,,0.0,,0.0001,0.0388
+2026-10-16,house-il-17,HOUSE,IL,17,False,standard,Eric Sorensen,Dillan Vancil,Eric Sorensen,0.994,17.6309,10.423,24.8622,Safe D,17.672,0.9975,,,0.0,,0.0009,0.4309
+2026-10-16,house-in-1,HOUSE,IN,1,False,standard,Frank Mrvan,Barb Regnitz,Frank J. Mrvan,0.9387,10.3824,2.1283,18.6638,Likely D,10.4543,0.9252,,,0.0,,0.0106,5.6859
+2026-10-16,house-in-2,HOUSE,IN,2,False,standard,Jamee Decio,Rudy Yakym,Rudy Yakym,0.0031,-20.8127,-28.1912,-13.4639,Safe R,-20.7334,0.0005,,,0.0,,0.0001,0.0874
+2026-10-16,house-in-3,HOUSE,IN,3,False,standard,Kelly Thompson,Marlin Stutzman,Marlin Stutzman,0.0009,-28.0795,-35.3155,-20.76,Safe R,-28.0662,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-in-4,HOUSE,IN,4,False,standard,Drew Cox,Jim Baird,Jim Baird,0.0014,-25.4314,-32.7838,-18.1831,Safe R,-25.5404,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-in-5,HOUSE,IN,5,False,standard,J. D. Ford,Victoria Spartz,Victoria Spartz,0.0234,-10.0815,-16.3046,-3.9232,Safe R,-11.5128,0.0338,-7.4556,1.0,0.3533,0.1859,0.0004,0.1898
+2026-10-16,house-in-6,HOUSE,IN,6,False,standard,Cinde Wirth,Jefferson Shreve,Jefferson Shreve,0.0011,-28.0986,-35.4414,-20.7839,Safe R,-28.1057,0.0,,,0.0,,0.0,0.0269
+2026-10-16,house-in-7,HOUSE,IN,7,False,standard,André Carson,Patrick McAuley,André Carson,0.9999,49.2968,41.9196,56.4939,Safe D,49.342,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-in-8,HOUSE,IN,8,False,standard,Mary Allen,Mark Messmer,Mark Messmer,0.0004,-32.9062,-40.3389,-25.5735,Safe R,-32.9371,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-in-9,HOUSE,IN,9,False,standard,Brad Meyer,Erin Houchin,Erin Houchin,0.0014,-24.2732,-31.5373,-16.9127,Safe R,-24.2811,0.0001,,,0.0,,0.0,0.0247
+2026-10-16,house-ks-1,HOUSE,KS,1,False,standard,Lauren Reinhold,Tracey Mann,Tracey Mann,0.001,-28.07,-35.496,-20.6489,Safe R,-28.0555,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-ks-2,HOUSE,KS,2,False,standard,Don Coover,Derek Schmidt,Derek Schmidt,0.0148,-14.1978,-21.5599,-6.7052,Safe R,-14.1803,0.0122,,,0.0,,0.0003,0.1423
+2026-10-16,house-ks-3,HOUSE,KS,3,False,standard,Sharice Davids,Eric Jenkins,Sharice Davids,0.9955,18.8571,11.4664,26.1121,Safe D,18.7631,0.9985,,,0.0,,0.0006,0.2201
+2026-10-16,house-ks-4,HOUSE,KS,4,False,standard,Katy Tyndell,Ron Estes,Ron Estes,0.0048,-19.8056,-27.1625,-12.438,Safe R,-19.8882,0.0008,,,0.0,,0.0001,0.0702
+2026-10-16,house-ky-1,HOUSE,KY,1,False,standard,Drew Williams,James Comer,James Comer,0.0002,-42.0478,-49.4425,-34.6147,Safe R,-42.0579,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-ky-2,HOUSE,KY,2,False,standard,Megan Wingfield,Brett Guthrie,Brett Guthrie,0.0006,-37.2166,-44.7417,-29.7863,Safe R,-37.31,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-ky-3,HOUSE,KY,3,False,standard,Morgan McGarvey,Maria Rodriquez,Morgan McGarvey,0.9995,30.7696,23.4263,38.1385,Safe D,30.8022,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ky-4,HOUSE,KY,4,False,standard,Melissa Strange,Ed Gallrein,Thomas Massie,0.0022,-28.3262,-36.5877,-19.9744,Safe R,-28.305,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-ky-5,HOUSE,KY,5,False,standard,Ned Pillersdorf,Hal Rogers,Hal Rogers,0.0001,-60.6871,-67.9331,-53.4807,Safe R,-60.6399,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-ky-6,HOUSE,KY,6,False,standard,Zach Dembo,Ralph Alvarado,Andy Barr,0.2079,-4.0231,-10.4869,2.4725,Lean R,-7.1953,0.1607,-0.2668,8.0,0.4611,0.4868,0.0052,2.2827
+2026-10-16,house-la-1,HOUSE,LA,1,False,jungle,Lauren Jewett,Randall Arrington; Steve Scalise,Steve Scalise,0.0002,-38.5958,-45.8547,-31.2826,Safe R,-38.5343,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-la-2,HOUSE,LA,2,False,jungle,Troy Carter; Renada Collins,Peter Williams,Troy Carter,1.0,61.5985,54.2269,68.7842,Safe D,61.5756,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-la-3,HOUSE,LA,3,False,jungle,John Day; Priscilla Gonzalez; Tia LeBrun; Caleb Walker,Kate Cotten; Clay Higgins,Clay Higgins,0.0006,-31.3981,-38.692,-24.0249,Safe R,-31.3651,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-la-4,HOUSE,LA,4,False,jungle,Conrad Cable; Matt Gromlich,Gordon Heslop; Mike Johnson; Mike Nichols,Mike Johnson,0.0007,-29.0725,-36.3241,-21.7387,Safe R,-29.0442,0.0,,,0.0,,0.0,0.025
+2026-10-16,house-la-5,HOUSE,LA,5,False,jungle,Dan McKay; Patricia Moore; Antonio Wilson,Stewart Cathey Jr.; Misti Cordell; Omar Dantzler; Michael Echols; Gabe Firment; Austin Magee,Julia Letlow,0.0024,-26.5775,-34.9996,-18.2764,Safe R,-26.5251,0.0001,,,0.0,,0.0,0.0
+2026-10-16,house-la-6,HOUSE,LA,6,False,jungle,Pat Forbes; Lindsay Garcia,Monique Appeaning; Larry Davis; Rick Edmonds; Chris Johnson; Michael Mebruer; Blake Miguez; Stephen Wagley,Cleo Fields,0.0044,-22.6904,-31.0862,-14.3158,Safe R,-22.7161,0.0009,,,0.0,,0.0,0.0
+2026-10-16,house-ma-1,HOUSE,MA,1,False,same_party,Richard Neal,,Richard Neal,1.0,,,,Safe D,,,,,,,,
+2026-10-16,house-ma-2,HOUSE,MA,2,False,same_party,Jim McGovern,,Jim McGovern,1.0,,,,Safe D,,,,,,,,
+2026-10-16,house-ma-3,HOUSE,MA,3,False,standard,Lori Trahan,Gary Grossi,Lori Trahan,0.9994,29.7985,22.6377,37.0993,Safe D,29.8622,1.0,,,0.0,,0.0,0.0216
+2026-10-16,house-ma-4,HOUSE,MA,4,False,standard,Jake Auchincloss,Thomas Stalcup,Jake Auchincloss,0.9994,30.5777,23.2179,37.9098,Safe D,30.5755,1.0,,,0.0,,0.0002,0.0761
+2026-10-16,house-ma-5,HOUSE,MA,5,False,same_party,Katherine Clark,,Katherine Clark,1.0,,,,Safe D,,,,,,,,
+2026-10-16,house-ma-6,HOUSE,MA,6,False,standard,Dan Koh,Micah Jones,Seth Moulton,0.9984,29.0998,20.8828,37.7097,Safe D,29.2023,1.0,,,0.0,,0.0,0.0178
+2026-10-16,house-ma-7,HOUSE,MA,7,False,same_party,Ayanna Pressley,,Ayanna Pressley,1.0,,,,Safe D,,,,,,,,
+2026-10-16,house-ma-8,HOUSE,MA,8,False,standard,Stephen Lynch,Robert Burke,Stephen Lynch,0.9998,43.5611,36.3986,50.8604,Safe D,43.5066,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ma-9,HOUSE,MA,9,False,standard,Bill Keating,Tyler MacAllister,Bill Keating,0.9976,21.8975,14.5856,29.2339,Safe D,21.9887,0.9998,,,0.0,,0.0002,0.0669
+2026-10-16,house-md-1,HOUSE,MD,1,False,standard,Dan Schwartz,Andy Harris,Andy Harris,0.0056,-15.3841,-21.7964,-8.9292,Safe R,-13.7278,0.0147,-18.6955,1.0,0.3301,0.0165,0.0001,0.0587
+2026-10-16,house-md-2,HOUSE,MD,2,False,standard,Johnny Olszewski,Dave Wallace,Johnny Olszewski,0.999,29.9167,22.5566,37.1641,Safe D,29.9733,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-md-3,HOUSE,MD,3,False,standard,Sarah Elfreth,Berney Flowers,Sarah Elfreth,0.9993,33.9103,26.599,41.112,Safe D,33.9121,1.0,,,0.0,,0.0,0.0203
+2026-10-16,house-md-4,HOUSE,MD,4,False,standard,Glenn Ivey,George McDermott,Glenn Ivey,1.0,83.0982,75.8351,90.3899,Safe D,83.1034,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-md-5,HOUSE,MD,5,False,standard,Adrian Boafo,Chris Chaffee,Steny Hoyer,0.9998,41.6951,33.5278,50.0421,Safe D,41.7053,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-md-6,HOUSE,MD,6,False,standard,April McClain Delaney,Robin Ficker,April McClain Delaney,0.9937,18.6829,11.3553,25.9499,Safe D,18.72,0.9985,,,0.0,,0.0008,0.3441
+2026-10-16,house-md-7,HOUSE,MD,7,False,standard,Kweisi Mfume,Scott Collier,Kweisi Mfume,1.0,69.8642,62.5183,76.9656,Safe D,69.8961,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-md-8,HOUSE,MD,8,False,standard,Jamie Raskin,Cheryl Riley,Jamie Raskin,1.0,65.1653,57.9036,72.3818,Safe D,65.1954,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-me-1,HOUSE,ME,1,False,standard,Chellie Pingree,Ronald Russell,Chellie Pingree,0.9998,27.4074,21.4487,33.421,Safe D,31.7246,1.0,21.0221,1.0,0.4049,0.9974,0.0,0.0
+2026-10-16,house-me-2,HOUSE,ME,2,False,standard,Matthew Dunlap,Paul LePage,Jared Golden,0.5532,0.6023,-5.4171,6.4757,Toss-up,-0.2302,0.4874,0.9952,8.0,0.5876,0.5647,0.0204,7.0156
+2026-10-16,house-mi-1,HOUSE,MI,1,False,standard,Callie Barr,Jack Bergman,Jack Bergman,0.0131,-14.6087,-21.9245,-7.2894,Safe R,-14.5478,0.0104,,,0.0,,0.0002,0.0551
+2026-10-16,house-mi-2,HOUSE,MI,2,False,standard,Ben Ambrose,John Moolenaar,John Moolenaar,0.0011,-25.3929,-32.5617,-18.1321,Safe R,-25.4154,0.0,,,0.0,,0.0,0.0152
+2026-10-16,house-mi-3,HOUSE,MI,3,False,standard,Hillary Scholten,Terri DeBoer,Hillary Scholten,0.9952,19.0271,11.8734,26.4334,Safe D,19.1208,0.9988,,,0.0,,0.001,0.3298
+2026-10-16,house-mi-4,HOUSE,MI,4,False,standard,Sean McCann,Bill Huizenga,Bill Huizenga,0.4081,-1.0528,-7.2152,5.0615,Toss-up,-0.4166,0.4736,-2.075,4.0,0.3869,0.3954,0.0136,4.1829
+2026-10-16,house-mi-5,HOUSE,MI,5,False,standard,Christian Vukasovich,Tim Walberg,Tim Walberg,0.0016,-23.3544,-30.6894,-16.1162,Safe R,-23.3586,0.0001,,,0.0,,0.0,0.0
+2026-10-16,house-mi-6,HOUSE,MI,6,False,standard,Debbie Dingell,Heather Smiley,Debbie Dingell,0.9994,34.9371,27.6623,42.1366,Safe D,34.9083,1.0,,,0.0,,0.0,0.0146
+2026-10-16,house-mi-7,HOUSE,MI,7,False,standard,William Lawrence,Tom Barrett,Tom Barrett,0.5506,0.554,-5.2667,6.5114,Toss-up,2.4078,0.649,-1.6901,2.0,0.4437,0.4048,0.0212,6.13
+2026-10-16,house-mi-8,HOUSE,MI,8,False,standard,Kristen McDonald Rivet,Thomas Smith,Kristen McDonald Rivet,0.9923,16.4618,9.1595,24.0045,Safe D,16.4854,0.9955,,,0.0,,0.0014,0.4476
+2026-10-16,house-mi-9,HOUSE,MI,9,False,standard,Ray Pooley,Lisa McClain,Lisa McClain,0.0008,-28.7635,-36.0792,-21.5032,Safe R,-28.7335,0.0,,,0.0,,0.0,0.0137
+2026-10-16,house-mi-10,HOUSE,MI,10,False,standard,Christina Hines,Mike Bouchard Jr.,John James,0.5567,0.7359,-6.0153,7.4981,Toss-up,3.5343,0.6869,-3.4487,2.0,0.403,0.3468,0.0213,6.5657
+2026-10-16,house-mi-11,HOUSE,MI,11,False,standard,Jeremy Moss,Ethan Baker,Haley Stevens,0.9966,24.7575,16.3829,33.0048,Safe D,24.7524,0.9997,,,0.0,,0.0003,0.0879
+2026-10-16,house-mi-12,HOUSE,MI,12,False,standard,Rashida Tlaib,James Hooper,Rashida Tlaib,1.0,51.7328,44.6165,59.0111,Safe D,51.7462,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-mi-13,HOUSE,MI,13,False,standard,Donavan McKinney,T. P. Nykoriak,Shri Thanedar,0.9997,49.3802,41.0913,57.6536,Safe D,49.2994,1.0,,,0.0,,0.0,0.0203
+2026-10-16,house-mn-1,HOUSE,MN,1,False,standard,Jake Johnson,Brad Finstad,Brad Finstad,0.224,-3.5135,-9.5237,2.5112,Lean R,-6.5476,0.1492,0.8185,4.0,0.4044,0.5437,0.005,1.8406
+2026-10-16,house-mn-2,HOUSE,MN,2,False,standard,Matt Little,Eric Pratt,Angie Craig,0.9788,11.4629,4.7767,17.9326,Safe D,15.4258,0.9833,6.6016,2.0,0.4553,0.7989,0.0066,2.2401
+2026-10-16,house-mn-3,HOUSE,MN,3,False,standard,Kelly Morrison,Tyler Bass,Kelly Morrison,0.999,30.0055,22.692,37.202,Safe D,29.9725,1.0,,,0.0,,0.0001,0.0509
+2026-10-16,house-mn-4,HOUSE,MN,4,False,standard,Betty McCollum,Paul Wikstrom,Betty McCollum,1.0,43.9185,36.7002,51.2774,Safe D,43.876,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-mn-5,HOUSE,MN,5,False,standard,Ilhan Omar,John Nagel,Ilhan Omar,1.0,63.1605,55.8698,70.3426,Safe D,63.1342,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-mn-6,HOUSE,MN,6,False,standard,Doug Chapin,Tom Emmer,Tom Emmer,0.0088,-16.1515,-23.4878,-8.7502,Safe R,-16.1659,0.0052,,,0.0,,0.0003,0.0997
+2026-10-16,house-mn-7,HOUSE,MN,7,False,standard,Erik Osberg,Michelle Fischbach,Michelle Fischbach,0.0006,-32.0427,-39.4021,-24.8166,Safe R,-32.1036,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-mn-8,HOUSE,MN,8,False,standard,Trina Swanson,Pete Stauber,Pete Stauber,0.0644,-8.971,-16.3954,-1.5797,Likely R,-9.0011,0.0765,,,0.0,,0.0017,0.5632
+2026-10-16,house-mo-1,HOUSE,MO,1,False,standard,Wesley Bell,Paul Berry,Wesley Bell,1.0,68.922,61.5905,76.0886,Safe D,68.9166,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-mo-2,HOUSE,MO,2,False,standard,Fred Wellman,Ann Wagner,Ann Wagner,0.237,-3.42,-9.7188,2.8178,Lean R,-4.2249,0.2511,-2.0258,2.0,0.3442,0.4062,0.0052,1.91
+2026-10-16,house-mo-3,HOUSE,MO,3,False,standard,Bethany Mann,Bob Onder,Bob Onder,0.003,-21.6381,-29.0025,-14.303,Safe R,-21.6941,0.0003,,,0.0,,0.0,0.0198
+2026-10-16,house-mo-4,HOUSE,MO,4,False,standard,Jordan Herrera,Mark Alford,Mark Alford,0.0002,-37.621,-44.9277,-30.359,Safe R,-37.5321,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-mo-5,HOUSE,MO,5,False,standard,Emanuel Cleaver,Rick Brattin,Emanuel Cleaver,0.9994,32.9485,25.7057,40.0764,Safe D,32.9497,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-mo-6,HOUSE,MO,6,False,standard,Josh Smead,Chris Stigall,Sam Graves,0.001,-31.4953,-39.7539,-23.1627,Safe R,-31.5693,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-mo-7,HOUSE,MO,7,False,standard,Missi Hesketh,Eric Burlison,Eric Burlison,0.0002,-37.9463,-45.188,-30.5546,Safe R,-37.9443,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-mo-8,HOUSE,MO,8,False,standard,Chris Reichard,Jason Smith,Jason Smith,0.0,-48.7793,-55.9631,-41.6196,Safe R,-48.7725,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-ms-1,HOUSE,MS,1,False,standard,Cliff Johnson,Trent Kelly,Trent Kelly,0.0006,-31.5592,-38.7859,-24.2154,Safe R,-31.5289,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-ms-2,HOUSE,MS,2,False,standard,Bennie Thompson,Ron Eller,Bennie Thompson,0.9992,31.3925,24.0459,38.6467,Safe D,31.4107,1.0,,,0.0,,0.0,0.0335
+2026-10-16,house-ms-3,HOUSE,MS,3,False,standard,Michael Chiaradio,Michael Guest,Michael Guest,0.0017,-23.7579,-31.1367,-16.4048,Safe R,-23.7367,0.0001,,,0.0,,0.0,0.0
+2026-10-16,house-ms-4,HOUSE,MS,4,False,standard,Jeffrey Hulum III,Mike Ezell,Mike Ezell,0.0004,-38.8012,-46.0772,-31.4808,Safe R,-38.7666,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-mt-1,HOUSE,MT,1,False,standard,Sam Forstag,Aaron Flint,Ryan Zinke,0.2718,-2.9164,-9.2807,3.3127,Lean R,-4.0041,0.2905,-1.8677,6.0,0.4898,0.4007,0.0081,3.6477
+2026-10-16,house-mt-2,HOUSE,MT,2,False,standard,Brian Miller,Troy Downing,Troy Downing,0.0004,-24.4488,-31.0455,-17.9803,Safe R,-25.9259,0.0,-20.177,1.0,0.2488,0.0285,0.0,0.0
+2026-10-16,house-nc-1,HOUSE,NC,1,False,standard,Don Davis,Laurie Buckhout,Don Davis,0.7955,3.9441,-2.2477,9.9651,Lean D,1.9268,0.6202,6.9041,7.0,0.4048,0.8209,0.0327,13.0479
+2026-10-16,house-nc-2,HOUSE,NC,2,False,standard,Deborah Ross,Eugene Douglass,Deborah Ross,1.0,43.429,36.1911,50.6789,Safe D,43.4345,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-nc-3,HOUSE,NC,3,False,standard,Raymond Smith Jr.,Greg Murphy,Greg Murphy,0.036,-9.555,-16.067,-2.969,Safe R,-10.9891,0.0405,-6.013,1.0,0.2889,0.2659,0.0006,0.2889
+2026-10-16,house-nc-4,HOUSE,NC,4,False,standard,Valerie Foushee,Max Ganorkar,Valerie Foushee,1.0,54.3343,47.1406,61.5456,Safe D,54.3017,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-nc-5,HOUSE,NC,5,False,standard,Chuck Hubbard,Virginia Foxx,Virginia Foxx,0.0207,-12.8826,-20.1872,-5.5078,Safe R,-12.8095,0.021,,,0.0,,0.0005,0.2046
+2026-10-16,house-nc-6,HOUSE,NC,6,False,standard,Cyril Jefferson,Addison McDowell,Addison McDowell,0.0221,-12.6501,-19.9525,-5.2357,Safe R,-12.5907,0.0228,,,0.0,,0.0004,0.1711
+2026-10-16,house-nc-7,HOUSE,NC,7,False,standard,Kimberly Hardy,David Rouzer,David Rouzer,0.025,-10.39,-16.8821,-3.9441,Safe R,-10.355,0.0501,-10.5734,1.0,0.2759,0.1431,0.0006,0.2065
+2026-10-16,house-nc-8,HOUSE,NC,8,False,standard,Colby Watson,Mark Harris,Mark Harris,0.012,-14.7785,-22.2907,-7.4804,Safe R,-14.717,0.0097,,,0.0,,0.0002,0.0815
+2026-10-16,house-nc-9,HOUSE,NC,9,False,standard,Richard Ojeda,Richard Hudson,Richard Hudson,0.0208,-10.9511,-17.3372,-4.4753,Safe R,-10.7882,0.0434,-11.1841,1.0,0.2945,0.1192,0.0004,0.1528
+2026-10-16,house-nc-10,HOUSE,NC,10,False,standard,Ashley Bell,Pat Harrigan,Pat Harrigan,0.0128,-14.1781,-21.4538,-7.0434,Safe R,-14.5422,0.0105,-9.8651,1.0,0.0562,0.3447,0.0002,0.0803
+2026-10-16,house-nc-11,HOUSE,NC,11,False,standard,Jamie Ager,Jennifer Balkcom,Chuck Edwards,0.6415,1.8598,-5.0366,8.6965,Lean D,4.0532,0.7118,-1.7355,1.0,0.3831,0.4246,0.0232,8.8084
+2026-10-16,house-nc-12,HOUSE,NC,12,False,standard,Alma Adams,Jack Codiga,Alma Adams,1.0,55.4879,48.2981,62.6697,Safe D,55.4608,1.0,,,0.0,,0.0,0.0238
+2026-10-16,house-nc-13,HOUSE,NC,13,False,standard,Paul Barringer,Brad Knott,Brad Knott,0.0332,-11.1861,-18.557,-3.8113,Safe R,-11.255,0.037,,,0.0,,0.0005,0.1962
+2026-10-16,house-nc-14,HOUSE,NC,14,False,standard,Lakesha Womack,Tim Moore,Tim Moore,0.0228,-12.3363,-19.5502,-5.1443,Safe R,-12.891,0.0204,-2.8517,1.0,0.0541,0.455,0.0002,0.1022
+2026-10-16,house-nd-al,HOUSE,ND,0,False,standard,Trygve Hammer,Julie Fedorchak,Julie Fedorchak,0.0004,-33.0895,-40.4313,-25.7251,Safe R,-33.1003,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-ne-1,HOUSE,NE,1,False,standard,Chris Backemeyer,Mike Flood,Mike Flood,0.1115,-5.7276,-11.5891,0.2894,Likely R,-10.2392,0.052,0.3855,3.0,0.4303,0.5219,0.002,1.0153
+2026-10-16,house-ne-2,HOUSE,NE,2,False,standard,Denise Powell,Brinker Harding,Don Bacon,0.9854,12.2942,5.8644,18.8834,Safe D,14.1325,0.9743,10.0414,2.0,0.4516,0.897,0.0052,2.5868
+2026-10-16,house-ne-3,HOUSE,NE,3,False,standard,Becky Stille,Adrian Smith,Adrian Smith,0.0001,-51.6303,-58.8218,-44.3176,Safe R,-51.6236,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-nh-1,HOUSE,NH,1,False,standard,Stefany Shaheen,Anthony DiLorenzo,Chris Pappas,0.93,7.7806,1.1757,14.3635,Likely D,11.4393,0.9426,3.1201,1.0,0.4397,0.6498,0.0192,6.8192
+2026-10-16,house-nh-2,HOUSE,NH,2,False,standard,Maggie Goodlander,Lily Tang Williams,Maggie Goodlander,0.9986,18.4041,12.4176,24.3259,Safe D,17.6222,0.9974,19.3278,8.0,0.4239,0.9961,0.0004,0.1611
+2026-10-16,house-nj-1,HOUSE,NJ,1,False,standard,Donald Norcross,Damon Galdo,Donald Norcross,0.9988,27.7069,20.3141,35.113,Safe D,27.6137,1.0,,,0.0,,0.0001,0.072
+2026-10-16,house-nj-2,HOUSE,NJ,2,False,standard,Zack Mullock,Jeff Van Drew,Jeff Van Drew,0.0824,-8.1399,-15.431,-0.6503,Likely R,-8.13,0.0984,,,0.0,,0.0024,1.0968
+2026-10-16,house-nj-3,HOUSE,NJ,3,False,standard,Herb Conaway,Michael McGuire,Herb Conaway,0.9968,20.5159,13.1859,27.9087,Safe D,20.5117,0.9994,,,0.0,,0.0006,0.295
+2026-10-16,house-nj-4,HOUSE,NJ,4,False,standard,Rachel Peace,Chris Smith,Chris Smith,0.0016,-26.2571,-33.4718,-18.8636,Safe R,-26.2428,0.0,,,0.0,,0.0,0.0217
+2026-10-16,house-nj-5,HOUSE,NJ,5,False,standard,Josh Gottheimer,Sean Kirrane,Josh Gottheimer,0.9955,18.5311,11.2162,25.9514,Safe D,18.4552,0.9983,,,0.0,,0.0006,0.2477
+2026-10-16,house-nj-6,HOUSE,NJ,6,False,standard,Frank Pallone,Hillary Herzig,Frank Pallone,0.9974,22.1952,14.8394,29.5562,Safe D,22.1238,0.9998,,,0.0,,0.0,0.0284
+2026-10-16,house-nj-7,HOUSE,NJ,7,False,standard,Rebecca Bennett,Thomas Kean Jr.,Thomas Kean Jr.,0.843,4.9382,-1.3724,11.0886,Likely D,5.0402,0.7883,4.5146,2.0,0.374,0.7142,0.0285,11.5809
+2026-10-16,house-nj-8,HOUSE,NJ,8,False,same_party,Rob Menendez,,Rob Menendez,1.0,,,,Safe D,,,,,,,,
+2026-10-16,house-nj-9,HOUSE,NJ,9,False,standard,Nellie Pou,Rosie Pino,Nellie Pou,0.9898,15.9994,8.5824,23.2264,Safe D,15.8975,0.9942,,,0.0,,0.002,1.2782
+2026-10-16,house-nj-10,HOUSE,NJ,10,False,standard,LaMonica McIver,Carmen Bucco,LaMonica McIver,1.0,62.5651,55.2905,69.8064,Safe D,62.4963,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-nj-11,HOUSE,NJ,11,False,standard,Analilia Mejia,Joe Hathaway,Analilia Mejia,0.9964,20.1055,12.8826,27.4324,Safe D,20.0726,0.9993,,,0.0,,0.0006,0.2427
+2026-10-16,house-nj-12,HOUSE,NJ,12,False,standard,Adam Hamawy,Gregg Mele,Bonnie Watson Coleman,0.999,32.5867,24.3116,40.9832,Safe D,32.5361,1.0,,,0.0,,0.0001,0.0539
+2026-10-16,house-nm-1,HOUSE,NM,1,False,standard,Melanie Stansbury,Didi Okpareke,Melanie Stansbury,0.9971,22.3343,14.96,29.6314,Safe D,22.2592,0.9998,,,0.0,,0.0002,0.0818
+2026-10-16,house-nm-2,HOUSE,NM,2,False,standard,Gabe Vasquez,Greg Cunningham,Gabe Vasquez,0.9669,8.8881,2.8679,14.7785,Safe D,12.6098,0.9773,3.6737,3.0,0.4253,0.6947,0.0128,6.784
+2026-10-16,house-nm-3,HOUSE,NM,3,False,standard,Teresa Leger Fernández,Martin Zamora,Teresa Leger Fernandez,0.9925,14.4752,7.9891,21.0093,Safe D,14.9849,0.9806,13.8101,1.0,0.4603,0.9614,0.0016,0.7985
+2026-10-16,house-nv-1,HOUSE,NV,1,False,standard,Dina Titus,Carrie Buck,Dina Titus,0.99,15.8152,8.433,23.14,Safe D,15.7788,0.9939,,,0.0,,0.0018,0.8888
+2026-10-16,house-nv-2,HOUSE,NV,2,False,standard,Teresa Benitez-Thompson,David Flippo,Mark Amodei,0.155,-5.2044,-11.9,1.5238,Likely R,-7.6519,0.1458,-1.8884,3.0,0.417,0.4124,0.004,1.5579
+2026-10-16,house-nv-3,HOUSE,NV,3,False,standard,Susie Lee,Martin O'Donnell,Susie Lee,0.9808,12.7748,5.498,20.0788,Safe D,12.7513,0.9785,,,0.0,,0.0052,2.1928
+2026-10-16,house-nv-4,HOUSE,NV,4,False,standard,Steven Horsford,Cody Whipple,Steven Horsford,0.9931,16.5757,9.2839,23.9655,Safe D,16.5962,0.9958,,,0.0,,0.0018,0.8453
+2026-10-16,house-ny-1,HOUSE,NY,1,False,standard,Chris Gallant,Nick LaLota,Nick LaLota,0.1375,-6.16,-13.3812,1.2265,Likely R,-6.1073,0.1661,-7.4714,1.0,0.004,0.4686,0.0039,1.395
+2026-10-16,house-ny-2,HOUSE,NY,2,False,standard,Patrick Halpin,Andrew Garbarino,Andrew Garbarino,0.027,-12.1526,-19.5073,-4.8094,Safe R,-12.173,0.0267,,,0.0,,0.0006,0.2324
+2026-10-16,house-ny-3,HOUSE,NY,3,False,standard,Tom Suozzi,Mike LiPetri,Tom Suozzi,0.9822,13.3087,5.9585,20.6094,Safe D,13.2609,0.9823,,,0.0,,0.0047,1.9109
+2026-10-16,house-ny-4,HOUSE,NY,4,False,standard,Laura Gillen,Jeanine Driscoll,Laura Gillen,0.9905,15.5768,8.3745,22.9687,Safe D,15.6058,0.9934,,,0.0,,0.0017,0.6704
+2026-10-16,house-ny-5,HOUSE,NY,5,False,standard,Gregory Meeks,George Marsh,Gregory Meeks,0.9999,54.615,47.4007,61.8107,Safe D,54.6314,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ny-6,HOUSE,NY,6,False,standard,Grace Meng,Joseph Chou,Grace Meng,0.9987,25.7833,18.4293,33.0866,Safe D,25.7788,1.0,,,0.0,,0.0003,0.221
+2026-10-16,house-ny-7,HOUSE,NY,7,False,standard,Claire Valdez,Melvin Rivera,Nydia Velázquez,0.9999,54.2751,45.8637,62.4076,Safe D,54.2291,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ny-8,HOUSE,NY,8,False,standard,Hakeem Jeffries,Lewis Mizrahi,Hakeem Jeffries,0.9999,55.9646,48.7786,63.3507,Safe D,56.0187,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ny-9,HOUSE,NY,9,False,standard,Yvette Clarke,Joel Azumah,Yvette Clarke,1.0,53.3914,46.1707,60.6405,Safe D,53.4719,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ny-10,HOUSE,NY,10,False,standard,Brad Lander,Jennifer Moore,Dan Goldman,1.0,68.0361,59.7763,76.263,Safe D,68.0442,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ny-11,HOUSE,NY,11,False,standard,Michael DeCillis,Nicole Malliotakis,Nicole Malliotakis,0.0048,-19.5779,-26.9366,-12.2207,Safe R,-19.5699,0.001,,,0.0,,0.0,0.0283
+2026-10-16,house-ny-12,HOUSE,NY,12,False,standard,Micah Lasher,Caroline Shinkle,Jerry Nadler,1.0,70.831,62.6906,79.0562,Safe D,70.8448,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ny-13,HOUSE,NY,13,False,standard,Darializa Avila Chevalier,Jomo Williams,Adriano Espaillat,1.0,66.3911,58.285,74.6547,Safe D,66.5325,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ny-14,HOUSE,NY,14,False,standard,Alexandria Ocasio-Cortez,Diamant Hysenaj,Alexandria Ocasio-Cortez,0.9999,44.1642,36.9714,51.4975,Safe D,44.2113,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ny-15,HOUSE,NY,15,False,standard,Ritchie Torres,Stylo Sapaskis,Ritchie Torres,1.0,61.0118,53.7843,68.3065,Safe D,60.9187,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ny-16,HOUSE,NY,16,False,standard,George Latimer,Joseph Cinquemani,George Latimer,1.0,49.2117,41.9792,56.4351,Safe D,49.1842,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-ny-17,HOUSE,NY,17,False,standard,Cait Conley,Mike Lawler,Mike Lawler,0.7602,3.1358,-2.6974,8.8805,Lean D,3.7227,0.7229,2.4982,4.0,0.4833,0.6503,0.0304,11.8904
+2026-10-16,house-ny-18,HOUSE,NY,18,False,standard,Pat Ryan,Jacqueline Auringer,Pat Ryan,0.9987,20.2876,14.0998,26.5224,Safe D,21.9516,0.9997,17.4023,2.0,0.3704,0.9847,0.0002,0.1026
+2026-10-16,house-ny-19,HOUSE,NY,19,False,standard,Josh Riley,Peter Oberacker,Josh Riley,0.9896,14.8512,7.6708,22.2035,Safe D,14.9089,0.991,,,0.0,,0.0024,0.9526
+2026-10-16,house-ny-20,HOUSE,NY,20,False,standard,Paul Tonko,Ralph Ambrosio,Paul Tonko,0.9986,27.8985,20.45,35.2921,Safe D,27.8969,1.0,,,0.0,,0.0001,0.0615
+2026-10-16,house-ny-21,HOUSE,NY,21,False,standard,Blake Gendebien,Anthony Constantino,Elise Stefanik,0.0743,-7.1525,-13.5199,-0.8643,Likely R,-13.548,0.0309,-0.9439,7.0,0.5024,0.4485,0.0017,0.7245
+2026-10-16,house-ny-22,HOUSE,NY,22,False,standard,John Mannion,Kailee Buller,John Mannion,0.9968,20.4478,13.0842,27.7784,Safe D,20.4281,0.9994,,,0.0,,0.0004,0.147
+2026-10-16,house-ny-23,HOUSE,NY,23,False,standard,Aaron Gies,Nick Langworthy,Nick Langworthy,0.0013,-19.5502,-25.8016,-13.3435,Safe R,-19.6302,0.0009,-19.5358,2.0,0.3474,0.0104,0.0,0.0
+2026-10-16,house-ny-24,HOUSE,NY,24,False,standard,Alissa Ellman,Claudia Tenney,Claudia Tenney,0.0038,-20.3066,-27.5926,-12.9052,Safe R,-20.279,0.0007,,,0.0,,0.0001,0.0608
+2026-10-16,house-ny-25,HOUSE,NY,25,False,standard,Joseph Morelle,Virginia McIntyre,Joseph Morelle,0.9994,29.343,21.9596,36.7277,Safe D,29.3016,1.0,,,0.0,,0.0001,0.0407
+2026-10-16,house-ny-26,HOUSE,NY,26,False,standard,Tim Kennedy,Dennis Hannon,Tim Kennedy,0.9998,36.3305,29.0339,43.6294,Safe D,36.4097,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-oh-1,HOUSE,OH,1,False,standard,Greg Landsman,Eric Conroy,Greg Landsman,0.9496,7.819,1.8772,13.86,Likely D,11.1885,0.9621,2.7574,1.0,0.4021,0.6427,0.0188,7.3192
+2026-10-16,house-oh-2,HOUSE,OH,2,False,standard,Jennifer Mazzuckelli,David Taylor,David Taylor,0.0004,-37.0099,-44.2639,-29.5658,Safe R,-37.04,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-oh-3,HOUSE,OH,3,False,standard,Joyce Beatty,Cleophus Dulaney,Joyce Beatty,1.0,49.3852,42.0897,56.5848,Safe D,49.2837,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-oh-4,HOUSE,OH,4,False,standard,Joshua Kolasinski,Jim Jordan,Jim Jordan,0.0004,-36.0231,-43.2694,-28.7198,Safe R,-36.0001,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-oh-5,HOUSE,OH,5,False,standard,Brian Shaver,Bob Latta,Bob Latta,0.0048,-18.4713,-26.0261,-11.2229,Safe R,-18.5997,0.0016,,,0.0,,0.0001,0.0598
+2026-10-16,house-oh-6,HOUSE,OH,6,False,standard,Elizabeth Kirtley,Michael Rulli,Michael Rulli,0.001,-29.3131,-36.6499,-22.0456,Safe R,-29.3719,0.0,,,0.0,,0.0001,0.0423
+2026-10-16,house-oh-7,HOUSE,OH,7,False,standard,Brian Poindexter,Max Miller,Max Miller,0.41,-1.0241,-7.0788,5.107,Toss-up,-7.6358,0.1127,9.3432,5.0,0.3872,0.8851,0.013,4.733
+2026-10-16,house-oh-8,HOUSE,OH,8,False,standard,Vanessa Enoch,Warren Davidson,Warren Davidson,0.0256,-12.1156,-19.4226,-4.7971,Safe R,-12.146,0.0269,,,0.0,,0.0005,0.1921
+2026-10-16,house-oh-9,HOUSE,OH,9,False,standard,Marcy Kaptur,Derek Merrin,Marcy Kaptur,0.5967,1.127,-4.9121,7.1546,Toss-up,4.5062,0.7629,-4.0123,2.0,0.401,0.2986,0.0213,8.6224
+2026-10-16,house-oh-10,HOUSE,OH,10,False,standard,Kristina Knickerbocker,Mike Turner,Mike Turner,0.0236,-9.7529,-15.852,-3.7501,Safe R,-8.5445,0.0875,-11.8039,2.0,0.3842,0.0661,0.0004,0.1836
+2026-10-16,house-oh-11,HOUSE,OH,11,False,standard,Shontel Brown,Mike Kirchner,Shontel Brown,1.0,65.28,58.1574,72.4765,Safe D,65.2785,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-oh-12,HOUSE,OH,12,False,standard,Jerrad Christian,Troy Balderson,Troy Balderson,0.0014,-25.2864,-32.483,-17.9725,Safe R,-25.2463,0.0,,,0.0,,0.0,0.0188
+2026-10-16,house-oh-13,HOUSE,OH,13,False,standard,Emilia Sykes,Carey Coleman,Emilia Sykes,0.9901,15.9306,8.5602,23.3483,Safe D,15.8975,0.9942,,,0.0,,0.0016,0.6139
+2026-10-16,house-oh-14,HOUSE,OH,14,False,standard,Maria Jukic,David Joyce,David Joyce,0.0052,-18.3377,-25.7404,-11.027,Safe R,-18.4463,0.0017,,,0.0,,0.0001,0.056
+2026-10-16,house-oh-15,HOUSE,OH,15,False,standard,Don Leonard,Mike Carey,Mike Carey,0.106,-5.9567,-12.0677,0.1744,Likely R,-6.5271,0.15,-5.1632,3.0,0.3893,0.2531,0.0016,0.7078
+2026-10-16,house-ok-1,HOUSE,OK,1,False,standard,John Croisant,Mark Tedford,Kevin Hern,0.0212,-14.8349,-23.1391,-6.5114,Safe R,-14.776,0.0208,,,0.0,,0.0004,0.1676
+2026-10-16,house-ok-2,HOUSE,OK,2,False,standard,Brandon Wade,Josh Brecheen,Josh Brecheen,0.0001,-49.5189,-56.8463,-42.3917,Safe R,-49.5563,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-ok-3,HOUSE,OK,3,False,standard,Suzie Byrd,Frank Lucas,Frank Lucas,0.0001,-41.2731,-48.705,-34.1057,Safe R,-41.2826,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-ok-4,HOUSE,OK,4,False,standard,Mitchell Jacob,Tom Cole,Tom Cole,0.0006,-29.6621,-36.9977,-22.5014,Safe R,-29.7262,0.0,,,0.0,,0.0,0.0243
+2026-10-16,house-ok-5,HOUSE,OK,5,False,standard,Jena Nelson,Stephanie Bice,Stephanie Bice,0.0154,-11.4736,-17.8839,-5.258,Safe R,-13.2102,0.018,-8.0372,1.0,0.3317,0.1788,0.0001,0.0657
+2026-10-16,house-or-1,HOUSE,OR,1,False,standard,Suzanne Bonamici,Barbara Kahl,Suzanne Bonamici,0.9998,48.9156,41.6363,56.131,Safe D,48.8897,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-or-2,HOUSE,OR,2,False,standard,Chris Beck,Cliff Bentz,Cliff Bentz,0.0022,-22.8746,-30.2407,-15.6423,Safe R,-22.8837,0.0001,,,0.0,,0.0,0.0172
+2026-10-16,house-or-3,HOUSE,OR,3,False,standard,Maxine Dexter,Loran Ayles,Maxine Dexter,0.9998,56.3496,49.1035,63.5717,Safe D,56.3541,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-or-4,HOUSE,OR,4,False,standard,Val Hoyle,Monique DeSpain,Val Hoyle,0.9958,19.4573,12.1895,26.7448,Safe D,19.4735,0.999,,,0.0,,0.0008,0.2766
+2026-10-16,house-or-5,HOUSE,OR,5,False,standard,Janelle Bynum,Patti Adair,Janelle Bynum,0.9936,17.4588,10.1922,24.8148,Safe D,17.5154,0.9973,,,0.0,,0.001,0.2917
+2026-10-16,house-or-6,HOUSE,OR,6,False,standard,Andrea Salinas,David Russ,Andrea Salinas,0.9962,18.8971,11.6892,26.2947,Safe D,18.8578,0.9986,,,0.0,,0.0008,0.3084
+2026-10-16,house-pa-1,HOUSE,PA,1,False,standard,Bob Harvie,Brian Fitzpatrick,Brian Fitzpatrick,0.1872,-4.1695,-10.2318,2.0048,Likely R,-3.3833,0.2955,-5.3484,6.0,0.4034,0.2394,0.0044,1.351
+2026-10-16,house-pa-2,HOUSE,PA,2,False,standard,Brendan Boyle,Jessica Arriaga,Brendan Boyle,0.9999,48.2849,40.8734,55.5981,Safe D,48.2585,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-pa-3,HOUSE,PA,3,False,same_party,Chris Rabb,,Dwight Evans,1.0,,,,Safe D,,,,,,,,
+2026-10-16,house-pa-4,HOUSE,PA,4,False,standard,Madeleine Dean,Aurora Stuski,Madeleine Dean,0.9992,26.3653,18.8783,33.7375,Safe D,26.3016,1.0,,,0.0,,0.0001,0.0311
+2026-10-16,house-pa-5,HOUSE,PA,5,False,standard,Mary Gay Scanlon,Nicholas Manganaro,Mary Gay Scanlon,0.9998,38.4866,31.145,45.8159,Safe D,38.4952,1.0,,,0.0,,0.0001,0.0347
+2026-10-16,house-pa-6,HOUSE,PA,6,False,standard,Chrissy Houlahan,Marty Young,Chrissy Houlahan,0.9973,21.5351,14.2882,29.0089,Safe D,21.5609,0.9997,,,0.0,,0.0004,0.1539
+2026-10-16,house-pa-7,HOUSE,PA,7,False,standard,Bob Brooks,Ryan Mackenzie,Ryan Mackenzie,0.8742,5.5778,-0.7098,11.8836,Likely D,5.6669,0.8159,5.5444,2.0,0.3381,0.7405,0.0276,9.7868
+2026-10-16,house-pa-8,HOUSE,PA,8,False,standard,Paige Cognetti,Rob Bresnahan,Rob Bresnahan,0.5167,0.182,-6.0402,6.4666,Toss-up,2.9743,0.6817,-4.9394,3.0,0.3519,0.2777,0.0202,7.4873
+2026-10-16,house-pa-9,HOUSE,PA,9,False,standard,Rachel Wallace,Dan Meuser,Dan Meuser,0.0004,-32.7042,-40.1076,-25.4497,Safe R,-32.6695,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-pa-10,HOUSE,PA,10,False,standard,Janelle Stelson,Scott Perry,Scott Perry,0.8694,5.388,-0.8153,11.6203,Likely D,6.56,0.8512,3.5298,4.0,0.3674,0.6689,0.0255,9.0156
+2026-10-16,house-pa-11,HOUSE,PA,11,False,standard,Nancy Mannion,Lloyd Smucker,Lloyd Smucker,0.0076,-16.8936,-24.197,-9.565,Safe R,-16.9164,0.0036,,,0.0,,0.0002,0.0705
+2026-10-16,house-pa-12,HOUSE,PA,12,False,standard,Summer Lee,James Hayes,Summer Lee,0.9985,24.8601,17.5459,32.0708,Safe D,24.7874,1.0,,,0.0,,0.0002,0.0846
+2026-10-16,house-pa-13,HOUSE,PA,13,False,standard,Beth Farnham,John Joyce,John Joyce,0.0002,-40.5011,-47.8184,-33.2506,Safe R,-40.487,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-pa-14,HOUSE,PA,14,False,standard,Alan Bradstock,Guy Reschenthaler,Guy Reschenthaler,0.0014,-26.118,-33.3683,-18.7,Safe R,-26.0947,0.0,,,0.0,,0.0,0.0172
+2026-10-16,house-pa-15,HOUSE,PA,15,False,standard,Ray Bilger,Glenn Thompson,Glenn Thompson,0.0004,-33.684,-40.9348,-26.398,Safe R,-33.7211,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-pa-16,HOUSE,PA,16,False,standard,Justin Wagner,Mike Kelly,Mike Kelly,0.006,-18.243,-25.6894,-10.9029,Safe R,-18.2703,0.0019,,,0.0,,0.0001,0.0521
+2026-10-16,house-pa-17,HOUSE,PA,17,False,standard,Chris Deluzio,Tony Guy,Chris Deluzio,0.9934,17.4815,10.0778,24.9357,Safe D,17.4883,0.9972,,,0.0,,0.0012,0.3655
+2026-10-16,house-ri-1,HOUSE,RI,1,False,standard,Gabe Amo,Kellie Keenan,Gabe Amo,0.9998,36.1655,29.6964,42.6163,Safe D,38.981,1.0,28.9416,1.0,0.2891,0.9987,0.0,0.0
+2026-10-16,house-ri-2,HOUSE,RI,2,False,standard,Seth Magaziner,Vic Mellor,Seth Magaziner,0.9996,19.9489,14.0406,25.9843,Safe D,22.2416,0.9998,16.706,1.0,0.4126,0.9879,0.0002,0.1434
+2026-10-16,house-sc-1,HOUSE,SC,1,False,standard,Nancy Lacore,Jenny Costa Honeycutt,Nancy Mace,0.4256,-0.9862,-7.5015,5.7405,Toss-up,-1.4394,0.4214,-0.3899,4.0,0.4658,0.4803,0.015,6.1989
+2026-10-16,house-sc-2,HOUSE,SC,2,False,standard,Zyon Khalifa,Joe Wilson,Joe Wilson,0.0253,-12.4985,-19.9076,-5.068,Safe R,-12.527,0.0234,,,0.0,,0.0008,0.3616
+2026-10-16,house-sc-3,HOUSE,SC,3,False,standard,Eunice Lehmacher,Sheri Biggs,Sheri Biggs,0.0002,-40.9441,-48.4178,-33.8249,Safe R,-40.9854,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-sc-4,HOUSE,SC,4,False,standard,Courtney McClain,William Timmons,William Timmons,0.0083,-16.8126,-24.2159,-9.4063,Safe R,-16.8032,0.0038,,,0.0,,0.0001,0.0467
+2026-10-16,house-sc-5,HOUSE,SC,5,False,standard,Mallory Dittmer,Wes Climer,Ralph Norman,0.0176,-15.5233,-23.7818,-7.1502,Safe R,-15.5226,0.0162,,,0.0,,0.0003,0.1328
+2026-10-16,house-sc-6,HOUSE,SC,6,False,standard,Jim Clyburn,John Peterson,Jim Clyburn,0.9994,32.3089,24.9832,39.5488,Safe D,32.2411,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-sc-7,HOUSE,SC,7,False,standard,John Vincent,Russell Fry,Russell Fry,0.0034,-18.1945,-24.7045,-11.5686,Safe R,-21.0517,0.0004,-9.2824,1.0,0.2432,0.1943,0.0001,0.0428
+2026-10-16,house-sd-al,HOUSE,SD,0,False,standard,Nikki Gronli,Marty Jackley,Dusty Johnson,0.0042,-17.543,-24.324,-10.7244,Safe R,-21.899,0.0013,-11.2273,1.0,0.4016,0.1,0.0,0.0158
+2026-10-16,house-tn-1,HOUSE,TN,1,False,standard,Kristi Burke,Diana Harshbarger,Diana Harshbarger,0.0001,-53.3483,-60.5819,-46.078,Safe R,-53.3373,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-tn-2,HOUSE,TN,2,False,standard,Michaela Barnett,Tim Burchett,Tim Burchett,0.0006,-29.3691,-36.7723,-22.0546,Safe R,-29.3663,0.0,,,0.0,,0.0,0.0266
+2026-10-16,house-tn-3,HOUSE,TN,3,False,standard,Anna Golladay,Chuck Fleischmann,Chuck Fleischmann,0.0006,-30.656,-38.0575,-23.3066,Safe R,-30.6769,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-tn-4,HOUSE,TN,4,False,standard,Victoria Broderick,Scott DesJarlais,Scott DesJarlais,0.0058,-17.4972,-24.9598,-10.0825,Safe R,-17.5034,0.0027,,,0.0,,0.0,0.0
+2026-10-16,house-tn-5,HOUSE,TN,5,False,standard,Chaz Molder,Charlie Hatcher,Andy Ogles,0.0127,-13.1842,-19.8539,-6.485,Safe R,-14.9917,0.0194,-10.6839,2.0,0.4224,0.102,0.0002,0.1244
+2026-10-16,house-tn-6,HOUSE,TN,6,False,standard,Mike Croley,Johnny Garrett,John Rose,0.009,-19.1175,-27.508,-10.8452,Safe R,-19.1541,0.0041,,,0.0,,0.0002,0.1078
+2026-10-16,house-tn-7,HOUSE,TN,7,False,standard,Darden Copeland,Matt Van Epps,Matt Van Epps,0.0065,-17.1185,-24.5889,-9.705,Safe R,-17.138,0.0033,,,0.0,,0.0,0.027
+2026-10-16,house-tn-8,HOUSE,TN,8,False,standard,Heidi Kuhn,David Kustoff,David Kustoff,0.007,-16.827,-24.1937,-9.5134,Safe R,-16.8667,0.0037,,,0.0,,0.0001,0.0912
+2026-10-16,house-tn-9,HOUSE,TN,9,False,standard,Justin Pearson,Brent Taylor,Steve Cohen,0.0219,-11.5694,-18.2692,-4.7187,Safe R,-12.6818,0.0402,-9.7259,1.0,0.4027,0.133,0.0005,0.3032
+2026-10-16,house-tx-1,HOUSE,TX,1,False,standard,Yolanda Prince,Nathaniel Moran,Nathaniel Moran,0.0001,-44.9509,-52.2641,-37.4881,Safe R,-44.9467,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-tx-2,HOUSE,TX,2,False,standard,Shaun Finnie,Steve Toth,Dan Crenshaw,0.0128,-14.0986,-21.2743,-6.9161,Safe R,-14.064,0.0262,-14.2063,1.0,0.3326,0.0799,0.0004,0.2077
+2026-10-16,house-tx-3,HOUSE,TX,3,False,standard,Evan Hunt,Keith Self,Keith Self,0.0046,-18.9317,-26.2513,-11.5013,Safe R,-18.9705,0.0013,,,0.0,,0.0,0.0213
+2026-10-16,house-tx-4,HOUSE,TX,4,False,standard,Jason Pearce,Pat Fallon,Pat Fallon,0.0034,-20.2302,-27.573,-12.9018,Safe R,-20.2177,0.0007,,,0.0,,0.0,0.0213
+2026-10-16,house-tx-5,HOUSE,TX,5,False,standard,Chelsey Hockett,Lance Gooden,Lance Gooden,0.0094,-15.8067,-23.2858,-8.4314,Safe R,-15.8049,0.0061,,,0.0,,0.0002,0.1326
+2026-10-16,house-tx-6,HOUSE,TX,6,False,standard,Danny Minton,Jake Ellzey,Jake Ellzey,0.006,-17.4285,-24.7988,-10.1611,Safe R,-17.3273,0.003,,,0.0,,0.0001,0.0757
+2026-10-16,house-tx-7,HOUSE,TX,7,False,standard,Lizzie Fletcher,Alexander Hale,Lizzie Fletcher,0.9994,33.3658,25.9523,40.6955,Safe D,33.4184,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-tx-8,HOUSE,TX,8,False,standard,Laura Jones,Jessica Hart Steinmann,Morgan Luttrell,0.0072,-20.1647,-28.4729,-11.8405,Safe R,-20.2139,0.0027,,,0.0,,0.0003,0.1514
+2026-10-16,house-tx-9,HOUSE,TX,9,False,standard,Leticia Gutierrez,Alex Mealer,None (new seat),0.0298,-10.1366,-16.549,-3.6513,Safe R,-13.5844,0.0306,-6.2193,2.0,0.4702,0.2091,0.0004,0.2745
+2026-10-16,house-tx-10,HOUSE,TX,10,False,standard,Caitlin Rourk,Chris Gober,Michael McCaul,0.0175,-12.1638,-18.8228,-5.5016,Safe R,-15.312,0.0174,-8.2166,1.0,0.4453,0.1537,0.0006,0.2427
+2026-10-16,house-tx-11,HOUSE,TX,11,False,standard,Claire Reynolds,August Pfluger,August Pfluger,0.0006,-29.1754,-36.5806,-21.9903,Safe R,-29.1634,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-tx-12,HOUSE,TX,12,False,standard,Angela Rodriguez Prilliman,Craig Goldman,Craig Goldman,0.0032,-20.8465,-28.1856,-13.5204,Safe R,-20.8772,0.0005,,,0.0,,0.0,0.0
+2026-10-16,house-tx-13,HOUSE,TX,13,False,standard,Mark Nair,Ronny Jackson,Ronny Jackson,0.0001,-41.5497,-48.8547,-34.2385,Safe R,-41.5367,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-tx-14,HOUSE,TX,14,False,standard,Thurman Bartie,Randy Weber,Randy Weber,0.0049,-18.972,-26.3317,-11.4688,Safe R,-19.0328,0.0013,,,0.0,,0.0,0.0
+2026-10-16,house-tx-15,HOUSE,TX,15,False,standard,Bobby Pulido,Monica De La Cruz,Monica De La Cruz,0.3743,-1.4054,-7.3262,4.3359,Lean R,-8.8659,0.0795,6.3497,6.0,0.4845,0.8369,0.0098,6.6277
+2026-10-16,house-tx-16,HOUSE,TX,16,False,standard,Veronica Escobar,Adam Bauman,Veronica Escobar,0.9991,27.2303,19.7336,34.4416,Safe D,27.2279,1.0,,,0.0,,0.0001,0.0679
+2026-10-16,house-tx-17,HOUSE,TX,17,False,standard,Casey Shepard,Pete Sessions,Pete Sessions,0.0071,-17.0798,-24.6357,-9.7318,Safe R,-17.0787,0.0034,,,0.0,,0.0,0.0243
+2026-10-16,house-tx-18,HOUSE,TX,18,False,standard,Christian Menefee,Ronald Whitfield,Christian Menefee,1.0,64.6032,57.3819,71.9413,Safe D,64.5694,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-tx-19,HOUSE,TX,19,False,standard,Kyle Rable,Tom Sell,Jodey Arrington,0.0002,-45.0397,-53.2907,-36.7042,Safe R,-45.0326,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-tx-20,HOUSE,TX,20,False,standard,Joaquin Castro,Edgardo Rafael Baez,Joaquin Castro,0.9998,39.0626,31.6566,46.3707,Safe D,39.0325,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-tx-21,HOUSE,TX,21,False,standard,Kristin Hook,Mark Teixeira,Chip Roy,0.0188,-15.1956,-23.4254,-6.6689,Safe R,-15.0479,0.019,,,0.0,,0.0004,0.1313
+2026-10-16,house-tx-22,HOUSE,TX,22,False,standard,Marquette Greene-Scott,Trever Nehls,Troy Nehls,0.0174,-15.7663,-24.3022,-7.4512,Safe R,-15.8027,0.0147,,,0.0,,0.0006,0.2578
+2026-10-16,house-tx-23,HOUSE,TX,23,False,standard,Katy Padilla Stout,Brandon Herrera,Vacant,0.1111,-7.9549,-16.1923,0.5019,Likely R,-7.9553,0.1365,-6.5383,1.0,0.0414,0.4232,0.0028,1.3401
+2026-10-16,house-tx-24,HOUSE,TX,24,False,standard,Kevin Burge,Beth Van Duyne,Beth Van Duyne,0.0217,-12.7948,-20.2511,-5.3338,Safe R,-12.8453,0.0207,,,0.0,,0.0003,0.1258
+2026-10-16,house-tx-25,HOUSE,TX,25,False,standard,Dione Sims,Roger Williams,Roger Williams,0.0046,-18.9021,-26.3513,-11.4988,Safe R,-18.8985,0.0014,,,0.0,,0.0001,0.0754
+2026-10-16,house-tx-26,HOUSE,TX,26,False,standard,Steven Shook,Brandon Gill,Brandon Gill,0.0032,-20.847,-28.1943,-13.426,Safe R,-20.8185,0.0005,,,0.0,,0.0002,0.0804
+2026-10-16,house-tx-27,HOUSE,TX,27,False,standard,Tanya Lloyd,Michael Cloud,Michael Cloud,0.008,-16.0382,-23.4049,-8.7525,Safe R,-16.0061,0.0055,,,0.0,,0.0001,0.048
+2026-10-16,house-tx-28,HOUSE,TX,28,False,standard,Henry Cuellar,Tano Tijerina,Henry Cuellar,0.9712,9.8244,3.4852,16.2374,Safe D,9.5458,0.9352,10.5056,3.0,0.3266,0.8832,0.0102,7.895
+2026-10-16,house-tx-29,HOUSE,TX,29,False,standard,Sylvia Garcia,Martha Fierro,Sylvia Garcia,0.9998,44.6066,37.249,51.9523,Safe D,44.5868,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-tx-30,HOUSE,TX,30,False,standard,Frederick Haynes III,Everett Jackson,None (new seat),1.0,54.8189,46.5233,63.1112,Safe D,54.8107,1.0,,,0.0,,0.0,0.032
+2026-10-16,house-tx-31,HOUSE,TX,31,False,standard,Justin Early,John Carter,John Carter,0.0059,-18.1377,-25.6118,-10.72,Safe R,-18.1665,0.002,,,0.0,,0.0001,0.0444
+2026-10-16,house-tx-32,HOUSE,TX,32,False,standard,Dan Barrios,Jace Yarbrough,None (new seat),0.0473,-11.3805,-19.7253,-3.0148,Safe R,-11.3887,0.0582,,,0.0,,0.0009,0.4361
+2026-10-16,house-tx-33,HOUSE,TX,33,False,standard,Colin Allred,Patrick Gillespie,Jasmine Crockett,0.9998,41.0347,32.7332,49.3402,Safe D,41.0245,1.0,,,0.0,,0.0001,0.0751
+2026-10-16,house-tx-34,HOUSE,TX,34,False,standard,Vicente Gonzalez,Eric Flores,Vicente Gonzalez,0.8315,4.5285,-1.6359,10.7033,Likely D,5.7771,0.8205,2.5738,4.0,0.389,0.6304,0.0288,18.564
+2026-10-16,house-tx-35,HOUSE,TX,35,False,standard,Johnny Garcia,Carlos De La Cruz,None (new seat),0.222,-3.9573,-10.8531,2.8255,Lean R,-2.6284,0.3586,-6.1083,1.0,0.3829,0.2511,0.0058,2.9614
+2026-10-16,house-tx-36,HOUSE,TX,36,False,standard,Rhonda Hart,Brian Babin,Brian Babin,0.0048,-19.0173,-26.3728,-11.6761,Safe R,-19.0607,0.0012,,,0.0,,0.0002,0.1244
+2026-10-16,house-tx-37,HOUSE,TX,37,False,standard,Greg Casar,Lauren Peña,Greg Casar,0.9999,64.8312,57.7046,72.0607,Safe D,64.9556,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-tx-38,HOUSE,TX,38,False,standard,Melissa McDonough,Jon Bonck,Wesley Hunt,0.021,-14.5819,-23.0073,-6.3586,Safe R,-14.5464,0.0225,,,0.0,,0.0004,0.1545
+2026-10-16,house-ut-1,HOUSE,UT,1,False,standard,Ben McAdams,Riley Owen,None (new seat),0.9996,35.6143,28.8702,42.4168,Safe D,32.3316,1.0,40.587,1.0,0.3939,1.0,0.0,0.0
+2026-10-16,house-ut-2,HOUSE,UT,2,False,standard,Peter Crosby,Blake Moore,Blake Moore,0.0007,-22.4769,-28.9665,-15.9537,Safe R,-29.1223,0.0,-4.6403,3.0,0.2715,0.3218,0.0,0.0
+2026-10-16,house-ut-3,HOUSE,UT,3,False,standard,Kent Udell,Celeste Maloy,Celeste Maloy,0.0001,-34.7451,-41.2808,-28.1689,Safe R,-40.1361,0.0,-18.5848,1.0,0.2486,0.0399,0.0,0.0
+2026-10-16,house-ut-4,HOUSE,UT,4,False,standard,Jonny Larsen,Mike Kennedy,Mike Kennedy,0.0006,-28.3876,-34.8194,-21.8174,Safe R,-35.2103,0.0,-9.4072,1.0,0.2663,0.177,0.0,0.0
+2026-10-16,house-va-1,HOUSE,VA,1,False,standard,Shannon Taylor,Rob Wittman,Rob Wittman,0.4454,-0.5841,-6.4618,5.1866,Toss-up,-2.9687,0.3186,2.0835,3.0,0.4632,0.622,0.014,4.6796
+2026-10-16,house-va-2,HOUSE,VA,2,False,standard,Elaine Luria,Jen Kiggans,Jen Kiggans,0.8652,5.2393,-0.8867,11.2334,Likely D,7.4144,0.8805,1.7892,2.0,0.3938,0.5925,0.0291,11.448
+2026-10-16,house-va-3,HOUSE,VA,3,False,standard,Bobby Scott,Edwin Rivera,Bobby Scott,0.9998,45.1442,37.8794,52.4139,Safe D,45.0806,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-va-4,HOUSE,VA,4,False,standard,Jennifer McClellan,Robert Murray,Jennifer McClellan,1.0,44.594,37.2563,51.9852,Safe D,44.6276,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-va-5,HOUSE,VA,5,False,standard,Tom Perriello,John McGuire,John McGuire,0.0828,-6.3255,-12.1237,-0.4919,Likely R,-7.2425,0.125,-5.1805,3.0,0.4742,0.2166,0.0014,0.5311
+2026-10-16,house-va-6,HOUSE,VA,6,False,standard,Beth Macy,Ben Cline,Ben Cline,0.0008,-22.3104,-28.5578,-16.2778,Safe R,-19.2594,0.0011,-27.6459,1.0,0.3685,0.0003,0.0001,0.0591
+2026-10-16,house-va-7,HOUSE,VA,7,False,standard,Eugene Vindman,Doug Ollivant,Eugene Vindman,0.9918,15.9672,8.6977,23.3944,Safe D,16.0316,0.9945,,,0.0,,0.0022,0.9136
+2026-10-16,house-va-8,HOUSE,VA,8,False,standard,Don Beyer,Tony Sabio,Don Beyer,1.0,57.3745,50.1041,64.562,Safe D,57.3466,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-va-9,HOUSE,VA,9,False,standard,Joy Powers,Morgan Griffith,Morgan Griffith,0.0004,-39.2112,-46.4636,-31.9148,Safe R,-39.1949,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-va-10,HOUSE,VA,10,False,standard,Suhas Subramanyam,Dave Beckwith,Suhas Subramanyam,0.9945,18.7592,11.4045,26.1665,Safe D,18.7447,0.9985,,,0.0,,0.0008,0.3149
+2026-10-16,house-va-11,HOUSE,VA,11,False,standard,James Walkinshaw,Arthur Purves,James Walkinshaw,0.9998,45.1452,37.8277,52.5118,Safe D,45.1954,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-vt-al,HOUSE,VT,0,False,standard,Becca Balint,Gerald Malloy,Becca Balint,1.0,35.9332,29.8998,41.9887,Safe D,42.7765,1.0,25.5902,4.0,0.398,0.9996,0.0,0.0
+2026-10-16,house-wa-1,HOUSE,WA,1,False,standard,Suzan DelBene,Mary Silva,Suzan DelBene,0.9997,36.5725,29.2336,43.9926,Safe D,36.4754,1.0,,,0.0,,0.0001,0.0383
+2026-10-16,house-wa-2,HOUSE,WA,2,False,standard,Rick Larsen,Edwin Feller,Rick Larsen,0.9998,35.2501,27.9136,42.4741,Safe D,35.2429,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-wa-3,HOUSE,WA,3,False,standard,Marie Gluesenkamp Perez,John Braun,Marie Gluesenkamp Perez,0.8992,6.1034,-0.0287,12.3154,Likely D,11.5977,0.9672,-2.23,4.0,0.3961,0.3857,0.0256,8.6025
+2026-10-16,house-wa-4,HOUSE,WA,4,False,standard,John Duresky,Amanda McKinney,Dan Newhouse,0.026,-13.958,-22.3449,-5.5143,Safe R,-13.9081,0.0276,,,0.0,,0.001,0.4321
+2026-10-16,house-wa-5,HOUSE,WA,5,False,standard,Carmela Conroy,Michael Baumgartner,Michael Baumgartner,0.0152,-11.9323,-18.1551,-5.4973,Safe R,-11.9136,0.0293,-11.8982,1.0,0.3343,0.0854,0.0002,0.0878
+2026-10-16,house-wa-6,HOUSE,WA,6,False,standard,Emily Randall,Teresa Fox,Emily Randall,0.9985,27.3609,20.0969,34.7214,Safe D,27.3834,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-wa-7,HOUSE,WA,7,False,standard,Pramila Jayapal,Nirav Sheth,Pramila Jayapal,1.0,78.3238,71.2113,85.5233,Safe D,78.2905,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-wa-8,HOUSE,WA,8,False,standard,Kim Schrier,Spencer Meline,Kim Schrier,0.993,17.8016,10.3778,25.2062,Safe D,17.7745,0.9976,,,0.0,,0.001,0.3337
+2026-10-16,house-wa-9,HOUSE,WA,9,False,standard,Adam Smith,Doug Basler,Adam Smith,0.9999,52.3204,44.9418,59.6117,Safe D,52.263,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-wa-10,HOUSE,WA,10,False,standard,Marilyn Strickland,Chris Chung,Marilyn Strickland,0.9987,26.9651,19.434,34.3902,Safe D,26.9435,1.0,,,0.0,,0.0002,0.0995
+2026-10-16,house-wi-1,HOUSE,WI,1,False,standard,Mitchell Berman,Bryan Steil,Bryan Steil,0.2808,-2.6412,-8.5518,3.2116,Lean R,-1.2383,0.4221,-4.3757,4.0,0.4604,0.2594,0.0074,2.6165
+2026-10-16,house-wi-2,HOUSE,WI,2,False,same_party,Mark Pocan,,Mark Pocan,1.0,,,,Safe D,,,,,,,,
+2026-10-16,house-wi-3,HOUSE,WI,3,False,standard,Rebecca Cooke,Derrick Van Orden,Derrick Van Orden,0.6182,1.3627,-4.6146,7.3448,Lean D,4.5014,0.7627,-3.147,4.0,0.4086,0.3371,0.0241,8.1664
+2026-10-16,house-wi-4,HOUSE,WI,4,False,standard,Gwen Moore,Tim Rogers,Gwen Moore,1.0,60.7718,53.577,67.8675,Safe D,60.7945,1.0,,,0.0,,0.0,0.0
+2026-10-16,house-wi-5,HOUSE,WI,5,False,standard,Andrew Beck,Scott Fitzgerald,Scott Fitzgerald,0.0042,-18.805,-26.2318,-11.5712,Safe R,-18.8248,0.0014,,,0.0,,0.0,0.0148
+2026-10-16,house-wi-6,HOUSE,WI,6,False,standard,Brad Smith,Glenn Grothman,Glenn Grothman,0.0026,-17.6441,-24.0548,-11.3015,Safe R,-12.8378,0.0208,-27.8982,1.0,0.3242,0.0008,0.0,0.0
+2026-10-16,house-wi-7,HOUSE,WI,7,False,standard,Fred Clark,Michael Alfonso,Tom Tiffany,0.02,-14.8795,-23.1032,-6.5202,Safe R,-14.9021,0.02,,,0.0,,0.0006,0.194
+2026-10-16,house-wi-8,HOUSE,WI,8,False,standard,Rick Crosson,Tony Wied,Tony Wied,0.0364,-10.8402,-18.1818,-3.528,Safe R,-10.8765,0.0421,,,0.0,,0.0006,0.2152
+2026-10-16,house-wv-1,HOUSE,WV,1,False,standard,Vince George,Carol Miller,Carol Miller,0.0002,-37.4757,-44.7398,-30.1767,Safe R,-37.4234,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-wv-2,HOUSE,WV,2,False,standard,Ace Parsi,Riley Moore,Riley Moore,0.0002,-35.9761,-43.345,-28.6459,Safe R,-35.9412,0.0,,,0.0,,0.0,0.0
+2026-10-16,house-wy-al,HOUSE,WY,0,False,standard,Lisa Kinney,Chuck Gray,Harriet Hageman,0.0006,-39.5472,-47.8098,-31.2583,Safe R,-39.5495,0.0,,,0.0,,0.0,0.0
+2026-10-16,senate-ak,SEN,AK,0,False,rcv_bloc,Mary Peltola,Gerald Heikes; Dan J. Sullivan; Dan S. Sullivan,Dan Sullivan,0.4624,-0.3809,-5.4856,4.7365,Toss-up,-4.8833,0.2386,1.5369,23.0,0.6958,0.6274,0.109,28.9323
+2026-10-16,senate-al,SEN,AL,0,False,standard,Everett Wess,Barry Moore,Tommy Tuberville,0.0062,-20.2092,-28.4471,-11.9507,Safe R,-23.0292,0.0195,-18.3485,2.0,0.5965,0.0237,0.0008,0.0418
+2026-10-16,senate-ar,SEN,AR,0,False,standard,Hallie Shoffner,Tom Cotton,Tom Cotton,0.0086,-14.3338,-21.2354,-7.5222,Safe R,-25.0112,0.0125,-10.8434,5.0,0.7513,0.0506,0.0012,0.0892
+2026-10-16,senate-co,SEN,CO,0,False,standard,John Hickenlooper,Mark Baisley,John Hickenlooper,0.995,21.0728,13.1446,29.1432,Safe D,21.055,0.9989,,,0.0,,0.0013,0.0363
+2026-10-16,senate-de,SEN,DE,0,False,standard,Chris Coons,Michael Katz,Chris Coons,0.998,26.3576,18.3614,34.3478,Safe D,26.2766,0.9999,,,0.0,,0.0002,0.0544
+2026-10-16,senate-fl-special,SEN,FL,0,True,standard,Angie Nixon,Ashley Moody,Ashley Moody,0.0384,-8.5231,-14.5209,-2.5172,Safe R,-16.8075,0.0661,-6.8248,16.0,0.8279,0.102,0.0074,0.0671
+2026-10-16,senate-ga,SEN,GA,0,False,standard,Jon Ossoff,Mike Collins,Jon Ossoff,0.9832,10.3145,4.5,16.1473,Safe D,15.5141,0.9176,9.3823,18.0,0.8426,0.9665,0.01,0.1772
+2026-10-16,senate-ia,SEN,IA,0,False,standard,Josh Turek,Ashley Hinson,Joni Ernst,0.4702,-0.3458,-6.1852,5.5839,Toss-up,-8.5514,0.2219,1.2632,28.0,0.8344,0.5956,0.1118,6.4058
+2026-10-16,senate-id,SEN,ID,0,False,same_party,,Jim Risch,Jim Risch,0.0,,,,Safe R,,,,,,,,
+2026-10-16,senate-il,SEN,IL,0,False,standard,Juliana Stratton,Don Tracy,Dick Durbin,0.9673,16.0571,5.9904,26.1436,Safe D,19.5669,0.9602,10.1711,1.0,0.3731,0.7604,0.0076,0.1305
+2026-10-16,senate-ks,SEN,KS,0,False,standard,Adam Hamilton,Roger Marshall,Roger Marshall,0.2665,-2.6703,-8.0893,2.8616,Lean R,-9.665,0.0798,1.4448,14.0,0.6315,0.6063,0.0616,4.2726
+2026-10-16,senate-ky,SEN,KY,0,False,standard,Charles Booker,Andy Barr,Mitch McConnell,0.0206,-18.0278,-27.7282,-8.2683,Safe R,-23.2423,0.0186,-10.6165,2.0,0.4166,0.21,0.0028,0.1351
+2026-10-16,senate-la,SEN,LA,0,False,standard,Jamie Davis,Julia Letlow,Bill Cassidy,0.058,-11.2119,-20.0717,-2.4289,Likely R,-15.4061,0.0838,-7.8722,2.0,0.5433,0.2218,0.0102,0.5165
+2026-10-16,senate-ma,SEN,MA,0,False,standard,Ed Markey,John Deaton,Ed Markey,0.9998,30.2972,24.1068,36.5207,Safe D,35.6255,1.0,24.0356,11.0,0.4591,0.9994,0.0,0.0014
+2026-10-16,senate-me,SEN,ME,0,False,standard,Troy Jackson,Susan Collins,Susan Collins,0.8362,3.8777,-1.2797,9.0826,Likely D,7.6971,0.8689,2.1264,24.0,0.6868,0.6703,0.0932,9.6711
+2026-10-16,senate-mi,SEN,MI,0,False,standard,Abdul El-Sayed,Mike Rogers,Gary Peters,0.7926,3.5163,-2.0599,9.1971,Lean D,5.7638,0.6972,3.1138,51.0,0.8475,0.7323,0.1042,1.5647
+2026-10-16,senate-mn,SEN,MN,0,False,standard,Peggy Flanagan,Michele Tafoya,Tina Smith,0.8468,4.9915,-1.3036,11.296,Likely D,12.8501,0.8752,2.953,15.0,0.7946,0.6919,0.0731,2.0393
+2026-10-16,senate-ms,SEN,MS,0,False,standard,Scott Colom,Cindy Hyde-Smith,Cindy Hyde-Smith,0.0252,-9.6545,-15.7818,-3.6808,Safe R,-15.1206,0.0139,-4.8333,4.0,0.5257,0.2307,0.0042,0.4198
+2026-10-16,senate-mt,SEN,MT,0,False,standard,Alani Bankhead,Kurt Alme,Steve Daines,0.0047,-21.2748,-29.3836,-13.3641,Safe R,-15.9752,0.0762,-24.5609,10.0,0.6311,0.0022,0.0006,0.0906
+2026-10-16,senate-nc,SEN,NC,0,False,standard,Roy Cooper,Michael Whatley,Thom Tillis,0.9786,10.0981,4.1902,16.0984,Safe D,9.991,0.8146,10.1744,44.0,0.8359,0.974,0.0106,0.1977
+2026-10-16,senate-ne,SEN,NE,0,False,independent,,Pete Ricketts,Pete Ricketts,0.364,-1.6304,-7.727,4.5487,Lean R,-2.5451,0.4204,-1.4941,16.0,0.8552,0.3934,0.0556,5.8455
+2026-10-16,senate-nh,SEN,NH,0,False,standard,Chris Pappas,John E. Sununu,Jeanne Shaheen,0.9504,7.9661,1.9181,14.0626,Safe D,13.3704,0.8845,6.8395,26.0,0.8258,0.8976,0.0296,3.333
+2026-10-16,senate-nj,SEN,NJ,0,False,standard,Cory Booker,Justin Murphy,Cory Booker,0.9924,18.674,10.7645,26.5542,Safe D,18.6414,0.9967,,,0.0,,0.002,0.0537
+2026-10-16,senate-nm,SEN,NM,0,False,standard,Ben Ray Luján,Larry Marker,Ben Ray Luján,0.9944,17.3904,10.2916,24.5658,Safe D,18.399,0.9504,16.9382,3.0,0.7294,0.9925,0.0014,0.1382
+2026-10-16,senate-oh-special,SEN,OH,0,True,standard,Sherrod Brown,Jon Husted,Jon Husted,0.7506,3.0821,-2.8475,9.0481,Lean D,-1.701,0.4395,3.9984,32.0,0.8287,0.773,0.1082,1.832
+2026-10-16,senate-ok,SEN,OK,0,False,standard,N'Kiyla Jasmine Thomas,Kevin Hern,Alan Armstrong,0.0058,-26.0001,-35.9941,-16.0272,Safe R,-27.1085,0.0075,-24.0653,1.0,0.3755,0.0464,0.0006,0.0395
+2026-10-16,senate-or,SEN,OR,0,False,standard,Jeff Merkley,David Brock Smith,Jeff Merkley,0.9978,25.7828,17.817,33.6175,Safe D,25.8196,0.9999,,,0.0,,0.0006,0.0215
+2026-10-16,senate-ri,SEN,RI,0,False,standard,Jack Reed,Raymond McKay,Jack Reed,0.9996,29.2764,23.1304,35.4204,Safe D,28.3442,1.0,30.2472,5.0,0.4646,1.0,0.0,0.0098
+2026-10-16,senate-sc,SEN,SC,0,False,standard,Annie Andrews,Darline Graham,Darline Graham,0.3212,-2.112,-8.0965,3.7354,Lean R,-4.0403,0.2782,-0.486,9.0,0.539,0.4702,0.0746,3.0548
+2026-10-16,senate-sd,SEN,SD,0,False,same_party,,Mike Rounds,Mike Rounds,0.0,,,,Safe R,,,,,,,,
+2026-10-16,senate-tn,SEN,TN,0,False,standard,Marquita Bradshaw,Bill Hagerty,Bill Hagerty,0.0014,-23.5124,-30.4649,-16.3525,Safe R,-24.7399,0.0002,-20.2147,1.0,0.2725,0.0325,0.0003,0.0121
+2026-10-16,senate-tx,SEN,TX,0,False,standard,James Talarico,Ken Paxton,John Cornyn,0.6788,2.0727,-3.6689,7.7899,Lean D,-0.7785,0.4722,2.5551,54.0,0.8537,0.6984,0.1158,1.0005
+2026-10-16,senate-va,SEN,VA,0,False,standard,Mark Warner,Bert Mizusawa,Mark Warner,0.9954,18.5063,11.3699,25.7817,Safe D,18.7958,0.9969,17.5839,2.0,0.2235,0.9212,0.001,0.0241
+2026-10-16,senate-wv,SEN,WV,0,False,standard,Rachel Fetty Anderson,Shelley Moore Capito,Shelley Moore Capito,0.0008,-37.8673,-45.7108,-29.8233,Safe R,-37.8084,0.0,,,0.0,,0.0,0.0
+2026-10-16,senate-wy,SEN,WY,0,False,standard,James W. Byrd,Harriet Hageman,Cynthia Lummis,0.004,-39.5212,-51.9591,-27.2729,Safe R,-39.5497,0.0002,,,0.0,,0.0002,0.0903

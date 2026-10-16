@@ -2,19 +2,19 @@ name,polls,races,record,correction,partisan,latest
 YouGov,60,23,441,-0.09,1,2026-10-12
 Public Policy Polling,47,43,403,0.55,43,2026-10-02
 University of New Hampshire,46,15,177,-0.86,0,2026-09-21
-The New York Times/Siena University,46,21,284,1.02,0,2026-10-08
-Emerson College,38,26,289,0.86,1,2026-10-11
+The New York Times/Siena University,46,21,284,1.03,0,2026-10-08
+Emerson College,39,27,289,0.86,1,2026-10-12
 co/efficient,33,29,22,2.33,12,2026-10-08
 Impact Research,32,19,87,-0.11,32,2026-10-04
+Beacon Research/Shaw & Co. Research,24,15,71,-1.62,0,2026-10-06
 Quantus Insights,24,18,0,-0.43,8,2026-10-11
-Beacon Research/Shaw & Co. Research,23,14,71,-1.62,0,2026-09-28
+InsiderAdvantage,23,14,108,0.92,0,2026-10-14
 GBAO,21,13,50,2.24,21,2026-10-08
 Change Research,20,9,99,-1.19,9,2026-10-10
 Global Strategy Group,20,14,103,1.81,20,2026-09-16
-InsiderAdvantage,20,14,108,0.92,0,2026-10-13
 SurveyUSA,20,15,949,-0.05,0,2026-10-12
 Wedgewood Polls,20,18,0,-0.43,2,2026-10-14
-"Fabrizio, Lee & Associates/Impact Research",19,18,40,0.73,2,2026-10-11
+"Fabrizio, Lee & Associates/Impact Research",19,18,40,0.73,3,2026-10-11
 Alaska Survey Research,16,3,28,-2.32,0,2026-10-03
 Marist University,16,11,163,0.51,0,2026-10-11
 Trafalgar Group,16,11,114,0.51,16,2026-10-10
@@ -51,7 +51,7 @@ EPIC-MRA,5,2,70,0.55,0,2026-08-28
 FM3 Research,5,5,26,-2.22,5,2026-07-12
 Franklin & Marshall College,5,3,43,0.61,0,2026-09-20
 "Normington, Petts & Associates",5,4,51,0.13,5,2026-09-28
-University of North Florida,5,2,17,-2.28,1,2026-07-17
+University of North Florida,5,2,17,-2.27,1,2026-07-17
 SoCal Strategies,5,3,4,-1.34,4,2026-09-13
 St. Pete Polls,5,3,43,0.08,0,2026-10-07
 Bravo Group,4,1,0,-0.43,0,2026-09-22
@@ -74,7 +74,7 @@ Opinion Diagnostics,3,2,1,-0.57,1,2026-09-25
 Hendrix College,3,3,25,-2.78,0,2026-08-13
 J.L. Partners,3,3,1,0.09,1,2026-08-18
 Kreate Strategies,3,2,0,-0.43,2,2026-08-16
-Peak Insights,3,3,0,-0.43,2,2026-08-25
+Peak Insights,3,3,0,-0.43,3,2026-08-25
 Public Policy Research/Texas Southern University,3,3,0,-0.43,0,2026-08-22
 RMG Research,3,3,38,-1.14,2,2026-09-25
 UC Berkeley Institute of Governmental Studies,3,1,0,-0.43,0,2026-09-20
@@ -82,8 +82,9 @@ Victory Insights,3,3,19,1.05,0,2025-11-24
 Wick,3,3,21,2.21,0,2026-10-06
 yes. every kid.,3,3,0,-0.43,0,2026-07-11
 Zenith Research,3,3,0,-0.43,2,2026-08-03
-20/20 Insight,2,1,3,-0.6,2,2026-10-09
+20/20 Insight,2,1,3,-0.59,2,2026-10-09
 2040 Strategy Group,2,2,0,-0.43,2,2026-07-25
+ActiVote,2,2,52,-1.47,0,2026-10-14
 American Pulse Research & Polling,2,2,10,-1.64,0,2026-09-24
 Bendixen & Amandi International,2,2,5,0.35,2,2026-08-30
 Blueprint Polling,2,2,3,-0.29,2,2026-07-28
@@ -98,7 +99,7 @@ Equis Research,2,1,0,-0.43,0,2026-10-09
 Expedition Strategies,2,1,5,0.9,2,2026-09-24
 GreatBlue Research,2,1,4,0.5,0,2026-09-08
 High Point University Survey Research Center,2,1,8,0.24,0,2026-09-16
-HighGround,2,1,10,0.3,0,2026-10-08
+HighGround,2,1,10,0.31,0,2026-10-08
 University of Houston,2,2,0,-0.43,0,2026-10-07
 MAD Global Strategy,2,2,0,-0.43,1,2026-06-11
 Maine People's Resource Center,2,2,9,-2.06,0,2026-09-29
@@ -109,6 +110,7 @@ Overton Insights,2,2,0,-0.43,2,2026-08-26
 Pollfinity,2,1,0,-0.43,0,2026-10-12
 PPIC,2,1,0,-0.43,0,2026-09-10
 Pulse Decision Science,2,2,0,-0.43,2,2026-09-27
+Research & Polling,2,2,5,-0.08,0,2026-10-09
 Rosetta Stone Communications,2,2,0,-0.43,1,2025-10-25
 Rutgers University Eagleton Institute of Politics,2,2,15,1.47,0,2026-09-07
 SEA Polling,2,2,0,-0.43,1,2026-08-30
@@ -118,6 +120,7 @@ Target Insyght,2,1,10,-0.2,0,2025-03-06
 The Tarrance Group,2,2,76,-2.55,2,2026-07-30
 University of Texas at Tyler,2,2,6,-0.23,0,2026-02-22
 Torchlight Strategies,2,2,0,-0.43,2,2026-09-19
+The Tyson Group / Alliance for a Better Future,2,1,17,0.99,1,2026-10-08
 1892 Polling,1,1,5,-0.78,0,2025-09-04
 A2 Insights,1,1,0,-0.43,0,2026-06-28
 Advanced Targeting Research,1,1,0,-0.43,0,2026-09-16
@@ -154,7 +157,6 @@ Praecones Analytica,1,1,3,0.35,0,2025-12-28
 Pulse Science Decision,1,1,0,-0.43,1,2026-06-23
 Red Oak Strategic,1,1,0,-0.43,1,2026-07-12
 Remington Research Group,1,1,49,-1.05,0,2026-09-15
-Research & Polling,1,1,5,-0.08,0,2026-10-09
 Resonance Media,1,1,0,-0.43,0,2026-10-03
 Stealth Analytics,1,1,0,-0.43,0,2026-08-13
 StimSight Research,1,1,0,-0.43,0,2026-09-12
