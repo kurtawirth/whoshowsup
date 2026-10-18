@@ -30,7 +30,62 @@ display(html`<div class="stat-row">
 </div>`);
 ```
 
-## Mail ballots lean Democratic
+## Ballots cast so far
+
+```js
+const kinds = ["Mail ballots returned", "Early in person"];
+const kindColor = {"Mail ballots returned": t.ind, "Early in person": t.ink};
+const daily = d3.rollups(ev.series, (v) => ({mail: d3.sum(v, (d) => d.returned), inperson: d3.sum(v, (d) => d.inperson)}), (d) => d.date)
+  .map(([date, x]) => ({date: new Date(date), ...x, cast: x.mail + x.inperson})).sort((a, b) => a.date - b.date);
+const byKind = daily.flatMap((d) => [{date: d.date, kind: kinds[0], n: d.mail}, {date: d.date, kind: kinds[1], n: d.inperson}]);
+display(resize((w) => Plot.plot({
+  width: w, height: 260, marginLeft: 56,
+  y: {label: "Ballots cast", grid: true, tickFormat: "~s"},
+  x: {label: null, ticks: d3.utcWeek.every(1), tickFormat: "%b %-d"},
+  color: {domain: kinds, range: kinds.map((k) => kindColor[k]), legend: true},
+  style: {background: "transparent", color: t["ink-3"], fontSize: "12px"},
+  marks: [
+    Plot.areaY(byKind, {x: "date", y: "n", fill: "kind", fillOpacity: 0.75, order: kinds}),
+    Plot.line(daily, {x: "date", y: "cast", stroke: t.ink, strokeWidth: 1.5}),
+    Plot.tip(daily, Plot.pointerX({x: "date", y: "cast", title: (d) => `${d3.utcFormat("%b %-d")(d.date)}
+${fmt(d.cast)} ballots cast
+${fmt(d.mail)} by mail, ${fmt(d.inperson)} early in person`}))
+  ]
+})));
+```
+
+<p class="caption">Mail ballots returned plus in-person early votes, added up across the reporting states. States join the count as they begin reporting, and in-person early voting opens on different dates in each state, so part of the rise is new states and newly opened polling places.</p>
+
+## By state
+
+```js
+function partyBar(d) {
+  if (d.dem == null) return html`<span class="muted">Not recorded</span>`;
+  const n = d.dem + d.rep + d.other || 1;
+  if (n < 500) return html`<span class="muted">Too few ballots yet</span>`;
+  const seg = (v, c) => `<b style="width:${(100 * v) / n}%;background:${c}"></b>`;
+  const el = html`<span class="ev-party" title="${pct(d.dem / n)} registered Democrats, ${pct(d.other / n)} other or none, ${pct(d.rep / n)} registered Republicans"></span>`;
+  el.innerHTML = seg(d.dem, t["party-d"]) + seg(d.other, t.hair) + seg(d.rep, t["party-r"]);
+  const lab = html`<span class="ev-party-lab"><span style="color:${t["party-d"]}">D ${pct(d.dem / n)}</span> · <span style="color:${t["party-r"]}">R ${pct(d.rep / n)}</span></span>`;
+  return html`<span class="ev-party-cell">${el}${lab}</span>`;
+}
+display(html`<div class="table-wrap"><table class="wsu-table">
+  <thead><tr><th>State</th><th class="num">Ballots cast</th><th class="num">Share of 2022 vote</th><th class="num">Mail ballots returned</th><th>Party registration of voters so far</th></tr></thead>
+  <tbody>${states.map((d) => html`<tr>
+    <td>${d.state_name}</td>
+    <td class="num">${fmt(d.cast)}</td>
+    <td class="num">${d.turnout22 ? pct(d.cast / d.turnout22) : "–"}</td>
+    <td class="num">${d.requested ? `${fmt(d.returned)} of ${fmt(d.requested)}` : fmt(d.returned)}</td>
+    <td>${partyBar(d)}</td>
+  </tr>`)}</tbody>
+</table></div>`);
+```
+
+<p class="caption">"Share of 2022 vote" compares ballots cast so far with each state's total vote for the U.S. House in 2022. Party registration is shown only where the state records it (${partyStates.length} of ${states.length} states) and at least 500 ballots are in, and it is not a vote: many registered Democrats and Republicans vote for the other party, and early voters differ from Election Day voters in ways that change from year to year, so an early lead in party registration does not mean a lead in votes. States count and report ballots differently, and some report only mail ballots.</p>
+
+<p class="caption">Early-vote counts from <a href="https://civicapi.org">civicAPI</a>, compiled from state election offices. Updated every morning.</p>
+
+## How to read early returns
 
 In every election since 2008, people who voted by mail have voted more Democratic for the U.S. House than people who voted on Election Day. Until 2016 the gap was modest, and in strong Republican years like 2010 and 2014 even mail voters narrowly favored Republicans. Then 2020 blew it open: mail voters backed Democrats by 38 points while Election Day voters backed Republicans by 33, and the split has stayed wide since. People who vote early in person are different. They vote much like Election Day voters, and in 2024 they favored Republicans by 15 points.
 
@@ -63,52 +118,3 @@ display(resize((w) => Plot.plot({
 ```
 
 <p class="caption">How people who voted each way voted for the U.S. House, Democrats' share of the two-party vote minus Republicans'. From the Cooperative Election Study, a survey of 25,000 to 45,000 voters after each election, weighted to match the country. Survey margins can be a few points off the real result in either direction; the differences between the three groups are the point.</p>
-
-## Ballots cast over time
-
-```js
-const byDate = d3.rollups(ev.series, (v) => d3.sum(v, (d) => d.cast), (d) => d.date)
-  .map(([date, cast]) => ({date: new Date(date), cast})).sort((a, b) => a.date - b.date);
-display(resize((w) => Plot.plot({
-  width: w, height: 240, marginLeft: 56,
-  y: {label: "Ballots cast", grid: true, tickFormat: "~s"},
-  x: {label: null, ticks: d3.utcWeek.every(1), tickFormat: "%b %-d"},
-  style: {background: "transparent", color: t["ink-3"], fontSize: "12px"},
-  marks: [
-    Plot.areaY(byDate, {x: "date", y: "cast", fill: t["ink-3"], fillOpacity: 0.12}),
-    Plot.line(byDate, {x: "date", y: "cast", stroke: t.ink, strokeWidth: 2}),
-    Plot.tip(byDate, Plot.pointerX({x: "date", y: "cast", title: (d) => `${d3.utcFormat("%b %-d")(d.date)}\n${fmt(d.cast)} ballots cast`}))
-  ]
-})));
-```
-
-<p class="caption">Mail ballots returned plus in-person early votes, added up across the reporting states. States join the count as they begin reporting, so part of the rise is new states.</p>
-
-## By state
-
-```js
-function partyBar(d) {
-  if (d.dem == null) return html`<span class="muted">Not recorded</span>`;
-  const n = d.dem + d.rep + d.other || 1;
-  if (n < 500) return html`<span class="muted">Too few ballots yet</span>`;
-  const seg = (v, c) => `<b style="width:${(100 * v) / n}%;background:${c}"></b>`;
-  const el = html`<span class="ev-party" title="${pct(d.dem / n)} registered Democrats, ${pct(d.other / n)} other or none, ${pct(d.rep / n)} registered Republicans"></span>`;
-  el.innerHTML = seg(d.dem, t["party-d"]) + seg(d.other, t.hair) + seg(d.rep, t["party-r"]);
-  const lab = html`<span class="ev-party-lab"><span style="color:${t["party-d"]}">D ${pct(d.dem / n)}</span> · <span style="color:${t["party-r"]}">R ${pct(d.rep / n)}</span></span>`;
-  return html`<span class="ev-party-cell">${el}${lab}</span>`;
-}
-display(html`<div class="table-wrap"><table class="wsu-table">
-  <thead><tr><th>State</th><th class="num">Ballots cast</th><th class="num">Share of 2022 vote</th><th class="num">Mail ballots returned</th><th>Party registration of voters so far</th></tr></thead>
-  <tbody>${states.map((d) => html`<tr>
-    <td>${d.state_name}</td>
-    <td class="num">${fmt(d.cast)}</td>
-    <td class="num">${d.turnout22 ? pct(d.cast / d.turnout22) : "–"}</td>
-    <td class="num">${d.requested ? `${fmt(d.returned)} of ${fmt(d.requested)}` : fmt(d.returned)}</td>
-    <td>${partyBar(d)}</td>
-  </tr>`)}</tbody>
-</table></div>`);
-```
-
-<p class="caption">"Share of 2022 vote" compares ballots cast so far with each state's total vote for the U.S. House in 2022. Party registration is shown only where the state records it (${partyStates.length} of ${states.length} states) and at least 500 ballots are in, and it is not a vote: many registered Democrats and Republicans vote for the other party, and early voters differ from Election Day voters in ways that change from year to year, so an early lead in party registration does not mean a lead in votes. States count and report ballots differently, and some report only mail ballots.</p>
-
-<p class="caption">Early-vote counts from <a href="https://civicapi.org">civicAPI</a>, compiled from state election offices. Updated every morning.</p>

@@ -439,7 +439,7 @@ def early_vote() -> dict:
     wide = wide.reindex(pd.MultiIndex.from_product([wide.index.levels[0], days], names=["state_po", "date"]))
     wide = wide.groupby(level=0).ffill().fillna(0)
     wide["cast"] = wide["returned"] + wide["inperson"]
-    series = wide.reset_index()[["date", "state_po", "cast"]]
+    series = wide.reset_index()[["date", "state_po", "returned", "inperson", "cast"]]
     # party registration of ballots cast (returned + in person), where the state records party
     cast = d[d["category"].isin(["returned", "inperson"]) & d["dem"].notna()]
     latest_date = d.groupby("state_po")["date"].max()
