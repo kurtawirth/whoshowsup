@@ -1,11 +1,16 @@
 {
- "forecast_date": "2026-10-17",
- "finished_at": "2026-10-17 12:22",
+ "forecast_date": "2026-10-18",
+ "finished_at": "2026-10-18 07:18",
  "refresh": true,
- "failed_steps": [],
+ "failed_steps": [
+  "Early vote (civicAPI)",
+  "Election-night race matching (civicAPI)"
+ ],
  "warnings": [
   "Poll check: HOUSE NM-1: recent Wikipedia poll table without Melanie Stansbury vs Didi Okpareke (columns: Melanie Stansbury (D), Didi Okapareke (R)) on 2026_United_States_House_of_Representatives_elections_in_New_Mexico",
   "Poll check: GOV MN: recent VoteHub poll (GQR, Oct 04) without Amy Klobuchar vs Lisa Demuth: Peggy Flanagan, Michele Tafoya",
-  "Poll check: HOUSE NM-3: recent VoteHub poll (Research & Polling Inc., Oct 09) without Teresa Leger Fern\u00e1ndez vs Martin Zamora: Teresa Leger Fernandez, Martin Zamora"
+  "Poll check: HOUSE NM-3: recent VoteHub poll (Research & Polling Inc., Oct 09) without Teresa Leger Fern\u00e1ndez vs Martin Zamora: Teresa Leger Fernandez, Martin Zamora",
+  "Early vote (civicAPI) FAILED: RuntimeError('civicAPI unavailable: https://civicapi.org/api/v2/early-vote/TN/inperson?date=2026-09-25')",
+  "Election-night race matching (civicAPI) FAILED: HTTPError('503 Server Error: Service Unavailable for url: https://civicapi.org/api/v2/race/search?startDate=2026-11-03&endDate=2026-11-03&country=US&province=AZ&limit=500')"
  ]
 }
