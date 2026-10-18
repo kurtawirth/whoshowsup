@@ -80,8 +80,12 @@ def main() -> pd.DataFrame:
     # about again each morning, and the step grew from 13 to 17 minutes as early voting went on.
     checked_path = RAW / "early_vote_checked.json"
     checked = set(json.loads(checked_path.read_text(encoding="utf-8"))) if checked_path.exists() else set()
-    caps = capabilities()
-    rows = []
+    try:
+        caps = capabilities()
+    except RuntimeError:  # civicAPI briefly down: use the last list of states rather than skip the step
+        caps = json.loads((RAW / "capabilities.json").read_text(encoding="utf-8"))
+        print("civicAPI capabilities unavailable; using the saved list")
+    rows, failed = [], []
     for st, c in caps.items():
         for cat in CATEGORIES:
             if cat not in c.get("categories", {}):
@@ -90,13 +94,22 @@ def main() -> pd.DataFrame:
                 key = f"{day:%Y-%m-%d}|{st}|{cat}"
                 if day < keep_before and ((f"{day:%Y-%m-%d}", st, cat) in have or key in checked):
                     continue
-                s = snapshot(st, cat, day)
-                time.sleep(0.15)
+                if len(failed) >= 10:  # civicAPI is down, not just one bad request: stop asking, keep what we have
+                    break
+                try:
+                    s = snapshot(st, cat, day)
+                except RuntimeError:  # one request failing (civicAPI 503s) no longer throws away the rest
+                    failed.append(key)
+                    continue
+                finally:
+                    time.sleep(0.15)
                 if s:
                     rows.append(s)
                 if day < keep_before:
                     checked.add(key)
     checked_path.write_text(json.dumps(sorted(checked)), encoding="utf-8")
+    if failed:  # not marked as checked, so the next run asks again
+        print(f"{len(failed)} civicAPI requests failed and will be retried next run (first: {failed[0]})")
     new = pd.DataFrame(rows)
     out = pd.concat([old, new], ignore_index=True) if len(new) else old
     out = out.drop_duplicates(["date", "state_po", "category"], keep="last").sort_values(["state_po", "category", "date"])
@@ -104,6 +117,8 @@ def main() -> pd.DataFrame:
     latest = out[out.date == out.date.max()]
     print(f"{len(caps)} states reporting; {len(new)} snapshots read; latest {out.date.max()}: "
           f"{int(latest[latest.category != 'requested'].total.sum()):,} ballots cast")
+    if len(failed) >= 10:  # saved what came back, but say so: today's counts may be incomplete
+        raise RuntimeError(f"civicAPI unavailable after {len(rows)} snapshots; kept those and the earlier counts")
     return out
 
 
