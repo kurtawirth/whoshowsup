@@ -43,6 +43,11 @@ def lean(m: float, d: str = "D", r: str = "R") -> str:
     return "even" if abs(m) < 0.05 else (f"{d}{sp}+{m:.1f}" if m > 0 else f"{r}{sp}+{-m:.1f}")
 
 
+def fav(p: float, d: str = "Democrats", r: str = "Republicans") -> str:
+    """The favorite and their chance ("Marshall 63%"), not the Democratic side's chance by default."""
+    return f"{d} {pct(p)}" if p >= 0.5 else f"{r} {pct(1 - p)}"
+
+
 def last(name) -> str:
     words = [w for w in str(name or "").split() if w.rstrip(".") not in ("Jr", "Sr", "II", "III")]
     return words[-1] if words else str(name)
@@ -90,8 +95,12 @@ def site_sections(races: dict, t1, now: str) -> list[str]:
             m = turnout_margin(x, t1.nat_median)
             w = np.exp(-0.5 * ((E - m) / 0.6) ** 2)
             ps, ph = np.average(sen >= 51, weights=w), np.average(house >= 218, weights=w)
-            who = "Republican" if x < 0 else "Democratic"
-            L.append(f"- {who} voters {abs(x):.0%} better than expected -> national vote about {lean(m)}; Senate D {pct(ps)}, House D {pct(ph)}")
+            if x < 0:  # each party's turnout edge stated as that party's own odds (STYLE.md: no Democratic default)
+                L.append(f"- Republican voters {abs(x):.0%} better than expected -> national vote about {lean(m)}; "
+                         f"Republicans hold the Senate {pct(1 - ps)}, win the House {pct(1 - ph)}")
+            else:
+                L.append(f"- Democratic voters {x:.0%} better than expected -> national vote about {lean(m)}; "
+                         f"Democrats win the Senate {pct(ps)}, the House {pct(ph)}")
         L.append("")
 
     pm = ROOT / "midterms_2026" / "outputs" / "poll_miss_scenarios.csv"
@@ -109,7 +118,8 @@ def site_sections(races: dict, t1, now: str) -> list[str]:
                   and min(r["p_dem"], 1 - r["p_dem"]) > 0.1], key=lambda r: -abs(r["p_fund"] - r["p_poll"]))
     L += ["## Fundamentals alone vs. polls alone (race pages), biggest disagreements among competitive statewide races"]
     for r in dis[:6]:
-        L.append(f"- {name(r)}: fundamentals alone {pct(r['p_fund'])} D, polls alone {pct(r['p_poll'])} D, our forecast {pct(r['p_dem'])} D "
+        dn, rn = last(r.get("dem_name")), last(r.get("rep_name"))
+        L.append(f"- {name(r)}: fundamentals alone {fav(r['p_fund'], dn, rn)}, polls alone {fav(r['p_poll'], dn, rn)}, our forecast {fav(r['p_dem'], dn, rn)} "
                  f"(polls get {round(100 * r['poll_weight'])}% of the weight) {link(r)}")
     L.append("")
 
@@ -154,7 +164,8 @@ def main(days: int = 7) -> Path:
     t1, t0 = (pd.read_csv(HIST / d / "topline.csv").iloc[0] for d in (now, base))
     f1, f0 = (pd.read_csv(HIST / d / "race_forecasts.csv").set_index("race_id") for d in (now, base))
     status = json.loads((ROOT / "midterms_2026" / "outputs" / "run_status.json").read_text(encoding="utf-8"))
-    L = [f"# The Turnout fact pack: {now} (compared with {base})", ""]
+    L = [f"# The Turnout fact pack: {now} (compared with {base})",
+         "Write every number neutrally: name whose odds moved, never \"the Senate rose\"; see STYLE.md, \"No Democratic default\".", ""]
 
     L += ["## Forecast run", f"- forecast_date {status.get('forecast_date')}, finished {status.get('finished_at')}, "
           f"failed steps: {status.get('failed_steps') or 'none'}"]
@@ -163,9 +174,9 @@ def main(days: int = 7) -> Path:
     L.append("")
 
     L += ["## Topline (now vs. a week ago)",
-          f"- House: Democrats {pct(t1.p_house_d)} (was {pct(t0.p_house_d)}); median {t1.house_median:.0f} D seats "
+          f"- House: Democrats {pct(t1.p_house_d)} (was {pct(t0.p_house_d)}), Republicans {pct(1 - t1.p_house_d)} (was {pct(1 - t0.p_house_d)}); median {t1.house_median:.0f} D seats "
           f"(80% range {t1.house_p10:.0f}-{t1.house_p90:.0f}); 218 needed",
-          f"- Senate: Democrats {pct(t1.p_senate_d)} (was {pct(t0.p_senate_d)}); median {t1.senate_median:.0f} D seats "
+          f"- Senate: Democrats {pct(t1.p_senate_d)} (was {pct(t0.p_senate_d)}), Republicans {pct(1 - t1.p_senate_d)} (was {pct(1 - t0.p_senate_d)}); median {t1.senate_median:.0f} D seats "
           f"(80% range {t1.senate_p10:.0f}-{t1.senate_p90:.0f}); Democrats need 51 (the vice president is a Republican)",
           f"- Governors: median {t1.gov_median:.0f} D of 36 (was {t0.gov_median:.0f})",
           f"- National House vote: {lean(t1.nat_median)} (was {lean(t0.nat_median)}); 80% range "
@@ -212,7 +223,7 @@ def main(days: int = 7) -> Path:
     j["dp"] = j["p_dem"] - j["p_dem_0"]
     moved = j[((j["p_dem"].between(0.03, 0.97)) | (j["p_dem_0"].between(0.03, 0.97))) & (j["dp"].abs() >= 0.03)]
     moved = moved.reindex(moved["dp"].abs().sort_values(ascending=False).index).head(15)
-    L += ["## Races that moved most this week", "(p = Democratic side's chance; margins are the model's expected margin)"]
+    L += ["## Races that moved most this week", "(each candidate's chance, then and now; margins are the model's expected margin)"]
     for rid, r in moved.iterrows():
         x = races.get(rid, {})
         dn, rn = x.get("dem_name") or r.get("dem_candidate"), x.get("rep_name") or r.get("rep_candidate")
@@ -225,10 +236,10 @@ def main(days: int = 7) -> Path:
         if abs(dfund - dnat) >= 2.5:
             # the non-poll baseline moved far more than the national estimate: a model or data change, whatever
             # else happened (a poll arriving the same week doesn't explain it)
-            why = (f"{'NO new polls' if not n_new else f'{n_new} new poll(s), BUT'} its non-poll baseline moved {dfund:+.1f} pts "
-                   f"(national estimate moved {dnat:+.1f}): PROBABLY A DATA OR MODEL CHANGE, NOT NEWS. Don't report this move as "
+            why = (f"{'NO new polls' if not n_new else f'{n_new} new poll(s), BUT'} its non-poll baseline moved {abs(dfund):.1f} pts toward {last(dn) if dfund > 0 else last(rn)} "
+                   f"(national estimate moved {abs(dnat):.1f} toward {'Democrats' if dnat > 0 else 'Republicans'}): PROBABLY A DATA OR MODEL CHANGE, NOT NEWS. Don't report this move as "
                    "something that happened in the race; at most, report what the new polls themselves showed")
-        L.append(f"- {rid} ({dn} vs. {rn}): {pct(r['p_dem_0'])} -> {pct(r['p_dem'])}; expected margin "
+        L.append(f"- {rid} ({dn} vs. {rn}): {last(dn)} {pct(r['p_dem_0'])} -> {pct(r['p_dem'])}, {last(rn)} {pct(1 - r['p_dem_0'])} -> {pct(1 - r['p_dem'])}; expected margin "
                  f"{lean(r['margin_median_0'], last(dn), last(rn))} -> {lean(r['margin_median'], last(dn), last(rn))}; "
                  f"poll avg {lean(r['poll_avg'], last(dn), last(rn))} ({int(r['poll_count']) if pd.notna(r['poll_count']) else 0} polls); {why}. "
                  f"https://whoshowsup.net/race/{rid}")
@@ -269,7 +280,7 @@ def main(days: int = 7) -> Path:
     for rid, r in gap.iterrows():
         x = races.get(rid, {})
         dn, rn = x.get("dem_name"), x.get("rep_name")
-        L.append(f"- {rid}: forecast {lean(r['margin_median'], last(dn), last(rn))} ({pct(r['p_dem'])} for {last(dn)}) vs. poll avg "
+        L.append(f"- {rid}: forecast {lean(r['margin_median'], last(dn), last(rn))} ({fav(r['p_dem'], last(dn), last(rn))}) vs. poll avg "
                  f"{lean(r['poll_avg'], last(dn), last(rn))} across {int(r['poll_count'])} polls; fundamentals {lean(r['fundamentals_mean'], last(dn), last(rn))}; "
                  f"polls get {round(100 * r['poll_weight'])}% of the weight; 2024 presidential {lean(x.get('pres24', float('nan')))}")
     L.append("")
@@ -282,7 +293,7 @@ def main(days: int = 7) -> Path:
             continue
         r, x = f1.loc[rid], races.get(rid, {})
         dn, rn = x.get("dem_name"), x.get("rep_name")
-        L.append(f"- {rid}: {dn} vs. {rn}: {pct(r['p_dem'])} D ({x.get('rating')}); expected {lean(r['margin_median'], last(dn), last(rn))}; "
+        L.append(f"- {rid}: {dn} vs. {rn}: {fav(r['p_dem'], last(dn), last(rn))} ({x.get('rating')}); expected {lean(r['margin_median'], last(dn), last(rn))}; "
                  f"poll avg {lean(r['poll_avg'], last(dn), last(rn))} ({int(r['poll_count']) if pd.notna(r['poll_count']) else 0} polls); "
                  f"2024 pres {lean(x.get('pres24', float('nan')))}")
     L.append("")
