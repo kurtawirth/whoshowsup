@@ -1,11 +1,12 @@
 {
- "forecast_date": "2026-10-19",
- "finished_at": "2026-10-19 07:18",
+ "forecast_date": "2026-10-20",
+ "finished_at": "2026-10-20 07:20",
  "refresh": true,
  "failed_steps": [],
  "warnings": [
   "Poll check: HOUSE NM-1: recent Wikipedia poll table without Melanie Stansbury vs Didi Okpareke (columns: Melanie Stansbury (D), Didi Okapareke (R)) on 2026_United_States_House_of_Representatives_elections_in_New_Mexico",
   "Poll check: GOV TX: recent Decision Desk poll (ActiVote, Oct 17) matched no race: Vikki Goodwin, Dan Patrick",
+  "Poll check: GOV TX: recent Decision Desk poll (University of Houston Hobby School of Public Affairs / YouGov, Oct 14) matched no race: Vikki Goodwin, Dan Patrick",
   "Poll check: GOV TX: recent Decision Desk poll (Texas Politics Project at the University of Texas at Austin / YouGov, Oct 05) matched no race: Dan Patrick, Vikki Goodwin",
   "Poll check: GOV MN: recent VoteHub poll (GQR, Oct 04) without Amy Klobuchar vs Lisa Demuth: Peggy Flanagan, Michele Tafoya",
   "Poll check: HOUSE NM-3: recent VoteHub poll (Research & Polling Inc., Oct 09) without Teresa Leger Fern\u00e1ndez vs Martin Zamora: Teresa Leger Fernandez, Martin Zamora"
