@@ -105,6 +105,8 @@ class Simulation:
         self.final = mid + shared + rng.normal(0, 1, len(mid)) * sd
         self.close = self.ours["state_po"].map(POLL_CLOSE_ET).fillna(21)
         self.speed = rng.uniform(1.5, 4.0, len(mid))  # hours from poll close to fully counted
+        # each race's vote at full count: the votes we expect there (so votes-left lines look like the real night)
+        self.votes = self.ours["expected_votes"].fillna(200_000) if "expected_votes" in self.ours else pd.Series(200_000, index=self.ours.index)
         self.clock = 18.5  # 6:30 p.m. ET
 
     def step(self, hours: float = 0.25) -> dict:
@@ -116,7 +118,7 @@ class Simulation:
             pct = min(100, 100 * (self.clock - self.close[rid]) / self.speed[i])
             # early counts wander around the final margin and settle as they fill in
             m = self.final[rid] + (1 - pct / 100) * 6 * np.sin(3 * i)
-            total = 1000 * pct
+            total = float(self.votes[rid]) * pct / 100
             d = int(total * (0.5 + m / 200))
             out[rid] = {"pct": round(pct), "d": d, "r": int(total - d), "margin": round(m, 2),
                         "called": ("D" if self.final[rid] > 0 else "R") if pct >= 95 or (pct >= 40 and abs(m) > 12) else None,
