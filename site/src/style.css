@@ -525,3 +525,24 @@ details.schedule > summary { font: 600 16px var(--sans); cursor: pointer; paddin
   .res-cards td .adj { white-space: normal; }
   .res-cards tr { grid-template-columns: minmax(0, 1fr) auto; }
 }
+
+/* ---------- one race's election-night panel (components/night.js) ---------- */
+.rn-head { font: 15px/1.45 var(--sans); margin: 10px 0 8px; max-width: none; }
+.rn-head b { font-weight: 700; font-variant-numeric: tabular-nums; }
+.rn-race { display: grid; gap: 12px; margin: 6px 0 4px; max-width: 720px; }
+.rn-cand { display: grid; gap: 4px; }
+.rn-top { display: grid; grid-template-columns: minmax(0, 1fr) auto 4.2em; gap: 12px; align-items: baseline; font: 16px var(--sans); font-variant-numeric: tabular-nums; }
+.rn-top > span:last-child { text-align: right; }
+.rn-bar { position: relative; height: 14px; border-radius: 4px; background: color-mix(in srgb, var(--hair) 70%, transparent); }
+.rn-bar b { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; }
+.rn-bar b.d { background: var(--dem); } .rn-bar b.r { background: var(--rep); } .rn-bar b.i { background: var(--ind); }
+.rn-bar i { position: absolute; top: -4px; bottom: -4px; width: 2px; margin-left: -1px; background: var(--ink); }
+.rn-go { font: 13px var(--sans); color: var(--ink-2); }
+.rn-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px 22px; margin: 14px 0 6px; }
+.rn-tile .k { font: 600 11.5px var(--sans); text-transform: uppercase; letter-spacing: .06em; color: var(--ink-3); }
+.rn-tile .v { font: 700 21px var(--sans); font-variant-numeric: tabular-nums; margin: 2px 0; }
+.rn-tile .n { font: 13px/1.4 var(--sans); color: var(--ink-2); }
+details.rn-counties { margin: 12px 0 4px; }
+details.rn-counties > summary { font: 600 14px var(--sans); cursor: pointer; padding: 6px 0; color: var(--ink-2); }
+.live-box.race-detail { max-width: 860px; }
+.live-box .rn-head { margin-top: 6px; }

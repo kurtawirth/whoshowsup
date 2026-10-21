@@ -4,7 +4,8 @@ title: Election night
 
 ```js
 import {tokens, pct, date, sides, raceLink, raceHref, raceTable, withSearch, hexMap, stateMap} from "./components/wsu.js";
-import {liveStream, liveOdds, votesLeft, raceMath, countiesOf, fetchRace, nightRead} from "./components/live.js";
+import {liveStream, liveOdds, raceMath, countiesOf, fetchRace, nightRead} from "./components/live.js";
+import {racePanel, finish, sideText, lastName, k} from "./components/night.js";
 const liveModel = FileAttachment("data/live_model.json").json();
 const races = FileAttachment("data/races.json").json();
 const top = FileAttachment("data/topline.json").json();
@@ -44,14 +45,11 @@ const CLOSE = {AL: [20, 20], AK: [24, 25], AZ: [21, 21], AR: [20.5, 20.5], CA: [
   OK: [20, 20], OR: [22, 23], PA: [20, 20], RI: [20, 20], SC: [19, 19], SD: [20, 21], TN: [20, 20], TX: [20, 21], UT: [22, 22],
   VT: [19, 19], VA: [19, 19], WA: [23, 23], WV: [19.5, 19.5], WI: [21, 21], WY: [21, 21]};
 const clock = (h) => { const hh = Math.floor(h) % 24, mm = Math.round((h % 1) * 60); return `${hh % 12 || 12}${mm ? `:${String(mm).padStart(2, "0")}` : ""} ${hh >= 12 ? "p.m." : "a.m."}`; };
-const lastName = (s) => String(s).trim().split(/\s+/).filter((w) => !/^(Jr\.?|Sr\.?|I{2,3})$/.test(w)).pop();
 const officeLabel = {SEN: "Senate", GOV: "Governor", HOUSE: "House"};
 const raceName = (r) => (r.office === "HOUSE" ? `House: ${r.label}` : `${r.state_name} ${officeLabel[r.office]}${r.special ? " (special)" : ""}`);
 const contested = races.filter((r) => r.race_type !== "same_party");
 const tagColor = (tag) => (tag === "D" ? t.dem : tag === "R" ? t.rep : t.ind);
 const chip = (tag) => html`<span class="party-chip ${tag.toLowerCase()}">${tag}</span>`;
-// votes, rounded for reading: "1.8 million", "412,000", "9,800"
-const k = (n) => (n >= 1e6 ? `${(n / 1e6).toFixed(1)} million` : n >= 1e4 ? `${Math.round(n / 1000).toLocaleString()},000` : (Math.round(n / 100) * 100 || Math.round(n)).toLocaleString());
 ```
 
 ```js
@@ -141,7 +139,6 @@ function rangeBar(d) {
     + (d.counted ? `<em style="left:${X(d.x.margin)}%;background:${tagColor(d.tagOf(d.lead))}"></em>` : "");
   return el;
 }
-function sideText(d, m) { const side = m >= 0 ? "D" : "R"; return `${lastName(d.nameOf(side))} +${Math.abs(m).toFixed(1)}`; }
 // "Talarico running 1.2 points ahead of our forecast", from the counted counties where we have them
 function gapText(d) {
   const g = d.m.gap;
@@ -151,12 +148,13 @@ function gapText(d) {
 }
 const status = (d) => (d.called ? html`<span class="res-called">${chip(d.tagOf(d.called))} ${lastName(d.nameOf(d.called))} wins</span>`
   : d.counted ? html`<span>${sideText(d, d.x.margin)}${leftText(d)}</span>` : html`<span class="muted">No votes yet (polls close ${clock((CLOSE[d.state_po] ?? [21])[0])})</span>`);
-// "about 150,000 votes left; Turek needs 54% of them" / "lead bigger than the votes left"
+// "4.6 million of ~8.1 million counted; Talarico needs 51% of the rest", against the turnout we expect
 function leftText(d) {
-  const v = votesLeft(d.x);
-  if (!v) return "";
-  const trail = v.leader === "D" ? "R" : "D";
-  return html`<div class="adj">${v.locked ? `Lead of ${k(v.lead)} is bigger than the ~${k(v.left)} votes left` : `~${k(v.left)} votes left; ${lastName(d.nameOf(trail))} needs ${Math.round(v.need * 100)}% of them`}</div>`;
+  const f = finish(d, d.m);
+  if (!f || d.called) return "";
+  const trail = d.lead === "D" ? "R" : "D", votes = d.x[trail === "D" ? "d" : "r"] ?? 0, more = f.line - votes;
+  const tail = !f.left ? "" : more > f.left ? `; ${lastName(d.nameOf(d.lead))}'s lead is bigger than what's left` : `; ${lastName(d.nameOf(trail))} needs ${Math.round((100 * more) / f.left)}% of the rest`;
+  return html`<div class="adj">${k(d.m.counted)} of ~${k(f.total)} counted${tail}</div>`;
 }
 const oddsCell = (d) => {
   const fav = `${lastName(d.nameOf(d.fav))} ${pct(Math.max(d.p_dem, 1 - d.p_dem))}`;
@@ -214,84 +212,18 @@ function schedule() {
 ```
 
 ```js
-// ---------- the drill-in: one race's full count ----------
+// ---------- the drill-in: one race's full count (components/night.js, the same panel as the race pages) ----------
 function detail(d) {
   const el = html`<div class="race-detail"></div>`;
-  const draw = (counties) => el.replaceChildren(...detailBody(d, raceMath(d, d.x, d.b, counties)));
+  const draw = (counties) => el.replaceChildren(...racePanel(d, counties));
   const cs = countiesOf(d.x);
   draw(cs);
-  // on the real night our published copy has no counties: ask civicAPI for this one race while it's open
+  // without counties in our published copy, ask civicAPI for this one race while it's open
   const cid = liveModel.civic?.[d.race_id];
   if (!cs && d.b && cid && d.counted && live.mode !== "simulation") {
     fetchRace(d, cid).then(({counties}) => { if (counties.size) draw(counties); }).catch(() => {});
   }
   return el;
-}
-function needCell(share) {
-  if (share == null) return "–";
-  if (share <= 0) return "already enough";
-  if (share > 1) return "out of reach";
-  return `${Math.round(share * 100)}%`;
-}
-function detailBody(d, m) {
-  const D = lastName(d.nameOf("D")), R = lastName(d.nameOf("R"));
-  const out = [];
-  // the count
-  const n = m.counted || 1, cand = (side, votes) => html`<div class="rd-cand">
-    <span>${chip(d.tagOf(side))} ${d.nameOf(side)}${d.called === side ? html` <b class="rd-won">won</b>` : ""}</span>
-    <b>${votes.toLocaleString()}</b><span class="muted">${m.counted ? `${((100 * votes) / n).toFixed(1)}%` : ""}</span></div>`;
-  out.push(html`<div class="rd-cands">${cand("D", d.x.d ?? 0)}${cand("R", d.x.r ?? 0)}</div>`);
-  const nowOdds = d.pNow != null && !d.called ? ` · Live odds: ${lastName(d.nameOf(d.pNow >= 0.5 ? "D" : "R"))} ${pct(Math.max(d.pNow, 1 - d.pNow))} (moved only by races that have finished counting)` : "";
-  out.push(html`<p class="rd-meta">${m.counted ? `About ${m.pct}% of the vote counted` : "No votes counted yet"} · This morning we gave ${lastName(d.nameOf(d.fav))} ${pct(Math.max(d.p_dem, 1 - d.p_dem))}${nowOdds} · <a href="${raceHref(d.race_id)}">Full race page</a></p>`);
-  if (!m.counted) return out;
-
-  // what's left, and what each side needs of it
-  const rowsLeft = [];
-  if (m.leftCount) rowsLeft.push([`If turnout ends where the count so far points (about ${k(m.projected)} votes)`, m.leftCount, m.needCount]);
-  if (m.leftOurs) rowsLeft.push([`If turnout ends where we expected (about ${k(m.expected)} votes)`, m.leftOurs, m.needOurs]);
-  out.push(html`<h4>What's left to count</h4>`);
-  if (rowsLeft.length) {
-    out.push(html`<div class="table-wrap"><table class="wsu-table rd-need">
-      <thead><tr><th></th><th class="num">Votes left</th><th class="num">${D} needs</th><th class="num">${R} needs</th></tr></thead>
-      <tbody>${rowsLeft.map(([label, left, nd]) => html`<tr><td>${label}</td><td class="num" data-label="Votes left">~${k(left)}</td><td class="num" data-label="${D} needs">${needCell(nd?.D)}</td><td class="num" data-label="${R} needs">${needCell(nd?.R)}</td></tr>`)}</tbody>
-    </table></div>`);
-    out.push(html`<p class="caption">The share of the remaining two-party vote each side would need to finish ahead. The two rows bracket it: the count's own estimate of what's left, and the turnout our model expected.${m.leftOurs == null && m.expected ? ` The count has already passed the ${k(m.expected)} votes we expected.` : ""}</p>`);
-  } else out.push(html`<p>${m.pct >= 100 ? "Fully counted." : "Too early to say how much is left."}</p>`);
-
-  // against our forecast
-  out.push(html`<h4>Against our forecast</h4>`);
-  if (m.gap != null) {
-    const ahead = m.gap >= 0 ? D : R;
-    out.push(html`<p>In the counties counted so far, our forecast expected ${sideText(d, m.expectedNow)}. The count there is ${sideText(d, (100 * m.lead) / m.counted)}${Math.abs(m.gap) < 0.5 ? ", right on our forecast." : html`, so <b>${ahead} is running ${Math.abs(m.gap).toFixed(1)} points ahead of our forecast</b>.`} Our most likely statewide result was ${sideText(d, d.margin_median)}.</p>`);
-  } else {
-    out.push(html`<p>Our most likely result was ${sideText(d, d.margin_median)}, with an 80% range from ${sideText(d, d.margin_p10)} to ${sideText(d, d.margin_p90)}. The count so far is ${sideText(d, d.x.margin)}. Early counts can swing a lot as different kinds of ballots come in${d.office === "HOUSE" ? "; we don't have county-by-county results for House districts" : ""}.</p>`);
-  }
-
-  // turnout
-  if (m.turnout != null) {
-    out.push(html`<h4>Turnout</h4>`);
-    const dir = (x) => `${Math.round(Math.abs(x) * 100)}% ${x >= 0 ? "above" : "below"}`;
-    const lean = m.turnoutLean ?? {};
-    out.push(html`<p>On pace for about ${k(m.projected)} votes, ${Math.abs(m.turnout) < 0.005 ? "right at" : dir(m.turnout)} the ${k(m.expected)} we expected.${lean.D != null && lean.R != null ? ` In counties that lean Democratic, turnout is running ${dir(lean.D)} what we expected; in Republican-leaning counties, ${dir(lean.R)}.` : ""}</p>`);
-    out.push(html`<p class="caption">Projected from how much of each place has counted, so it firms up as the night goes on.</p>`);
-  }
-
-  // county by county
-  const cr = (m.countyRows ?? []).filter((c) => c.counted);
-  if (cr.length) {
-    const unit = d.state_po === "LA" ? "parish" : "county";
-    out.push(html`<h4>County by county</h4>`);
-    out.push(raceTable([...m.countyRows].sort((x, y) => y.share - x.share), [
-      {key: "label", label: unit === "parish" ? "Parish" : "County", sort: true},
-      {key: "pct", label: "Counted", num: true, sort: true, defaultDir: -1, render: (c) => (c.counted ? `${c.pct}%` : "")},
-      {key: "margin", label: "Count", num: true, sort: true, render: (c) => (c.margin == null ? "" : sideText(d, c.margin))},
-      {key: "bench", label: "Benchmark", num: true, sort: true, render: (c) => sideText(d, c.bench)},
-      {key: "gap", label: "vs. benchmark", num: true, sort: true, render: (c) => (c.gap == null ? "" : `${lastName(d.nameOf(c.gap >= 0 ? "D" : "R"))} ${Math.abs(c.gap).toFixed(1)} ahead`)},
-      {key: "turnout", label: "Turnout vs. expected", num: true, sort: true, render: (c) => (c.turnout == null ? "" : `${c.turnout >= 0 ? "+" : "−"}${Math.round(Math.abs(c.turnout) * 100)}%`)}
-    ], {search: m.countyRows.length > 15, placeholder: `Search ${unit === "parish" ? "parishes" : "counties"}`, noun: unit, pageSize: 10}));
-    out.push(html`<p class="caption">Benchmark: what each ${unit} would show if the race landed exactly on our most likely result. A side running ahead of the benchmark in most places is outrunning our forecast.</p>`);
-  }
-  return out;
 }
 ```
 
@@ -392,6 +324,12 @@ function overview() {
     ${read ? html`<div class="s"><div class="k">Counted counties vs. our forecast</div><div class="v">${Math.abs(read.gap) < 0.25 ? "Even" : `${read.gap > 0 ? "D" : "R"} +${Math.abs(read.gap).toFixed(1)}`}</div><div class="muted">${Math.abs(read.gap) < 0.25 ? "right on our forecast" : `points ${read.gap > 0 ? "more Democratic" : "more Republican"} than we expected`}</div></div>` : ""}
     ${read?.turnout != null ? html`<div class="s"><div class="k">Turnout vs. our expectation</div><div class="v">${read.turnout >= 0 ? "+" : "−"}${Math.round(Math.abs(read.turnout) * 100)}%</div><div class="muted">${read.turnoutD != null && read.turnoutR != null ? `D-leaning counties ${read.turnoutD >= 0 ? "+" : "−"}${Math.round(Math.abs(read.turnoutD) * 100)}%, R-leaning ${read.turnoutR >= 0 ? "+" : "−"}${Math.round(Math.abs(read.turnoutR) * 100)}%` : "in counted counties"}</div></div>` : ""}
   </div>`);
+  // the night's vote so far, against the turnout we expect, in the races that are counting
+  const counting = rows.filter((d) => d.office === "HOUSE" && d.counted);
+  if (counting.length) {
+    const got = d3.sum(counting, (d) => d.m.counted), exp = d3.sum(counting, (d) => Math.max(d.expected_votes ?? 0, d.m.counted));
+    parts.push(html`<p class="rn-head">House votes counted so far: <b>${k(got)}</b> of the ~<b>${k(exp)}</b> we expect in the ${counting.length} districts counting${(() => { const all = d3.sum(rows.filter((d) => d.office === "HOUSE"), (d) => d.expected_votes ?? 0); return all ? ` (~${k(all)} in all ${rows.filter((d) => d.office === "HOUSE").length} contested districts)` : ""; })()}.</p>`);
+  }
   if (odds) parts.push(html`<p class="caption">${odds.used
     ? `Live odds: based on the ${odds.used} race${odds.used === 1 ? "" : "s"} at least 95% counted, results are running about ${Math.abs(odds.shift).toFixed(1)} points more ${odds.shift >= 0 ? "Democratic" : "Republican"} than our forecast nationally (more or less in some regions and states). We move every race still out by that much, count called races for their winners, and play out the rest of the night thousands of times.`
     : "Live odds: until races finish counting, these are our forecast's odds with called races counted for their winners. Partial counts don't move them, since early votes lean toward whichever party's voters cast that kind of ballot."}${read ? ` The counted-counties and turnout figures compare every county that has reported in the ${read.states} states with Senate or governor races counting against our county benchmarks; they move earlier than the live odds, and can mislead early, when one kind of ballot dominates the count.` : ""} Not a call: estimates that will swing as results come in.</p>`);

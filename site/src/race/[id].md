@@ -12,7 +12,10 @@ const markets = FileAttachment("../data/markets.json").json();
 const liveModel = FileAttachment("../data/live_model.json").json();
 const finePrint = FileAttachment("../data/fine_print.json").json();
 const benchFile = FileAttachment("../data/benchmarks.json");
-import {raceLive, votesLeft, countyKey} from "../components/live.js";
+import {raceLive, countyKey, countiesOf} from "../components/live.js";
+import {nightRace, racePanel} from "../components/night.js";
+// our poller's published copy of the night's counts: the fallback when civicAPI can't be reached directly
+const publishedLive = FileAttachment("../data/live.json").json();
 ```
 
 ```js
@@ -37,6 +40,25 @@ display(html`<p class="kicker"><a href="${link(r.office === "HOUSE" ? "house" : 
 ```js
 display(fixed ? html`<h1 class="race-title">${heading}</h1>`
   : html`<h1 class="race-title">${heading}:<span class="matchup">${dName} vs. ${rName}</span></h1>`);
+```
+
+```js
+// Election night, at the top, above the forecast: the same panel as the Election night page (components/night.js): the count against the votes
+// we expect, the line each side has to reach, what's left, the counted counties against our forecast and turnout
+{
+  const pub = publishedLive?.mode && publishedLive.mode !== "waiting" ? publishedLive.races?.[id] : null;
+  const x = night?.x ?? pub ?? null;
+  if (!fixed && x) {
+    const bench = r.office !== "HOUSE" && r.state_po !== "AK" ? (await benchFile.json())[id] ?? null : null;
+    const d = nightRace(r, x, {bench});
+    const counties = night?.counties?.size ? night.counties : countiesOf(pub);
+    const when = night?.at ? new Date(night.at) : publishedLive.asof ? new Date(publishedLive.asof) : null;
+    display(html`<div class="callout live-box race-detail">
+      <b>${d.called ? `${d.nameOf(d.called)} wins` : (x.d ?? 0) + (x.r ?? 0) ? "Election results: counting" : "Election night"}</b>
+      ${racePanel(d, counties, {link: false, countyTable: false})}
+      <p class="muted">${publishedLive.mode === "simulation" ? "Rehearsal: made-up results for testing. " : ""}Results from <a href="https://civicapi.org">civicAPI</a>${when ? `, updated ${when.toLocaleTimeString("en-US", {timeZone: "America/New_York", hour: "numeric", minute: "2-digit"})} ET` : ""}; calls are civicAPI's. <a href="${link("results")}">All results</a></p></div>`);
+  }
+}
 ```
 
 ```js
@@ -101,19 +123,7 @@ function ratingSentence(r) { return `We rate it <b>${r.rating}</b>.`.replace(/<\
 const night = fixed ? null : raceLive(r, liveModel.civic[id], {Generators, force: new URLSearchParams(location.search).has("direct")});
 ```
 
-```js
-if (night?.x) {
-  const x = night.x, tot = x.d + x.r;
-  const v = votesLeft(x);
-  const k = (n) => (n >= 1e6 ? `${(n / 1e6).toFixed(2)} million` : n.toLocaleString());
-  const who = (s) => (s === "D" ? dName : rName);
-  display(html`<div class="callout live-box"><b>${x.called ? `${who(x.called)} wins` : tot ? "Counting" : "Election night"}</b>
-    ${tot ? html` · ${x.pct}% counted<br>${dName} ${k(x.d)} (${((100 * x.d) / tot).toFixed(1)}%) · ${rName} ${k(x.r)} (${((100 * x.r) / tot).toFixed(1)}%)
-      ${v && !x.called ? html`<br>${v.locked ? `${who(v.leader)}'s lead of ${k(v.lead)} is bigger than the roughly ${k(v.left)} votes left.` : `About ${k(v.left)} votes left; ${who(v.leader === "D" ? "R" : "D")} needs ${Math.round(v.need * 100)}% of them to catch up.`}` : ""}`
-      : " · No votes counted yet."}
-    <span class="muted"> Results from <a href="https://civicapi.org">civicAPI</a>, updated ${new Date(night.at).toLocaleTimeString("en-US", {timeZone: "America/New_York", hour: "numeric", minute: "2-digit"})} ET; calls are civicAPI's. "Votes left" is estimated from the share counted so far.</span></div>`);
-}
-```
+
 
 ```js
 // The newsletter, offered once on every race page, right after the forecast (a link to Substack's own sign-up
@@ -218,7 +228,8 @@ const bench = !fixed && r.office !== "HOUSE" && r.state_po !== "AK" ? (await ben
 
 ```js
 if (bench) {
-  const L = night?.counties;
+  const pub = publishedLive?.mode && publishedLive.mode !== "waiting" ? publishedLive.races?.[id] : null;
+  const L = night?.counties?.size ? night.counties : countiesOf(pub);
   const tag = (m) => (m >= 0 ? dTag : rTag);
   const fm = (m) => (Math.abs(m) < 0.05 ? "Even" : `${tag(m)}+${Math.abs(m).toFixed(1)}`);
   const rows = bench.map(([name, fips, b, p24, share]) => {
