@@ -4584,7 +4584,7 @@ HOUSE,VT,0,False,R,Gerald Malloy,False,2026,,
 HOUSE,WA,1,False,D,Suzan DelBene,True,2026,2.0,"Suzan DelBene (Democratic), incumbent U.S. representative"
 HOUSE,WA,1,False,R,Mary Silva,False,2026,0.0,"Mary Silva (Republican), candidate for this district in 2024"
 HOUSE,WA,2,False,D,Rick Larsen,True,2026,2.0,"Rick Larsen (Democratic), incumbent U.S. representative"
-HOUSE,WA,2,False,R,Edwin Feller,False,2026,,
+HOUSE,WA,2,False,R,Edwin Feller,False,2026,0.0,"Edwin H. Feller (Republican), retired businessman"
 HOUSE,WA,3,False,D,Marie Gluesenkamp Perez,True,2026,2.0,"Marie Gluesenkamp Perez (Democratic), incumbent U.S. representative"
 HOUSE,WA,3,False,R,John Braun,False,2026,,
 HOUSE,WA,4,False,D,John Duresky,False,2026,0.0,"John Duresky (Democratic), combat veteran, retired Air Force major and project manager"
@@ -4598,9 +4598,9 @@ HOUSE,WA,7,False,R,Nirav Sheth,False,2026,0.0,"Nirav Sheth (Republican), restaur
 HOUSE,WA,8,False,D,Kim Schrier,True,2026,2.0,"Kim Schrier (Democratic), incumbent U.S. representative"
 HOUSE,WA,8,False,R,Spencer Meline,False,2026,0.0,"Spencer Meline (Republican), small business owner"
 HOUSE,WA,9,False,D,Adam Smith,True,2026,2.0,"Adam Smith (Democratic), incumbent U.S. representative"
-HOUSE,WA,9,False,R,Doug Basler,False,2026,0.0,"Doug Basler (Republican), perennial candidate"
+HOUSE,WA,9,False,R,Doug Basler,False,2026,0.0,"Doug Basler (Republican), businessman and perennial candidate"
 HOUSE,WA,10,False,D,Marilyn Strickland,True,2026,2.0,"Marilyn Strickland (Democratic), incumbent U.S. representative"
-HOUSE,WA,10,False,R,Chris Chung,False,2026,0.0,"Chris D. Chung (Republican), Democratic candidate for insurance commissioner in 2024"
+HOUSE,WA,10,False,R,Chris Chung,False,2026,0.0,"Chris D. Chung (Republican), pharmacist and Democratic candidate for insurance commissioner in 2024"
 HOUSE,WI,1,False,D,Mitchell Berman,False,2026,0.0,"Mitchell Berman, nurse"
 HOUSE,WI,1,False,R,Bryan Steil,True,2026,2.0,"Bryan Steil , incumbent U.S. representative"
 HOUSE,WI,2,False,D,Mark Pocan,True,2026,2.0,"Mark Pocan , incumbent U.S. representative"
