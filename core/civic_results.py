@@ -22,6 +22,7 @@ import json
 import re
 import sys
 import time
+import unicodedata
 
 import pandas as pd
 import requests
@@ -117,15 +118,29 @@ def _side_votes(race: dict, cands: list[dict]) -> tuple[int, int, str | None]:
     return d, r, called
 
 
+_WORDS = re.compile(r"\b(county|parish|borough|census area|municipality)\b")
+
+
+def county_key(s: str) -> str:
+    """The results page's county key (site/src/components/live.js countyKey): no accents, punctuation, spaces or
+    "County"; civicAPI still calls South Dakota's Oglala Lakota County by its old name, Shannon."""
+    k = "".join(ch for ch in unicodedata.normalize("NFD", str(s)) if not unicodedata.combining(ch)).lower()
+    k = re.sub(r"[^a-z0-9]", "", _WORDS.sub("", k))
+    return {"shannon": "oglalalakota"}.get(k, k)
+
+
 def fetch(race_ids: list[str] | None = None, pause: float = 0.25) -> dict:
+    """Each race's count; Senate and governor races also carry each county's count ({key: [d, r, pct]}), which the
+    results page compares with our county benchmarks and expected turnout."""
     m = pd.read_csv(MAP)
     ours = our_races().set_index("race_id")
     if race_ids is not None:
         m = m[m["race_id"].isin(race_ids)]
     out = {}
     for row in m.itertuples():
+        statewide = ours.loc[row.race_id, "office"] != "HOUSE"
         try:
-            x = get(f"race/{row.civic_id}?light")
+            x = get(f"race/{row.civic_id}" if statewide else f"race/{row.civic_id}?light")
         except Exception as e:  # keep going: one race failing shouldn't stop the rest
             print(f"  {row.race_id}: {e!r}")
             continue
@@ -134,6 +149,15 @@ def fetch(race_ids: list[str] | None = None, pause: float = 0.25) -> dict:
         out[row.race_id] = {"pct": x.get("percent_reporting"), "d": d, "r": r,
                             "margin": round(100 * (d - r) / (d + r), 2) if d + r else None,
                             "called": called, "updated": x.get("last_updated")}
+        if statewide and x.get("region_results"):
+            race = ours.loc[row.race_id].to_dict()
+            counties = {}
+            for k, v in x["region_results"].items():
+                cd, cr_, _ = _side_votes(race, v.get("candidates") or [])
+                if cd or cr_:
+                    counties[county_key(v.get("name") or k)] = [cd, cr_, round(float(v.get("percent_reporting") or 0))]
+            if counties:
+                out[row.race_id]["counties"] = counties
         time.sleep(pause)
     return out
 

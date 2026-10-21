@@ -62,7 +62,8 @@ export function liveStream(liveFile, races, civic, {Generators, force = false}) 
           // never step backward: a count lower than one already shown keeps the higher one
           const tot = (o) => (o ? (o.d ?? 0) + (o.r ?? 0) : -1);
           const best = [v, old, prev].reduce((a, b) => (tot(b) > tot(a) ? b : a));
-          races_[rid] = {...best, called: v.called ?? old?.called ?? null};
+          // civicAPI's search has no county breakdown: keep the counties from our published copy
+          races_[rid] = {...best, counties: best.counties ?? old?.counties, called: v.called ?? old?.called ?? null};
         }
       }
       last = races_;
@@ -253,4 +254,107 @@ export function raceLive(race, civicId, {Generators, force = false}) {
     document.addEventListener("visibilitychange", vis);
     return () => { stopped = true; clearTimeout(timer); document.removeEventListener("visibilitychange", vis); };
   });
+}
+
+// ---------------------------------------------------------------------------------------------------------
+// The results page's drill-in: what's left to count, what each side needs, turnout against what we expected, and
+// how the counted areas compare with our forecast. Display only; nothing here feeds the forecast.
+
+/** One race's civicAPI record, with each county's count: {x, counties: Map(countyKey -> {d, r, pct})}. */
+export async function fetchRace(race, civicId) {
+  const res = await fetch(`https://civicapi.org/api/v2/race/${civicId}`);
+  if (!res.ok) throw new Error(res.status);
+  const j = await res.json(), x = j.data ?? j;
+  const top = race.race_type === "rcv_bloc" ? null : civicSides(race, x.candidates);
+  const counties = new Map();
+  for (const [k, v] of Object.entries(x.region_results ?? {})) {
+    const s = civicSides(race, v.candidates);
+    counties.set(countyKey(v.name ?? k), {pct: v.percent_reporting ?? 0, d: s.d, r: s.r});
+  }
+  return {x: top && {pct: x.percent_reporting ?? 0, d: top.d, r: top.r, called: top.called,
+    margin: top.d + top.r ? (100 * (top.d - top.r)) / (top.d + top.r) : null}, counties};
+}
+
+/** Counties from our published copy (the rehearsal writes them as {key: [d, r, pct]}), as fetchRace's Map. */
+export function countiesOf(x) {
+  if (!x?.counties) return null;
+  return new Map(Object.entries(x.counties).map(([k, [d, r, pct]]) => [k, {d, r, pct}]));
+}
+
+/** What share of the votes left each side needs to finish ahead: {D, R} (0-1; <= 0 means already safe, > 1 means
+ *  out of reach), for `left` votes still to count with the D side ahead by `lead` (negative: behind). */
+export function needs(left, lead) {
+  if (!(left > 0)) return null;
+  return {D: (left - lead) / (2 * left), R: (left + lead) / (2 * left)};
+}
+
+/** Everything the drill-in shows for one race. r: races.json row; x: its live count {pct, d, r, margin};
+ *  bench: its county benchmarks [[name, fips, benchmark margin, 2024 margin, share of the state's vote]];
+ *  counties: Map(countyKey -> {d, r, pct}) or null. */
+export function raceMath(r, x, bench, counties) {
+  const counted = (x?.d ?? 0) + (x?.r ?? 0), pct = x?.pct ?? 0;
+  const expected = r.expected_votes ?? null;              // two-party votes we expect (2024 vote x midterm drop-off)
+  const lead = (x?.d ?? 0) - (x?.r ?? 0);
+  const out = {counted, pct, expected, lead, margin: x?.margin ?? null};
+  if (counted && pct >= 5 && pct < 100) {
+    out.projected = counted / (pct / 100);                 // where turnout ends if the count's own estimate holds
+    out.leftCount = out.projected - counted;
+    out.needCount = needs(out.leftCount, lead);
+  } else if (counted && pct >= 100) out.projected = counted;
+  if (expected && counted && counted < expected && pct < 100) {
+    out.leftOurs = expected - counted;                     // if turnout ends where we expected
+    out.needOurs = needs(out.leftOurs, lead);
+  }
+  if (expected && out.projected && pct >= 10) out.turnout = out.projected / expected - 1;
+  // counted areas against our forecast: the margin our county benchmarks expect from the counties counted so far
+  if (bench && counties && counties.size) {
+    let w = 0, wb = 0, projT = 0, expT = 0;
+    const lean = {D: [0, 0], R: [0, 0]};
+    out.countyRows = bench.map(([name, fips, b, p24, share]) => {
+      const c = counties.get(countyKey(name));
+      const n = c ? c.d + c.r : 0;
+      const row = {key: String(fips), label: name.replace(/ (County|Parish|Borough|Census Area|Municipality)$/, ""), name, share, bench: b,
+        pct: c?.pct ?? 0, d: c?.d ?? 0, r: c?.r ?? 0, counted: n};
+      if (n) {
+        row.margin = (100 * (c.d - c.r)) / n;
+        row.gap = row.margin - b;
+        w += n; wb += n * b;
+        if (expected && c.pct >= 10) {
+          const proj = n / (Math.min(c.pct, 100) / 100), exp = share * expected;
+          row.turnout = proj / exp - 1;
+          projT += proj; expT += exp;
+          const side = b >= 0 ? "D" : "R";
+          lean[side][0] += proj; lean[side][1] += exp;
+        }
+      }
+      return row;
+    });
+    if (w) { out.expectedNow = wb / w; out.gap = (100 * lead) / counted - out.expectedNow; out.benchCounted = w; }
+    if (expT) out.turnoutCounted = projT / expT - 1;
+    out.turnoutLean = Object.fromEntries(Object.entries(lean).filter(([, [p, e]]) => e > 0).map(([k, [p, e]]) => [k, p / e - 1]));
+  }
+  return out;
+}
+
+/** The night so far across every Senate and governor race with county counts: how the counted counties compare
+ *  with our benchmarks, and turnout against what we expected, overall and in Democratic- and Republican-leaning
+ *  counties. One race per state for turnout (a state's Senate and governor races share their voters). */
+export function nightRead(list) {
+  let w = 0, wg = 0;
+  const T = {all: [0, 0], D: [0, 0], R: [0, 0]};
+  const seen = new Set();
+  for (const {r, m} of list) {
+    if (!m?.countyRows || !m.benchCounted) continue;
+    w += m.benchCounted; wg += m.benchCounted * m.gap;
+    if (seen.has(r.state_po)) continue;
+    seen.add(r.state_po);
+    for (const c of m.countyRows) {
+      if (c.turnout == null) continue;
+      const proj = (c.turnout + 1) * c.share * r.expected_votes, exp = c.share * r.expected_votes;
+      for (const k of ["all", c.bench >= 0 ? "D" : "R"]) { T[k][0] += proj; T[k][1] += exp; }
+    }
+  }
+  if (!w) return null;
+  const rate = ([p, e]) => (e ? p / e - 1 : null);
+  return {gap: wg / w, votes: w, turnout: rate(T.all), turnoutD: rate(T.D), turnoutR: rate(T.R), states: seen.size};
 }
