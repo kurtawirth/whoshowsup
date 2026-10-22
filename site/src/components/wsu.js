@@ -482,6 +482,7 @@ export function raceTable(rows, columns, {search = true, filters = [], pageSize 
     }
     thead.append(th);
   }
+  if (detail) { const th = document.createElement("th"); th.className = "c-more"; th.setAttribute("aria-label", "Details"); thead.append(th); }
   const tbody = table.createTBody();
   wrap.append(table);
   const more = document.createElement("button");
@@ -517,6 +518,10 @@ export function raceTable(rows, columns, {search = true, filters = [], pageSize 
       }
       if (!detail) return [tr];
       const id = idOf(r), isOpen = open.has(id);
+      const more = document.createElement("td");
+      more.className = "c-more";
+      more.innerHTML = `<span class="more-btn">${isOpen ? "Close" : "Details"}<i aria-hidden="true">${isOpen ? "▴" : "▾"}</i></span>`;
+      tr.append(more);
       tr.className = "expandable" + (isOpen ? " open" : "");
       tr.tabIndex = 0;
       tr.setAttribute("aria-expanded", String(isOpen));
@@ -532,7 +537,7 @@ export function raceTable(rows, columns, {search = true, filters = [], pageSize 
       const dr = document.createElement("tr");
       dr.className = "detail-row";
       const td = document.createElement("td");
-      td.colSpan = columns.length;
+      td.colSpan = columns.length + 1;
       td.append(detail(r));
       dr.append(td);
       return [tr, dr];

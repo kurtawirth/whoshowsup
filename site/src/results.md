@@ -57,10 +57,8 @@ const L = live.races ?? {};
 const started = live.mode !== "waiting" && Object.keys(L).length > 0;
 const asof = live.asof ? new Date(live.asof) : null;
 const etTime = (d) => d.toLocaleTimeString("en-US", {timeZone: "America/New_York", hour: "numeric", minute: "2-digit"}) + " ET";
-// Live odds: what the races that have finished counting say about the ones still out (components/live.js)
-const odds = started ? liveOdds(races, liveModel, live.races) : null;
 // one row per race: our forecast, the latest count, and what's left (components/live.js raceMath)
-const rows = withSearch(contested).map((r) => {
+const base = withSearch(contested).map((r) => {
   const s = sides(r), x = L[r.race_id] ?? {};
   const counted = (x.d ?? 0) + (x.r ?? 0) > 0;
   const lead = counted ? (x.margin >= 0 ? "D" : "R") : null;
@@ -68,11 +66,14 @@ const rows = withSearch(contested).map((r) => {
   const nameOf = (side) => (side === "D" ? s.d : s.r);
   const b = r.office !== "HOUSE" ? bench[r.race_id] ?? null : null;
   const m = raceMath(r, x, b, countiesOf(x));
-  const pNow = odds?.p?.[r.race_id] ?? null;
-  return {...r, s, x, m, b, counted, lead, called: x.called ?? null, tagOf, nameOf, pNow,
+  return {...r, s, x, m, b, counted, lead, called: x.called ?? null, tagOf, nameOf,
     fav: r.p_dem >= 0.5 ? "D" : "R", closes: (CLOSE[r.state_po] ?? [21, 21])[1],
     flipped: Boolean(x.called && r.incumbent_party && tagOf(x.called) !== r.incumbent_party)};
 });
+// Live odds (components/live.js): the races that have finished counting move every race still out, and each
+// race's own partial count moves its own odds; mFinal is where we now expect each margin to finish
+const odds = started ? liveOdds(races, liveModel, live.races, {partial: Object.fromEntries(base.map((d) => [d.race_id, d.m]))}) : null;
+const rows = base.map((d) => ({...d, pNow: odds?.p?.[d.race_id] ?? null, mNow: odds?.mFinal?.[d.race_id] ?? null}));
 const rowOf = new Map(rows.map((d) => [d.race_id, d]));
 const calledRows = rows.filter((d) => d.called);
 const right = calledRows.filter((d) => d.called === d.fav);
@@ -148,13 +149,11 @@ function gapText(d) {
 }
 const status = (d) => (d.called ? html`<span class="res-called">${chip(d.tagOf(d.called))} ${lastName(d.nameOf(d.called))} wins</span>`
   : d.counted ? html`<span>${sideText(d, d.x.margin)}${leftText(d)}</span>` : html`<span class="muted">No votes yet (polls close ${clock((CLOSE[d.state_po] ?? [21])[0])})</span>`);
-// "4.6 million of ~8.1 million counted; Talarico needs 51% of the rest", against the turnout we expect
+// "272,000 of ~4.7 million votes counted": the count against the turnout we expect
 function leftText(d) {
   const f = finish(d, d.m);
-  if (!f || d.called) return "";
-  const trail = d.lead === "D" ? "R" : "D", votes = d.x[trail === "D" ? "d" : "r"] ?? 0, more = f.line - votes;
-  const tail = !f.left ? "" : more > f.left ? `; ${lastName(d.nameOf(d.lead))}'s lead is bigger than what's left` : `; ${lastName(d.nameOf(trail))} needs ${Math.round((100 * more) / f.left)}% of the rest`;
-  return html`<div class="adj">${k(d.m.counted)} of ~${k(f.total)} counted${tail}</div>`;
+  if (!f || !d.counted) return "";
+  return html`<div class="adj">${k(d.m.counted)} of ~${k(f.total)} votes counted</div>`;
 }
 const oddsCell = (d) => {
   const fav = `${lastName(d.nameOf(d.fav))} ${pct(Math.max(d.p_dem, 1 - d.p_dem))}`;
@@ -332,7 +331,7 @@ function overview() {
   }
   if (odds) parts.push(html`<p class="caption">${odds.used
     ? `Live odds: based on the ${odds.used} race${odds.used === 1 ? "" : "s"} at least 95% counted, results are running about ${Math.abs(odds.shift).toFixed(1)} points more ${odds.shift >= 0 ? "Democratic" : "Republican"} than our forecast nationally (more or less in some regions and states). We move every race still out by that much, count called races for their winners, and play out the rest of the night thousands of times.`
-    : "Live odds: until races finish counting, these are our forecast's odds with called races counted for their winners. Partial counts don't move them, since early votes lean toward whichever party's voters cast that kind of ballot."}${read ? ` The counted-counties and turnout figures compare every county that has reported in the ${read.states} states with Senate or governor races counting against our county benchmarks; they move earlier than the live odds, and can mislead early, when one kind of ballot dominates the count.` : ""} Not a call: estimates that will swing as results come in.</p>`);
+    : "Live odds: until races finish counting, the night's overall shift comes from our forecast."} Each race's own count also moves its odds, more as more of it comes in: where we have county results, we compare the counted counties with our forecast and fill in the counties still out from their benchmarks.${read ? ` The counted-counties and turnout figures compare every county that has reported in the ${read.states} states with Senate or governor races counting against our county benchmarks; they move earlier than the live odds, and can mislead early, when one kind of ballot dominates the count.` : ""} Not a call: estimates that will swing as results come in.</p>`);
   parts.push(html`<div class="tallies">${TALLY.SEN()}${TALLY.HOUSE()}${TALLY.GOV()}</div>`);
   if (calledRows.length) parts.push(html`<div class="stat-row">
     <div class="s"><div class="k">Our favorite won</div><div class="v">${right.length} of ${calledRows.length} called races</div></div>

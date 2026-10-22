@@ -12,7 +12,7 @@ const markets = FileAttachment("../data/markets.json").json();
 const liveModel = FileAttachment("../data/live_model.json").json();
 const finePrint = FileAttachment("../data/fine_print.json").json();
 const benchFile = FileAttachment("../data/benchmarks.json");
-import {raceLive, countyKey, countiesOf} from "../components/live.js";
+import {raceLive, countyKey, countiesOf, liveOdds, raceMath} from "../components/live.js";
 import {nightRace, racePanel} from "../components/night.js";
 // our poller's published copy of the night's counts: the fallback when civicAPI can't be reached directly
 const publishedLive = FileAttachment("../data/live.json").json();
@@ -50,8 +50,11 @@ display(fixed ? html`<h1 class="race-title">${heading}</h1>`
   const x = night?.x ?? pub ?? null;
   if (!fixed && x) {
     const bench = r.office !== "HOUSE" && r.state_po !== "AK" ? (await benchFile.json())[id] ?? null : null;
-    const d = nightRace(r, x, {bench});
     const counties = night?.counties?.size ? night.counties : countiesOf(pub);
+    // live odds, the same as the Election night page's: every race's published count, this race's latest
+    const L = {...(publishedLive?.mode !== "waiting" ? publishedLive?.races ?? {} : {}), [id]: x};
+    const odds = liveOdds(races, liveModel, L, {partial: {[id]: raceMath(r, x, bench, counties)}, n: 2000});
+    const d = nightRace(r, x, {bench, pNow: odds.p[id], mNow: odds.mFinal[id]});
     const when = night?.at ? new Date(night.at) : publishedLive.asof ? new Date(publishedLive.asof) : null;
     display(html`<div class="callout live-box race-detail">
       <b>${d.called ? `${d.nameOf(d.called)} wins` : (x.d ?? 0) + (x.r ?? 0) ? "Election results: counting" : "Election night"}</b>
