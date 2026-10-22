@@ -345,7 +345,7 @@ details summary { cursor: pointer; font: 600 14px var(--sans); color: var(--ink-
   .res-cards td.c-label { grid-column: 1 / -1; font-size: 15px; }
   .res-cards td.c-pct { text-align: right; color: var(--ink-3); font-size: 13px; }
   .res-cards td.c-pct:not(:empty)::after { content: " counted"; }
-  .res-cards td.c-p_dem::before { content: "Our forecast: "; color: var(--ink-3); }
+  .res-cards td.c-p_dem::before { content: "Chance to win "; display: block; font-size: 11px; color: var(--ink-3); text-transform: uppercase; letter-spacing: .04em; }
   .res-cards td.c-range .rng { width: 100%; max-width: 220px; }
   .res-cards td.c-p_dem { text-align: right; font-size: 13px; color: var(--ink-2); }
   .res-cards .table-wrap { overflow-x: visible; }
@@ -540,8 +540,20 @@ details.schedule > summary { font: 600 16px var(--sans); cursor: pointer; paddin
 .rn-bar { position: relative; height: 16px; border-radius: 4px; background: color-mix(in srgb, var(--hair) 70%, transparent); margin: 2px 0; }
 .rn-bar b { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; }
 .rn-bar b.d { background: var(--dem); } .rn-bar b.r { background: var(--rep); } .rn-bar b.i { background: var(--ind); }
-.rn-bar i.exp { position: absolute; top: -3px; bottom: -3px; width: 4px; margin-left: -2px; border-radius: 2px; background: var(--ink); }
-.rn-bar u { position: absolute; top: -6px; bottom: -6px; width: 0; margin-left: -1px; border-left: 2px dashed var(--ink-3); }
+/* the marks get wide invisible hit areas so they're easy to hover or tap; the visible line is drawn inside */
+.rn-bar i.exp, .rn-bar u { position: absolute; top: -7px; bottom: -7px; width: 18px; margin-left: -9px; cursor: help; z-index: 1; }
+.rn-bar i.exp::after { content: ""; position: absolute; left: 7px; top: 4px; bottom: 4px; width: 4px; border-radius: 2px; background: var(--ink); }
+.rn-bar u::after { content: ""; position: absolute; left: 8px; top: 0; bottom: 0; border-left: 2px dashed var(--ink-3); }
+.rn-bar i.exp:focus-visible, .rn-bar u:focus-visible { outline: 2px solid var(--accent); border-radius: 3px; }
+.rn-bar b { cursor: help; }
+.rn-odds { margin: 8px 0 10px; }
+.rn-odds .k { font: 600 11.5px var(--sans); text-transform: uppercase; letter-spacing: .06em; color: var(--ink-3); }
+.rn-odds .v { font: 700 26px/1.2 var(--sans); font-variant-numeric: tabular-nums; display: flex; align-items: center; gap: 8px; }
+.rn-odds .v .party-chip { font-size: 13px; }
+.rn-odds .n { font: 13px var(--sans); color: var(--ink-2); }
+.rn-link { margin: 14px 0 4px; }
+.rn-link a.more-btn { text-decoration: none; font-size: 14px; padding: 6px 14px; }
+.odds-now { font: 700 15.5px var(--sans); white-space: nowrap; font-variant-numeric: tabular-nums; }
 .rn-go { font: 13px var(--sans); color: var(--ink-2); }
 .rn-key { display: flex; flex-wrap: wrap; gap: 4px 18px; font: 12.5px var(--sans); color: var(--ink-3); margin: 6px 0 2px; }
 .rn-key span { display: inline-flex; align-items: center; gap: 6px; }

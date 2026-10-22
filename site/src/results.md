@@ -155,18 +155,19 @@ function leftText(d) {
   if (!f || !d.counted) return "";
   return html`<div class="adj">${k(d.m.counted)} of ~${k(f.total)} votes counted</div>`;
 }
+// the number people come for: our chance now, big; this morning's, small
 const oddsCell = (d) => {
-  const fav = `${lastName(d.nameOf(d.fav))} ${pct(Math.max(d.p_dem, 1 - d.p_dem))}`;
-  if (d.called || d.pNow == null) return fav;
-  const lead = d.pNow >= 0.5 ? "D" : "R";
-  return html`<span>${fav}<div class="adj">now ${lastName(d.nameOf(lead))} ${pct(Math.max(d.pNow, 1 - d.pNow))}</div></span>`;
+  const morning = `${lastName(d.nameOf(d.fav))} ${pct(Math.max(d.p_dem, 1 - d.p_dem))}`;
+  if (d.called) return html`<span><span class="odds-now">${chip(d.tagOf(d.called))} ${lastName(d.nameOf(d.called))} won</span><div class="adj">this morning: ${morning}</div></span>`;
+  const p = d.pNow ?? d.p_dem, side = p >= 0.5 ? "D" : "R";
+  return html`<span><span class="odds-now">${chip(d.tagOf(side))} ${lastName(d.nameOf(side))} ${pct(Math.max(p, 1 - p))}</span>${d.pNow != null ? html`<div class="adj">this morning: ${morning}</div>` : ""}</span>`;
 };
 const COLUMNS = [
   {key: "label", label: "Race", sort: true, sortValue: (d) => `${d.state_name} ${String(d.district ?? 0).padStart(2, "0")}`, render: (d) => html`<span class="rd-name">${raceName(d)}</span>`},
   {key: "status", label: "Result so far", render: status},
   {key: "pct", label: "Counted", num: true, sort: true, defaultDir: -1, sortValue: (d) => d.x.pct ?? -1, render: (d) => (d.counted ? `${d.x.pct ?? 0}%` : "")},
   {key: "range", label: "vs. our forecast", render: (d) => html`<span>${rangeBar(d)}${gapText(d) ? html`<div class="adj">${gapText(d)}</div>` : ""}</span>`},
-  {key: "p_dem", label: "Our forecast", sort: true, sortValue: (d) => Math.max(d.p_dem, 1 - d.p_dem), render: oddsCell}
+  {key: "p_dem", label: "Chance to win", sort: true, sortValue: (d) => { const p = d.pNow ?? d.p_dem; return Math.max(p, 1 - p); }, render: oddsCell}
 ];
 const STATUS_FILTER = {key: "status", label: "Every race", options: [["open", "Not called yet"], ["called", "Called"], ["flip", "Seats that flipped"], ["against", "Leader isn't our favorite"]],
   test: (d, v) => (v === "open" ? !d.called : v === "called" ? Boolean(d.called) : v === "flip" ? d.flipped
@@ -247,7 +248,9 @@ function tipRows(r) {
   const d = rowOf.get(r.race_id);
   if (!d) return [["t-title", raceName(r)], ["t-sub", r.race_type === "same_party" ? `Only ${r.race_note === "D" ? "Democrats" : "Republicans"} on the ballot` : "No race"]];
   const rows_ = [["t-title", raceName(d)]];
-  rows_.push(["t-val", d.called ? `${lastName(d.nameOf(d.called))} wins` : d.counted ? sideText(d, d.x.margin) : "No votes yet"]);
+  const p = d.pNow ?? d.p_dem;
+  rows_.push(["t-val", d.called ? `${lastName(d.nameOf(d.called))} won` : `${lastName(d.nameOf(p >= 0.5 ? "D" : "R"))} ${pct(Math.max(p, 1 - p))} to win${d.pNow != null ? " now" : ""}`]);
+  rows_.push(["t-sub", d.counted ? `Count: ${sideText(d, d.x.margin)}` : "No votes yet"]);
   if (d.counted) rows_.push(["t-sub", `${d.x.pct ?? 0}% counted`]);
   if (gapText(d)) rows_.push(["t-sub", gapText(d)]);
   rows_.push(["t-sub", "Click for the full count"]);

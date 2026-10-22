@@ -197,14 +197,16 @@ export function liveOdds(races, m, L, {n = 4000, partial = null} = {}) {
     const known = x?.called ? (x.called === "D" ? 1 : -1) : null;
     const counted = x && x.margin != null && (x.pct ?? 0) >= 95 ? x.margin : null;
     const p = {r, c, ind, known, counted, mean: r.margin_median, own: own(r), sd: Math.sqrt(own(r)), cur: x?.margin ?? null};
-    // part-way counted: what the count says about this race's own miss (g), and how much to trust it (sg)
+    // part-way counted: what the count says about this race's own miss (g), and how much to trust it (sg, points
+    // of noise). The weights come from replaying 2018-2024 Senate and governor counts county by county against our
+    // backtest forecasts (research/live_odds/calibrate.py), chosen to hold up across early-ballot skews of 3-9 points.
     const q = partial?.[r.race_id];
     if (known == null && counted == null && q && q.counted && q.pct >= 1) {
       const f = Math.min(q.pct, 95) / 100;
       if (q.gap != null && q.uncounted > 0) {
-        Object.assign(p, {g: q.gap, sg: 1.5 + 6 * (1 - f), C: q.counted, U: q.uncounted, mc: (100 * q.lead) / q.counted, rem: q.benchRem});
+        Object.assign(p, {g: q.gap, sg: 6 + 2 * (1 - f), C: q.counted, U: q.uncounted, mc: (100 * q.lead) / q.counted, rem: q.benchRem});
       } else {
-        Object.assign(p, {g: x.margin - r.margin_median, sg: 2 + 10 * (1 - f)});
+        Object.assign(p, {g: x.margin - r.margin_median, sg: 0.5 + 6 * (1 - f)});
       }
     }
     return p;
@@ -225,7 +227,7 @@ export function liveOdds(races, m, L, {n = 4000, partial = null} = {}) {
           const v = 1 / (1 / p.own + 1 / p.sg ** 2);
           miss = v * (shared / p.own + p.g / p.sg ** 2) + Math.sqrt(v) * gauss();
         }
-        final = p.U ? (p.C * p.mc + p.U * (p.rem + miss)) / (p.C + p.U) + gauss() * 0.5 : p.mean + miss;
+        final = (p.U ? (p.C * p.mc + p.U * (p.rem + miss)) / (p.C + p.U) : p.mean + miss) + gauss() * 0.5;
       }
       const won = p.known != null ? p.known > 0 : final > 0;
       mSum[i] += final;

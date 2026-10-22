@@ -2,7 +2,7 @@
 // the votes counted against the total we expect, the line each candidate has to reach to win, what's left, how the
 // counted counties compare with our forecast, turnout, and the county-by-county count. Display only.
 import {html} from "npm:htl";
-import {pct, sides, raceHref, raceTable} from "./wsu.js";
+import {pct, sides, raceHref, raceTable, tip} from "./wsu.js";
 import {raceMath} from "./live.js";
 
 export const lastName = (s) => String(s).trim().split(/\s+/).filter((w) => !/^(Jr\.?|Sr\.?|I{2,3})$/.test(w)).pop();
@@ -36,11 +36,11 @@ export function racePanel(d, counties, {link = true, countyTable = true} = {}) {
   const m = raceMath(d, d.x, d.b, counties);
   const D = lastName(d.nameOf("D")), R = lastName(d.nameOf("R"));
   const out = [];
-  const odds = d.pNow != null && !d.called ? ` · Live odds: ${lastName(d.nameOf(d.pNow >= 0.5 ? "D" : "R"))} ${pct(Math.max(d.pNow, 1 - d.pNow))}` : "";
-  out.push(html`<p class="rd-meta">This morning we gave ${lastName(d.nameOf(d.fav))} ${pct(Math.max(d.p_dem, 1 - d.p_dem))}${odds}${link ? html` · <a href="${raceHref(d.race_id)}">Full race page</a>` : ""}</p>`);
+  out.push(chanceNow(d));
   const f = finish(d, m);
   if (!m.counted) {
     out.push(html`<p>No votes counted yet.${f ? ` We expect about ${k(f.total)} votes for the two main sides, so about ${k(f.line)} to win.` : ""}</p>`);
+    if (link) out.push(raceButton(d));
     return out;
   }
 
@@ -57,6 +57,11 @@ export function racePanel(d, counties, {link = true, countyTable = true} = {}) {
       const el = html`<div class="rn-bar" role="img" aria-label="${d.nameOf(side)}: ${votes.toLocaleString()} votes counted; expected to finish near ${k(exp)}; ${k(f.line)} needed to win"></div>`;
       el.innerHTML = `<b class="${d.tagOf(side).toLowerCase()}" style="width:${X(votes)}"></b>`
         + (d.called ? "" : `<i class="exp" style="left:${X(exp)}"></i>`) + `<u style="left:${X(f.line)}"></u>`;
+      // what each mark means, on hover (or a tap on phones)
+      explain(el.querySelector("b"), [["t-title", `${lastName(d.nameOf(side))}: counted so far`], ["t-val", `${votes.toLocaleString()} votes`], ["t-sub", `${((100 * votes) / m.counted).toFixed(1)}% of the votes counted for the two main sides`]]);
+      if (!d.called) explain(el.querySelector("i.exp"), [["t-title", "Where we now expect them to finish"], ["t-val", `about ${k(exp)} votes`],
+        ["t-sub", "Our live estimate: the votes counted so far, plus what we expect from the places still counting, based on how the counted areas compare with our forecast"]]);
+      explain(el.querySelector("u"), [["t-title", "Votes needed to win"], ["t-val", `about ${k(f.line)}`], ["t-sub", `Half of the ${k(f.total)} votes we now expect for the two main sides`]]);
       const note = d.called ? (d.called === side ? "Won" : "")
         : `Now expected to finish near ${k(exp)}${more > 0 ? ` · needs ${k(more)} more to win${f.left ? ` (${Math.min(100, Math.round((100 * more) / f.left))}% of what's left)` : ""}` : " · already past the line"}`;
       return html`<div class="rn-cand">
@@ -83,6 +88,7 @@ export function racePanel(d, counties, {link = true, countyTable = true} = {}) {
 
   // county by county, folded away until asked for
   const cr = (m.countyRows ?? []).filter((c) => c.counted);
+  if (link) out.push(raceButton(d));
   if (cr.length && countyTable) {
     const unit = d.state_po === "LA" ? "parish" : "county", units = unit === "parish" ? "parishes" : "counties";
     const box = html`<details class="rn-counties"><summary>County by county (${cr.length} of ${m.countyRows.length} ${units} reporting)</summary></details>`;
@@ -101,6 +107,29 @@ export function racePanel(d, counties, {link = true, countyTable = true} = {}) {
     out.push(box);
   }
   return out;
+}
+/** The number people come for: our chance now, big, with this morning's beside it. */
+export function chanceNow(d) {
+  const morning = `${lastName(d.nameOf(d.fav))} ${pct(Math.max(d.p_dem, 1 - d.p_dem))}`;
+  if (d.called) return html`<div class="rn-odds"><div class="k">Result</div><div class="v">${chip(d.tagOf(d.called))} ${d.nameOf(d.called)} won</div><div class="n">This morning we gave ${morning}</div></div>`;
+  const p = d.pNow ?? d.p_dem, side = p >= 0.5 ? "D" : "R";
+  return html`<div class="rn-odds"><div class="k">${d.pNow != null ? "Chance to win now" : "Our forecast"}</div>
+    <div class="v">${chip(d.tagOf(side))} ${lastName(d.nameOf(side))} ${pct(Math.max(p, 1 - p))}</div>
+    ${d.pNow != null ? html`<div class="n">This morning: ${morning}. Live odds move with the count here and in races that have finished.</div>` : ""}</div>`;
+}
+const raceButton = (d) => html`<p class="rn-link"><a class="more-btn" href="${raceHref(d.race_id)}">Open the full race page →</a></p>`;
+// hover (and tap, on phones) explanations for the marks on a bar
+const t_ = {show: (e, rows) => tip().show(e, rows), move: (e) => tip().move(e), hide: () => tip().hide()};
+function explain(el, rows) {
+  if (!el) return;
+  el.tabIndex = 0;
+  el.setAttribute("aria-label", rows.map((r) => r[1]).join(": "));
+  el.addEventListener("pointerenter", (e) => t_.show(e, rows));
+  el.addEventListener("pointermove", (e) => t_.move(e));
+  el.addEventListener("pointerleave", () => t_.hide());
+  el.addEventListener("focus", () => { const b = el.getBoundingClientRect(); t_.show({clientX: b.left, clientY: b.bottom}, rows); });
+  el.addEventListener("blur", () => t_.hide());
+  el.addEventListener("click", (e) => { e.stopPropagation(); t_.show(e, rows); clearTimeout(el._t); el._t = setTimeout(() => t_.hide(), 4000); });
 }
 const sign = (x) => `${x >= 0 ? "+" : "−"}${Math.round(Math.abs(x) * 100)}%`;
 const tile = (label, value, note) => html`<div class="rn-tile"><div class="k">${label}</div><div class="v">${value}</div><div class="n">${note}</div></div>`;
