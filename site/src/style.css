@@ -569,3 +569,9 @@ details.rn-counties { margin: 12px 0 4px; }
 details.rn-counties > summary { font: 600 14px var(--sans); cursor: pointer; padding: 6px 0; color: var(--ink-2); }
 .live-box.race-detail { max-width: 860px; }
 .live-box .rn-head { margin-top: 6px; }
+.seg-row { display: flex; flex-wrap: wrap; gap: 0 12px; align-items: center; }
+.pill-upset { display: inline-block; font: 700 10.5px var(--sans); text-transform: uppercase; letter-spacing: .05em; color: var(--ink); background: color-mix(in srgb, var(--ind) 22%, var(--card)); border-radius: 999px; padding: 2px 7px; vertical-align: 1px; }
+@media (max-width: 640px) {
+  .seg { flex-wrap: wrap; border-radius: 14px; }
+  .seg button { padding: 6px 10px; }
+}

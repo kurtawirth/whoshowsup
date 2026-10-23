@@ -29,7 +29,7 @@ const TABS = [["overview", "Overview"], ["senate", "Senate"], ["house", "House"]
 // The address can name a tab (#house) or a race (#senate-tx), which opens on its chamber's tab, already expanded.
 const hash = location.hash.slice(1);
 const hashTab = TABS.some(([k]) => k === hash) ? hash : /^senate-/.test(hash) ? "senate" : /^house-/.test(hash) ? "house" : /^governor-/.test(hash) ? "governors" : null;
-const ui = {tab: hashTab ?? "overview", mapMode: {senate: "lead", house: "lead", governors: "lead"},
+const ui = {tab: hashTab ?? "overview", mapMode: {overview: "lead", senate: "lead", house: "lead", governors: "lead"}, mapOffice: {overview: "SEN"},
   open: hashTab && hashTab !== hash ? {[hashTab]: new Set([hash])} : {}};
 const openSet = (k) => (ui.open[k] ??= new Set());
 ```
@@ -231,7 +231,7 @@ function detail(d) {
 // ---------- maps ----------
 function fillLead(r) {
   const d = rowOf.get(r.race_id);
-  if (!d) return r.race_type === "same_party" ? (r.race_note === "D" ? t.dem : t.rep) : t.hair;
+  if (!d) return r.race_type === "same_party" ? (r.race_note === "D" ? t["Safe D"] : t["Safe R"]) : t.hair;  // decided before the night
   const tag = d.called ? d.tagOf(d.called) : d.lead ? d.tagOf(d.lead) : null;
   if (!tag) return t.hair;
   if (tag === "I") return t.ind;
@@ -256,31 +256,63 @@ function tipRows(r) {
   rows_.push(["t-sub", "Click for the full count"]);
   return rows_;
 }
+// our chance to win (live, or this morning's), in the forecast pages' rating colors
+const CHANCE_STEPS = [[0.95, "Safe"], [0.75, "Likely"], [0.6, "Lean"], [0.5, "Toss-up"]];
+function chanceFill(d, p) {
+  const side = p >= 0.5 ? "D" : "R", q = Math.max(p, 1 - p);
+  if (d.tagOf(side) === "I") return t.ind;
+  const step = CHANCE_STEPS.find(([lo]) => q >= lo)[1];
+  return t[step === "Toss-up" ? "Toss-up" : `${step} ${side}`];
+}
+function fillChance(r) {
+  const d = rowOf.get(r.race_id);
+  if (!d) return r.race_type === "same_party" ? (r.race_note === "D" ? t["Safe D"] : t["Safe R"]) : t.hair;
+  return chanceFill(d, d.called ? (d.called === "D" ? 1 : 0) : d.pNow ?? d.p_dem);
+}
+function fillMorning(r) {
+  const d = rowOf.get(r.race_id);
+  if (!d) return r.race_type === "same_party" ? (r.race_note === "D" ? t["Safe D"] : t["Safe R"]) : t.hair;
+  return chanceFill(d, d.p_dem);
+}
+const MAP_MODES = [["lead", "Who's ahead", fillLead], ["chance", "Chance to win now", fillChance], ["gap", "Against our forecast", fillGap], ["morning", "This morning's forecast", fillMorning]];
 function legend(mode) {
   const sw = (c, label) => html`<span><i style="background:${c}"></i>${label}</span>`;
-  return mode === "lead"
-    ? html`<div class="map-legend">${sw(t["Safe D"], "Democrat won")}${sw(t["Lean D"], "Democrat leading")}${sw(t.hair, "No votes yet")}${sw(t["Lean R"], "Republican leading")}${sw(t["Safe R"], "Republican won")}</div>`
-    : html`<div class="map-legend">${sw(t["Safe D"], "6+ pts bluer")}${sw(t["Lean D"], "1–3 bluer")}${sw(t["Toss-up"], "within 1")}${sw(t["Lean R"], "1–3 redder")}${sw(t["Safe R"], "6+ pts redder")}${sw(t.surface, "under 10% counted")}</div>`;
+  if (mode === "lead") return html`<div class="map-legend">${sw(t["Safe D"], "Democrat won")}${sw(t["Lean D"], "Democrat leading")}${sw(t.hair, "No votes yet")}${sw(t["Lean R"], "Republican leading")}${sw(t["Safe R"], "Republican won")}</div>`;
+  if (mode === "gap") return html`<div class="map-legend">${sw(t["Safe D"], "6+ pts bluer")}${sw(t["Lean D"], "1–3 bluer")}${sw(t["Toss-up"], "within 1")}${sw(t["Lean R"], "1–3 redder")}${sw(t["Safe R"], "6+ pts redder")}${sw(t.surface, "under 10% counted")}</div>`;
+  return html`<div class="map-legend">${sw(t["Safe D"], "D 95%+")}${sw(t["Likely D"], "D 75–95%")}${sw(t["Lean D"], "D 60–75%")}${sw(t["Toss-up"], "under 60% either way")}${sw(t["Lean R"], "R 60–75%")}${sw(t["Likely R"], "R 75–95%")}${sw(t["Safe R"], "R 95%+")}${mode === "chance" ? sw(t.ind, "independent favored") : ""}</div>`;
 }
-// the map for a tab, with its two views; clicking a state or district opens that race in the table below
-function mapPanel(key, office, table) {
+const MAP_NOTES = {
+  lead: "Solid colors are races civicAPI has called; lighter ones, who leads the count so far.",
+  chance: "Our live chance to win: this morning's forecast, moved by each race's own count and by the races that have finished counting. Called races count for their winners.",
+  gap: "Each race's count against what our forecast expected",
+  morning: "Our forecast as of this morning, before any votes were counted."
+};
+// a map with its four views; clicking a state or district opens that race in `table`. With offices, the map
+// also switches between the Senate, the House and governors (the Overview tab).
+function mapPanel(key, office, table, {offices = null} = {}) {
   const box = html`<div class="map-panel"></div>`;
+  const officeSeg = offices ? html`<div class="seg" role="group" aria-label="Office"></div>` : null;
   const toggle = html`<div class="seg" role="group" aria-label="Map view"></div>`;
-  const body = html`<div></div>`;
-  const w = Math.min(width, office === "HOUSE" ? 1100 : 1000);
+  const body = html`<div></div>`, note = html`<p class="caption"></p>`;
   const draw = () => {
-    const mode = ui.mapMode[key];
-    toggle.replaceChildren(...[["lead", "Who's ahead"], ["gap", "Against our forecast"]].map(([v, label]) => {
+    const mode = ui.mapMode[key] ?? "lead", off = offices ? ui.mapOffice[key] ?? office : office;
+    if (offices) officeSeg.replaceChildren(...offices.map(([v, label]) => {
+      const b = html`<button type="button" aria-pressed=${String(off === v)}>${label}</button>`;
+      b.onclick = () => { ui.mapOffice[key] = v; draw(); };
+      return b;
+    }));
+    toggle.replaceChildren(...MAP_MODES.map(([v, label]) => {
       const b = html`<button type="button" aria-pressed=${String(mode === v)}>${label}</button>`;
       b.onclick = () => { ui.mapMode[key] = v; draw(); };
       return b;
     }));
-    const opts = {width: w, fillRace: mode === "lead" ? fillLead : fillGap, tipRows, onPick: (r) => rowOf.has(r.race_id) && table.reveal(r.race_id)};
-    body.replaceChildren(office === "HOUSE" ? hexMap(races, layout, opts) : stateMap(races, topo, statesMeta, {office, ...opts}), legend(mode));
+    const w = Math.min(width, off === "HOUSE" ? 1100 : 1000);
+    const opts = {width: w, fillRace: MAP_MODES.find(([v]) => v === mode)[2], tipRows, onPick: (r) => rowOf.has(r.race_id) && table.reveal(r.race_id)};
+    body.replaceChildren(off === "HOUSE" ? hexMap(races, layout, opts) : stateMap(races, topo, statesMeta, {office: off, ...opts}), legend(mode));
+    note.textContent = `${MAP_NOTES[mode]}${mode === "gap" ? (off === "HOUSE" ? ": for House districts, our most likely margin for the whole district, so early counts can mislead." : ", in the counties counted so far.") : ""} Click a ${off === "HOUSE" ? "district" : "state"} for its full count.`;
   };
   draw();
-  box.append(toggle, body);
-  box.append(html`<p class="caption">"Against our forecast" compares each race's count with what our forecast expected${office === "HOUSE" ? ": for House districts, our most likely margin for the whole district, so early counts can mislead" : " from the counties counted so far"}. Click a ${office === "HOUSE" ? "district" : "state"} for its full count.</p>`);
+  box.append(...(offices ? [html`<div class="seg-row">${officeSeg}${toggle}</div>`] : [toggle]), body, note);
   return box;
 }
 function chamberTable(key, list, {pageSize = 25} = {}) {
@@ -336,29 +368,53 @@ function overview() {
     ? `Live odds: based on the ${odds.used} race${odds.used === 1 ? "" : "s"} at least 95% counted, results are running about ${Math.abs(odds.shift).toFixed(1)} points more ${odds.shift >= 0 ? "Democratic" : "Republican"} than our forecast nationally (more or less in some regions and states). We move every race still out by that much, count called races for their winners, and play out the rest of the night thousands of times.`
     : "Live odds: until races finish counting, the night's overall shift comes from our forecast."} Each race's own count also moves its odds, more as more of it comes in: where we have county results, we compare the counted counties with our forecast and fill in the counties still out from their benchmarks.${read ? ` The counted-counties and turnout figures compare every county that has reported in the ${read.states} states with Senate or governor races counting against our county benchmarks; they move earlier than the live odds, and can mislead early, when one kind of ballot dominates the count.` : ""} Not a call: estimates that will swing as results come in.</p>`);
   parts.push(html`<div class="tallies">${TALLY.SEN()}${TALLY.HOUSE()}${TALLY.GOV()}</div>`);
-  if (calledRows.length) parts.push(html`<div class="stat-row">
-    <div class="s"><div class="k">Our favorite won</div><div class="v">${right.length} of ${calledRows.length} called races</div></div>
-    <div class="s"><div class="k">Inside our 80% range</div><div class="v">${settled.length ? `${inRange.length} of ${settled.length}` : "–"}</div><div class="muted">races with 95%+ counted</div></div>
-  </div>`);
-  const upsets = calledRows.filter((d) => d.called !== d.fav).sort((a, b) => Math.abs(b.p_dem - 0.5) - Math.abs(a.p_dem - 0.5));
-  const upsetItem = (d) => html`<li>${raceLink(d, raceName(d))}: ${lastName(d.nameOf(d.called))} wins, whom we gave ${pct(d.called === "D" ? d.p_dem : 1 - d.p_dem)}</li>`;
-  if (upsets.length) parts.push(html`<div class="upsets"><p><b>Called against our forecast</b>${upsets.length > 5 ? ", biggest surprises first" : ""}:</p>
-    <ul class="tight">${upsets.slice(0, 5).map(upsetItem)}</ul>
-    ${upsets.length > 5 ? html`<details><summary>Show all ${upsets.length}</summary><ul class="tight">${upsets.slice(5).map(upsetItem)}</ul></details>` : ""}</div>`);
+  // the map, all three offices; clicking a race opens it in "Find any race" below
+  const all = raceTable(rows, COLUMNS, {filters: [{key: "office", label: "All offices", options: [["SEN", "Senate"], ["GOV", "Governor"], ["HOUSE", "House"]], test: (d, v) => d.office === v}, STATUS_FILTER],
+    sorts: [SORTS[1], ...SORTS.filter((x, i) => i !== 1)], pageSize: 10, detail, openSet: openSet("all"), placeholder: "Search candidates, states, districts"});
+  all.classList.add("res-cards");
+  parts.push(mapPanel("overview", "SEN", all, {offices: [["SEN", "Senate"], ["HOUSE", "House"], ["GOV", "Governors"]]}));
   // the races that matter most for control, then any race at all
   const keyRaces = [...topRaces("SEN", 7), ...topRaces("HOUSE", 5), ...topRaces("GOV", 3)];
   parts.push(html`<h2>Key races</h2><p class="caption">The Senate and House races likeliest to decide control in our forecast, and the closest governor's races. Click a race for its full count.</p>`);
   const kt = raceTable(keyRaces, COLUMNS, {search: false, pageSize: 20, detail, openSet: openSet("key"), noun: "race"});
   kt.classList.add("res-cards");
   parts.push(kt);
+  if (calledRows.length) parts.push(...scorecard());
   parts.push(html`<h2>Find any race</h2>`);
-  const all = raceTable(rows, COLUMNS, {filters: [{key: "office", label: "All offices", options: [["SEN", "Senate"], ["GOV", "Governor"], ["HOUSE", "House"]], test: (d, v) => d.office === v}, STATUS_FILTER],
-    sorts: [SORTS[1], ...SORTS.filter((x, i) => i !== 1)], pageSize: 10, detail, openSet: openSet("all"), placeholder: "Search candidates, states, districts"});
-  all.classList.add("res-cards");
   parts.push(all);
   parts.push(caption());
   parts.push(html`<details class="schedule"><summary>When polls close</summary>${schedule()}</details>`);
   return parts;
+}
+// ---------- called races against our forecast ----------
+function scorecard() {
+  const wonP = (d) => (d.called === "D" ? d.p_dem : 1 - d.p_dem);  // the chance we gave the winner this morning
+  const upsets = calledRows.filter((d) => d.called !== d.fav);
+  const outside = settled.filter((d) => !(d.x.margin >= d.margin_p10 && d.x.margin <= d.margin_p90));
+  const list = calledRows.map((d) => ({...d, wonP: wonP(d), surprise: d.called !== d.fav,
+    inside: (d.x.pct ?? 0) >= 95 ? d.x.margin >= d.margin_p10 && d.x.margin <= d.margin_p90 : null}));
+  const cols = [
+    {key: "label", label: "Race", sort: true, sortValue: (d) => `${d.state_name} ${String(d.district ?? 0).padStart(2, "0")}`, render: (d) => html`<span class="rd-name">${raceName(d)}</span>`},
+    {key: "winner", label: "Winner", render: (d) => html`<span class="odds-now">${chip(d.tagOf(d.called))} ${lastName(d.nameOf(d.called))}</span>${d.surprise ? html` <span class="pill-upset">Upset</span>` : ""}`},
+    {key: "wonP", label: "We gave them", num: true, sort: true, render: (d) => pct(d.wonP)},
+    {key: "result", label: "Result", num: true, sort: true, sortValue: (d) => Math.abs(d.x.margin), render: (d) => html`<span>by ${Math.abs(d.x.margin) < 0.05 ? "under 0.1" : Math.abs(d.x.margin).toFixed(1)}${(d.x.pct ?? 0) < 95 ? html`<div class="adj">${d.x.pct ?? 0}% counted</div>` : ""}</span>`},
+    {key: "expected", label: "We expected", num: true, render: (d) => sideText(d, d.margin_median)},
+    {key: "inside", label: "Inside our 80% range", render: (d) => (d.inside == null ? html`<span class="muted">still counting</span>` : d.inside ? "Yes" : html`<b>No</b>`)}
+  ];
+  const tbl = raceTable(list, cols, {
+    filters: [{key: "office", label: "All offices", options: [["SEN", "Senate"], ["GOV", "Governor"], ["HOUSE", "House"]], test: (d, v) => d.office === v},
+      {key: "which", label: "Every called race", options: [["upset", "Upsets: our underdog won"], ["outside", "Outside our 80% range"]], test: (d, v) => (v === "upset" ? d.surprise : d.inside === false)}],
+    sorts: [{label: "Biggest surprises first", value: (d) => d.wonP, dir: 1}, {label: "Closest results", value: (d) => Math.abs(d.x.margin), dir: 1}, {label: "State A–Z", value: (d) => `${d.state_name} ${String(d.district ?? 0).padStart(2, "0")}`, dir: 1}],
+    pageSize: 10, detail, openSet: openSet("called"), noun: "called race", placeholder: "Search called races"});
+  tbl.classList.add("score-table");
+  const share = settled.length ? inRange.length / settled.length : null;
+  return [html`<h2>Called races: how our forecast did</h2>`,
+    html`<div class="stat-row">
+      <div class="s"><div class="k">Our favorite won</div><div class="v">${right.length} of ${calledRows.length}</div><div class="muted">${pct(right.length / calledRows.length)} of called races${upsets.length ? `; ${upsets.length} upset${upsets.length === 1 ? "" : "s"}` : ""}</div></div>
+      <div class="s"><div class="k">Inside our 80% range</div><div class="v">${settled.length ? `${inRange.length} of ${settled.length}` : "–"}</div><div class="muted">${share != null ? `${pct(share)} of races 95%+ counted; a well-calibrated forecast lands about 80%` : "races 95%+ counted"}</div></div>
+    </div>`,
+    html`<p class="caption">Every race civicAPI has called, next to what we said this morning. "We gave them" is the chance our forecast gave the winner before any votes were counted; an upset is a race our underdog won. Results are as counted so far, and margins are between the two main sides. ${outside.length ? `${outside.length} race${outside.length === 1 ? "" : "s"} finished outside our 80% range so far.` : ""}</p>`,
+    tbl];
 }
 const caption = () => html`<p class="caption">"vs. our forecast": the bar is the range our forecast gave an 80% chance, the tick our most likely result, and the dot the count so far (early counts can swing a lot as different kinds of ballots come in). Margins are between the two main sides only.</p>`;
 
