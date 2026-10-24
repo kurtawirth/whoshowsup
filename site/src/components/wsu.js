@@ -164,7 +164,7 @@ function raceTipRows(r) {
 // ---------- House hex map ----------
 /** Options for the results page: fillRace(r) colors a district instead of its rating, tipRows(r) replaces the
  *  hover card, and onPick(r) runs on click or tap instead of opening the race page. */
-export function hexMap(races, layout, {width = 960, fillRace = null, tipRows = raceTipRows, onPick = null} = {}) {
+export function hexMap(races, layout, {width = 960, fillRace = null, tipRows = raceTipRows, onPick = null, mark = null} = {}) {
   const t = tokens();
   const byKey = new Map(races.filter((r) => r.office === "HOUSE").map((r) => [`${r.state_po}-${r.district}`, r]));
   const hexes = layout.hexes;
@@ -219,6 +219,9 @@ export function hexMap(races, layout, {width = 960, fillRace = null, tipRows = r
       d3.select(this.parentNode).raise();
       if (r) card.show(raceTipRows(r), raceHref(r.race_id));
     });
+  // a dot in the middle of each district whose race has been called (mark(r), the results page)
+  if (mark) g.append("g").style("pointer-events", "none").selectAll("circle").data(hexes.filter((h) => { const r = byKey.get(`${h.state}-${h.district}`); return r && mark(r); }))
+    .join("circle").attr("cx", (h) => X(h.x)).attr("cy", (h) => Y(h.y)).attr("r", Math.max(1.6, R * 0.22)).attr("fill", t.surface).attr("stroke", t.ink).attr("stroke-width", 0.6);
   // State names sit in the open space above each state's island (the layout reserves room for them).
   const labels = layout.labels ?? [];
   const labelG = layer.append("g").style("pointer-events", "none");
@@ -278,7 +281,7 @@ function zoomable(svg, layer, w, h, onZoom = () => {}) {
 
 // ---------- state map (Senate / Governors) ----------
 /** Same options as hexMap (fillRace, tipRows, onPick), for the results page. */
-export function stateMap(races, topo, states, {office, width = 960, fillRace = null, tipRows = raceTipRows, onPick = null} = {}) {
+export function stateMap(races, topo, states, {office, width = 960, fillRace = null, tipRows = raceTipRows, onPick = null, mark = null} = {}) {
   const t = tokens();
   const fipsToPo = Object.fromEntries(Object.entries(states.fips).map(([po, f]) => [f, po]));
   const byState = d3.group(races.filter((r) => r.office === office), (r) => r.state_po);
@@ -298,12 +301,14 @@ export function stateMap(races, topo, states, {office, width = 960, fillRace = n
     if (main.race_type === "independent") return t.ind;
     return t[main.rating];
   };
+  // borders: a gap in the page color between filled states, gray where a state is drawn in the page color itself
+  const edge = (po) => (!byState.get(po) || fill(po) === t.surface ? t.axis : t.surface);
   const layer = svg.append("g");                 // everything that zooms
   layer.append("g").selectAll("a").data(feats).join("a")
     .attr("href", (f) => { const rs = byState.get(fipsToPo[f.id]); return rs && !onPick ? raceHref((rs.find((r) => !r.special) ?? rs[0]).race_id) : null; })
     .append("path").attr("d", path)
     .attr("fill", (f) => fill(fipsToPo[f.id]))
-    .attr("stroke", (f) => (byState.get(fipsToPo[f.id]) ? t.surface : t.axis))
+    .attr("stroke", (f) => edge(fipsToPo[f.id]))
     .attr("stroke-width", (f) => (byState.get(fipsToPo[f.id]) ? 1.2 : 0.8)).attr("stroke-linejoin", "round")
     .attr("vector-effect", "non-scaling-stroke")   // borders stay thin when zoomed in
     .attr("tabindex", (f) => (byState.get(fipsToPo[f.id]) ? 0 : null))
@@ -317,7 +322,7 @@ export function stateMap(races, topo, states, {office, width = 960, fillRace = n
     .on("pointerleave blur", function (event, f) {
       if (isTouch(event) && event.type !== "blur") return;
       const has = byState.get(fipsToPo[f.id]);
-      d3.select(this).attr("stroke", has ? t.surface : t.axis).attr("stroke-width", has ? 1.2 : 0.8);
+      d3.select(this).attr("stroke", edge(fipsToPo[f.id])).attr("stroke-width", has ? 1.2 : 0.8);
       t_.hide();
     })
     .on("click", function (event, f) {
@@ -329,7 +334,7 @@ export function stateMap(races, topo, states, {office, width = 960, fillRace = n
       // Phones: first tap previews the state's race(s) in a card; the card's button opens the page.
       if (!rs || !isTouch(event)) return;
       event.preventDefault();
-      if (selectedState) d3.select(selectedState).attr("stroke", t.surface).attr("stroke-width", 1.2);
+      if (selectedState) d3.select(selectedState).attr("stroke", (g) => edge(fipsToPo[g.id])).attr("stroke-width", 1.2);
       selectedState = this;
       d3.select(this).attr("stroke", t.ink).attr("stroke-width", 2).raise();
       const main = rs.find((r) => !r.special) ?? rs[0];
@@ -348,6 +353,18 @@ export function stateMap(races, topo, states, {office, width = 960, fillRace = n
       .attr("fill", fillRace ? fillRace(r) : t[r.rating]).attr("stroke", t.surface).attr("stroke-width", 2).attr("vector-effect", "non-scaling-stroke")
       .on("pointerenter", (event) => t_.show(event, tipRows(r))).on("pointermove", (e) => t_.move(e)).on("pointerleave", () => t_.hide())
       .on("click", (event) => { if (onPick) { event.preventDefault(); onPick(r); } });
+  }
+  // a check mark on states whose race has been called (mark(r), the results page)
+  if (mark) {
+    const g = layer.append("g").attr("class", "call-marks").style("pointer-events", "none");
+    for (const f of feats) {
+      const rs = byState.get(fipsToPo[f.id]);
+      const main = rs && (rs.find((r) => !r.special) ?? rs[0]);
+      if (!main || !mark(main)) continue;
+      const [cx, cy] = path.centroid(f);
+      g.append("circle").attr("cx", cx).attr("cy", cy).attr("r", 8.5).attr("fill", t.surface).attr("stroke", t.ink).attr("stroke-width", 1).attr("vector-effect", "non-scaling-stroke");
+      g.append("path").attr("d", `M${cx - 3.8},${cy + 0.2}l2.6,2.8l5-5.6`).attr("fill", "none").attr("stroke", t.ink).attr("stroke-width", 1.8).attr("stroke-linecap", "round").attr("stroke-linejoin", "round");
+    }
   }
   // special-election dots grow more slowly than the map so they don't swallow the state
   return zoomable(svg, layer, 975, 610, (zk) => layer.selectAll("circle.special-dot").attr("r", 7 / Math.sqrt(zk)));

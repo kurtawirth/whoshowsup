@@ -275,14 +275,15 @@ function fillMorning(r) {
   return chanceFill(d, d.p_dem);
 }
 const MAP_MODES = [["lead", "Who's ahead", fillLead], ["chance", "Chance to win now", fillChance], ["gap", "Against our forecast", fillGap], ["morning", "This morning's forecast", fillMorning]];
-function legend(mode) {
+function legend(mode, office) {
   const sw = (c, label) => html`<span><i style="background:${c}"></i>${label}</span>`;
-  if (mode === "lead") return html`<div class="map-legend">${sw(t["Safe D"], "Democrat won")}${sw(t["Lean D"], "Democrat leading")}${sw(t.hair, "No votes yet")}${sw(t["Lean R"], "Republican leading")}${sw(t["Safe R"], "Republican won")}</div>`;
-  if (mode === "gap") return html`<div class="map-legend">${sw(t["Safe D"], "6+ pts bluer")}${sw(t["Lean D"], "1–3 bluer")}${sw(t["Toss-up"], "within 1")}${sw(t["Lean R"], "1–3 redder")}${sw(t["Safe R"], "6+ pts redder")}${sw(t.surface, "under 10% counted")}</div>`;
-  return html`<div class="map-legend">${sw(t["Safe D"], "D 95%+")}${sw(t["Likely D"], "D 75–95%")}${sw(t["Lean D"], "D 60–75%")}${sw(t["Toss-up"], "under 60% either way")}${sw(t["Lean R"], "R 60–75%")}${sw(t["Likely R"], "R 75–95%")}${sw(t["Safe R"], "R 95%+")}${mode === "chance" ? sw(t.ind, "independent favored") : ""}</div>`;
+  const called = mode === "morning" ? "" : office === "HOUSE" ? html`<span><b class="call-dot"></b>called</span>` : html`<span><b class="call-check">✓</b>called</span>`;
+  if (mode === "lead") return html`<div class="map-legend">${sw(t["Safe D"], "Democrat won")}${sw(t["Lean D"], "Democrat leading")}${sw(t.hair, "No votes yet")}${sw(t["Lean R"], "Republican leading")}${sw(t["Safe R"], "Republican won")}${called}</div>`;
+  if (mode === "gap") return html`<div class="map-legend">${sw(t["Safe D"], "6+ pts bluer")}${sw(t["Lean D"], "1–3 bluer")}${sw(t["Toss-up"], "within 1")}${sw(t["Lean R"], "1–3 redder")}${sw(t["Safe R"], "6+ pts redder")}${sw(t.surface, "under 10% counted")}${called}</div>`;
+  return html`<div class="map-legend">${sw(t["Safe D"], "D 95%+")}${sw(t["Likely D"], "D 75–95%")}${sw(t["Lean D"], "D 60–75%")}${sw(t["Toss-up"], "under 60% either way")}${sw(t["Lean R"], "R 60–75%")}${sw(t["Likely R"], "R 75–95%")}${sw(t["Safe R"], "R 95%+")}${mode === "chance" ? sw(t.ind, "independent favored") : ""}${called}</div>`;
 }
 const MAP_NOTES = {
-  lead: "Solid colors are races civicAPI has called; lighter ones, who leads the count so far.",
+  lead: "Solid colors (and check marks) are races civicAPI has called; lighter ones, who leads the count so far.",
   chance: "Our live chance to win: this morning's forecast, moved by each race's own count and by the races that have finished counting. Called races count for their winners.",
   gap: "Each race's count against what our forecast expected",
   morning: "Our forecast as of this morning, before any votes were counted."
@@ -306,9 +307,12 @@ function mapPanel(key, office, table, {offices = null} = {}) {
       b.onclick = () => { ui.mapMode[key] = v; draw(); };
       return b;
     }));
-    const w = Math.min(width, off === "HOUSE" ? 1100 : 1000);
-    const opts = {width: w, fillRace: MAP_MODES.find(([v]) => v === mode)[2], tipRows, onPick: (r) => rowOf.has(r.race_id) && table.reveal(r.race_id)};
-    body.replaceChildren(off === "HOUSE" ? hexMap(races, layout, opts) : stateMap(races, topo, statesMeta, {office: off, ...opts}), legend(mode));
+    // sized so the buttons, the map and its key fit on one screen
+    const fitH = Math.max(300, (typeof innerHeight === "number" ? innerHeight : 900) - 290);
+    const w = Math.min(width, off === "HOUSE" ? 1000 : 900, off === "HOUSE" ? fitH / 0.66 : (fitH * 975) / 610);
+    const opts = {width: w, fillRace: MAP_MODES.find(([v]) => v === mode)[2], tipRows, onPick: (r) => rowOf.has(r.race_id) && table.reveal(r.race_id),
+      mark: mode === "morning" ? null : (r) => Boolean(rowOf.get(r.race_id)?.called)};
+    body.replaceChildren(off === "HOUSE" ? hexMap(races, layout, opts) : stateMap(races, topo, statesMeta, {office: off, ...opts}), legend(mode, off));
     note.textContent = `${MAP_NOTES[mode]}${mode === "gap" ? (off === "HOUSE" ? ": for House districts, our most likely margin for the whole district, so early counts can mislead." : ", in the counties counted so far.") : ""} Click a ${off === "HOUSE" ? "district" : "state"} for its full count.`;
   };
   draw();

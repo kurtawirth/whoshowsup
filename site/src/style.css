@@ -575,3 +575,6 @@ details.rn-counties > summary { font: 600 14px var(--sans); cursor: pointer; pad
   .seg { flex-wrap: wrap; border-radius: 14px; }
   .seg button { padding: 6px 10px; }
 }
+.map-legend .call-check { display: inline-grid; place-items: center; width: 16px; height: 16px; border-radius: 50%; border: 1px solid var(--ink); background: var(--surface); font: 700 10px var(--sans); color: var(--ink); }
+.map-legend .call-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--ink); background: var(--surface); }
+.map-panel .zoom-wrap { margin-inline: auto; }
