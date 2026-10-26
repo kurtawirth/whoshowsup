@@ -1,6 +1,6 @@
 {
- "forecast_date": "2026-10-25",
- "finished_at": "2026-10-25 07:19",
+ "forecast_date": "2026-10-26",
+ "finished_at": "2026-10-26 07:23",
  "refresh": true,
  "failed_steps": [],
  "warnings": [
@@ -10,7 +10,6 @@
   "Poll check: GOV TX: recent Decision Desk poll (ActiVote, Oct 17) matched no race: Dan Patrick, Vikki Goodwin",
   "Poll check: GOV TX: recent Decision Desk poll (University of Houston Hobby School of Public Affairs / YouGov, Oct 14) matched no race: Vikki Goodwin, Dan Patrick",
   "Poll check: GOV TX: recent Decision Desk poll (YouGov / Texas Politics Project at the University of Texas at Austin, Oct 05) matched no race: Vikki Goodwin, Dan Patrick",
-  "Poll check: GOV MN: recent VoteHub poll (GQR, Oct 04) without Amy Klobuchar vs Lisa Demuth: Peggy Flanagan, Michele Tafoya",
   "Poll check: HOUSE NM-3: recent VoteHub poll (Research & Polling Inc., Oct 09) without Teresa Leger Fern\u00e1ndez vs Martin Zamora: Teresa Leger Fernandez, Martin Zamora"
  ]
 }
