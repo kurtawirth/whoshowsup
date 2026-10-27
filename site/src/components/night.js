@@ -2,7 +2,7 @@
 // the votes counted against the total we expect, the line each candidate has to reach to win, what's left, how the
 // counted counties compare with our forecast, turnout, and the county-by-county count. Display only.
 import {html} from "npm:htl";
-import {pct, sides, raceHref, raceTable, tip} from "./wsu.js";
+import {pct, sides, raceHref, raceTable, tip, copyLink} from "./wsu.js";
 import {raceMath} from "./live.js";
 
 export const lastName = (s) => String(s).trim().split(/\s+/).filter((w) => !/^(Jr\.?|Sr\.?|I{2,3})$/.test(w)).pop();
@@ -117,7 +117,12 @@ export function chanceNow(d) {
     <div class="v">${chip(d.tagOf(side))} ${lastName(d.nameOf(side))} ${pct(Math.max(p, 1 - p))}</div>
     ${d.pNow != null ? html`<div class="n">This morning: ${morning}. Live odds move with the count here and in races that have finished.</div>` : ""}</div>`;
 }
-const raceButton = (d) => html`<p class="rn-link"><a class="more-btn" href="${raceHref(d.race_id)}">Open the full race page →</a></p>`;
+// the full race page, and a button that copies its address (the race page carries the same live count)
+const raceButton = (d) => {
+  const copy = html`<button type="button" class="copy-race">Copy link to this race</button>`;
+  copy.onclick = (e) => { e.stopPropagation(); copyLink(copy, `https://whoshowsup.net/race/${d.race_id}`); };
+  return html`<p class="rn-link"><a class="more-btn" href="${raceHref(d.race_id)}">Open the full race page →</a>${copy}</p>`;
+};
 // hover (and tap, on phones) explanations for the marks on a bar
 const t_ = {show: (e, rows) => tip().show(e, rows), move: (e) => tip().move(e), hide: () => tip().hide()};
 function explain(el, rows) {

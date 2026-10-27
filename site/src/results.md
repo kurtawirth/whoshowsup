@@ -3,7 +3,7 @@ title: Election night
 ---
 
 ```js
-import {tokens, pct, date, sides, raceLink, raceHref, raceTable, withSearch, hexMap, stateMap} from "./components/wsu.js";
+import {tokens, pct, date, sides, raceLink, raceHref, raceTable, withSearch, hexMap, stateMap, shareRow} from "./components/wsu.js";
 import {liveStream, liveOdds, raceMath, countiesOf, fetchRace, nightRead} from "./components/live.js";
 import {racePanel, finish, sideText, lastName, k} from "./components/night.js";
 const liveModel = FileAttachment("data/live_model.json").json();
@@ -15,6 +15,18 @@ const layout = FileAttachment("data/hexmap.json").json();
 const topo = FileAttachment("data/states-albers-10m.json").json();
 const statesMeta = FileAttachment("data/states.json").json();
 ```
+
+```js
+// Open at the top. The races draw only after the data loads, so for a moment the page is just its header and
+// footer; a browser that restores or nudges the scroll position then can pin the view to the footer and leave the
+// reader at the bottom once everything appears. So: no scroll restoring here, and back to the top after the first
+// full draw unless the reader has already scrolled, or the address names a race (#senate-tx), which opens on it.
+const opening = {done: false, touched: false, race: /^#(senate|house|governor)-/.test(location.hash)};
+if (!opening.race) { history.scrollRestoration = "manual"; scrollTo(0, 0); }
+for (const ev of ["wheel", "touchstart", "keydown", "mousedown"]) addEventListener(ev, () => (opening.touched = true), {once: true, passive: true});
+```
+
+<style>#observablehq-footer { overflow-anchor: none; } #observablehq-main { min-height: 100vh; }</style>
 
 ```js
 // Results: civicAPI directly during the night (every reader shares its cached answer), with the copy our poller
@@ -93,6 +105,8 @@ ${live.mode === "simulation" ? html`<div class="sim-banner"><b>Rehearsal.</b> Th
 <p class="dek">${started
   ? html`Vote counts from <a href="https://civicapi.org">civicAPI</a>, refreshed every few minutes, next to what our forecast expected. Click any race for its full count: the votes left, what each side needs of them, and turnout against what we expected. This page updates on its own. Calls are civicAPI's, not ours.`
   : html`From the first poll closings at 6 p.m. Eastern on November 3, the count for every House, Senate and governor race will appear here every few minutes, next to what our forecast expected, with a running tally of the House and Senate. ${(() => { const days = Math.ceil((new Date("2026-11-03T23:00:00Z") - new Date()) / 864e5); return days > 0 ? `That's ${days} day${days === 1 ? "" : "s"} away.` : ""; })()}`}</p>
+
+${shareRow("https://whoshowsup.net/results", started ? "Live 2026 election results and odds, race by race, from Who Shows Up" : "2026 election night results, race by race, from Who Shows Up")}
 
 ```js
 // ---------- pieces every tab uses ----------
@@ -308,8 +322,8 @@ function mapPanel(key, office, table, {offices = null} = {}) {
       return b;
     }));
     // sized so the buttons, the map and its key fit on one screen
-    const fitH = Math.max(300, (typeof innerHeight === "number" ? innerHeight : 900) - 290);
-    const w = Math.min(width, off === "HOUSE" ? 1000 : 900, off === "HOUSE" ? fitH / 0.66 : (fitH * 975) / 610);
+    const fitH = Math.max(340, (typeof innerHeight === "number" ? innerHeight : 900) - 220);
+    const w = Math.min(width, off === "HOUSE" ? 1150 : 1050, off === "HOUSE" ? fitH / 0.66 : (fitH * 975) / 610);
     const opts = {width: w, fillRace: MAP_MODES.find(([v]) => v === mode)[2], tipRows, onPick: (r) => rowOf.has(r.race_id) && table.reveal(r.race_id),
       mark: mode === "morning" ? null : (r) => Boolean(rowOf.get(r.race_id)?.called)};
     body.replaceChildren(off === "HOUSE" ? hexMap(races, layout, opts) : stateMap(races, topo, statesMeta, {office: off, ...opts}), legend(mode, off));
@@ -362,12 +376,7 @@ function overview() {
     ${read ? html`<div class="s"><div class="k">Counted counties vs. our forecast</div><div class="v">${Math.abs(read.gap) < 0.25 ? "Even" : `${read.gap > 0 ? "D" : "R"} +${Math.abs(read.gap).toFixed(1)}`}</div><div class="muted">${Math.abs(read.gap) < 0.25 ? "right on our forecast" : `points ${read.gap > 0 ? "more Democratic" : "more Republican"} than we expected`}</div></div>` : ""}
     ${read?.turnout != null ? html`<div class="s"><div class="k">Turnout vs. our expectation</div><div class="v">${read.turnout >= 0 ? "+" : "−"}${Math.round(Math.abs(read.turnout) * 100)}%</div><div class="muted">${read.turnoutD != null && read.turnoutR != null ? `D-leaning counties ${read.turnoutD >= 0 ? "+" : "−"}${Math.round(Math.abs(read.turnoutD) * 100)}%, R-leaning ${read.turnoutR >= 0 ? "+" : "−"}${Math.round(Math.abs(read.turnoutR) * 100)}%` : "in counted counties"}</div></div>` : ""}
   </div>`);
-  // the night's vote so far, against the turnout we expect, in the races that are counting
-  const counting = rows.filter((d) => d.office === "HOUSE" && d.counted);
-  if (counting.length) {
-    const got = d3.sum(counting, (d) => d.m.counted), exp = d3.sum(counting, (d) => Math.max(d.expected_votes ?? 0, d.m.counted));
-    parts.push(html`<p class="rn-head">House votes counted so far: <b>${k(got)}</b> of the ~<b>${k(exp)}</b> we expect in the ${counting.length} districts counting${(() => { const all = d3.sum(rows.filter((d) => d.office === "HOUSE"), (d) => d.expected_votes ?? 0); return all ? ` (~${k(all)} in all ${rows.filter((d) => d.office === "HOUSE").length} contested districts)` : ""; })()}.</p>`);
-  }
+  if (started) parts.push(leftToCount());
   if (odds) parts.push(html`<p class="caption">${odds.used
     ? `Live odds: based on the ${odds.used} race${odds.used === 1 ? "" : "s"} at least 95% counted, results are running about ${Math.abs(odds.shift).toFixed(1)} points more ${odds.shift >= 0 ? "Democratic" : "Republican"} than our forecast nationally (more or less in some regions and states). We move every race still out by that much, count called races for their winners, and play out the rest of the night thousands of times.`
     : "Live odds: until races finish counting, the night's overall shift comes from our forecast."} Each race's own count also moves its odds, more as more of it comes in: where we have county results, we compare the counted counties with our forecast and fill in the counties still out from their benchmarks.${read ? ` The counted-counties and turnout figures compare every county that has reported in the ${read.states} states with Senate or governor races counting against our county benchmarks; they move earlier than the live odds, and can mislead early, when one kind of ballot dominates the count.` : ""} Not a call: estimates that will swing as results come in.</p>`);
@@ -389,6 +398,33 @@ function overview() {
   parts.push(caption());
   parts.push(html`<details class="schedule"><summary>When polls close</summary>${schedule()}</details>`);
   return parts;
+}
+// ---------- what's left to count, in plain words ----------
+// Votes: every contested House district (together they cover nearly the whole country's vote), each counted up
+// to where its own count says it will end, or to our expected turnout before it has much in.
+function leftToCount() {
+  const house = rows.filter((d) => d.office === "HOUSE");
+  const done = (d) => (d.x.pct ?? 0) >= 100;
+  const total = (d) => (done(d) ? d.m.counted : Math.max(d.m.projected ?? d.expected_votes ?? 0, d.m.counted));
+  const left = (d) => total(d) - d.m.counted;
+  const all = d3.sum(house, total), out = d3.sum(house, left), got = all - out;
+  const piles = d3.rollups(house, (v) => d3.sum(v, left), (d) => d.state_name).filter(([, n]) => n >= 50000).sort((a, b) => b[1] - a[1]).slice(0, 4);
+  const open = (o) => rows.filter((d) => d.office === o && !d.called).length;
+  const [s, h, g] = [open("SEN"), open("HOUSE"), open("GOV")];
+  const uncalled = [s && `${s} Senate`, h && `${h} House`, g && `${g} governor's`].filter(Boolean);
+  // states whose last polls haven't closed yet, by the clock of the latest update (hours after midnight ET, Nov. 3)
+  const hr = asof ? (asof - Date.UTC(2026, 10, 3, 5)) / 36e5 : null;
+  const stillOpen = hr == null ? [] : Object.entries(CLOSE).filter(([, [, last]]) => last > hr).sort((a, b) => a[1][1] - b[1][1]);
+  const list = (xs) => (xs.length < 3 ? xs.join(" and ") : `${xs.slice(0, -1).join(", ")} and ${xs.at(-1)}`);
+  const share = all ? got / all : 0;
+  return html`<div class="left-box"><h3>What's left to count</h3>
+    <div class="left-bar" role="img" aria-label="${Math.round(share * 100)}% of the expected vote counted"><b style="flex:${share}"></b><i></i></div>
+    <ul>
+      <li><b>Votes:</b> ${out > 0 ? html`about <b>${k(out)}</b> still to count, roughly ${Math.round((100 * out) / all)}% of the ${k(all)} we expect in all.` : "all in, or close to it."}</li>
+      <li><b>Races:</b> ${uncalled.length ? html`${list(uncalled)} race${s + h + g === 1 ? "" : "s"} not called yet.` : "every race has been called."}</li>
+      ${piles.length ? html`<li><b>Most of the uncounted vote:</b> ${list(piles.map(([st, n]) => `${st} (${k(n)})`))}.</li>` : ""}
+      ${stillOpen.length ? html`<li><b>Polls still open</b> in ${stillOpen.length} state${stillOpen.length === 1 ? "" : "s"}: ${list(stillOpen.map(([po]) => statesMeta.names?.[po] ?? po))}. The last close at ${clock(d3.max(stillOpen, ([, [, last]]) => last))} ET.</li>` : ""}
+    </ul></div>`;
 }
 // ---------- called races against our forecast ----------
 function scorecard() {
@@ -449,6 +485,15 @@ if (started) {
   display(watchTable());
   display(html`<h2>When polls close</h2>`);
   display(schedule());
+}
+// the first full draw: back to the top (see `opening` above); later updates leave the reader where they are
+if (!opening.done) {
+  opening.done = true;
+  requestAnimationFrame(() => {
+    if (opening.touched) return;
+    if (opening.race) document.querySelector(`tr[data-id="${CSS.escape(location.hash.slice(1))}"]`)?.scrollIntoView({block: "start"});
+    else scrollTo(0, 0);
+  });
 }
 ```
 

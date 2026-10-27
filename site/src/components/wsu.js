@@ -240,12 +240,16 @@ export function hexMap(races, layout, {width = 960, fillRace = null, tipRows = r
       .style("display", (d) => (R * zk >= 9 || d.n >= 6 ? null : "none")));
 }
 
-// Zoom for a map: pinch or the buttons on phones; buttons, double-click or ctrl+scroll on desktop.
-// At full view a one-finger swipe scrolls the page as usual; once zoomed in it pans the map.
-// `layer` holds everything that zooms; w and h are the svg's viewBox size.
+// Zoom for a map: the slider (drag it for a smooth zoom), the buttons, pinch on phones, double-click or
+// ctrl+scroll on desktop. At full view a one-finger swipe scrolls the page as usual; once zoomed in, dragging
+// pans the map. `layer` holds everything that zooms; w and h are the svg's viewBox size.
 function zoomable(svg, layer, w, h, onZoom = () => {}) {
   let zk = 1;
-  const zoom = d3.zoom().scaleExtent([1, 8]).translateExtent([[0, 0], [w, h]]).extent([[0, 0], [w, h]])
+  const MAX = 8;
+  // the slider runs on a log scale, so each stretch of it zooms by the same factor
+  const toSlider = (k_) => Math.log(k_) / Math.log(MAX), fromSlider = (v) => Math.pow(MAX, v);
+  const smooth = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const zoom = d3.zoom().scaleExtent([1, MAX]).translateExtent([[0, 0], [w, h]]).extent([[0, 0], [w, h]])
     .filter((event) => {
       if (event.type === "wheel") return event.ctrlKey || event.metaKey;
       if (event.type.startsWith("touch")) return event.touches.length > 1 || zk > 1;
@@ -258,10 +262,13 @@ function zoomable(svg, layer, w, h, onZoom = () => {}) {
       onZoom(zk);
       svg.style("touch-action", zk > 1.01 ? "none" : "pan-y").style("cursor", zk > 1.01 ? "grab" : null);
       reset.disabled = zk <= 1.01;
+      if (!sliding) slider.value = String(toSlider(zk));
+      slider.setAttribute("aria-valuetext", `${zk.toFixed(1)} times`);
     });
   svg.style("touch-action", "pan-y").call(zoom);
   const wrap = document.createElement("div");
   wrap.className = "zoom-wrap";
+  wrap.style.maxWidth = `${svg.attr("width")}px`;   // the controls line up with the map, which sits centered
   const bar = document.createElement("div");
   bar.className = "zoom-bar";
   const btn = (label, aria, fn) => {
@@ -271,9 +278,17 @@ function zoomable(svg, layer, w, h, onZoom = () => {}) {
     bar.append(b);
     return b;
   };
-  btn("+", "Zoom in", () => svg.call(zoom.scaleBy, 1.8));
-  btn("−", "Zoom out", () => svg.call(zoom.scaleBy, 1 / 1.8));
-  const reset = btn("Reset", "Reset zoom", () => svg.call(zoom.transform, d3.zoomIdentity));
+  const go = (fn) => (smooth ? svg.transition().duration(250) : svg).call(fn);
+  btn("−", "Zoom out", () => go((s) => zoom.scaleBy(s, 1 / 1.6)));
+  // dragging the slider zooms continuously around the middle of what's on screen
+  const slider = document.createElement("input");
+  let sliding = false;
+  Object.assign(slider, {type: "range", min: "0", max: "1", step: "0.005", value: "0", className: "zoom-slider"});
+  slider.setAttribute("aria-label", "Zoom");
+  slider.addEventListener("input", () => { sliding = true; svg.interrupt().call(zoom.scaleTo, fromSlider(+slider.value)); sliding = false; });
+  bar.append(slider);
+  btn("+", "Zoom in", () => go((s) => zoom.scaleBy(s, 1.6)));
+  const reset = btn("Reset", "Reset zoom", () => go((s) => zoom.transform(s, d3.zoomIdentity)));
   reset.disabled = true;
   wrap.append(bar, svg.node());
   return wrap;
@@ -575,6 +590,37 @@ export function raceTable(rows, columns, {search = true, filters = [], pageSize 
     if (tr) { tr.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start"}); tr.focus({preventScroll: true}); }
   };
   return root;
+}
+
+/** Copy `url` to the clipboard, saying so on `btn` for a moment. */
+export function copyLink(btn, url, label = btn.textContent) {
+  const done = (msg) => { btn.textContent = msg; setTimeout(() => (btn.textContent = label), 1800); };
+  (navigator.clipboard?.writeText(url) ?? Promise.reject()).then(() => done("Link copied"), () => { prompt("Copy this link:", url); });
+}
+/** Share buttons: the phone's own share sheet where there is one, then copy link, X, Bluesky and Facebook. */
+export function shareRow(url, text) {
+  const row = document.createElement("div");
+  row.className = "share-row";
+  row.append("Share:");
+  if (navigator.share) {
+    const b = document.createElement("button");
+    b.type = "button"; b.textContent = "Share…";
+    b.onclick = () => navigator.share({title: text, url}).catch(() => {});
+    row.append(b);
+  }
+  const copy = document.createElement("button");
+  copy.type = "button"; copy.textContent = "Copy link";
+  copy.onclick = () => copyLink(copy, url);
+  row.append(copy);
+  const e = encodeURIComponent;
+  for (const [label, href] of [["X", `https://twitter.com/intent/tweet?text=${e(text)}&url=${e(url)}`],
+    ["Bluesky", `https://bsky.app/intent/compose?text=${e(`${text} ${url}`)}`],
+    ["Facebook", `https://www.facebook.com/sharer/sharer.php?u=${e(url)}`]]) {
+    const a = document.createElement("a");
+    a.href = href; a.target = "_blank"; a.rel = "noopener"; a.textContent = label;
+    row.append(a);
+  }
+  return row;
 }
 
 /** Tipping-point chance, with a decimal below 10% (House seats share it thinly): "3.2%", "12%". */
