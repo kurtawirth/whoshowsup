@@ -62,7 +62,8 @@ export function liveStream(liveFile, races, civic, {Generators, force = false}) 
           // never step backward: a count lower than one already shown keeps the higher one
           const tot = (o) => (o ? (o.d ?? 0) + (o.r ?? 0) : -1);
           const best = [v, old, prev].reduce((a, b) => (tot(b) > tot(a) ? b : a));
-          races_[rid] = {...best, called: v.called ?? old?.called ?? null};
+          // civicAPI's search has no county breakdown: keep the counties from our published copy
+          races_[rid] = {...best, counties: best.counties ?? old?.counties, called: v.called ?? old?.called ?? null};
         }
       }
       last = races_;
@@ -157,12 +158,18 @@ function gauss() {
   return u * f;
 }
 
-/** races: races.json rows; m: live_model.json; L: live races {rid: {pct, d, r, margin, called}}. */
-export function liveOdds(races, m, L, {n = 4000} = {}) {
-  const contested = races.filter((r) => r.race_type !== "same_party" && (r.office === "SEN" || r.office === "HOUSE"));
+/** races: races.json rows; m: live_model.json; L: live races {rid: {pct, d, r, margin, called}}.
+ *  partial (optional): {rid: raceMath(...)} for races part-way counted. Each one's own count then moves its odds:
+ *  how far its counted areas run from our forecast (against the county benchmarks where we have them, else the
+ *  count itself) is weighed against the night's shared shift, trusting the count more as more of it is in, and the
+ *  uncounted vote is filled in from the benchmarks of the places still out. Returns each race's chance (p) and
+ *  where we now expect its margin to finish (mFinal, the average over the simulated nights). Senate and House
+ *  control count only those chambers; governors get their own odds. */
+export function liveOdds(races, m, L, {n = 4000, partial = null} = {}) {
+  const contested = races.filter((r) => r.race_type !== "same_party");
   const states = [...new Set(contested.map((r) => r.state_po))].sort(), regions = [...new Set(Object.values(m.region))].sort();
   const K = 1 + regions.length + states.length;
-  const col = (r) => [0, 1 + regions.indexOf(m.region[r.state_po]), 1 + regions.length + states.indexOf(r.state_po)];
+  const col = (r) => [0, 1 + Math.max(0, regions.indexOf(m.region[r.state_po])), 1 + regions.length + states.indexOf(r.state_po)];
   const prior = [m.env_sd ** 2, ...regions.map(() => m.region_sd ** 2), ...states.map(() => m.state_sd ** 2)];
   const sdTot = (r) => Math.max((r.margin_p90 - r.margin_p10) / 2.563, 2.5);
   const own = (r) => Math.max(sdTot(r) ** 2 - m.env_sd ** 2 - m.region_sd ** 2 - m.state_sd ** 2, 4);
@@ -189,26 +196,50 @@ export function liveOdds(races, m, L, {n = 4000} = {}) {
     const ind = r.race_type === "independent" && Boolean(r.rep_candidate);
     const known = x?.called ? (x.called === "D" ? 1 : -1) : null;
     const counted = x && x.margin != null && (x.pct ?? 0) >= 95 ? x.margin : null;
-    return {r, c, ind, known, counted, mean: r.margin_median, sd: Math.sqrt(own(r))};
+    const p = {r, c, ind, known, counted, mean: r.margin_median, own: own(r), sd: Math.sqrt(own(r)), cur: x?.margin ?? null};
+    // part-way counted: what the count says about this race's own miss (g), and how much to trust it (sg, points
+    // of noise). The weights come from replaying 2018-2024 Senate and governor counts county by county against our
+    // backtest forecasts (research/live_odds/calibrate.py), chosen to hold up across early-ballot skews of 3-9 points.
+    const q = partial?.[r.race_id];
+    if (known == null && counted == null && q && q.counted && q.pct >= 1) {
+      const f = Math.min(q.pct, 95) / 100;
+      if (q.gap != null && q.uncounted > 0) {
+        Object.assign(p, {g: q.gap, sg: 6 + 2 * (1 - f), C: q.counted, U: q.uncounted, mc: (100 * q.lead) / q.counted, rem: q.benchRem});
+      } else {
+        Object.assign(p, {g: x.margin - r.margin_median, sg: 0.5 + 6 * (1 - f)});
+      }
+    }
+    return p;
   });
-  const pRace = new Float64Array(plan.length);
+  const pRace = new Float64Array(plan.length), mSum = new Float64Array(plan.length);
   for (let s = 0; s < n; s++) {
     for (let i = 0; i < K; i++) z[i] = gauss();
     for (let i = 0; i < K; i++) { let v = mu[i]; for (let k = 0; k <= i; k++) v += C[i][k] * z[k]; th[i] = v; }
     let sd = 0, hd = 0;
     plan.forEach((p, i) => {
-      let won;
-      if (p.known != null) won = p.known > 0;
-      else if (p.counted != null) won = p.counted + gauss() * 0.5 > 0;
-      else won = p.mean + th[p.c[0]] + th[p.c[1]] + th[p.c[2]] + p.sd * gauss() > 0;
+      let final;
+      if (p.known != null) final = p.cur ?? p.known;
+      else if (p.counted != null) final = p.counted + gauss() * 0.5;
+      else {
+        const shared = th[p.c[0]] + th[p.c[1]] + th[p.c[2]];
+        let miss = shared + p.sd * gauss();
+        if (p.g != null) {  // this race's own count, weighed against the night's shared shift
+          const v = 1 / (1 / p.own + 1 / p.sg ** 2);
+          miss = v * (shared / p.own + p.g / p.sg ** 2) + Math.sqrt(v) * gauss();
+        }
+        final = (p.U ? (p.C * p.mc + p.U * (p.rem + miss)) / (p.C + p.U) : p.mean + miss) + gauss() * 0.5;
+      }
+      const won = p.known != null ? p.known > 0 : final > 0;
+      mSum[i] += final;
       if (won) pRace[i]++;
-      if (won && !p.ind) { if (p.r.office === "SEN") sd++; else hd++; }
+      if (won && !p.ind) { if (p.r.office === "SEN") sd++; else if (p.r.office === "HOUSE") hd++; }
     });
     if (m.senate_base + sd >= 51) senD++;
     if (houseFixedD + hd >= 218) houseD++;
   }
   return {pSen: senD / n, pHouse: houseD / n, used, shift: mu[0],
-    p: Object.fromEntries(plan.map((p, i) => [p.r.race_id, pRace[i] / n]))};
+    p: Object.fromEntries(plan.map((p, i) => [p.r.race_id, pRace[i] / n])),
+    mFinal: Object.fromEntries(plan.map((p, i) => [p.r.race_id, mSum[i] / n]))};
 }
 
 // ---------------------------------------------------------------------------------------------------------
@@ -253,4 +284,117 @@ export function raceLive(race, civicId, {Generators, force = false}) {
     document.addEventListener("visibilitychange", vis);
     return () => { stopped = true; clearTimeout(timer); document.removeEventListener("visibilitychange", vis); };
   });
+}
+
+// ---------------------------------------------------------------------------------------------------------
+// The results page's drill-in: what's left to count, what each side needs, turnout against what we expected, and
+// how the counted areas compare with our forecast. Display only; nothing here feeds the forecast.
+
+/** One race's civicAPI record, with each county's count: {x, counties: Map(countyKey -> {d, r, pct})}. */
+export async function fetchRace(race, civicId) {
+  const res = await fetch(`https://civicapi.org/api/v2/race/${civicId}`);
+  if (!res.ok) throw new Error(res.status);
+  const j = await res.json(), x = j.data ?? j;
+  const top = race.race_type === "rcv_bloc" ? null : civicSides(race, x.candidates);
+  const counties = new Map();
+  for (const [k, v] of Object.entries(x.region_results ?? {})) {
+    const s = civicSides(race, v.candidates);
+    counties.set(countyKey(v.name ?? k), {pct: v.percent_reporting ?? 0, d: s.d, r: s.r});
+  }
+  return {x: top && {pct: x.percent_reporting ?? 0, d: top.d, r: top.r, called: top.called,
+    margin: top.d + top.r ? (100 * (top.d - top.r)) / (top.d + top.r) : null}, counties};
+}
+
+/** Counties from our published copy (the rehearsal writes them as {key: [d, r, pct]}), as fetchRace's Map. */
+export function countiesOf(x) {
+  if (!x?.counties) return null;
+  return new Map(Object.entries(x.counties).map(([k, [d, r, pct]]) => [k, {d, r, pct}]));
+}
+
+/** What share of the votes left each side needs to finish ahead: {D, R} (0-1; <= 0 means already safe, > 1 means
+ *  out of reach), for `left` votes still to count with the D side ahead by `lead` (negative: behind). */
+export function needs(left, lead) {
+  if (!(left > 0)) return null;
+  return {D: (left - lead) / (2 * left), R: (left + lead) / (2 * left)};
+}
+
+/** Everything the drill-in shows for one race. r: races.json row; x: its live count {pct, d, r, margin};
+ *  bench: its county benchmarks [[name, fips, benchmark margin, 2024 margin, share of the state's vote]];
+ *  counties: Map(countyKey -> {d, r, pct}) or null. */
+export function raceMath(r, x, bench, counties) {
+  const counted = (x?.d ?? 0) + (x?.r ?? 0), pct = x?.pct ?? 0;
+  const expected = r.expected_votes ?? null;              // two-party votes we expect (2024 vote x midterm drop-off)
+  const lead = (x?.d ?? 0) - (x?.r ?? 0);
+  const out = {counted, pct, expected, lead, margin: x?.margin ?? null};
+  if (counted && pct >= 5 && pct < 100) {
+    out.projected = counted / (pct / 100);                 // where turnout ends if the count's own estimate holds
+    out.leftCount = out.projected - counted;
+    out.needCount = needs(out.leftCount, lead);
+  } else if (counted && pct >= 100) out.projected = counted;
+  if (expected && counted && counted < expected && pct < 100) {
+    out.leftOurs = expected - counted;                     // if turnout ends where we expected
+    out.needOurs = needs(out.leftOurs, lead);
+  }
+  if (expected && out.projected && pct >= 10) out.turnout = out.projected / expected - 1;
+  // counted areas against our forecast: the margin our county benchmarks expect from the counties counted so far
+  if (bench && counties && counties.size) {
+    let w = 0, wb = 0, projT = 0, expT = 0;
+    const lean = {D: [0, 0], R: [0, 0]};
+    out.countyRows = bench.map(([name, fips, b, p24, share]) => {
+      const c = counties.get(countyKey(name));
+      const n = c ? c.d + c.r : 0;
+      const row = {key: String(fips), label: name.replace(/ (County|Parish|Borough|Census Area|Municipality)$/, ""), name, share, bench: b,
+        pct: c?.pct ?? 0, d: c?.d ?? 0, r: c?.r ?? 0, counted: n};
+      if (n) {
+        row.margin = (100 * (c.d - c.r)) / n;
+        row.gap = row.margin - b;
+        w += n; wb += n * b;
+        if (expected && c.pct >= 10) {
+          const proj = n / (Math.min(c.pct, 100) / 100), exp = share * expected;
+          row.turnout = proj / exp - 1;
+          projT += proj; expT += exp;
+          const side = b >= 0 ? "D" : "R";
+          lean[side][0] += proj; lean[side][1] += exp;
+        }
+      }
+      return row;
+    });
+    if (w) { out.expectedNow = wb / w; out.gap = (100 * lead) / counted - out.expectedNow; out.benchCounted = w; }
+    // the vote still out, county by county (from each county's own share counted, or our expectation where it
+    // hasn't reported), and the margin our benchmarks give it
+    if (expected) {
+      let u = 0, ub = 0;
+      for (const row of out.countyRows) {
+        const left = row.counted && row.pct >= 5 ? (row.counted * (100 - Math.min(row.pct, 100))) / Math.min(row.pct, 100) : Math.max(row.share * expected - row.counted, 0);
+        u += left; ub += left * row.bench;
+      }
+      if (u > 0) { out.uncounted = u; out.benchRem = ub / u; }
+    }
+    if (expT) out.turnoutCounted = projT / expT - 1;
+    out.turnoutLean = Object.fromEntries(Object.entries(lean).filter(([, [p, e]]) => e > 0).map(([k, [p, e]]) => [k, p / e - 1]));
+  }
+  return out;
+}
+
+/** The night so far across every Senate and governor race with county counts: how the counted counties compare
+ *  with our benchmarks, and turnout against what we expected, overall and in Democratic- and Republican-leaning
+ *  counties. One race per state for turnout (a state's Senate and governor races share their voters). */
+export function nightRead(list) {
+  let w = 0, wg = 0;
+  const T = {all: [0, 0], D: [0, 0], R: [0, 0]};
+  const seen = new Set();
+  for (const {r, m} of list) {
+    if (!m?.countyRows || !m.benchCounted) continue;
+    w += m.benchCounted; wg += m.benchCounted * m.gap;
+    if (seen.has(r.state_po)) continue;
+    seen.add(r.state_po);
+    for (const c of m.countyRows) {
+      if (c.turnout == null) continue;
+      const proj = (c.turnout + 1) * c.share * r.expected_votes, exp = c.share * r.expected_votes;
+      for (const k of ["all", c.bench >= 0 ? "D" : "R"]) { T[k][0] += proj; T[k][1] += exp; }
+    }
+  }
+  if (!w) return null;
+  const rate = ([p, e]) => (e ? p / e - 1 : null);
+  return {gap: wg / w, votes: w, turnout: rate(T.all), turnoutD: rate(T.D), turnoutR: rate(T.R), states: seen.size};
 }

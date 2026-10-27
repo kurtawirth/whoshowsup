@@ -162,7 +162,9 @@ function raceTipRows(r) {
 }
 
 // ---------- House hex map ----------
-export function hexMap(races, layout, {width = 960} = {}) {
+/** Options for the results page: fillRace(r) colors a district instead of its rating, tipRows(r) replaces the
+ *  hover card, and onPick(r) runs on click or tap instead of opening the race page. */
+export function hexMap(races, layout, {width = 960, fillRace = null, tipRows = raceTipRows, onPick = null, mark = null} = {}) {
   const t = tokens();
   const byKey = new Map(races.filter((r) => r.office === "HOUSE").map((r) => [`${r.state_po}-${r.district}`, r]));
   const hexes = layout.hexes;
@@ -187,20 +189,26 @@ export function hexMap(races, layout, {width = 960} = {}) {
   let selected = null;
   const outline = (el, on) => d3.select(el).attr("stroke", on ? t.ink : null).attr("stroke-width", on ? 2 : null);
   g.selectAll("path.hex").data(hexes).join("a")
-    .attr("href", (h) => { const r = byKey.get(`${h.state}-${h.district}`); return r ? raceHref(r.race_id) : null; })
+    .attr("href", (h) => { const r = byKey.get(`${h.state}-${h.district}`); return r && !onPick ? raceHref(r.race_id) : null; })
     .append("path").attr("class", "hex")
     .attr("d", (h) => hexPath(X(h.x), Y(h.y), R - gap)) // every tile identical
-    .attr("fill", (h) => { const r = byKey.get(`${h.state}-${h.district}`); return r ? t[r.rating] : t.hair; })
+    .attr("fill", (h) => { const r = byKey.get(`${h.state}-${h.district}`); return r ? (fillRace ? fillRace(r) : t[r.rating]) : t.hair; })
+    .style("cursor", (h) => (onPick && byKey.get(`${h.state}-${h.district}`) ? "pointer" : null))
     .attr("tabindex", 0)
     .on("pointerenter focus", function (event, h) {
       if (isTouch(event) && event.type !== "focus") return;   // phones: tap handles it
       const r = byKey.get(`${h.state}-${h.district}`);
       outline(this, true);
-      if (r) t_.show(event, raceTipRows(r));
+      if (r) t_.show(event, tipRows(r));
     })
     .on("pointermove", (event) => { if (!isTouch(event)) t_.move(event); })
     .on("pointerleave blur", function (event) { if (!isTouch(event) || event.type === "blur") { if (this !== selected) outline(this, false); t_.hide(); } })
     .on("click", function (event, h) {
+      if (onPick) {
+        const r = byKey.get(`${h.state}-${h.district}`);
+        if (r) { event.preventDefault(); t_.hide(); onPick(r); }
+        return;
+      }
       // Phones: the first tap previews the district in a card; the card's button opens the race.
       if (!isTouch(event)) return;
       event.preventDefault();
@@ -211,6 +219,9 @@ export function hexMap(races, layout, {width = 960} = {}) {
       d3.select(this.parentNode).raise();
       if (r) card.show(raceTipRows(r), raceHref(r.race_id));
     });
+  // a dot in the middle of each district whose race has been called (mark(r), the results page)
+  if (mark) g.append("g").style("pointer-events", "none").selectAll("circle").data(hexes.filter((h) => { const r = byKey.get(`${h.state}-${h.district}`); return r && mark(r); }))
+    .join("circle").attr("cx", (h) => X(h.x)).attr("cy", (h) => Y(h.y)).attr("r", Math.max(1.6, R * 0.22)).attr("fill", t.surface).attr("stroke", t.ink).attr("stroke-width", 0.6);
   // State names sit in the open space above each state's island (the layout reserves room for them).
   const labels = layout.labels ?? [];
   const labelG = layer.append("g").style("pointer-events", "none");
@@ -229,12 +240,16 @@ export function hexMap(races, layout, {width = 960} = {}) {
       .style("display", (d) => (R * zk >= 9 || d.n >= 6 ? null : "none")));
 }
 
-// Zoom for a map: pinch or the buttons on phones; buttons, double-click or ctrl+scroll on desktop.
-// At full view a one-finger swipe scrolls the page as usual; once zoomed in it pans the map.
-// `layer` holds everything that zooms; w and h are the svg's viewBox size.
+// Zoom for a map: the slider (drag it for a smooth zoom), the buttons, pinch on phones, double-click or
+// ctrl+scroll on desktop. At full view a one-finger swipe scrolls the page as usual; once zoomed in, dragging
+// pans the map. `layer` holds everything that zooms; w and h are the svg's viewBox size.
 function zoomable(svg, layer, w, h, onZoom = () => {}) {
   let zk = 1;
-  const zoom = d3.zoom().scaleExtent([1, 8]).translateExtent([[0, 0], [w, h]]).extent([[0, 0], [w, h]])
+  const MAX = 8;
+  // the slider runs on a log scale, so each stretch of it zooms by the same factor
+  const toSlider = (k_) => Math.log(k_) / Math.log(MAX), fromSlider = (v) => Math.pow(MAX, v);
+  const smooth = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const zoom = d3.zoom().scaleExtent([1, MAX]).translateExtent([[0, 0], [w, h]]).extent([[0, 0], [w, h]])
     .filter((event) => {
       if (event.type === "wheel") return event.ctrlKey || event.metaKey;
       if (event.type.startsWith("touch")) return event.touches.length > 1 || zk > 1;
@@ -247,10 +262,13 @@ function zoomable(svg, layer, w, h, onZoom = () => {}) {
       onZoom(zk);
       svg.style("touch-action", zk > 1.01 ? "none" : "pan-y").style("cursor", zk > 1.01 ? "grab" : null);
       reset.disabled = zk <= 1.01;
+      if (!sliding) slider.value = String(toSlider(zk));
+      slider.setAttribute("aria-valuetext", `${zk.toFixed(1)} times`);
     });
   svg.style("touch-action", "pan-y").call(zoom);
   const wrap = document.createElement("div");
   wrap.className = "zoom-wrap";
+  wrap.style.maxWidth = `${svg.attr("width")}px`;   // the controls line up with the map, which sits centered
   const bar = document.createElement("div");
   bar.className = "zoom-bar";
   const btn = (label, aria, fn) => {
@@ -260,16 +278,25 @@ function zoomable(svg, layer, w, h, onZoom = () => {}) {
     bar.append(b);
     return b;
   };
-  btn("+", "Zoom in", () => svg.call(zoom.scaleBy, 1.8));
-  btn("−", "Zoom out", () => svg.call(zoom.scaleBy, 1 / 1.8));
-  const reset = btn("Reset", "Reset zoom", () => svg.call(zoom.transform, d3.zoomIdentity));
+  const go = (fn) => (smooth ? svg.transition().duration(250) : svg).call(fn);
+  btn("−", "Zoom out", () => go((s) => zoom.scaleBy(s, 1 / 1.6)));
+  // dragging the slider zooms continuously around the middle of what's on screen
+  const slider = document.createElement("input");
+  let sliding = false;
+  Object.assign(slider, {type: "range", min: "0", max: "1", step: "0.005", value: "0", className: "zoom-slider"});
+  slider.setAttribute("aria-label", "Zoom");
+  slider.addEventListener("input", () => { sliding = true; svg.interrupt().call(zoom.scaleTo, fromSlider(+slider.value)); sliding = false; });
+  bar.append(slider);
+  btn("+", "Zoom in", () => go((s) => zoom.scaleBy(s, 1.6)));
+  const reset = btn("Reset", "Reset zoom", () => go((s) => zoom.transform(s, d3.zoomIdentity)));
   reset.disabled = true;
   wrap.append(bar, svg.node());
   return wrap;
 }
 
 // ---------- state map (Senate / Governors) ----------
-export function stateMap(races, topo, states, {office, width = 960} = {}) {
+/** Same options as hexMap (fillRace, tipRows, onPick), for the results page. */
+export function stateMap(races, topo, states, {office, width = 960, fillRace = null, tipRows = raceTipRows, onPick = null, mark = null} = {}) {
   const t = tokens();
   const fipsToPo = Object.fromEntries(Object.entries(states.fips).map(([po, f]) => [f, po]));
   const byState = d3.group(races.filter((r) => r.office === office), (r) => r.state_po);
@@ -285,15 +312,18 @@ export function stateMap(races, topo, states, {office, width = 960} = {}) {
     const rs = byState.get(po);
     if (!rs) return t.surface; // no race: blank, so gray always means "toss-up"
     const main = rs.find((r) => !r.special) ?? rs[0];
+    if (fillRace) return fillRace(main);
     if (main.race_type === "independent") return t.ind;
     return t[main.rating];
   };
+  // borders: a gap in the page color between filled states, gray where a state is drawn in the page color itself
+  const edge = (po) => (!byState.get(po) || fill(po) === t.surface ? t.axis : t.surface);
   const layer = svg.append("g");                 // everything that zooms
   layer.append("g").selectAll("a").data(feats).join("a")
-    .attr("href", (f) => { const rs = byState.get(fipsToPo[f.id]); return rs ? raceHref((rs.find((r) => !r.special) ?? rs[0]).race_id) : null; })
+    .attr("href", (f) => { const rs = byState.get(fipsToPo[f.id]); return rs && !onPick ? raceHref((rs.find((r) => !r.special) ?? rs[0]).race_id) : null; })
     .append("path").attr("d", path)
     .attr("fill", (f) => fill(fipsToPo[f.id]))
-    .attr("stroke", (f) => (byState.get(fipsToPo[f.id]) ? t.surface : t.axis))
+    .attr("stroke", (f) => edge(fipsToPo[f.id]))
     .attr("stroke-width", (f) => (byState.get(fipsToPo[f.id]) ? 1.2 : 0.8)).attr("stroke-linejoin", "round")
     .attr("vector-effect", "non-scaling-stroke")   // borders stay thin when zoomed in
     .attr("tabindex", (f) => (byState.get(fipsToPo[f.id]) ? 0 : null))
@@ -301,21 +331,25 @@ export function stateMap(races, topo, states, {office, width = 960} = {}) {
       const rs = byState.get(fipsToPo[f.id]);
       if (!rs || (isTouch(event) && event.type !== "focus")) return;
       d3.select(this).attr("stroke", t.ink).attr("stroke-width", 2).raise();
-      t_.show(event, rs.flatMap((r, i) => (i ? [["t-sub", " "], ...raceTipRows(r)] : raceTipRows(r))));
+      t_.show(event, rs.flatMap((r, i) => (i ? [["t-sub", " "], ...tipRows(r)] : tipRows(r))));
     })
     .on("pointermove", (event) => { if (!isTouch(event)) t_.move(event); })
     .on("pointerleave blur", function (event, f) {
       if (isTouch(event) && event.type !== "blur") return;
       const has = byState.get(fipsToPo[f.id]);
-      d3.select(this).attr("stroke", has ? t.surface : t.axis).attr("stroke-width", has ? 1.2 : 0.8);
+      d3.select(this).attr("stroke", edge(fipsToPo[f.id])).attr("stroke-width", has ? 1.2 : 0.8);
       t_.hide();
     })
     .on("click", function (event, f) {
-      // Phones: first tap previews the state's race(s) in a card; the card's button opens the page.
       const rs = byState.get(fipsToPo[f.id]);
+      if (onPick) {
+        if (rs) { event.preventDefault(); t_.hide(); onPick(rs.find((r) => !r.special) ?? rs[0]); }
+        return;
+      }
+      // Phones: first tap previews the state's race(s) in a card; the card's button opens the page.
       if (!rs || !isTouch(event)) return;
       event.preventDefault();
-      if (selectedState) d3.select(selectedState).attr("stroke", t.surface).attr("stroke-width", 1.2);
+      if (selectedState) d3.select(selectedState).attr("stroke", (g) => edge(fipsToPo[g.id])).attr("stroke-width", 1.2);
       selectedState = this;
       d3.select(this).attr("stroke", t.ink).attr("stroke-width", 2).raise();
       const main = rs.find((r) => !r.special) ?? rs[0];
@@ -329,10 +363,23 @@ export function stateMap(races, topo, states, {office, width = 960} = {}) {
     const f = feats.find((f) => fipsToPo[f.id] === r.state_po);
     if (!f) continue;
     const [cx, cy] = path.centroid(f);
-    layer.append("a").attr("href", raceHref(r.race_id)).append("circle").attr("class", "special-dot")
+    layer.append("a").attr("href", onPick ? null : raceHref(r.race_id)).append("circle").attr("class", "special-dot")
       .attr("cx", cx + 14).attr("cy", cy + 10).attr("r", 7)
-      .attr("fill", t[r.rating]).attr("stroke", t.surface).attr("stroke-width", 2).attr("vector-effect", "non-scaling-stroke")
-      .on("pointerenter", (event) => t_.show(event, raceTipRows(r))).on("pointermove", (e) => t_.move(e)).on("pointerleave", () => t_.hide());
+      .attr("fill", fillRace ? fillRace(r) : t[r.rating]).attr("stroke", t.surface).attr("stroke-width", 2).attr("vector-effect", "non-scaling-stroke")
+      .on("pointerenter", (event) => t_.show(event, tipRows(r))).on("pointermove", (e) => t_.move(e)).on("pointerleave", () => t_.hide())
+      .on("click", (event) => { if (onPick) { event.preventDefault(); onPick(r); } });
+  }
+  // a check mark on states whose race has been called (mark(r), the results page)
+  if (mark) {
+    const g = layer.append("g").attr("class", "call-marks").style("pointer-events", "none");
+    for (const f of feats) {
+      const rs = byState.get(fipsToPo[f.id]);
+      const main = rs && (rs.find((r) => !r.special) ?? rs[0]);
+      if (!main || !mark(main)) continue;
+      const [cx, cy] = path.centroid(f);
+      g.append("circle").attr("cx", cx).attr("cy", cy).attr("r", 8.5).attr("fill", t.surface).attr("stroke", t.ink).attr("stroke-width", 1).attr("vector-effect", "non-scaling-stroke");
+      g.append("path").attr("d", `M${cx - 3.8},${cy + 0.2}l2.6,2.8l5-5.6`).attr("fill", "none").attr("stroke", t.ink).attr("stroke-width", 1.8).attr("stroke-linecap", "round").attr("stroke-linejoin", "round");
+    }
   }
   // special-election dots grow more slowly than the map so they don't swallow the state
   return zoomable(svg, layer, 975, 610, (zk) => layer.selectAll("circle.special-dot").attr("r", 7 / Math.sqrt(zk)));
@@ -397,8 +444,14 @@ export const RACE_SORTS = [
   {label: "State A–Z", value: (r) => `${r.state_name} ${String(r.district ?? 0).padStart(2, "0")}`, dir: 1}
 ];
 
-export function raceTable(rows, columns, {search = true, filters = [], pageSize = 50, sort, sorts = null, placeholder = "Search candidates, states, districts", noun = "race"} = {}) {
+/** detail(r): optional; rows become click-to-expand, showing detail(r) in a full-width row underneath (results
+ *  page); pass openSet to keep which rows are open when the table is rebuilt. root.reveal(id) clears the search
+ *  and filters, opens that row and scrolls to it (the maps use it). */
+export function raceTable(rows, columns, {search = true, filters = [], pageSize = 50, sort, sorts = null, placeholder = "Search candidates, states, districts", noun = "race", detail = null, openSet = null} = {}) {
   const root = document.createElement("div");
+  const open = openSet ?? new Set(), idOf = (r) => r.race_id ?? r.key ?? r.label;
+  const selects = [];
+  let searchInput = null;
   const controls = document.createElement("div");
   controls.className = "table-controls";
   let q = "";
@@ -411,6 +464,7 @@ export function raceTable(rows, columns, {search = true, filters = [], pageSize 
     input.style.minWidth = "260px";
     input.addEventListener("input", () => { q = input.value.toLowerCase(); shown = pageSize; render(); });
     controls.append(input);
+    searchInput = input;
   }
   for (const f of filters) {
     const sel = document.createElement("select");
@@ -418,6 +472,7 @@ export function raceTable(rows, columns, {search = true, filters = [], pageSize 
     for (const [v, text] of [["", f.label], ...f.options]) sel.append(new Option(text, v));
     sel.addEventListener("change", () => { active[f.key] = sel.value; shown = pageSize; render(); });
     controls.append(sel);
+    selects.push([f.key, sel]);
   }
   let preset = sorts ? sorts[0] : null;
   let sortSel = null;
@@ -459,6 +514,7 @@ export function raceTable(rows, columns, {search = true, filters = [], pageSize 
     }
     thead.append(th);
   }
+  if (detail) { const th = document.createElement("th"); th.className = "c-more"; th.setAttribute("aria-label", "Details"); thead.append(th); }
   const tbody = table.createTBody();
   wrap.append(table);
   const more = document.createElement("button");
@@ -482,7 +538,7 @@ export function raceTable(rows, columns, {search = true, filters = [], pageSize 
       th.classList.toggle("sorted-asc", th.dataset.sort === sortCol && sortDir === 1);
       th.classList.toggle("sorted-desc", th.dataset.sort === sortCol && sortDir === -1);
     }
-    tbody.replaceChildren(...data.slice(0, shown).map((r) => {
+    tbody.replaceChildren(...data.slice(0, shown).flatMap((r) => {
       const tr = document.createElement("tr");
       for (const c of columns) {
         const td = document.createElement("td");
@@ -492,7 +548,31 @@ export function raceTable(rows, columns, {search = true, filters = [], pageSize 
         if (v instanceof Node) td.append(v); else td.textContent = v ?? "–";
         tr.append(td);
       }
-      return tr;
+      if (!detail) return [tr];
+      const id = idOf(r), isOpen = open.has(id);
+      const more = document.createElement("td");
+      more.className = "c-more";
+      more.innerHTML = `<span class="more-btn">${isOpen ? "Close" : "Details"}<i aria-hidden="true">${isOpen ? "▴" : "▾"}</i></span>`;
+      tr.append(more);
+      tr.className = "expandable" + (isOpen ? " open" : "");
+      tr.tabIndex = 0;
+      tr.setAttribute("aria-expanded", String(isOpen));
+      tr.dataset.id = id;
+      const toggle = (event) => {
+        if (event.target.closest("a, button, input, select")) return;  // links inside the row still work
+        if (open.has(id)) open.delete(id); else open.add(id);
+        render();
+      };
+      tr.addEventListener("click", toggle);
+      tr.addEventListener("keydown", (event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); toggle(event); } });
+      if (!isOpen) return [tr];
+      const dr = document.createElement("tr");
+      dr.className = "detail-row";
+      const td = document.createElement("td");
+      td.colSpan = columns.length + 1;
+      td.append(detail(r));
+      dr.append(td);
+      return [tr, dr];
     }));
     const plural = /[^aeiou]y$/.test(noun) ? `${noun.slice(0, -1)}ies` : /(s|sh|ch|x)$/.test(noun) ? `${noun}es` : `${noun}s`;
     count.textContent = `${data.length.toLocaleString()} ${data.length === 1 ? noun : plural}`;
@@ -500,7 +580,47 @@ export function raceTable(rows, columns, {search = true, filters = [], pageSize 
   }
   render();
   root.append(controls, wrap, more);
+  root.reveal = (id) => {
+    q = ""; if (searchInput) searchInput.value = "";
+    for (const [k, sel] of selects) { sel.value = ""; active[k] = ""; }
+    shown = Math.max(shown, rows.length);
+    open.add(id);
+    render();
+    const tr = tbody.querySelector(`tr[data-id="${CSS.escape(id)}"]`);
+    if (tr) { tr.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start"}); tr.focus({preventScroll: true}); }
+  };
   return root;
+}
+
+/** Copy `url` to the clipboard, saying so on `btn` for a moment. */
+export function copyLink(btn, url, label = btn.textContent) {
+  const done = (msg) => { btn.textContent = msg; setTimeout(() => (btn.textContent = label), 1800); };
+  (navigator.clipboard?.writeText(url) ?? Promise.reject()).then(() => done("Link copied"), () => { prompt("Copy this link:", url); });
+}
+/** Share buttons: the phone's own share sheet where there is one, then copy link, X, Bluesky and Facebook. */
+export function shareRow(url, text) {
+  const row = document.createElement("div");
+  row.className = "share-row";
+  row.append("Share:");
+  if (navigator.share) {
+    const b = document.createElement("button");
+    b.type = "button"; b.textContent = "Share…";
+    b.onclick = () => navigator.share({title: text, url}).catch(() => {});
+    row.append(b);
+  }
+  const copy = document.createElement("button");
+  copy.type = "button"; copy.textContent = "Copy link";
+  copy.onclick = () => copyLink(copy, url);
+  row.append(copy);
+  const e = encodeURIComponent;
+  for (const [label, href] of [["X", `https://twitter.com/intent/tweet?text=${e(text)}&url=${e(url)}`],
+    ["Bluesky", `https://bsky.app/intent/compose?text=${e(`${text} ${url}`)}`],
+    ["Facebook", `https://www.facebook.com/sharer/sharer.php?u=${e(url)}`]]) {
+    const a = document.createElement("a");
+    a.href = href; a.target = "_blank"; a.rel = "noopener"; a.textContent = label;
+    row.append(a);
+  }
+  return row;
 }
 
 /** Tipping-point chance, with a decimal below 10% (House seats share it thinly): "3.2%", "12%". */

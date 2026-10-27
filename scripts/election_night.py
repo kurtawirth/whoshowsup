@@ -95,7 +95,14 @@ POLL_CLOSE_ET = {  # hour (ET) most polls close; used only to order the simulate
     **{s: 22 for s in ("MT", "NV", "UT", "ID")}, **{s: 23 for s in ("CA", "OR", "WA")}, "HI": 24, "AK": 25}
 
 
+county_key = cr.county_key  # the same keys our poller publishes for real counts
+
+
 class Simulation:
+    """One made-up night drawn from our own forecast. Senate and governor races are built county by county from
+    the site's county benchmarks (each county's vote and margin, counted at its own pace), so the page's turnout and
+    benchmark comparisons have something to show; House races are counted as a whole."""
+
     def __init__(self, ours: pd.DataFrame, seed: int = 2026):
         rng = np.random.default_rng(seed)
         self.ours = ours.set_index("race_id")
@@ -105,9 +112,29 @@ class Simulation:
         self.final = mid + shared + rng.normal(0, 1, len(mid)) * sd
         self.close = self.ours["state_po"].map(POLL_CLOSE_ET).fillna(21)
         self.speed = rng.uniform(1.5, 4.0, len(mid))  # hours from poll close to fully counted
-        # each race's vote at full count: the votes we expect there (so votes-left lines look like the real night)
-        self.votes = self.ours["expected_votes"].fillna(200_000) if "expected_votes" in self.ours else pd.Series(200_000, index=self.ours.index)
+        # turnout against what we expected: a national surprise, each race's own, and (turnout-first) a tilt toward
+        # the side the night is breaking for
+        nat_t = np.exp(rng.normal(0.02, 0.04))
+        self.turnout = nat_t * np.exp(rng.normal(0, 0.05, len(mid)))
+        self.votes = (self.ours["expected_votes"].fillna(200_000) if "expected_votes" in self.ours
+                      else pd.Series(200_000.0, index=self.ours.index)) * self.turnout
+        self.early = rng.normal(0, 5, len(mid))  # how far a race's first-counted ballots lean from its final margin
         self.clock = 18.5  # 6:30 p.m. ET
+        bench = json.loads((ROOT / "site" / "src" / "data" / "benchmarks.json").read_text(encoding="utf-8"))
+        self.counties = {}
+        for i, rid in enumerate(self.ours.index):
+            rows = bench.get(rid)
+            if not rows or self.ours.loc[rid, "race_type"] == "same_party":
+                continue
+            shift = float(self.final.iloc[i] - mid.iloc[i])
+            b = np.array([x[2] for x in rows], float)
+            share = np.array([x[4] for x in rows], float)
+            t_c = np.exp(0.012 * shift * np.tanh(b / 15) + rng.normal(0, 0.04, len(rows)))
+            v = float(self.votes.iloc[i]) * share * t_c
+            f = b + shift + rng.normal(0, 2.0, len(rows))
+            self.counties[rid] = {"key": [county_key(x[0]) for x in rows], "v": v, "f": f,
+                                  "delay": rng.uniform(0, 0.4, len(rows)), "speed": rng.uniform(1.0, 3.5, len(rows))}
+            self.final.iloc[i] = float((f * v).sum() / v.sum())  # the state's margin is what its counties add up to
 
     def step(self, hours: float = 0.25) -> dict:
         self.clock += hours
@@ -115,14 +142,31 @@ class Simulation:
         for i, (rid, r) in enumerate(self.ours.iterrows()):
             if r["race_type"] == "same_party" or self.clock < self.close[rid]:
                 continue
-            pct = min(100, 100 * (self.clock - self.close[rid]) / self.speed[i])
-            # early counts wander around the final margin and settle as they fill in
-            m = self.final[rid] + (1 - pct / 100) * 6 * np.sin(3 * i)
-            total = float(self.votes[rid]) * pct / 100
-            d = int(total * (0.5 + m / 200))
-            out[rid] = {"pct": round(pct), "d": d, "r": int(total - d), "margin": round(m, 2),
-                        "called": ("D" if self.final[rid] > 0 else "R") if pct >= 95 or (pct >= 40 and abs(m) > 12) else None,
+            c = self.counties.get(rid)
+            if c:
+                p = np.clip((self.clock - self.close[rid] - c["delay"]) / c["speed"], 0, 1)
+                m = c["f"] + (1 - p) * self.early[i]
+                n = c["v"] * p
+                dc, rc = n * (0.5 + m / 200), n * (0.5 - m / 200)
+                d, rv, tot = int(dc.sum()), int(rc.sum()), float(c["v"].sum())
+                pct = min(100, 100 * float(n.sum()) / tot)
+                margin = 100 * (d - rv) / (d + rv) if d + rv else 0.0
+                counties = {k: [int(a), int(b_), round(100 * float(q))] for k, a, b_, q in zip(c["key"], dc, rc, p) if q > 0}
+            else:
+                pct = min(100, 100 * (self.clock - self.close[rid]) / self.speed[i])
+                # early counts wander around the final margin and settle as they fill in
+                margin = self.final[rid] + (1 - pct / 100) * self.early[i]
+                total = float(self.votes[rid]) * pct / 100
+                d = int(total * (0.5 + margin / 200))
+                rv = int(total - d)
+                counties = None
+            if d + rv == 0:
+                continue
+            out[rid] = {"pct": round(pct), "d": d, "r": rv, "margin": round(margin, 2),
+                        "called": ("D" if self.final[rid] > 0 else "R") if pct >= 95 or (pct >= 40 and abs(margin) > 12) else None,
                         "updated": None}
+            if counties:
+                out[rid]["counties"] = counties
         return out
 
 
