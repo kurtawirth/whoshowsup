@@ -192,7 +192,8 @@ PLACEHOLDER = {"mode": "waiting", "source": "civicAPI", "races": {}, "called": 0
 
 def run() -> None:
     ours = cr.our_races()
-    total = int((ours["race_type"] != "same_party").sum())
+    contested = set(ours.loc[ours["race_type"] != "same_party", "race_id"])  # same-party races are decided already
+    total = len(contested)
     close = close_races(ours)
     live = json.loads(LIVE.read_text(encoding="utf-8")) if LIVE.exists() and not SIMULATE else {"races": {}}
     sim = Simulation(ours) if SIMULATE else None
@@ -200,13 +201,18 @@ def run() -> None:
     log(f"Election night {mode}: {len(close)} close races every {INTERVAL}s, all {total} every 5th round")
     k = 0
     while True:
+        test = []
         if SIMULATE:
             res = sim.step()
         else:
-            res = cr.fetch(None if k % 5 == 0 else close)
+            res = cr.fetch(None if k % 5 == 0 else close, allow_test=PRACTICE, skipped=test)
         live["races"].update(res)
-        called = sum(1 for v in live["races"].values() if v.get("called"))
-        reporting = sum(1 for v in live["races"].values() if (v.get("d") or v.get("r")))
+        counted = [v for rid, v in live["races"].items() if rid in contested]
+        called = sum(1 for v in counted if v.get("called"))
+        reporting = sum(1 for v in counted if (v.get("d") or v.get("r")))
+        if test:
+            log(f"  civicAPI marked {len(test)} races as test data; left out")
+        live["civic_test"] = bool(test)  # the page ignores civicAPI's direct feed while this is set
         live.update({"asof": datetime.now(timezone.utc).isoformat(timespec="seconds"),
                      "mode": "simulation" if SIMULATE else "practice" if PRACTICE else "live",
                      "source": "civicAPI", "called": called, "reporting": reporting, "total": total})

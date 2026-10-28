@@ -9,7 +9,9 @@
 // is slow or refuses. Whenever civicAPI can't be reached (or a race needs more candidates than its search lists,
 // like Alaska's top-four races), the page uses the copy our own poller publishes every few minutes.
 const API = "https://civicapi.org/api/v2/race/search?country=US&startDate=2026-11-03&endDate=2026-11-03&limit=50000&election_type=";
-const NIGHT_START = Date.parse("2026-11-03T22:30:00Z"), NIGHT_END = Date.parse("2026-11-06T05:00:00Z");
+// The first polls close at 6 p.m. ET (23:00 UTC): a count before then is civicAPI testing its feed, which its
+// search doesn't flag, so the page doesn't ask until then, nor while our poller reports test data (civic_test).
+const NIGHT_START = Date.parse("2026-11-03T23:00:00Z"), NIGHT_END = Date.parse("2026-11-06T05:00:00Z");
 
 /** Votes for our forecast's D side and R side, and the winner if called (port of core/civic_results._side_votes). */
 export function civicSides(r, cands) {
@@ -51,10 +53,12 @@ export function liveStream(liveFile, races, civic, {Generators, force = false}) 
   return Generators.observe((notify) => {
     let published = null, direct = null, directAt = 0, last = {};
     let delay = 60_000, timer = null, stopped = false;
+    // same-party races (two Democrats in a California top-two) are decided before the night: not in the tally
+    const contested = new Set(races.filter((r) => r.race_type !== "same_party").map((r) => r.race_id));
     const emit = () => {
       if (!published) return;
       const rehearsal = ["simulation", "practice"].includes(published.mode);
-      const fresh = direct && Date.now() - directAt < 4 * 60_000 && !rehearsal;
+      const fresh = direct && Date.now() - directAt < 4 * 60_000 && !rehearsal && !published.civic_test;
       const races_ = {...(published.races ?? {})};
       if (fresh) {
         for (const [rid, v] of Object.entries(direct)) {
@@ -67,11 +71,11 @@ export function liveStream(liveFile, races, civic, {Generators, force = false}) 
         }
       }
       last = races_;
-      const vals = Object.values(races_);
+      const vals = Object.entries(races_).filter(([rid]) => contested.has(rid)).map(([, v]) => v);
       notify({...published, races: races_, mode: fresh && published.mode === "waiting" ? "live" : published.mode,
         source: fresh ? "direct" : "published", asof: fresh ? new Date(directAt).toISOString() : published.asof,
         called: vals.filter((v) => v.called).length, reporting: vals.filter((v) => (v.d ?? 0) + (v.r ?? 0) > 0).length,
-        total: published.total ?? races.filter((r) => r.race_type !== "same_party").length});
+        total: published.total ?? contested.size});
     };
     // our published copy: re-read whenever the page's own HTML points at a newer one
     let href = liveFile.href;

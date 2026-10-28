@@ -129,9 +129,12 @@ def county_key(s: str) -> str:
     return {"shannon": "oglalalakota"}.get(k, k)
 
 
-def fetch(race_ids: list[str] | None = None, pause: float = 0.25) -> dict:
+def fetch(race_ids: list[str] | None = None, pause: float = 0.25, allow_test: bool = False,
+          skipped: list[str] | None = None) -> dict:
     """Each race's count; Senate and governor races also carry each county's count ({key: [d, r, pct]}), which the
-    results page compares with our county benchmarks and expected turnout."""
+    results page compares with our county benchmarks and expected turnout. civicAPI fills races with made-up
+    counts when it tests its own feed (it did on Oct. 27, flagged test_data); those are left out, and their
+    race_ids added to `skipped`, unless allow_test (practice runs)."""
     m = pd.read_csv(MAP)
     ours = our_races().set_index("race_id")
     if race_ids is not None:
@@ -145,6 +148,11 @@ def fetch(race_ids: list[str] | None = None, pause: float = 0.25) -> dict:
             print(f"  {row.race_id}: {e!r}")
             continue
         x = x.get("data", x)
+        if x.get("test_data") and not allow_test:
+            if skipped is not None:
+                skipped.append(row.race_id)
+            time.sleep(pause)
+            continue
         d, r, called = _side_votes(ours.loc[row.race_id].to_dict(), x.get("candidates") or [])
         out[row.race_id] = {"pct": x.get("percent_reporting"), "d": d, "r": r,
                             "margin": round(100 * (d - r) / (d + r), 2) if d + r else None,
