@@ -1,10 +1,11 @@
 {
- "forecast_date": "2026-10-28",
- "finished_at": "2026-10-28 07:20",
+ "forecast_date": "2026-10-29",
+ "finished_at": "2026-10-29 07:25",
  "refresh": true,
  "failed_steps": [],
  "warnings": [
   "Poll check: HOUSE NM-1: recent Wikipedia poll table without Melanie Stansbury vs Didi Okpareke (columns: Melanie Stansbury (D), Didi Okapareke (R)) on 2026_United_States_House_of_Representatives_elections_in_New_Mexico",
+  "Poll check: GOV TX: recent Decision Desk poll (YouGov Blue / 254 Labs, Oct 26) matched no race: Vikki Goodwin, Dan Patrick",
   "Poll check: GOV TX: recent Decision Desk poll (Slingshot Strategies / Texas Public Opinion Research, Oct 18) matched no race: Dan Patrick, Vikki Goodwin",
   "Poll check: GOV TX: recent Decision Desk poll (Pollfinity, Oct 18) matched no race: Dan Patrick, Vikki Goodwin",
   "Poll check: GOV TX: recent Decision Desk poll (ActiVote, Oct 17) matched no race: Dan Patrick, Vikki Goodwin",
