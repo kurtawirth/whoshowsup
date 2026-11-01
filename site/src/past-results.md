@@ -29,8 +29,9 @@ const shareOf = (v, i) => (v && v[2] ? (100 * v[i]) / v[2] : null);
 const previousKey = (k) => { const [o, y, sp] = k.split("-"); return `${o}-${+y - 4}${sp ? "-special" : ""}`; };
 // remembered across state and election changes (those rebuild the controls)
 const memo = {election: params.get("election") ?? "PRES-2024", shift: params.get("mode") === "shift"};
-// Browser history: the address bar follows the view. Opening a state or a county adds a step the back button
-// returns to; changing the election or Result/Shift just updates the address.
+// Browser history: the address bar follows the view. Opening a state adds a step, so the back button returns to
+// the national map (even when the page was opened straight onto a state); picking a county, the election or
+// Result/Shift just updates the address.
 const nav = {first: true, target: null, timer: null, cur: null};
 const viewQuery = ({state, county, election, shift}) => {
   const q = new URLSearchParams();
@@ -48,10 +49,17 @@ const queryView = (search) => {
 // commit after a short pause, so a click that changes both the state and the county is one step
 nav.commit = () => {
   const qs = viewQuery(nav.cur);
+  if (nav.first && nav.cur.state && !history.state?.wsu) {
+    // opened on a state: put the national map behind it, so back goes there
+    history.replaceState({wsu: 1}, "", location.pathname + viewQuery({...nav.cur, state: "", county: null}));
+    history.pushState({wsu: 1}, "", location.pathname + qs);
+    nav.first = false;
+    return;
+  }
   if (qs === location.search) { if (nav.target === qs) nav.target = null; nav.first = false; return; }
   const was = queryView(location.search);
-  const newStep = !nav.first && nav.target === null && (was.state !== nav.cur.state || (was.county ?? null) !== (nav.cur.county ?? null));
-  history[newStep ? "pushState" : "replaceState"](null, "", location.pathname + qs);
+  const newStep = !nav.first && nav.target === null && was.state !== nav.cur.state;
+  history[newStep ? "pushState" : "replaceState"]({wsu: 1}, "", location.pathname + qs);
   if (nav.target === qs) nav.target = null;
   nav.first = false;
 };
