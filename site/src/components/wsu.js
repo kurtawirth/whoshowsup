@@ -95,10 +95,18 @@ export function touchCard() {
     cardEl.setAttribute("role", "dialog");
     cardEl.innerHTML = `<button class="close" aria-label="Close">×</button><div class="body"></div><a class="go"></a>`;
     cardEl.querySelector(".close").addEventListener("click", () => cardEl.classList.remove("open"));
+    // a card opened with onGo runs it in place of following the link (the link stays as the fallback)
+    cardEl.querySelector(".go").addEventListener("click", (e) => {
+      if (!cardEl.onGo) return;
+      e.preventDefault();
+      cardEl.classList.remove("open");
+      cardEl.onGo();
+    });
     document.body.appendChild(cardEl);
   }
   return {
-    show(rows, href, label = "Open the full forecast →") {
+    show(rows, href, label = "Open the full forecast →", onGo = null) {
+      cardEl.onGo = onGo;
       cardEl.querySelector(".body").replaceChildren(...rows.map(([cls, text]) => {
         const d = document.createElement("div");
         d.className = cls;
@@ -243,7 +251,7 @@ export function hexMap(races, layout, {width = 960, fillRace = null, tipRows = r
 // Zoom for a map: the slider (drag it for a smooth zoom), the buttons, pinch on phones, double-click or
 // ctrl+scroll on desktop. At full view a one-finger swipe scrolls the page as usual; once zoomed in, dragging
 // pans the map. `layer` holds everything that zooms; w and h are the svg's viewBox size.
-function zoomable(svg, layer, w, h, onZoom = () => {}) {
+export function zoomable(svg, layer, w, h, onZoom = () => {}) {
   let zk = 1;
   const MAX = 8;
   // the slider runs on a log scale, so each stretch of it zooms by the same factor

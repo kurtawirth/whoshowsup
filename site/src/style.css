@@ -234,6 +234,7 @@ figure { max-width: none; margin: 0; }
 .wsu-card .t-title { font-weight: 700; font-size: 16px; padding-right: 30px; }
 .wsu-card .t-sub { color: var(--ink-3); font-size: 13px; }
 .wsu-card .t-val { font-weight: 700; font-size: 20px; }
+.wsu-card .t-line { font-size: 14px; font-variant-numeric: tabular-nums; }
 .wsu-card .close { position: absolute; top: 8px; right: 10px; border: 0; background: none; font-size: 24px; line-height: 1;
   color: var(--ink-3); cursor: pointer; padding: 4px 8px; }
 .wsu-card .go { display: block; margin-top: 12px; text-align: center; padding: 10px; border-radius: 10px;

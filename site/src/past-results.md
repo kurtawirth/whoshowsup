@@ -3,7 +3,7 @@ title: Past results
 ---
 
 ```js
-import {tokens, tip, isTouch} from "./components/wsu.js";
+import {tokens, tip, isTouch, touchCard, zoomable} from "./components/wsu.js";
 import * as topojson from "npm:topojson-client";
 const data = FileAttachment("data/counties.json").json();
 const topo = FileAttachment("data/counties-10m.json").json();
@@ -61,7 +61,7 @@ nav.commit = () => {
 
 # How every county voted
 
-<p class="dek">Pick a state and an election to see how its counties voted, or how they shifted since the last time. Tap or click a county for its full history: every presidential race since 2000, recent Senate and governor races, and turnout. These are past results only; they are not part of the forecast.</p>
+<p class="dek">Pick a state and an election to see how its counties voted, or how they shifted since the last time. Tap or click a state to open it, then a county for its vote count and full history: every presidential race since 2000, recent Senate and governor races, and turnout. These are past results only; they are not part of the forecast.</p>
 
 ```js
 const stateList = Object.entries(states.names).filter(([po]) => po !== "DC").sort((a, b) => a[1].localeCompare(b[1]));
@@ -91,7 +91,9 @@ const mode = Generators.input(modeInput);
 
 ```js
 const picked = Mutable(params.get("county"));
-const pick = (fips) => { picked.value = fips; };
+// the map outlines the picked county itself (sel.draw), so picking one doesn't redraw the map or undo a zoom
+const sel = {fips: params.get("county"), draw: null};
+const pick = (fips) => { picked.value = fips; sel.fips = fips; sel.draw?.(); };
 ```
 
 ```js
@@ -208,10 +210,55 @@ function countyMap(width) {
   const [[x0, y0], [x1, y1]] = path.bounds(focus ?? {type: "FeatureCollection", features: shown});
   const vb = [x0 - 6, y0 - 6, x1 - x0 + 12, y1 - y0 + 12];
   const height = Math.min(width * (vb[3] / vb[2]), 620);
-  const svg = d3.create("svg").attr("viewBox", vb).attr("width", width).attr("height", height)
+  const svg = d3.create("svg").attr("viewBox", [0, 0, vb[2], vb[3]]).attr("width", width).attr("height", height)
     .attr("role", "img").attr("aria-label", `County map of ${electionLabel(election)} results${statePo ? ` in ${states.names[statePo]}` : ""}`)
     .style("max-width", "100%").style("height", "auto").style("display", "block");
-  const tt = tip();
+  // `layer` zooms; inside it the map is shifted so the viewBox starts at 0,0, as zoomable() expects
+  const layer = svg.append("g");
+  const g = layer.append("g").attr("transform", `translate(${-vb[0]},${-vb[1]})`);
+  const tt = tip(), card = touchCard();
+  card.hide();
+  const year = +election.split("-")[1];
+  const pctOf = (n, v) => `${((100 * n) / v[2]).toFixed(1)}%`;
+  // the vote count, for a county or a whole state: each party's votes and share, others, total and turnout
+  const countRows = (v, adults) => {
+    const out = [["t-val", lean(marginOf(v))],
+      ["t-line", `Democrats ${v[0].toLocaleString()} (${pctOf(v[0], v)})`],
+      ["t-line", `Republicans ${v[1].toLocaleString()} (${pctOf(v[1], v)})`]];
+    const other = v[2] - v[0] - v[1];
+    if (other / v[2] >= 0.001) out.push(["t-line", `Others ${other.toLocaleString()} (${pctOf(other, v)})`]);
+    out.push(["t-sub", `${v[2].toLocaleString()} votes in all${adults ? `; turnout ${Math.round((100 * v[2]) / adults)}% of adult citizens` : ""}`]);
+    return out;
+  };
+  const adultsOf = (fips) => { const cv = data.cvap[fips] ?? {}; return cv[String(year)] ?? cv[String(year - 1)] ?? null; };
+  function countyCard(f) {
+    const r = data.results[f.id] ?? {}, v = r[election], po = poOf[f.id.slice(0, 2)];
+    const out = [["t-title", f.id === "02000" ? "Alaska (statewide)" : `${nameOf(f.id)}, ${states.names[po]}`], ["t-sub", electionLabel(election)]];
+    if (!v) out.push(["t-sub", "No result for this election"]);
+    else {
+      out.push(...countRows(v, adultsOf(f.id)));
+      const m0 = marginOf(r[prevKey]);
+      if (m0 != null) { const dm = marginOf(v) - m0; out.push(["t-sub", `${prevKey.split("-")[1]}: ${lean(m0)}${Math.abs(dm) < 0.05 ? ", no change" : `, so a ${Math.abs(dm).toFixed(1)}-point shift toward ${dm > 0 ? "Democrats" : "Republicans"}`}`]); }
+    }
+    card.show(out, data.results[f.id] ? viewQuery({state: po, county: f.id, election, shift}) : null, "See its full history ↓", () => {
+      document.querySelector(".pr-panel")?.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start"});
+    });
+  }
+  function stateCard(po) {
+    const fips = states.fips[po];
+    const v = shown.reduce((a, f) => { const x = f.id.startsWith(fips) ? data.results[f.id]?.[election] : null; if (x) { a[0] += x[0]; a[1] += x[1]; a[2] += x[2]; a.n++; a.d += x[0] > x[1]; } return a; }, Object.assign([0, 0, 0], {n: 0, d: 0}));
+    const out = [["t-title", states.names[po]], ["t-sub", electionLabel(election)]];
+    if (!v.n) out.push(["t-sub", "No race here in this election"]);
+    else {
+      out.push(...countRows(v, null));
+      if (po !== "AK") out.push(["t-sub", `Democrats carried ${v.d} of ${v.n} ${po === "LA" ? "parishes" : po === "VA" ? "counties and cities" : "counties"}`]);
+    }
+    card.show(out, viewQuery({state: po, election, shift}), `Open ${states.names[po]} →`, () => {
+      pick(null);
+      stateInput.value = po;
+      stateInput.dispatchEvent(new Event("input", {bubbles: true}));
+    });
+  }
   const rows = (f) => {
     const r = data.results[f.id] ?? {}, v = r[election], m = marginOf(v);
     const out = [["t-title", f.id === "02000" ? "Alaska (statewide)" : `${nameOf(f.id)}, ${statePo ? states.names[statePo] : poOf[f.id.slice(0, 2)]}`]];
@@ -220,7 +267,7 @@ function countyMap(width) {
     if (shift && r[prevKey]) out.push(["t-sub", `Shift since ${prevKey.split("-")[1]}: ${m - marginOf(r[prevKey]) >= 0 ? "toward Democrats" : "toward Republicans"} by ${Math.abs(m - marginOf(r[prevKey])).toFixed(1)}`]);
     return out;
   };
-  svg.append("g").selectAll("path").data(shown).join("path")
+  g.append("g").selectAll("path").data(shown).join("path")
     .attr("d", path).attr("fill", (f) => { const v = valueOf(f.id); return v == null ? t.surface : color(v); })
     .attr("stroke", (f) => (valueOf(f.id) == null ? t["ink-3"] : t.surface)).attr("stroke-dasharray", (f) => (valueOf(f.id) == null ? "2,2" : null))
     .attr("stroke-width", statePo ? 0.6 : 0.15).attr("vector-effect", "non-scaling-stroke")
@@ -228,20 +275,28 @@ function countyMap(width) {
     .on("pointerenter", function (event, f) { if (isTouch(event)) return; d3.select(this).attr("stroke", t.ink).attr("stroke-width", 1.5).raise(); tt.show(event, rows(f)); })
     .on("pointermove", (event) => { if (!isTouch(event)) tt.move(event); })
     .on("pointerleave", function (event, f) { if (isTouch(event)) return; d3.select(this).attr("stroke", valueOf(f.id) == null ? t["ink-3"] : t.surface).attr("stroke-width", statePo ? 0.6 : 0.15); tt.hide(); })
+    // the whole country: a click previews the state, whose card opens it; a state: a click picks the county
+    // (its history fills in below the map) and shows its vote count in the card
     .on("click", (event, f) => {
       tt.hide();
-      pick(f.id);
       const po = poOf[f.id.slice(0, 2)];
-      if (!statePo && po) { stateInput.value = po; stateInput.dispatchEvent(new Event("input", {bubbles: true})); }
+      if (!po) return;
+      if (!statePo) { stateCard(po); return; }
+      if (data.results[f.id]) pick(f.id);
+      countyCard(f);
     });
   // state borders on top
-  if (!statePo) svg.append("path").datum(topojson.mesh(topo, topo.objects.states, (a, b) => a !== b && a.id !== "02" && b.id !== "02"))
-    .attr("d", path).attr("fill", "none").attr("stroke", t.surface).attr("stroke-width", statePo ? 0 : 1).attr("vector-effect", "non-scaling-stroke");
-  if (picked && data.results[picked] && inState(picked)) {
-    const f = shown.find((f) => f.id === picked);
-    if (f) svg.append("path").datum(f).attr("d", path).attr("fill", "none").attr("stroke", t.ink).attr("stroke-width", 2.5).attr("vector-effect", "non-scaling-stroke").attr("pointer-events", "none");
-  }
-  return svg.node();
+  if (!statePo) g.append("path").datum(topojson.mesh(topo, topo.objects.states, (a, b) => a !== b && a.id !== "02" && b.id !== "02"))
+    .attr("d", path).attr("fill", "none").attr("stroke", t.surface).attr("stroke-width", 1).attr("vector-effect", "non-scaling-stroke")
+    .attr("pointer-events", "none");
+  const outline = g.append("path").attr("fill", "none").attr("stroke", t.ink).attr("stroke-width", 2.5)
+    .attr("vector-effect", "non-scaling-stroke").attr("pointer-events", "none");
+  sel.draw = () => {
+    const f = sel.fips && data.results[sel.fips] && inState(sel.fips) ? shown.find((f) => f.id === sel.fips) : null;
+    outline.attr("d", f ? path(f) : null);
+  };
+  sel.draw();
+  return zoomable(svg, layer, vb[2], vb[3]);
 }
 display(resize((w) => countyMap(w)));
 ```
@@ -297,7 +352,7 @@ function countyPanel(fips) {
   </div>`;
 }
 function waveWord(b) { return b >= 1.15 ? "turnout swings harder than the state's" : b <= 0.85 ? "turnout swings less than the state's" : "turnout moves about in step with the state"; }
-display(picked && data.results[picked] ? countyPanel(picked) : html`<p class="caption">${isTouchDevice() ? "Tap" : "Click"} a county for its full history.</p>`);
+display(picked && data.results[picked] ? countyPanel(picked) : html`<p class="caption">${isTouchDevice() ? "Tap" : "Click"} ${statePo ? "a county for its vote count and full history" : "a state to open it"}.</p>`);
 function isTouchDevice() { return matchMedia("(pointer: coarse)").matches; }
 ```
 
