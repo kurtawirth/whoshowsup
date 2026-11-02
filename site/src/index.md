@@ -35,7 +35,22 @@ const headline = headlineFor(top.p_house_d, top.p_senate_d);
 const daysLeft = Math.round((new Date(`${top.election_day}T12:00:00`) - new Date(`${top.forecast_date}T12:00:00`)) / 864e5);
 ```
 
-<p class="kicker">2026 midterm forecast · Updated ${date(top.forecast_date)} · ${daysLeft} days to Election Day</p>
+```js
+// Election week: a banner pointing to the live results (written from the reader's clock, so it changes on its own)
+{
+  const now = Date.now(), open = Date.parse("2026-11-03T23:00:00Z"), day = Date.parse("2026-11-03T05:00:00Z");
+  if (now < Date.parse("2026-11-08T05:00:00Z")) {
+    const text = now >= open ? "Election night: live results and odds, race by race"
+      : now >= day ? "Election night is tonight: live results and odds for every race from 6 p.m. Eastern"
+      : now >= day - 864e5 ? "Election night is tomorrow: live results and odds for every race from 6 p.m. Eastern Tuesday"
+      : "Election night: live results and odds for every race, from 6 p.m. Eastern on November 3";
+    const a = html`<a class="night-banner" href="${link("results")}"><b>${now >= open ? "Live" : "Tuesday"}</b><span>${text}</span><span aria-hidden="true">→</span></a>`;
+    display(a);
+  }
+}
+```
+
+<p class="kicker">2026 midterm forecast · Updated ${date(top.forecast_date)} · ${daysLeft} day${daysLeft === 1 ? "" : "s"} to Election Day</p>
 
 # ${headline}
 

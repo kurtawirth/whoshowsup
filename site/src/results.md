@@ -3,7 +3,7 @@ title: Election night
 ---
 
 ```js
-import {tokens, pct, date, sides, raceLink, raceHref, raceTable, withSearch, hexMap, stateMap, shareRow} from "./components/wsu.js";
+import {tokens, pct, margin, date, sides, raceLink, raceHref, raceTable, withSearch, hexMap, stateMap, shareRow} from "./components/wsu.js";
 import {liveStream, liveOdds, raceMath, countiesOf, fetchRace, nightRead} from "./components/live.js";
 import {racePanel, finish, sideText, lastName, k} from "./components/night.js";
 const liveModel = FileAttachment("data/live_model.json").json();
@@ -42,8 +42,21 @@ const TABS = [["overview", "Overview"], ["senate", "Senate"], ["house", "House"]
 const hash = location.hash.slice(1);
 const hashTab = TABS.some(([k]) => k === hash) ? hash : /^senate-/.test(hash) ? "senate" : /^house-/.test(hash) ? "house" : /^governor-/.test(hash) ? "governors" : null;
 const ui = {tab: hashTab ?? "overview", mapMode: {overview: "lead", senate: "lead", house: "lead", governors: "lead"}, mapOffice: {overview: "SEN"},
-  open: hashTab && hashTab !== hash ? {[hashTab]: new Set([hash])} : {}};
+  open: hashTab && hashTab !== hash ? {[hashTab]: new Set([hash])} : {},
+  mem: {},          // each table's search, filters, sort and "Show more", kept across updates
+  prev: {}, changedAt: {},  // each race's last count, and when it last changed (its row flashes)
+  tables: {}};      // the tables now on the page, so the maps and "Find a race" can open a race in them
 const openSet = (k) => (ui.open[k] ??= new Set());
+const memOf = (k) => (ui.mem[k] ??= {});
+```
+
+```js
+// "4 min ago" beside the update time, kept current between updates
+const agoText = (t) => { const m = Math.floor((Date.now() - t) / 60000); return m < 0 || m > 360 ? "" : m < 1 ? " (just now)" : ` (${m} min ago)`; };
+{
+  const tick = setInterval(() => { for (const el of document.querySelectorAll(".ago")) el.textContent = agoText(+el.dataset.t); }, 20000);
+  invalidation.then(() => clearInterval(tick));
+}
 ```
 
 ```js
@@ -62,6 +75,40 @@ const raceName = (r) => (r.office === "HOUSE" ? `House: ${r.label}` : `${r.state
 const contested = races.filter((r) => r.race_type !== "same_party");
 const tagColor = (tag) => (tag === "D" ? t.dem : tag === "R" ? t.rep : t.ind);
 const chip = (tag) => html`<span class="party-chip ${tag.toLowerCase()}">${tag}</span>`;
+const smooth = () => (matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth");
+```
+
+```js
+// Which ballots each state counts first, and which way its count has tended to move as the rest come in
+// (mechanics, not a prediction), for the states with the closest Senate and governor races.
+// From AP's 2026 "what to expect" notes, Votebeat, and state and local reporting (checked Nov. 2, 2026).
+const COUNT_ORDER = {
+  AK: "Election-night results include early in-person and Election Day votes; most mail ballots are counted over the following days and can arrive up to 10 days late. Any ranked-choice tally comes Nov. 18. Late ballots have moved results before, but not consistently toward either party.",
+  AZ: "Early ballots received before Election Day are reported about an hour after polls close, then Election Day votes. Mail ballots dropped off on Election Day take days to count; they leaned Republican in 2020 and 2022 and Democratic in 2024.",
+  FL: "Mail and early in-person votes post soon after polls close, then Election Day precincts; most of the vote is in by late evening. Mail has leaned Democratic and early in-person voting Republican, so first results are mixed, with no consistent late shift.",
+  GA: "Early in-person and mail votes come shortly after 7 p.m., then Election Day votes; provisional and military ballots take days. Early returns have leaned Democratic and then moved toward Republicans: in 2024's presidential race, an early 11-point Democratic lead became a 2-point Republican win.",
+  IA: "Most counties release absentee and early votes first, often with some Election Day votes, and counting usually finishes within hours. Early returns have tended to lean Democratic, so the count can move toward Republicans.",
+  KS: "Nearly every county posts early and mail votes first, with Election Day votes added later in the night. Under a court order, mail postmarked by Election Day still counts if it arrives within three days.",
+  ME: "Towns report all kinds of ballots together, slowly; many count by hand, and in 2024 about 90% was in by the next afternoon. The Senate race and the 2nd District may need a ranked-choice tally, which has usually come the following week.",
+  MI: "First updates mix mail, early and Election Day votes; big counties such as Wayne, Oakland and Macomb report later, and Detroit can run into the next morning. In 2024's presidential race the Democrat led early, the Republican pulled ahead, and that lead then narrowed.",
+  MN: "Absentee ballots are processed ahead of time but released with precinct results after 8 p.m. Hennepin County reports nearly everything at once; Ramsey and Dakota are slower. Counting usually finishes overnight.",
+  NC: "Mail ballots post first after polls close at 7:30 p.m., then early in-person votes, then Election Day precincts until about 1 a.m.; nearly all of the vote is counted on election night.",
+  NE: "Most counties release early and absentee votes first; about half, including Douglas and Lancaster, report few Election Day votes at first. In 2024, 90% was in by about 2 a.m. Central.",
+  NH: "Absentee and in-person ballots are counted together, town by town, and many small towns count by hand; in 2024, 90% was in by about 1:45 a.m. Early swings reflect which towns report first, not the kind of ballot.",
+  NV: "Early in-person votes and mail received before Election Day come first, a few hours after polls close. Mail postmarked by Election Day counts if it arrives by Nov. 7, so counting runs for days; in 2022, late Clark County mail moved the Senate race toward the Democrat.",
+  OH: "Early and absentee votes come first, then Election Day votes; in 2024, 90% was in by about 11 p.m. Under a 2025 law, most mail ballots must now arrive by the time polls close.",
+  PA: "Mail ballots can't be opened before 7 a.m. on Election Day, so counties count them overnight alongside Election Day votes. Mail has leaned Democratic: in 2024 the Republican Senate winner's lead shrank as later ballots came in.",
+  SC: "Most counties post early in-person and many mail results first, some with Election Day votes; in 2024, half the vote was in by about 9 p.m. and 90% by about 11 p.m.",
+  TX: "Early in-person and mail votes come first, shortly after polls close, then Election Day votes; large counties are slower.",
+  WI: "Absentee ballots can't be processed before Election Day, and Milwaukee and other cities that count them centrally report late, often after midnight. Those late batches have leaned Democratic, so the count can move toward Democrats late in the night."
+};
+function countOrderList() {
+  const list = Object.entries(COUNT_ORDER).sort((a, b) => (statesMeta.names?.[a[0]] ?? a[0]).localeCompare(statesMeta.names?.[b[0]] ?? b[0]));
+  return html`<details class="schedule"><summary>How each state counts</summary>
+    <p class="caption">Which ballots each state usually reports first, and which way its count has tended to move as the rest come in, for the states with the closest Senate and governor races. An early lead can mean little until the late ballots are in.</p>
+    <dl class="count-list">${list.map(([po, text]) => html`<dt>${statesMeta.names?.[po] ?? po}</dt><dd>${text}</dd>`)}</dl>
+    <p class="caption">From the Associated Press's 2026 notes on what to expect in each state, <a href="https://www.votebeat.org">Votebeat</a>, and state and local reporting.</p></details>`;
+}
 ```
 
 ```js
@@ -82,6 +129,13 @@ const base = withSearch(contested).map((r) => {
     fav: r.p_dem >= 0.5 ? "D" : "R", closes: (CLOSE[r.state_po] ?? [21, 21])[1],
     flipped: Boolean(x.called && r.incumbent_party && tagOf(x.called) !== r.incumbent_party)};
 });
+// which races just got new votes: their rows flash once
+for (const d of base) {
+  const was = ui.prev[d.race_id];
+  if (was != null && was !== d.m.counted) ui.changedAt[d.race_id] = Date.now();
+  ui.prev[d.race_id] = d.m.counted;
+}
+const justChanged = (d) => Date.now() - (ui.changedAt[d.race_id] ?? 0) < 8000;
 // Live odds (components/live.js): the races that have finished counting move every race still out, and each
 // race's own partial count moves its own odds; mFinal is where we now expect each margin to finish
 const odds = started ? liveOdds(races, liveModel, live.races, {partial: Object.fromEntries(base.map((d) => [d.race_id, d.m]))}) : null;
@@ -98,15 +152,24 @@ const importance = (d) => (d.office === "GOV" ? 0.5 - Math.abs(d.p_dem - 0.5) : 
 
 ${live.mode === "simulation" ? html`<div class="sim-banner"><b>Rehearsal.</b> These are made-up results for testing the page, not real votes.</div>` : live.mode === "practice" ? html`<div class="sim-banner"><b>Practice run.</b> Real counts from civicAPI, fetched to test the page; not published.</div>` : ""}
 
-<p class="kicker">Election night · November 3, 2026${asof && started ? ` · Updated ${etTime(asof)}${live.source === "direct" ? " · live from civicAPI" : ""}` : ""}</p>
+${html`<p class="kicker">Election night · November 3, 2026${started ? ` · ${live.called} of ${live.total} races called` : ""}${asof && started ? html` · Updated ${etTime(asof)}<span class="ago" data-t=${+asof}>${agoText(+asof)}</span>${live.source === "direct" ? " · live from civicAPI" : ""}` : ""}</p>`}
 
-# ${started ? `${live.called} of ${live.total} races called` : "Results will appear here on election night"}
+# ${started && headline ? headline : started ? `${live.called} of ${live.total} races called` : "Results will appear here on election night"}
 
 <p class="dek">${started
-  ? html`Vote counts from <a href="https://civicapi.org">civicAPI</a>, refreshed every few minutes, next to what our forecast expected. Click any race for its full count: the votes left, what each side needs of them, and turnout against what we expected. This page updates on its own. Calls are civicAPI's, not ours.`
-  : html`From the first poll closings at 6 p.m. Eastern on November 3, the count for every House, Senate and governor race will appear here every few minutes, next to what our forecast expected, with a running tally of the House and Senate. ${(() => { const days = Math.ceil((new Date("2026-11-03T23:00:00Z") - new Date()) / 864e5); return days > 0 ? `That's ${days} day${days === 1 ? "" : "s"} away.` : ""; })()}`}</p>
+  ? html`Live results and odds, updated every few minutes. The odds are our estimates from the counts so far, not calls, and will swing as votes come in.`
+  : html`From the first poll closings at 6 p.m. Eastern on November 3, the count for every House, Senate and governor race will appear here every few minutes, next to what our forecast expected, with a running tally of the House and Senate. ${(() => { const today = new Date().toLocaleDateString("en-CA", {timeZone: "America/New_York"}), days = Math.round((Date.parse("2026-11-03") - Date.parse(today)) / 864e5); return days > 1 ? `That's ${days} days away.` : days === 1 ? "That's tomorrow." : days === 0 ? "That's tonight." : ""; })()}`}</p>
 
-${shareRow("https://whoshowsup.net/results", started ? "Live 2026 election results and odds, race by race, from Who Shows Up" : "2026 election night results, race by race, from Who Shows Up")}
+```js
+// how the page works, folded away until asked for
+if (started) display(html`<details class="how-works"><summary>How this page works</summary>
+  <p>Vote counts come from <a href="https://civicapi.org">civicAPI</a>, refreshed every few minutes, next to what our forecast expected this morning. Calls are civicAPI's, not ours. Click any race for its full count: the votes left, what each side needs of them, where the uncounted vote leans, and turnout against what we expected. The page updates on its own.</p>
+  ${odds ? html`<p>${odds.used
+    ? `Live odds: in the ${odds.used} race${odds.used === 1 ? "" : "s"} at least 95% counted, results are running about ${Math.abs(odds.shift).toFixed(1)} points more ${odds.shift >= 0 ? "Democratic" : "Republican"} than our forecast nationally (more or less in some regions and states). We move every race still out by that much, count called races for their winners, and play out the rest of the night thousands of times.`
+    : "Live odds: until races finish counting, the night's overall shift comes from our forecast."} Each race's own count also moves its odds, more as more of it comes in: where we have county results, we compare the counted counties with our forecast and fill in the counties still out from their benchmarks. The same results always give the same odds.</p>` : ""}
+  ${read ? html`<p>The turnout and counted-counties figures compare every county that has reported in the ${read.states} states with Senate or governor races counting against our county benchmarks. They move earlier than the live odds, and can mislead early, when one kind of ballot dominates the count.</p>` : ""}
+</details>`);
+```
 
 ```js
 // ---------- pieces every tab uses ----------
@@ -123,26 +186,73 @@ function tally(office, base = {D: 0, R: 0}) {
     else if (d.called) c[tag + "c"]++;
     else c[tag + "l"]++;
   }
+  c.flips = d3.rollups(list.filter((d) => d.flipped), (v) => v.length, (d) => d.tagOf(d.called)).sort((a, b) => b[1] - a[1]);
   return c;
 }
-function tallyBar(label, c, need, total, note) {
-  const seg = (n, color, opacity = 1) => (n ? `<b style="flex:${n};background:${color};opacity:${opacity}"></b>` : "");
+const PARTY = {D: "Democrats", R: "Republicans", I: "independents"};
+// under each bar, in words: where the seats stand if every lead holds, what each side still needs, and flips
+function tallyLines(office, c, need) {
+  const lines = [];
+  const lead = {D: c.Dc + c.Dl, R: c.Rc + c.Rl, I: c.Ic + c.Il};
+  if (c.Dl + c.Rl + c.Il + c.open > 0) lines.push(html`<div>If current leads hold: ${chip("D")} ${lead.D}${lead.I ? html` · ${chip("I")} ${lead.I}` : ""} · ${chip("R")} ${lead.R}${c.open ? ` (${c.open} with no votes yet)` : ""}</div>`);
+  if (need) {
+    const left = c.Dl + c.Rl + c.Il + c.open;  // seats not yet called
+    const needOf = {D: need - c.Dc, R: (office === "SEN" ? need - 1 : need) - c.Rc};  // Republicans hold the Senate at 50, with the vice president
+    const won = needOf.D <= 0 ? "D" : needOf.R <= 0 ? "R" : null;
+    const say = (p) => (needOf[p] > left ? `${PARTY[p]} can no longer get there` : `${PARTY[p]} need ${needOf[p]} of the ${left} seats not yet called`);
+    lines.push(html`<div>${won ? html`<b>${PARTY[won]} have won control.</b>` : `To win control: ${say("D")}; ${say("R")}.`}</div>`);
+    // the count's leads and our odds can point different ways early in the night: say why
+    const p = office === "SEN" ? odds?.pSen : odds?.pHouse;
+    if (!won && p != null && lead.D !== lead.R) {
+      const leader = lead.D > lead.R ? "D" : "R", fav = p >= 0.5 ? "D" : "R";
+      if (leader !== fav && Math.max(p, 1 - p) >= 0.6) lines.push(html`<div class="muted">${PARTY[leader]} lead in more seats right now, but our live odds favor ${PARTY[fav]}: many of those leads are early counts that our odds expect to shift as the rest of the vote comes in.</div>`);
+    }
+  }
+  lines.push(html`<div class="muted">${c.flips.length ? `Changed parties so far: ${c.flips.map(([p, n]) => `${n} seat${n === 1 ? "" : "s"} to ${PARTY[p]}`).join(", ")}.` : "No seat has changed parties yet."}</div>`);
+  return lines;
+}
+function tallyBar(office, label, c, need, total, note) {
+  // the same shades as the map: solid for called, lighter for leading
+  const seg = (n, color) => (n ? `<b style="flex:${n};background:${color}"></b>` : "");
   const bar = html`<div class="tally-bar"></div>`;
-  bar.innerHTML = seg(c.Dc, t.dem) + seg(c.Dl, t.dem, 0.4) + seg(c.Ic + c.Il, t.ind, c.Ic ? 1 : 0.4) + seg(c.open, t.hair) + seg(c.Rl, t.rep, 0.4) + seg(c.Rc, t.rep)
+  bar.innerHTML = seg(c.Dc, t["Safe D"]) + seg(c.Dl, t["Lean D"]) + seg(c.Ic, t.ind) + seg(c.Il, `color-mix(in srgb, ${t.ind} 45%, ${t.surface})`) + seg(c.open, t.hair) + seg(c.Rl, t["Lean R"]) + seg(c.Rc, t["Safe R"])
     + (need ? `<i style="left:${(100 * need) / total}%"></i>` : "");
   return html`<div class="tally">
     <div class="tally-head"><b>${label}</b><span class="muted">${note}</span></div>
+    ${need ? html`<div class="tally-scale"><span style="left:${(100 * need) / total}%">${need} for control</span></div>` : ""}
     ${bar}
     <div class="tally-nums"><span>${chip("D")} ${c.Dc} won${c.Dl ? `, ${c.Dl} leading` : ""}</span>${c.Ic + c.Il ? html`<span>${chip("I")} ${c.Ic} won${c.Il ? `, ${c.Il} leading` : ""}</span>` : ""}<span class="muted">${c.open} not yet counted</span><span>${chip("R")} ${c.Rc} won${c.Rl ? `, ${c.Rl} leading` : ""}</span></div>
+    <div class="tally-lines">${tallyLines(office, c, need)}</div>
   </div>`;
 }
+const SEATS = {SEN: () => tally("SEN", {D: 34, R: 31}), HOUSE: () => tally("HOUSE"), GOV: () => tally("GOV")};
 const TALLY = {
-  SEN: () => tallyBar("Senate", tally("SEN", {D: 34, R: 31}), 51, 100, "51 seats for control (50 plus the vice president for Republicans); includes the 65 seats not up this year"),
-  HOUSE: () => tallyBar("House", tally("HOUSE"), 218, 435, "218 seats for control; includes seats where only one party is on the ballot"),
-  GOV: () => tallyBar("Governors", tally("GOV"), null, 36, "36 races")
+  SEN: () => tallyBar("SEN", "Senate", SEATS.SEN(), 51, 100, "Includes the 65 seats not up this year; Republicans need only 50, with the vice president's tiebreak"),
+  HOUSE: () => tallyBar("HOUSE", "House", SEATS.HOUSE(), 218, 435, "Includes seats where only one party is on the ballot"),
+  GOV: () => tallyBar("GOV", "Governors", SEATS.GOV(), null, 36, "36 races")
 };
-const party = (p) => (p >= 0.5 ? `D ${pct(p)}` : `R ${pct(1 - p)}`);
-const oddsStat = (label, now, morning) => html`<div class="s"><div class="k">${label}</div><div class="v">${party(now)}</div><div class="muted">this morning: ${party(morning)}</div></div>`;
+// "Republicans' chance of Senate control: 72% (this morning: 21%)", for whichever side is favored now
+function controlCard(chamber, p, morning) {
+  const side = p >= 0.5 ? "D" : "R";
+  const now = side === "D" ? p : 1 - p, then = side === "D" ? morning : 1 - morning;
+  return html`<div class="ctl"><div class="k">${PARTY[side]}' chance of ${chamber} control</div><div class="v">${chip(side)} ${pct(now)}</div><div class="muted">this morning: ${pct(then)}</div></div>`;
+}
+// the headline, in words: "Republicans are favored to win the Senate; Democrats are all but certain to win the House"
+function controlLine(chamber, p, c, need) {
+  if (c.Dc >= need) return `Democrats have won the ${chamber}`;
+  if (c.Rc >= (chamber === "Senate" ? need - 1 : need)) return `Republicans have won the ${chamber}`;
+  const q = Math.max(p, 1 - p), who = PARTY[p >= 0.5 ? "D" : "R"];
+  if (q < 0.55) return `the ${chamber} is a toss-up`;
+  return `${who} are ${q >= 0.99 ? "all but certain" : q >= 0.9 ? "very likely" : q >= 0.7 ? "favored" : "slightly favored"} to win the ${chamber}`;
+}
+const headline = odds ? (([s]) => s[0].toUpperCase() + s.slice(1))([`${controlLine("Senate", odds.pSen, SEATS.SEN(), 51)}; ${controlLine("House", odds.pHouse, SEATS.HOUSE(), 218)}`]) : null;
+// the top of the page, above the tabs: control odds, then the seat tallies
+function topBlock() {
+  return html`<div class="top-block">
+    ${odds ? html`<div class="ctl-row">${controlCard("Senate", odds.pSen, top.p_senate_d)}${controlCard("House", odds.pHouse, top.p_house_d)}</div>` : ""}
+    <div class="tallies">${TALLY.SEN()}${TALLY.HOUSE()}${TALLY.GOV()}</div>
+  </div>`;
+}
 
 // A race's count against our forecast: the 80% range (bar), our most likely result (tick) and the count so far (dot).
 const SPAN = 20;  // the bar runs from R+20 to D+20; margins beyond sit at the ends
@@ -154,20 +264,40 @@ function rangeBar(d) {
     + (d.counted ? `<em style="left:${X(d.x.margin)}%;background:${tagColor(d.tagOf(d.lead))}"></em>` : "");
   return el;
 }
-// "Talarico running 1.2 points ahead of our forecast", from the counted counties where we have them
+// "Talarico running 1.2 points ahead of our forecast", from the counted counties where we have them (map hover cards)
 function gapText(d) {
   const g = d.m.gap;
   if (g == null) return "";
   if (Math.abs(g) < 0.5) return "Right on our forecast";
   return `${lastName(d.nameOf(g > 0 ? "D" : "R"))} running ${Math.abs(g).toFixed(1)} ahead of forecast`;
 }
-const status = (d) => (d.called ? html`<span class="res-called">${chip(d.tagOf(d.called))} ${lastName(d.nameOf(d.called))} wins</span>`
-  : d.counted ? html`<span>${sideText(d, d.x.margin)}${leftText(d)}</span>` : html`<span class="muted">No votes yet (polls close ${clock((CLOSE[d.state_po] ?? [21])[0])})</span>`);
+// the same in the tables, by party, so each row names its people only once
+function gapCell(d) {
+  const g = d.m.gap;
+  if (g == null) return "";
+  if (Math.abs(g) < 0.5) return html`<div class="adj">Right on our forecast</div>`;
+  return html`<div class="adj">${chip(d.tagOf(g > 0 ? "D" : "R"))} ${Math.abs(g).toFixed(1)} pts ahead of our forecast</div>`;
+}
+const status = (d) => (d.called
+  ? html`<span><span class="res-called">${chip(d.tagOf(d.called))} Won by ${Math.abs(d.x.margin ?? 0) < 0.05 ? "under 0.1" : Math.abs(d.x.margin).toFixed(1)}</span>${(d.x.pct ?? 0) < 100 ? html`<div class="adj">${d.x.pct ?? 0}% counted</div>` : ""}</span>`
+  : d.counted ? html`<span><span class="res-lead">${chip(d.tagOf(d.lead))} ${sideText(d, d.x.margin)}</span>${leftText(d)}${leanText(d)}${favNote(d)}</span>`
+  : html`<span class="muted">No votes yet (polls close ${clock((CLOSE[d.state_po] ?? [21])[0])})</span>`);
 // "272,000 of ~4.7 million votes counted": the count against the turnout we expect
 function leftText(d) {
   const f = finish(d, d.m);
   if (!f || !d.counted) return "";
   return html`<div class="adj">${k(d.m.counted)} of ~${k(f.total)} votes counted</div>`;
+}
+// where the votes still out lean, from our county benchmarks for the places still counting (Senate and governors)
+function leanText(d) {
+  if (d.m.benchRem == null || !(d.m.uncounted > 0) || (d.x.pct ?? 0) >= 100) return "";
+  return html`<div class="adj">Votes left lean ${sideText(d, d.m.benchRem)}</div>`;
+}
+// the leader isn't who our live odds favor: say so, so the row doesn't read as a contradiction
+function favNote(d) {
+  if (d.pNow == null || !d.lead) return "";
+  const fav = d.pNow >= 0.5 ? "D" : "R";
+  return fav === d.lead ? "" : html`<div class="adj fav-note">Our odds favor ${lastName(d.nameOf(fav))}, who trails for now</div>`;
 }
 // the number people come for: our chance now, big; this morning's, small
 const oddsCell = (d) => {
@@ -180,7 +310,7 @@ const COLUMNS = [
   {key: "label", label: "Race", sort: true, sortValue: (d) => `${d.state_name} ${String(d.district ?? 0).padStart(2, "0")}`, render: (d) => html`<span class="rd-name">${raceName(d)}</span>`},
   {key: "status", label: "Result so far", render: status},
   {key: "pct", label: "Counted", num: true, sort: true, defaultDir: -1, sortValue: (d) => d.x.pct ?? -1, render: (d) => (d.counted ? `${d.x.pct ?? 0}%` : "")},
-  {key: "range", label: "vs. our forecast", render: (d) => html`<span>${rangeBar(d)}${gapText(d) ? html`<div class="adj">${gapText(d)}</div>` : ""}</span>`},
+  {key: "range", label: "vs. our forecast", render: (d) => html`<span>${rangeBar(d)}${gapCell(d)}</span>`},
   {key: "p_dem", label: "Chance to win", sort: true, sortValue: (d) => { const p = d.pNow ?? d.p_dem; return Math.max(p, 1 - p); }, render: oddsCell}
 ];
 const STATUS_FILTER = {key: "status", label: "Every race", options: [["open", "Not called yet"], ["called", "Called"], ["flip", "Seats that flipped"], ["against", "Leader isn't our favorite"]],
@@ -217,11 +347,11 @@ function schedule() {
       const states = [...new Set(list.map((r) => r.state_po))].sort();
       const big = list.filter((r) => r.office !== "HOUSE").sort((a, b) => a.state_po.localeCompare(b.state_po));
       return html`<tr><td class="nowrap"><b>${clock(h)}</b></td>
-        <td>${states.map((s, i) => html`${i ? ", " : ""}${s}${CLOSE[s][1] > CLOSE[s][0] ? html`<sup title="last polls close at ${clock(CLOSE[s][1])}">*</sup>` : ""}`)}</td>
+        <td>${states.map((s, i) => html`${i ? ", " : ""}${s}${CLOSE[s][1] > CLOSE[s][0] ? html`<sup>*</sup>` : ""}`)}</td>
         <td>${big.length ? big.map((r, i) => html`${i ? ", " : ""}${raceLink(r, `${r.state_po} ${officeLabel[r.office].slice(0, 3)}${r.special ? " (sp.)" : ""}`)}`) : html`<span class="muted">–</span>`}</td>
         <td class="num">${list.filter((r) => r.office === "HOUSE").length}</td></tr>`;
     })}</tbody></table></div>
-    <p class="caption">When each state's first polls close. <sup>*</sup>States that span two time zones, where the rest close an hour later (hover for the time); results often wait until all of a state's polls have closed. Alaska's and Hawaii's polls close at midnight Eastern, and the far western Aleutian Islands at 1 a.m. Poll-closing times from <a href="https://www.thegreenpapers.com/G26/closing.phtml?format=gc">The Green Papers</a>.</p>`;
+    <p class="caption">When each state's first polls close. <sup>*</sup>States that span two time zones, where polls in the rest of the state close an hour later; results often wait until all of a state's polls have closed. Alaska's and Hawaii's polls close at midnight Eastern, and the far western Aleutian Islands at 1 a.m. Poll-closing times from <a href="https://www.thegreenpapers.com/G26/closing.phtml?format=gc">The Green Papers</a>.</p>`;
 }
 ```
 
@@ -229,7 +359,12 @@ function schedule() {
 // ---------- the drill-in: one race's full count (components/night.js, the same panel as the race pages) ----------
 function detail(d) {
   const el = html`<div class="race-detail"></div>`;
-  const draw = (counties) => el.replaceChildren(...racePanel(d, counties));
+  // back up to the map this race was opened from (or the one above it)
+  const back = html`<button type="button" class="back-map">↑ Back to the map</button>`;
+  back.onclick = (e) => { e.stopPropagation(); document.querySelector(`#panel-${ui.tab} .map-panel`)?.scrollIntoView({block: "start", behavior: smooth()}); };
+  const order = d.office !== "HOUSE" ? COUNT_ORDER[d.state_po] : null;
+  const draw = (counties) => el.replaceChildren(back, ...racePanel(d, counties),
+    ...(order ? [html`<p class="count-order"><b>How ${d.state_name} counts:</b> ${order}</p>`] : []));
   const cs = countiesOf(d.x);
   draw(cs);
   // without counties in our published copy, ask civicAPI for this one race while it's open
@@ -297,7 +432,7 @@ function legend(mode, office) {
   return html`<div class="map-legend">${sw(t["Safe D"], "D 95%+")}${sw(t["Likely D"], "D 75–95%")}${sw(t["Lean D"], "D 60–75%")}${sw(t["Toss-up"], "under 60% either way")}${sw(t["Lean R"], "R 60–75%")}${sw(t["Likely R"], "R 75–95%")}${sw(t["Safe R"], "R 95%+")}${mode === "chance" ? sw(t.ind, "independent favored") : ""}${called}</div>`;
 }
 const MAP_NOTES = {
-  lead: "Solid colors (and check marks) are races civicAPI has called; lighter ones, who leads the count so far.",
+  lead: (off) => `Solid colors with a ${off === "HOUSE" ? "dot" : "check mark"} are races civicAPI has called; lighter ones, who leads the count so far; solid with no mark, seats where only one party is on the ballot.`,
   chance: "Our live chance to win: this morning's forecast, moved by each race's own count and by the races that have finished counting. Called races count for their winners.",
   gap: "Each race's count against what our forecast expected",
   morning: "Our forecast as of this morning, before any votes were counted."
@@ -324,37 +459,90 @@ function mapPanel(key, office, table, {offices = null} = {}) {
     // sized so the buttons, the map and its key fit on one screen
     const fitH = Math.max(340, (typeof innerHeight === "number" ? innerHeight : 900) - 220);
     const w = Math.min(width, off === "HOUSE" ? 1150 : 1050, off === "HOUSE" ? fitH / 0.66 : (fitH * 975) / 610);
-    const opts = {width: w, fillRace: MAP_MODES.find(([v]) => v === mode)[2], tipRows, onPick: (r) => rowOf.has(r.race_id) && table.reveal(r.race_id),
+    const opts = {width: w, fillRace: MAP_MODES.find(([v]) => v === mode)[2], tipRows, onPick: (r) => rowOf.has(r.race_id) && openRace(table, r.race_id),
       mark: mode === "morning" ? null : (r) => Boolean(rowOf.get(r.race_id)?.called)};
     body.replaceChildren(off === "HOUSE" ? hexMap(races, layout, opts) : stateMap(races, topo, statesMeta, {office: off, ...opts}), legend(mode, off));
-    note.textContent = `${MAP_NOTES[mode]}${mode === "gap" ? (off === "HOUSE" ? ": for House districts, our most likely margin for the whole district, so early counts can mislead." : ", in the counties counted so far.") : ""} Click a ${off === "HOUSE" ? "district" : "state"} for its full count.`;
+    const n = MAP_NOTES[mode];
+    note.textContent = `${typeof n === "function" ? n(off) : n}${mode === "gap" ? (off === "HOUSE" ? ": for House districts, our most likely margin for the whole district, so early counts can mislead." : ", in the counties counted so far.") : ""} Click a ${off === "HOUSE" ? "district" : "state"} for its full count.`;
   };
   draw();
-  box.append(...(offices ? [html`<div class="seg-row">${officeSeg}${toggle}</div>`] : [toggle]), body, note);
+  // keyboard readers can step past the map's hundreds of districts
+  const skip = html`<button type="button" class="skip-map">Skip the map</button>`;
+  skip.onclick = () => { const next = box.nextElementSibling; if (next) { next.tabIndex = -1; next.focus(); } };
+  box.append(skip, ...(offices ? [html`<div class="seg-row">${officeSeg}${toggle}</div>`] : [toggle]), body, note);
   return box;
 }
 function chamberTable(key, list, {pageSize = 25} = {}) {
   return raceTable(list, COLUMNS, {filters: [STATUS_FILTER, stateFilter(list)], sorts: SORTS, pageSize, detail, openSet: openSet(key),
-    placeholder: "Search candidates, states, districts"});
+    memory: memOf(key), changed: justChanged, placeholder: "Search candidates, states, districts"});
+}
+// Open a race in a table and take the reader to it, as a step in the browser's history: Back returns to where they
+// were (the map, usually), and the address names the race, so it can be shared.
+function openRace(table, rid) {
+  history.replaceState({...(history.state ?? {}), wsuY: window.scrollY, wsuTab: ui.tab}, "");
+  history.pushState({wsuRace: rid, wsuTab: ui.tab}, "", `#${rid}`);
+  table.reveal(rid);
 }
 ```
 
 ```js
 // ---------- tabs ----------
+function selectTab(key, {address = true} = {}) {
+  ui.tab = key;
+  if (address) history.replaceState(history.state, "", `#${key}`);
+  for (const [k_] of TABS) {
+    document.getElementById(`tab-${k_}`)?.setAttribute("aria-selected", String(k_ === key));
+    document.getElementById(`panel-${k_}`)?.toggleAttribute("hidden", k_ !== key);
+  }
+  document.getElementById(`panel-${key}`)?.dispatchEvent(new Event("show"));
+}
 function tabBar() {
   const bar = html`<div class="tabs" role="tablist" aria-label="Results by office"></div>`;
   for (const [key, label] of TABS) {
     const b = html`<button type="button" role="tab" id="tab-${key}" aria-selected=${String(ui.tab === key)}>${label}</button>`;
-    b.onclick = () => {
-      ui.tab = key;
-      history.replaceState(history.state, "", `#${key}`);
-      for (const x of bar.children) x.setAttribute("aria-selected", String(x === b));
-      for (const [k_] of TABS) document.getElementById(`panel-${k_}`)?.toggleAttribute("hidden", k_ !== key);
-      document.getElementById(`panel-${key}`)?.dispatchEvent(new Event("show"));
-    };
+    b.onclick = () => selectTab(key);
     bar.append(b);
   }
   return bar;
+}
+// "Find a race", right under the tabs: suggestions as you type; picking one opens it in the table on this tab (or
+// on its own office's tab)
+const OFFICE_TAB = {SEN: "senate", HOUSE: "house", GOV: "governors"};
+const OFFICE_ORDER = {SEN: 0, GOV: 1, HOUSE: 2};
+function quickFind() {
+  const box = html`<div class="quick-find"><input type="search" placeholder="Find a race: state, district or candidate" aria-label="Find a race" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="qf-list"><ul id="qf-list" class="qf-list" role="listbox" hidden></ul></div>`;
+  const input = box.querySelector("input"), list = box.querySelector("ul");
+  let hits = [], at = -1;
+  const close = () => { list.hidden = true; input.setAttribute("aria-expanded", "false"); };
+  const pick = (d) => {
+    input.value = ""; close(); input.blur();
+    const key = ui.tab === "overview" ? "all" : ui.tab === OFFICE_TAB[d.office] ? ui.tab : (selectTab(OFFICE_TAB[d.office]), OFFICE_TAB[d.office]);
+    if (ui.tables[key]) openRace(ui.tables[key], d.race_id);
+  };
+  const mark = () => [...list.children].forEach((li, i) => li.setAttribute("aria-selected", String(i === at)));
+  input.addEventListener("input", () => {
+    const q = input.value.trim().toLowerCase();
+    // matches at the start of a word first ("kansas" is Kansas before Arkansas)
+    const word = new RegExp(`(^|[^a-z])${q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`);
+    const score = (d) => (d.state_name.toLowerCase().startsWith(q) ? 0 : word.test(d._search) ? 1 : 2);
+    hits = q.length < 2 ? [] : rows.filter((d) => d._search.includes(q))
+      .sort((a, b) => score(a) - score(b) || OFFICE_ORDER[a.office] - OFFICE_ORDER[b.office] || d3.ascending(a.state_name, b.state_name) || d3.ascending(a.district, b.district)).slice(0, 8);
+    at = -1;
+    list.replaceChildren(...hits.map((d) => {
+      const li = html`<li role="option"><span>${raceName(d)}</span><span class="muted">${d.called ? `${lastName(d.nameOf(d.called))} won` : d.counted ? sideText(d, d.x.margin) : "No votes yet"}</span></li>`;
+      li.addEventListener("mousedown", (e) => { e.preventDefault(); pick(d); });
+      return li;
+    }));
+    list.hidden = !hits.length;
+    input.setAttribute("aria-expanded", String(Boolean(hits.length)));
+  });
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); if (hits.length) { at = (at + (e.key === "ArrowDown" ? 1 : hits.length - 1)) % hits.length; mark(); } }
+    else if (e.key === "Enter" && hits.length) { e.preventDefault(); pick(hits[Math.max(at, 0)]); }
+    else if (e.key === "Escape") close();
+  });
+  input.addEventListener("blur", () => setTimeout(close, 150));
+  return box;
 }
 function panel(key, build) {
   const el = html`<section class="tab-panel" id="panel-${key}" role="tabpanel" aria-labelledby="tab-${key}"></section>`;
@@ -367,37 +555,67 @@ function panel(key, build) {
 ```
 
 ```js
+// Back and Forward between the map and the races opened from it
+{
+  const onPop = (e) => {
+    const s = e.state ?? {};
+    if (s.wsuTab && s.wsuTab !== ui.tab) selectTab(s.wsuTab, {address: false});
+    if (s.wsuY != null) scrollTo({top: s.wsuY});
+    else if (s.wsuRace) document.querySelector(`#panel-${ui.tab} tr[data-id="${CSS.escape(s.wsuRace)}"]`)?.scrollIntoView({block: "start"});
+  };
+  addEventListener("popstate", onPop);
+  invalidation.then(() => removeEventListener("popstate", onPop));
+}
+```
+
+```js
 // ---------- the Overview tab ----------
 function overview() {
   const parts = [];
-  if (odds) parts.push(html`<div class="stat-row">
-    ${oddsStat("Senate control", odds.pSen, top.p_senate_d)}
-    ${oddsStat("House control", odds.pHouse, top.p_house_d)}
-    ${read ? html`<div class="s"><div class="k">Counted counties vs. our forecast</div><div class="v">${Math.abs(read.gap) < 0.25 ? "Even" : `${read.gap > 0 ? "D" : "R"} +${Math.abs(read.gap).toFixed(1)}`}</div><div class="muted">${Math.abs(read.gap) < 0.25 ? "right on our forecast" : `points ${read.gap > 0 ? "more Democratic" : "more Republican"} than we expected`}</div></div>` : ""}
-    ${read?.turnout != null ? html`<div class="s"><div class="k">Turnout vs. our expectation</div><div class="v">${read.turnout >= 0 ? "+" : "−"}${Math.round(Math.abs(read.turnout) * 100)}%</div><div class="muted">${read.turnoutD != null && read.turnoutR != null ? `D-leaning counties ${read.turnoutD >= 0 ? "+" : "−"}${Math.round(Math.abs(read.turnoutD) * 100)}%, R-leaning ${read.turnoutR >= 0 ? "+" : "−"}${Math.round(Math.abs(read.turnoutR) * 100)}%` : "in counted counties"}</div></div>` : ""}
-  </div>`);
+  // the night against our forecast: three measures, each labeled for what it compares
+  const signed = (x) => `${x >= 0 ? "+" : "−"}${Math.round(Math.abs(x) * 100)}%`;
+  const lean = (g) => (Math.abs(g) < 0.25 ? "Even" : `${g > 0 ? "D" : "R"} +${Math.abs(g).toFixed(1)}`);
+  if (odds && (read || odds.used)) {
+    parts.push(html`<h2 class="night-h">The night against our forecast</h2><div class="stat-row night-row">
+      ${read?.turnout != null ? html`<div class="s"><div class="k">Turnout vs. what we expected</div><div class="v">${signed(read.turnout)}</div><div class="muted">${read.turnoutD != null && read.turnoutR != null ? `Democratic-leaning counties ${signed(read.turnoutD)}, Republican-leaning ${signed(read.turnoutR)}` : "in the counties counted so far"}</div></div>` : ""}
+      ${read ? html`<div class="s"><div class="k">Counted counties vs. our benchmarks</div><div class="v">${lean(read.gap)}</div><div class="muted">${Math.abs(read.gap) < 0.25 ? "right on our forecast" : `points ${read.gap > 0 ? "more Democratic" : "more Republican"} than we expected there`}</div></div>` : ""}
+      <div class="s"><div class="k">Finished races vs. our forecast</div><div class="v">${odds.used ? lean(odds.shift) : "–"}</div><div class="muted">${odds.used ? `in the ${odds.used} race${odds.used === 1 ? "" : "s"} at least 95% counted` : "no race has finished counting yet"}</div></div>
+    </div>
+    <p class="caption">The first two use every county reported so far in states with Senate or governor races, so they move early and can mislead when one kind of ballot dominates the count. The third uses only races nearly done counting; it's the one our live odds lean on.</p>`);
+  }
   if (started) parts.push(leftToCount());
-  if (odds) parts.push(html`<p class="caption">${odds.used
-    ? `Live odds: based on the ${odds.used} race${odds.used === 1 ? "" : "s"} at least 95% counted, results are running about ${Math.abs(odds.shift).toFixed(1)} points more ${odds.shift >= 0 ? "Democratic" : "Republican"} than our forecast nationally (more or less in some regions and states). We move every race still out by that much, count called races for their winners, and play out the rest of the night thousands of times.`
-    : "Live odds: until races finish counting, the night's overall shift comes from our forecast."} Each race's own count also moves its odds, more as more of it comes in: where we have county results, we compare the counted counties with our forecast and fill in the counties still out from their benchmarks.${read ? ` The counted-counties and turnout figures compare every county that has reported in the ${read.states} states with Senate or governor races counting against our county benchmarks; they move earlier than the live odds, and can mislead early, when one kind of ballot dominates the count.` : ""} Not a call: estimates that will swing as results come in.</p>`);
-  parts.push(html`<div class="tallies">${TALLY.SEN()}${TALLY.HOUSE()}${TALLY.GOV()}</div>`);
+  const calls = latestCalls();
+  if (calls) parts.push(calls);
   // the map, all three offices; clicking a race opens it in "Find any race" below
   const all = raceTable(rows, COLUMNS, {filters: [{key: "office", label: "All offices", options: [["SEN", "Senate"], ["GOV", "Governor"], ["HOUSE", "House"]], test: (d, v) => d.office === v}, STATUS_FILTER],
-    sorts: [SORTS[1], ...SORTS.filter((x, i) => i !== 1)], pageSize: 10, detail, openSet: openSet("all"), placeholder: "Search candidates, states, districts"});
+    sorts: [SORTS[1], ...SORTS.filter((x, i) => i !== 1)], pageSize: 10, detail, openSet: openSet("all"), memory: memOf("all"), changed: justChanged, placeholder: "Search candidates, states, districts"});
   all.classList.add("res-cards");
+  ui.tables.all = all;
   parts.push(mapPanel("overview", "SEN", all, {offices: [["SEN", "Senate"], ["HOUSE", "House"], ["GOV", "Governors"]]}));
-  // the races that matter most for control, then any race at all
+  // the races that matter most for control, then any race at all, then how our forecast has done
   const keyRaces = [...topRaces("SEN", 7), ...topRaces("HOUSE", 5), ...topRaces("GOV", 3)];
   parts.push(html`<h2>Key races</h2><p class="caption">The Senate and House races likeliest to decide control in our forecast, and the closest governor's races. Click a race for its full count.</p>`);
-  const kt = raceTable(keyRaces, COLUMNS, {search: false, pageSize: 20, detail, openSet: openSet("key"), noun: "race"});
-  kt.classList.add("res-cards");
+  const kt = raceTable(keyRaces, COLUMNS, {search: false, pageSize: 20, detail, openSet: openSet("key"), memory: memOf("key"), changed: justChanged, noun: "race"});
+  kt.classList.add("res-cards", "key-cards");
   parts.push(kt);
-  if (calledRows.length) parts.push(...scorecard());
   parts.push(html`<h2>Find any race</h2>`);
   parts.push(all);
   parts.push(caption());
+  if (calledRows.length) parts.push(...scorecard());
   parts.push(html`<details class="schedule"><summary>When polls close</summary>${schedule()}</details>`);
+  if (Object.keys(COUNT_ORDER).length) parts.push(countOrderList());
   return parts;
+}
+// ---------- the latest calls, newest first (when each call first showed up in our poller's copy) ----------
+function latestCalls() {
+  const list = rows.filter((d) => d.called && d.x.called_at).sort((a, b) => d3.descending(a.x.called_at, b.x.called_at)).slice(0, 8);
+  if (!list.length) return null;
+  return html`<div class="calls"><h3>Latest calls</h3><ul>${list.map((d) => {
+    const go = html`<button type="button" class="call-race">${raceName(d)}</button>`;
+    go.onclick = () => openRace(ui.tables.all, d.race_id);
+    const gave = d.called === "D" ? d.p_dem : 1 - d.p_dem;
+    return html`<li><span class="when">${etTime(new Date(d.x.called_at)).replace(" ET", "")}</span><span>${chip(d.tagOf(d.called))} <b>${lastName(d.nameOf(d.called))}</b> wins ${go}${d.flipped ? html` <span class="pill-flip">Flip</span>` : ""}<span class="muted"> · we gave ${pct(gave)} this morning</span></span></li>`;
+  })}</ul></div>`;
 }
 // ---------- what's left to count, in plain words ----------
 // Votes: every contested House district (together they cover nearly the whole country's vote), each counted up
@@ -417,12 +635,16 @@ function leftToCount() {
   const stillOpen = hr == null ? [] : Object.entries(CLOSE).filter(([, [, last]]) => last > hr).sort((a, b) => a[1][1] - b[1][1]);
   const list = (xs) => (xs.length < 3 ? xs.join(" and ") : `${xs.slice(0, -1).join(", ")} and ${xs.at(-1)}`);
   const share = all ? got / all : 0;
+  // the House vote counted so far, nationally, against our forecast of the national House vote
+  const vD = d3.sum(house, (d) => d.x.d ?? 0), vR = d3.sum(house, (d) => d.x.r ?? 0);
+  const houseLine = vD + vR > 0 ? html`<li><b>House vote counted so far:</b> ${margin((100 * (vD - vR)) / (vD + vR))}, from ${k(vD + vR)} votes for the two parties; our forecast for the national House vote was ${margin(top.nat_median)}. Contested seats only; early counts lean toward whichever ballots states count first, and the West counts last.</li>` : "";
   return html`<div class="left-box"><h3>What's left to count</h3>
     <div class="left-bar" role="img" aria-label="${Math.round(share * 100)}% of the expected vote counted"><b style="flex:${share}"></b><i></i></div>
     <ul>
       <li><b>Votes:</b> ${out > 0 ? html`about <b>${k(out)}</b> still to count, roughly ${Math.round((100 * out) / all)}% of the ${k(all)} we expect in all.` : "all in, or close to it."}</li>
       <li><b>Races:</b> ${uncalled.length ? html`${list(uncalled)} race${s + h + g === 1 ? "" : "s"} not called yet.` : "every race has been called."}</li>
       ${piles.length ? html`<li><b>Most of the uncounted vote:</b> ${list(piles.map(([st, n]) => `${st} (${k(n)})`))}.</li>` : ""}
+      ${houseLine}
       ${stillOpen.length ? html`<li><b>Polls still open</b> in ${stillOpen.length} state${stillOpen.length === 1 ? "" : "s"}: ${list(stillOpen.map(([po]) => statesMeta.names?.[po] ?? po))}. The last close at ${clock(d3.max(stillOpen, ([, [, last]]) => last))} ET.</li>` : ""}
     </ul></div>`;
 }
@@ -445,7 +667,7 @@ function scorecard() {
     filters: [{key: "office", label: "All offices", options: [["SEN", "Senate"], ["GOV", "Governor"], ["HOUSE", "House"]], test: (d, v) => d.office === v},
       {key: "which", label: "Every called race", options: [["upset", "Upsets: our underdog won"], ["outside", "Outside our 80% range"]], test: (d, v) => (v === "upset" ? d.surprise : d.inside === false)}],
     sorts: [{label: "Biggest surprises first", value: (d) => d.wonP, dir: 1}, {label: "Closest results", value: (d) => Math.abs(d.x.margin), dir: 1}, {label: "State A–Z", value: (d) => `${d.state_name} ${String(d.district ?? 0).padStart(2, "0")}`, dir: 1}],
-    pageSize: 10, detail, openSet: openSet("called"), noun: "called race", placeholder: "Search called races"});
+    pageSize: 10, detail, openSet: openSet("called"), memory: memOf("called"), noun: "called race", placeholder: "Search called races"});
   tbl.classList.add("score-table");
   const share = settled.length ? inRange.length / settled.length : null;
   return [html`<h2>Called races: how our forecast did</h2>`,
@@ -461,11 +683,10 @@ const caption = () => html`<p class="caption">"vs. our forecast": the bar is the
 // ---------- a chamber's tab ----------
 function chamber(key, office) {
   const list = rows.filter((d) => d.office === office);
-  const parts = [];
-  if (odds && office !== "GOV") parts.push(html`<div class="stat-row">${office === "SEN" ? oddsStat("Senate control", odds.pSen, top.p_senate_d) : oddsStat("House control", odds.pHouse, top.p_house_d)}</div>`);
-  parts.push(html`<div class="tallies">${TALLY[office]()}</div>`);
+  const parts = [];  // the control odds and seat tallies sit above the tabs
   const table = chamberTable(key, list, {pageSize: office === "HOUSE" ? 25 : 40});
   table.classList.add("res-cards");
+  ui.tables[key] = table;
   parts.push(mapPanel(key, office, table));
   parts.push(html`<h2>Every ${office === "GOV" ? "governor's race" : office === "SEN" ? "Senate race" : "House race"}</h2>`);
   parts.push(table, caption());
@@ -476,12 +697,17 @@ function chamber(key, office) {
 ```js
 // ---------- the page ----------
 if (started) {
+  ui.tables = {};
+  display(topBlock());
+  display(shareRow("https://whoshowsup.net/results", "Live 2026 election results and odds, race by race, from Who Shows Up"));
   display(tabBar());
+  display(quickFind());
   display(panel("overview", overview));
   display(panel("senate", () => chamber("senate", "SEN")));
   display(panel("house", () => chamber("house", "HOUSE")));
   display(panel("governors", () => chamber("governors", "GOV")));
 } else {
+  display(shareRow("https://whoshowsup.net/results", "2026 election night results, race by race, from Who Shows Up"));
   display(watchTable());
   display(html`<h2>When polls close</h2>`);
   display(schedule());

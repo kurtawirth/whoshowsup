@@ -211,10 +211,23 @@ export function hexMap(races, layout, {width = 960, fillRace = null, tipRows = r
     })
     .on("pointermove", (event) => { if (!isTouch(event)) t_.move(event); })
     .on("pointerleave blur", function (event) { if (!isTouch(event) || event.type === "blur") { if (this !== selected) outline(this, false); t_.hide(); } })
+    .on("keydown", (event, h) => {
+      const r = byKey.get(`${h.state}-${h.district}`);
+      if (!r || (event.key !== "Enter" && event.key !== " ")) return;
+      event.preventDefault(); t_.hide();
+      if (onPick) onPick(r); else location.href = raceHref(r.race_id);
+    })
     .on("click", function (event, h) {
       if (onPick) {
         const r = byKey.get(`${h.state}-${h.district}`);
-        if (r) { event.preventDefault(); t_.hide(); onPick(r); }
+        if (!r) return;
+        event.preventDefault(); t_.hide();
+        // phones: a first tap previews the district; the card's button opens it
+        if (isTouch(event)) {
+          if (selected) outline(selected, false);
+          selected = this; outline(this, true); d3.select(this.parentNode).raise();
+          card.show(tipRows(r), `#${r.race_id}`, "Open the full count ↓", () => onPick(r));
+        } else onPick(r);
         return;
       }
       // Phones: the first tap previews the district in a card; the card's button opens the race.
@@ -348,10 +361,26 @@ export function stateMap(races, topo, states, {office, width = 960, fillRace = n
       d3.select(this).attr("stroke", edge(fipsToPo[f.id])).attr("stroke-width", has ? 1.2 : 0.8);
       t_.hide();
     })
+    .on("keydown", (event, f) => {
+      const rs = byState.get(fipsToPo[f.id]);
+      if (!rs || (event.key !== "Enter" && event.key !== " ")) return;
+      event.preventDefault(); t_.hide();
+      const main = rs.find((r) => !r.special) ?? rs[0];
+      if (onPick) onPick(main); else location.href = raceHref(main.race_id);
+    })
     .on("click", function (event, f) {
       const rs = byState.get(fipsToPo[f.id]);
       if (onPick) {
-        if (rs) { event.preventDefault(); t_.hide(); onPick(rs.find((r) => !r.special) ?? rs[0]); }
+        if (!rs) return;
+        event.preventDefault(); t_.hide();
+        const main = rs.find((r) => !r.special) ?? rs[0];
+        // phones: a first tap previews the state's race(s); the card's button opens the main one
+        if (isTouch(event)) {
+          if (selectedState) d3.select(selectedState).attr("stroke", (g) => edge(fipsToPo[g.id])).attr("stroke-width", 1.2);
+          selectedState = this;
+          d3.select(this).attr("stroke", t.ink).attr("stroke-width", 2).raise();
+          touchCard().show(rs.flatMap((r, i) => (i ? [["t-sub", " "], ...tipRows(r)] : tipRows(r))), `#${main.race_id}`, "Open the full count ↓", () => onPick(main));
+        } else onPick(main);
         return;
       }
       // Phones: first tap previews the state's race(s) in a card; the card's button opens the page.
@@ -453,24 +482,28 @@ export const RACE_SORTS = [
 ];
 
 /** detail(r): optional; rows become click-to-expand, showing detail(r) in a full-width row underneath (results
- *  page); pass openSet to keep which rows are open when the table is rebuilt. root.reveal(id) clears the search
- *  and filters, opens that row and scrolls to it (the maps use it). */
-export function raceTable(rows, columns, {search = true, filters = [], pageSize = 50, sort, sorts = null, placeholder = "Search candidates, states, districts", noun = "race", detail = null, openSet = null} = {}) {
+ *  page); pass openSet to keep which rows are open when the table is rebuilt, and memory (an object kept outside
+ *  the redraw) to keep its search, filters, sort and "Show more" too. changed(r): optional; true marks a row that
+ *  just got new votes (it flashes). root.reveal(id) clears the search and filters, opens that row and scrolls to it
+ *  (the maps use it). */
+export function raceTable(rows, columns, {search = true, filters = [], pageSize = 50, sort, sorts = null, placeholder = "Search candidates, states, districts", noun = "race", detail = null, openSet = null, memory = null, changed = null} = {}) {
   const root = document.createElement("div");
   const open = openSet ?? new Set(), idOf = (r) => r.race_id ?? r.key ?? r.label;
+  const mem = memory ?? {};
   const selects = [];
   let searchInput = null;
   const controls = document.createElement("div");
   controls.className = "table-controls";
-  let q = "";
-  const active = {};
+  let q = mem.q ?? "";
+  const active = mem.active ??= {};
   if (search) {
     const input = document.createElement("input");
     input.type = "search";
     input.placeholder = placeholder;
+    input.value = q;
     input.setAttribute("aria-label", "Search races");
     input.style.minWidth = "260px";
-    input.addEventListener("input", () => { q = input.value.toLowerCase(); shown = pageSize; render(); });
+    input.addEventListener("input", () => { q = mem.q = input.value.toLowerCase(); shown = mem.shown = pageSize; render(); });
     controls.append(input);
     searchInput = input;
   }
@@ -478,11 +511,12 @@ export function raceTable(rows, columns, {search = true, filters = [], pageSize 
     const sel = document.createElement("select");
     sel.setAttribute("aria-label", f.label);
     for (const [v, text] of [["", f.label], ...f.options]) sel.append(new Option(text, v));
-    sel.addEventListener("change", () => { active[f.key] = sel.value; shown = pageSize; render(); });
+    sel.value = active[f.key] ?? "";
+    sel.addEventListener("change", () => { active[f.key] = sel.value; shown = mem.shown = pageSize; render(); });
     controls.append(sel);
     selects.push([f.key, sel]);
   }
-  let preset = sorts ? sorts[0] : null;
+  let preset = sorts ? sorts[mem.preset ?? 0] ?? sorts[0] : null;
   let sortSel = null;
   if (sorts) {
     sortSel = document.createElement("select");
@@ -492,7 +526,8 @@ export function raceTable(rows, columns, {search = true, filters = [], pageSize 
     sortSel.lastChild.hidden = true;
     sortSel.addEventListener("change", () => {
       if (sortSel.value === "col") return;
-      preset = sorts[+sortSel.value]; sortCol = null; shown = pageSize; render();
+      mem.preset = +sortSel.value;
+      preset = sorts[mem.preset]; sortCol = mem.sortCol = null; shown = mem.shown = pageSize; render();
     });
     controls.append(sortSel);
   }
@@ -504,7 +539,8 @@ export function raceTable(rows, columns, {search = true, filters = [], pageSize 
   const table = document.createElement("table");
   table.className = "wsu-table";
   const thead = table.createTHead().insertRow();
-  let sortCol = sorts ? null : sort?.key ?? null, sortDir = sort?.dir ?? 1;
+  let sortCol = mem.sortCol !== undefined ? mem.sortCol : sorts ? null : sort?.key ?? null, sortDir = mem.sortDir ?? sort?.dir ?? 1;
+  if (sorts && sortCol) { preset = null; sortSel.value = "col"; } else if (sortSel) sortSel.value = String(mem.preset ?? 0);
   for (const c of columns) {
     const th = document.createElement("th");
     th.textContent = c.label;
@@ -513,8 +549,8 @@ export function raceTable(rows, columns, {search = true, filters = [], pageSize 
     if (c.sort) {
       th.dataset.sort = c.key;
       th.addEventListener("click", () => {
-        sortDir = sortCol === c.key ? -sortDir : c.defaultDir ?? 1;
-        sortCol = c.key;
+        sortDir = mem.sortDir = sortCol === c.key ? -sortDir : c.defaultDir ?? 1;
+        sortCol = mem.sortCol = c.key;
         preset = null;
         if (sortSel) sortSel.value = "col";
         render();
@@ -529,9 +565,9 @@ export function raceTable(rows, columns, {search = true, filters = [], pageSize 
   more.textContent = "Show more";
   Object.assign(more.style, {margin: "14px 0", font: "600 14px var(--sans)", padding: "8px 16px", borderRadius: "8px",
     border: "1px solid var(--axis)", background: "var(--card)", color: "var(--ink)", cursor: "pointer"});
-  let shown = pageSize;
-  more.addEventListener("click", () => { shown += pageSize; render(); });
-  function render() {
+  let shown = mem.shown ?? pageSize;
+  more.addEventListener("click", () => { shown = mem.shown = shown + pageSize; render(); });
+  function view() {
     let data = rows.filter((r) => (!q || (r._search ?? "").includes(q)) &&
       filters.every((f) => !active[f.key] || f.test(r, active[f.key])));
     if (preset) {
@@ -542,6 +578,10 @@ export function raceTable(rows, columns, {search = true, filters = [], pageSize 
       const val = col.sortValue ?? ((r) => r[col.key]);
       data = [...data].sort((a, b) => sortDir * d3.ascending(val(a), val(b)));
     }
+    return data;
+  }
+  function render() {
+    const data = view();
     for (const th of thead.children) {
       th.classList.toggle("sorted-asc", th.dataset.sort === sortCol && sortDir === 1);
       th.classList.toggle("sorted-desc", th.dataset.sort === sortCol && sortDir === -1);
@@ -562,7 +602,7 @@ export function raceTable(rows, columns, {search = true, filters = [], pageSize 
       more.className = "c-more";
       more.innerHTML = `<span class="more-btn">${isOpen ? "Close" : "Details"}<i aria-hidden="true">${isOpen ? "▴" : "▾"}</i></span>`;
       tr.append(more);
-      tr.className = "expandable" + (isOpen ? " open" : "");
+      tr.className = "expandable" + (isOpen ? " open" : "") + (changed?.(r) ? " changed" : "");
       tr.tabIndex = 0;
       tr.setAttribute("aria-expanded", String(isOpen));
       tr.dataset.id = id;
@@ -589,9 +629,11 @@ export function raceTable(rows, columns, {search = true, filters = [], pageSize 
   render();
   root.append(controls, wrap, more);
   root.reveal = (id) => {
-    q = ""; if (searchInput) searchInput.value = "";
+    q = mem.q = ""; if (searchInput) searchInput.value = "";
     for (const [k, sel] of selects) { sel.value = ""; active[k] = ""; }
-    shown = Math.max(shown, rows.length);
+    // show the list down to that race, not all of it
+    const at = view().findIndex((r) => idOf(r) === id);
+    shown = mem.shown = Math.max(shown, Math.ceil((at + 1) / pageSize) * pageSize);
     open.add(id);
     render();
     const tr = tbody.querySelector(`tr[data-id="${CSS.escape(id)}"]`);

@@ -206,6 +206,13 @@ def run() -> None:
             res = sim.step()
         else:
             res = cr.fetch(None if k % 5 == 0 else close, allow_test=PRACTICE, skipped=test)
+        # when each call first showed up (civicAPI doesn't say), for the page's "Latest calls"
+        now_iso = (datetime(2026, 11, 3, tzinfo=timezone.utc) + timedelta(hours=sim.clock + 5) if SIMULATE
+                   else datetime.now(timezone.utc)).isoformat(timespec="seconds")
+        for rid, v in res.items():
+            old = live["races"].get(rid) or {}
+            if v.get("called"):
+                v["called_at"] = old.get("called_at") if old.get("called") == v["called"] and old.get("called_at") else now_iso
         live["races"].update(res)
         counted = [v for rid, v in live["races"].items() if rid in contested]
         called = sum(1 for v in counted if v.get("called"))

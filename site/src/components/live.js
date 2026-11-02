@@ -67,7 +67,9 @@ export function liveStream(liveFile, races, civic, {Generators, force = false}) 
           const tot = (o) => (o ? (o.d ?? 0) + (o.r ?? 0) : -1);
           const best = [v, old, prev].reduce((a, b) => (tot(b) > tot(a) ? b : a));
           // civicAPI's search has no county breakdown: keep the counties from our published copy
-          races_[rid] = {...best, counties: best.counties ?? old?.counties, called: v.called ?? old?.called ?? null};
+          const called = v.called ?? old?.called ?? null;
+          races_[rid] = {...best, counties: best.counties ?? old?.counties, called,
+            called_at: called && old?.called === called ? old.called_at : best.called_at ?? null};
         }
       }
       last = races_;
@@ -152,11 +154,23 @@ function invertSPD(A) {  // via Cholesky
   }
   return inv;
 }
-let spare = null;
+// The simulated nights draw the same random numbers every time (a fixed seed, and the same number of draws for every
+// race whatever its state), so the odds move only when the results do: a reload, or a new count in a Texas House
+// race, can't nudge Senate control from 73% to 72%.
+const SEED = 2026;
+let rand = Math.random, spare = null;
+function mulberry32(a) {
+  return () => {
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
 function gauss() {
   if (spare != null) { const s = spare; spare = null; return s; }
   let u, v, q;
-  do { u = Math.random() * 2 - 1; v = Math.random() * 2 - 1; q = u * u + v * v; } while (q >= 1 || q === 0);
+  do { u = rand() * 2 - 1; v = rand() * 2 - 1; q = u * u + v * v; } while (q >= 1 || q === 0);
   const f = Math.sqrt((-2 * Math.log(q)) / q);
   spare = v * f;
   return u * f;
@@ -216,22 +230,24 @@ export function liveOdds(races, m, L, {n = 4000, partial = null} = {}) {
     return p;
   });
   const pRace = new Float64Array(plan.length), mSum = new Float64Array(plan.length);
+  rand = mulberry32(SEED); spare = null;
   for (let s = 0; s < n; s++) {
     for (let i = 0; i < K; i++) z[i] = gauss();
     for (let i = 0; i < K; i++) { let v = mu[i]; for (let k = 0; k <= i; k++) v += C[i][k] * z[k]; th[i] = v; }
     let sd = 0, hd = 0;
     plan.forEach((p, i) => {
+      const e1 = gauss(), e2 = gauss();  // two draws per race, used or not, so every race keeps its own draws
       let final;
       if (p.known != null) final = p.cur ?? p.known;
-      else if (p.counted != null) final = p.counted + gauss() * 0.5;
+      else if (p.counted != null) final = p.counted + e1 * 0.5;
       else {
         const shared = th[p.c[0]] + th[p.c[1]] + th[p.c[2]];
-        let miss = shared + p.sd * gauss();
+        let miss = shared + p.sd * e1;
         if (p.g != null) {  // this race's own count, weighed against the night's shared shift
           const v = 1 / (1 / p.own + 1 / p.sg ** 2);
-          miss = v * (shared / p.own + p.g / p.sg ** 2) + Math.sqrt(v) * gauss();
+          miss = v * (shared / p.own + p.g / p.sg ** 2) + Math.sqrt(v) * e1;
         }
-        final = (p.U ? (p.C * p.mc + p.U * (p.rem + miss)) / (p.C + p.U) : p.mean + miss) + gauss() * 0.5;
+        final = (p.U ? (p.C * p.mc + p.U * (p.rem + miss)) / (p.C + p.U) : p.mean + miss) + e2 * 0.5;
       }
       const won = p.known != null ? p.known > 0 : final > 0;
       mSum[i] += final;
@@ -348,10 +364,11 @@ export function raceMath(r, x, bench, counties) {
       const c = counties.get(countyKey(name));
       const n = c ? c.d + c.r : 0;
       const row = {key: String(fips), label: name.replace(/ (County|Parish|Borough|Census Area|Municipality)$/, ""), name, share, bench: b,
-        pct: c?.pct ?? 0, d: c?.d ?? 0, r: c?.r ?? 0, counted: n};
+        p24, pct: c?.pct ?? 0, d: c?.d ?? 0, r: c?.r ?? 0, counted: n};
       if (n) {
         row.margin = (100 * (c.d - c.r)) / n;
         row.gap = row.margin - b;
+        if (p24 != null) row.shift24 = row.margin - p24;   // against the 2024 presidential margin there
         w += n; wb += n * b;
         if (expected && c.pct >= 10) {
           const proj = n / (Math.min(c.pct, 100) / 100), exp = share * expected;

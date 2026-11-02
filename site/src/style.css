@@ -606,3 +606,70 @@ details.rn-counties > summary { font: 600 14px var(--sans); cursor: pointer; pad
 .map-legend .call-check { display: inline-grid; place-items: center; width: 16px; height: 16px; border-radius: 50%; border: 1px solid var(--ink); background: var(--surface); font: 700 10px var(--sans); color: var(--ink); }
 .map-legend .call-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--ink); background: var(--surface); }
 .map-panel .zoom-wrap { margin-inline: auto; }
+
+/* election night: the top of the page (control odds, seat tallies), finding a race, latest calls */
+.ctl-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 18px 0 6px; font-family: var(--sans); }
+.ctl { background: var(--card); border-radius: 14px; box-shadow: 0 0 0 1px var(--card-ring); padding: 14px 18px; }
+.ctl .k { font-size: 13px; color: var(--ink-2); font-weight: 600; }
+.ctl .v { display: flex; align-items: center; gap: 8px; font-size: 34px; font-weight: 750; line-height: 1.15; margin: 4px 0 2px; font-variant-numeric: tabular-nums; }
+.ctl .v .party-chip { font-size: 13px; }
+.ctl .muted { font-size: 13px; }
+.tally-scale { position: relative; height: 16px; font-size: 11.5px; color: var(--ink-2); font-weight: 600; }
+.tally-scale span { position: absolute; bottom: 1px; transform: translateX(-50%); white-space: nowrap; }
+.tally-lines { display: grid; gap: 3px; margin-top: 8px; font-size: 14px; color: var(--ink-2); }
+.tally-lines .party-chip { vertical-align: 1px; }
+.res-lead { display: inline-flex; align-items: center; gap: 6px; font-weight: 650; white-space: nowrap; }
+.wsu-table td .adj.fav-note { color: var(--ink-2); font-style: italic; }
+.how-works { font-family: var(--sans); margin: 4px 0 6px; max-width: 760px; }
+.how-works summary { cursor: pointer; font-size: 14px; font-weight: 600; color: var(--ink-2); }
+.how-works p { font-size: 14px; line-height: 1.5; color: var(--ink-2); margin: 8px 0; }
+.quick-find { position: relative; max-width: 520px; margin: -8px 0 18px; font-family: var(--sans); }
+.quick-find input { width: 100%; box-sizing: border-box; font: 15px var(--sans); padding: 10px 14px; border-radius: 10px; border: 1px solid var(--axis); background: var(--card); color: var(--ink); }
+.qf-list { position: absolute; z-index: 20; left: 0; right: 0; top: calc(100% + 4px); margin: 0; padding: 4px; list-style: none; background: var(--card); border-radius: 10px; box-shadow: 0 0 0 1px var(--card-ring), 0 8px 24px rgba(0,0,0,.18); }
+.qf-list li, .calls li, .calls .muted { font-family: var(--sans); }
+.qf-list li { display: flex; justify-content: space-between; gap: 12px; padding: 9px 10px; border-radius: 7px; cursor: pointer; font-size: 14px; max-width: none; }
+.qf-list li:hover, .qf-list li[aria-selected="true"] { background: color-mix(in srgb, var(--accent) 12%, var(--card)); }
+.calls { background: var(--card); border-radius: 14px; box-shadow: 0 0 0 1px var(--card-ring); padding: 14px 20px; margin: 16px 0; font-family: var(--sans); }
+.calls h3 { font: 700 17px var(--sans); margin: 0 0 8px; }
+.calls ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.calls li { display: grid; grid-template-columns: 4.6em 1fr; gap: 8px; font-size: 14.5px; line-height: 1.45; color: var(--ink-2); max-width: none; }
+.calls .when { color: var(--ink-3); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.calls b { color: var(--ink); }
+.call-race { font: inherit; color: var(--accent); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+.pill-flip { display: inline-block; font: 700 10.5px var(--sans); text-transform: uppercase; letter-spacing: .05em; color: var(--ink); background: color-mix(in srgb, var(--accent) 18%, var(--card)); border-radius: 999px; padding: 2px 7px; vertical-align: 1px; }
+.back-map { font: 600 13px var(--sans); color: var(--ink-2); background: none; border: 1px solid var(--axis); border-radius: 999px; padding: 5px 12px; cursor: pointer; margin: 2px 0 10px; }
+.back-map:hover { color: var(--ink); border-color: var(--ink); }
+.skip-map { position: absolute; left: -9999px; }
+.skip-map:focus { position: static; display: inline-block; margin: 0 0 8px; font: 600 13px var(--sans); padding: 6px 12px; border-radius: 8px; border: 1px solid var(--ink); background: var(--card); color: var(--ink); }
+.count-order { font: 14px/1.5 var(--sans); color: var(--ink-2); margin: 12px 0 0; max-width: 760px; }
+.count-list { font-family: var(--sans); font-size: 14px; line-height: 1.5; margin: 8px 0; }
+.count-list dt { font-weight: 700; margin-top: 10px; }
+.count-list dd { margin: 2px 0 0; color: var(--ink-2); max-width: 760px; }
+.night-h { font-size: 19px; }
+.tab-panel > h2.night-h { margin-top: 8px; border-top: 0; padding-top: 0; }
+/* a row whose count just changed flashes once */
+@keyframes wsu-flash { from { background: color-mix(in srgb, var(--accent) 22%, transparent); } to { background: transparent; } }
+.wsu-table tr.changed > td { animation: wsu-flash 2.5s ease-out 1; }
+.res-cards > .table-wrap > table > tbody > tr.changed { animation: wsu-flash 2.5s ease-out 1; }
+@media (prefers-reduced-motion: reduce) { .wsu-table tr.changed > td, .res-cards > .table-wrap > table > tbody > tr.changed { animation: none; } }
+@media (max-width: 640px) {
+  .ctl-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .ctl { padding: 12px; }
+  .ctl .k { font-size: 12px; }
+  .ctl .v { font-size: 26px; }
+  /* finger-sized targets */
+  .share-row button, .share-row a, .seg button, .back-map, .copy-race, .more-btn { min-height: 40px; display: inline-flex; align-items: center; }
+  .share-row button, .share-row a { padding: 6px 14px; }
+  .calls li { grid-template-columns: 1fr; gap: 0; }
+  .calls { padding: 12px 14px; }
+  /* key races: tighter cards */
+  .key-cards > .table-wrap > table > tbody > tr { padding: 10px 12px; margin-bottom: 6px; }
+  .key-cards td.c-range .rng { display: none; }
+  .key-cards td.c-range .adj { margin-top: 0; }
+}
+/* homepage: election-week banner to the live results */
+a.night-banner, a.night-banner:visited { color: var(--surface); }
+.night-banner { display: flex; align-items: center; gap: 12px; margin: 18px 0 0; padding: 12px 16px; border-radius: 12px; background: var(--ink); color: var(--surface); font: 600 15px/1.35 var(--sans); text-decoration: none; }
+.night-banner b { font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; background: color-mix(in srgb, var(--surface) 18%, transparent); white-space: nowrap; }
+.night-banner span:last-child { margin-left: auto; font-size: 18px; }
+.night-banner:hover { opacity: .92; }

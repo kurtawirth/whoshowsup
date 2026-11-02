@@ -3,7 +3,7 @@
 // counted counties compare with our forecast, turnout, and the county-by-county count. Display only.
 import {html} from "npm:htl";
 import {pct, sides, raceHref, raceTable, tip, copyLink} from "./wsu.js";
-import {raceMath} from "./live.js";
+import {raceMath, needs} from "./live.js";
 
 export const lastName = (s) => String(s).trim().split(/\s+/).filter((w) => !/^(Jr\.?|Sr\.?|I{2,3})$/.test(w)).pop();
 /** votes, rounded for reading: "1.8 million", "412,000", "9,800" */
@@ -79,6 +79,12 @@ export function racePanel(d, counties, {link = true, countyTable = true} = {}) {
   if (m.gap != null) tiles.push(tile("Against our forecast", Math.abs(m.gap) < 0.5 ? "On target" : `${lastName(d.nameOf(m.gap > 0 ? "D" : "R"))} +${Math.abs(m.gap).toFixed(1)}`,
     `in the counties counted so far: we expected ${sideText(d, m.expectedNow)} there; the count is ${sideText(d, (100 * m.lead) / m.counted)}`));
   else tiles.push(tile("Against our forecast", sideText(d, d.x.margin), `the count so far; our most likely result was ${sideText(d, d.margin_median)}${d.office === "HOUSE" ? " (no county breakdown for House districts, so early counts can mislead)" : ""}`));
+  // where the votes still out lean: our county benchmarks for the places still counting
+  if (!d.called && m.benchRem != null && m.uncounted > 0 && m.pct < 100) {
+    const short = f && m.lead !== 0 ? (m.lead > 0 ? "R" : "D") : null, need = short && f.left ? needs(f.left, m.lead)?.[short] : null;
+    tiles.push(tile("Where the votes left lean", sideText(d, m.benchRem),
+      `our benchmarks for the places still counting${need != null ? `; ${lastName(d.nameOf(short))} ${need > 1 ? "can't catch up on the count alone" : `needs ${Math.round(need * 100)}% of what's left`}` : ""}`));
+  }
   if (m.turnout != null) {
     const lean = m.turnoutLean ?? {};
     tiles.push(tile("Turnout", `${m.turnout >= 0 ? "+" : "−"}${Math.round(Math.abs(m.turnout) * 100)}%`,
@@ -96,13 +102,14 @@ export function racePanel(d, counties, {link = true, countyTable = true} = {}) {
       if (!box.open || box.querySelector("table")) return;
       box.append(raceTable([...m.countyRows].sort((x, y) => y.share - x.share), [
         {key: "label", label: unit === "parish" ? "Parish" : "County", sort: true},
-        {key: "pct", label: "Counted", num: true, sort: true, defaultDir: -1, render: (c) => (c.counted ? `${c.pct}%` : "")},
         {key: "margin", label: "Count", num: true, sort: true, render: (c) => (c.margin == null ? "" : sideText(d, c.margin))},
         {key: "bench", label: "Benchmark", num: true, sort: true, render: (c) => sideText(d, c.bench)},
         {key: "gap", label: "vs. benchmark", num: true, sort: true, render: (c) => (c.gap == null ? "" : `${lastName(d.nameOf(c.gap >= 0 ? "D" : "R"))} +${Math.abs(c.gap).toFixed(1)}`)},
+        {key: "pct", label: "Counted", num: true, sort: true, defaultDir: -1, render: (c) => (c.counted ? `${c.pct}%` : "")},
+        {key: "shift24", label: "Shift since 2024", num: true, sort: true, render: (c) => (c.shift24 == null ? "" : `${c.shift24 >= 0 ? "D" : "R"} +${Math.abs(c.shift24).toFixed(1)}`)},
         {key: "turnout", label: "Turnout vs. expected", num: true, sort: true, render: (c) => (c.turnout == null ? "" : sign(c.turnout))}
       ], {search: m.countyRows.length > 15, placeholder: `Search ${units}`, noun: unit, pageSize: 10}),
-      html`<p class="caption">Benchmark: what each ${unit} would show if the race landed exactly on our most likely result. A side running ahead of the benchmark in most places is outrunning our forecast.</p>`);
+      html`<p class="caption">Benchmark: what each ${unit} would show if the race landed exactly on our most likely result. A side running ahead of the benchmark in most places is outrunning our forecast. Shift since 2024: the count so far against the 2024 presidential margin there (D +3.0: three points more Democratic).</p>`);
     });
     out.push(box);
   }
