@@ -3,7 +3,7 @@ title: Election night
 ---
 
 ```js
-import {tokens, pct, margin, date, sides, raceLink, raceHref, raceTable, withSearch, hexMap, stateMap, shareRow} from "./components/wsu.js";
+import {tokens, pct, margin, date, sides, raceLink, raceHref, raceTable, withSearch, hexMap, stateMap, shareRow, tip} from "./components/wsu.js";
 import {liveStream, liveOdds, raceMath, countiesOf, fetchRace, nightRead} from "./components/live.js";
 import {racePanel, finish, sideText, lastName, k} from "./components/night.js";
 const liveModel = FileAttachment("data/live_model.json").json();
@@ -638,8 +638,29 @@ function leftToCount() {
   // the House vote counted so far, nationally, against our forecast of the national House vote
   const vD = d3.sum(house, (d) => d.x.d ?? 0), vR = d3.sum(house, (d) => d.x.r ?? 0);
   const houseLine = vD + vR > 0 ? html`<li><b>House vote counted so far:</b> ${margin((100 * (vD - vR)) / (vD + vR))}, from ${k(vD + vR)} votes for the two parties; our forecast for the national House vote was ${margin(top.nat_median)}. Contested seats only; early counts lean toward whichever ballots states count first, and the West counts last.</li>` : "";
+  // hovering the bar (or tapping it, or tabbing to it) shows the votes counted so far
+  const sharePct = share > 0 && share < 0.01 ? "Less than 1%" : `About ${Math.round(share * 100)}%`;
+  const tipLines = [["t-title", "Votes counted so far"], ["t-val", got.toLocaleString()],
+    ["t-sub", `${sharePct} of the ${k(all)} we expect. Votes for the two parties in contested House races.`]];
+  const bar = html`<div class="left-bar" role="img" tabindex="0" aria-label="${got.toLocaleString()} votes counted so far, ${Math.round(share * 100)}% of the expected vote"><b style="flex:${share}"></b><i></i></div>`;
+  const tt = tip();
+  tt.hide();  // the page redraws with each update; don't leave a popup stranded from the old bar
+  bar.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") tt.show(e, tipLines); });
+  bar.addEventListener("pointermove", (e) => { if (e.pointerType === "mouse") tt.move(e); });
+  bar.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") tt.hide(); });
+  bar.addEventListener("click", (e) => {
+    if (e.pointerType === "mouse") return;
+    tt.show(e, tipLines);
+    window.addEventListener("pointerdown", () => tt.hide(), {once: true, capture: true});
+  });
+  bar.addEventListener("focus", () => {
+    if (!bar.matches(":focus-visible")) return;
+    const r = bar.getBoundingClientRect();
+    tt.show({clientX: r.left + r.width / 2, clientY: r.bottom}, tipLines);
+  });
+  bar.addEventListener("blur", () => tt.hide());
   return html`<div class="left-box"><h3>What's left to count</h3>
-    <div class="left-bar" role="img" aria-label="${Math.round(share * 100)}% of the expected vote counted"><b style="flex:${share}"></b><i></i></div>
+    ${bar}
     <ul>
       <li><b>Votes:</b> ${out > 0 ? html`about <b>${k(out)}</b> still to count, roughly ${Math.round((100 * out) / all)}% of the ${k(all)} we expect in all.` : "all in, or close to it."}</li>
       <li><b>Races:</b> ${uncalled.length ? html`${list(uncalled)} race${s + h + g === 1 ? "" : "s"} not called yet.` : "every race has been called."}</li>

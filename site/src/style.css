@@ -484,7 +484,7 @@ button.seg.i[aria-pressed=true] { background: var(--ind, #6b4fbb); border-color:
 .copy-race:hover { color: var(--ink); border-color: var(--ink); }
 .left-box { background: var(--card); border-radius: 14px; box-shadow: 0 0 0 1px var(--card-ring); padding: 16px 20px; margin: 16px 0; font-family: var(--sans); }
 .left-box h3 { font: 700 17px var(--sans); margin: 0 0 10px; }
-.left-box .left-bar { display: flex; height: 14px; border-radius: 7px; overflow: hidden; gap: 2px; margin: 4px 0 12px; }
+.left-box .left-bar { display: flex; height: 14px; border-radius: 7px; overflow: hidden; gap: 2px; margin: 4px 0 12px; cursor: help; }
 .left-box .left-bar b { background: var(--ink-2); }
 .left-box .left-bar i { background: var(--tossup); flex: 1; }
 .left-box ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
