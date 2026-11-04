@@ -264,7 +264,10 @@ export function liveOdds(races, m, L, {n = 4000, partial = null} = {}) {
     const x = L[r.race_id], c = col(r);
     const ind = r.race_type === "independent" && Boolean(r.rep_candidate);
     const known = x?.called ? (x.called === "D" ? 1 : -1) : null;
-    const counted = x && x.margin != null && (x.pct ?? 0) >= 95 ? x.margin : null;
+    // nearly done counting: the margin so far, unless county counts show votes still out, which count until the end
+    // (a cutoff at 95% swung close races from a high chance to under 1%: research/live_odds/late_count.py)
+    const stillOut = partial?.[r.race_id]?.gap != null && partial[r.race_id].uncounted > 0 && (x?.pct ?? 0) < 100;
+    const counted = x && x.margin != null && (x.pct ?? 0) >= 95 && !stillOut ? x.margin : null;
     const p = {r, c, ind, known, counted, mean: r.margin_median, own: own(r), sd: Math.sqrt(own(r)), cur: x?.margin ?? null};
     // part-way counted: what the count says about this race's own miss (g), and how much to trust it (sg, points
     // of noise). The weights come from replaying 2018-2024 Senate and governor counts county by county against our

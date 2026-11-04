@@ -41,3 +41,21 @@ of each other, except at 75% counted in the county version (said 94%, won 91%).
 **Limits.** House districts have no county results, so the whole-count weights come from treating Senate and
 governor counts as if only their totals were known. Real counting quirks (an overnight pause, a late batch of mail
 ballots from one county) aren't in the replay. Governors and the shared national shift use the same machinery.
+
+## Update, election night 2026: the 95% cutoff
+
+Races at 95% counted were treated as nearly final (the margin so far, give or take half a point), so Mississippi's
+Senate race went from a high Democratic chance to Hyde-Smith >99% between 93% and 95% counted, while the count
+moved slightly toward the Democrat. `late_count.py` replays the same 214 races at 90-99% counted. Races with county
+results now keep the votes-still-out math until the count reaches 100%; races without them (House) don't change.
+
+| Races at 95%+ counted | cutoff (log loss) | votes still out (log loss) | whole count, no votes-left term |
+|---|---|---|---|
+| All | 0.016 | **0.011** | 0.022 |
+| Within 3 points | 0.156 | **0.102** | 0.205 |
+| Within 1 point | 0.383 | **0.236** | 0.485 |
+
+Within 3 points, by year: 2018 0.123 vs. 0.177 (the new version is worse), 2020 0.017 vs. 0.006, 2022 0.175 vs. 0.046,
+2024 0.307 vs. 0.176. It holds across the assumed early-ballot skews (0.095-0.109 vs. 0.130-0.170). Races moving 25+
+points from 93% to 97% counted fall from 16.2% to 1.5%. The new version is underconfident in this stretch (said 60%,
+won 80%; said 80%, won 95%), and the replay's counting order is assumed, so a late batch from one county isn't in it.
