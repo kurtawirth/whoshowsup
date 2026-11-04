@@ -130,11 +130,12 @@ def county_key(s: str) -> str:
 
 
 def fetch(race_ids: list[str] | None = None, pause: float = 0.25, allow_test: bool = False,
-          skipped: list[str] | None = None) -> dict:
+          skipped: list[str] | None = None, on_batch=None, batch: int = 35) -> dict:
     """Each race's count; Senate and governor races also carry each county's count ({key: [d, r, pct]}), which the
     results page compares with our county benchmarks and expected turnout. civicAPI fills races with made-up
     counts when it tests its own feed (it did on Oct. 27, flagged test_data); those are left out, and their
-    race_ids added to `skipped`, unless allow_test (practice runs)."""
+    race_ids added to `skipped`, unless allow_test (practice runs). on_batch, if given, gets the results so far after
+    every `batch` races, so a slow pass can publish as it goes."""
     m = pd.read_csv(MAP)
     ours = our_races().set_index("race_id")
     if race_ids is not None:
@@ -166,6 +167,8 @@ def fetch(race_ids: list[str] | None = None, pause: float = 0.25, allow_test: bo
                     counties[county_key(v.get("name") or k)] = [cd, cr_, round(float(v.get("percent_reporting") or 0))]
             if counties:
                 out[row.race_id]["counties"] = counties
+        if on_batch and len(out) % batch == 0:
+            on_batch(out)
         time.sleep(pause)
     return out
 

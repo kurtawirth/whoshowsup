@@ -10,8 +10,9 @@
 
 Every round fetches the close races (Senate, governor, and House races neither side is 98% sure to win)
 and, every fifth round, all the rest; writes site/src/data/live.json; and, unless practicing, commits
-that one file and pushes it, which rebuilds the site (about 1.5 minutes). Stops at --until or when every
-race has been called. Results are display only: they never feed the forecast.
+that one file and pushes it, which rebuilds the site (about 1.5 minutes). When civicAPI is slow enough that a
+round takes many minutes, it also publishes what's new partway through, at most every PARTWAY_GAP seconds. Stops
+at --until or when every race has been called. Results are display only: they never feed the forecast.
 
 --simulate draws a plausible night from our own forecast (each race's final margin from its forecast
 range, counted up gradually in poll-closing order, called once it's out of reach) so the page and the
@@ -38,6 +39,7 @@ INTERVAL = int(ARGS.get("--interval", 180))
 UNTIL = pd.Timestamp(ARGS.get("--until", "2026-11-04T09:00"), tz="UTC")
 PRACTICE, SIMULATE, ONCE = "--practice" in ARGS, "--simulate" in ARGS, "--once" in ARGS
 WRITE_ONLY = "--write-only" in ARGS
+PARTWAY_GAP = 240  # seconds between publishes in the middle of a round; longer than a deploy, since a newer deploy cancels the one running
 
 
 def keep_awake(on: bool = True) -> None:
@@ -200,12 +202,10 @@ def run() -> None:
     mode = "simulation" if SIMULATE else "practice (not publishing)" if PRACTICE else "LIVE"
     log(f"Election night {mode}: {len(close)} close races every {INTERVAL}s, all {total} every 5th round")
     k = 0
-    while True:
-        test = []
-        if SIMULATE:
-            res = sim.step()
-        else:
-            res = cr.fetch(None if k % 5 == 0 else close, allow_test=PRACTICE, skipped=test)
+    last_publish = time.monotonic()
+
+    def save(res: dict, test: list) -> tuple[int, int]:
+        """Merge results into live.json; returns how many races are called and how many have votes."""
         # when each call first showed up (civicAPI doesn't say), for the page's "Latest calls"
         now_iso = (datetime(2026, 11, 3, tzinfo=timezone.utc) + timedelta(hours=sim.clock + 5) if SIMULATE
                    else datetime.now(timezone.utc)).isoformat(timespec="seconds")
@@ -226,9 +226,37 @@ def run() -> None:
         if SIMULATE:  # stamp the simulated time of night (ET is UTC-5 on Nov 3)
             live["asof"] = (datetime(2026, 11, 3, tzinfo=timezone.utc) + timedelta(hours=sim.clock + 5)).isoformat(timespec="seconds")
         LIVE.write_text(json.dumps(live, separators=(",", ":")), encoding="utf-8")
+        return called, reporting
+
+    def partway(so_far: dict, test: list) -> None:
+        """A slow pass shouldn't hold back what it has: publish the races that changed so far."""
+        nonlocal last_publish
+        if time.monotonic() - last_publish < PARTWAY_GAP:
+            return
+        keys = ("pct", "d", "r", "called")
+        new = {rid: v for rid, v in so_far.items() if any(v.get(x) != (live["races"].get(rid) or {}).get(x) for x in keys)}
+        if not new:
+            return
+        try:
+            called, reporting = save(new, test)
+            log(f"  partway: {len(new)} races changed, {reporting} with votes, {called} of {total} called")
+            publish(called, total)
+            last_publish = time.monotonic()
+        except Exception as e:  # keep the round going; its end publishes everything anyway
+            log(f"  partway publish failed: {e!r}")
+
+    while True:
+        test = []
+        if SIMULATE:
+            res = sim.step()
+        else:
+            on_batch = None if PRACTICE or WRITE_ONLY else (lambda so_far: partway(so_far, test))
+            res = cr.fetch(None if k % 5 == 0 else close, allow_test=PRACTICE, skipped=test, on_batch=on_batch)
+        called, reporting = save(res, test)
         log(f"round {k}: {len(res)} races fetched, {reporting} with votes, {called} of {total} called")
         if not (PRACTICE or SIMULATE or WRITE_ONLY):
             publish(called, total)
+            last_publish = time.monotonic()
         k += 1
         done = called >= total or pd.Timestamp.now(tz="UTC") >= UNTIL or (SIMULATE and sim.clock > float(ARGS.get("--sim-hour", 29)))
         if ONCE or done:
