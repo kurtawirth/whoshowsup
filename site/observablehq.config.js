@@ -89,7 +89,8 @@ export default {
     busy = true; last = Date.now(); snapshot();
     try {
       const html = await (await fetch(location.href, {cache: "no-store"})).text();
-      if (!(html.match(RE) ?? []).some((f) => !ours.has(f))) return;
+      // the live results file changes with every election-night update, and the pages that use it reread it themselves
+      if (!(html.match(RE) ?? []).some((f) => !ours.has(f) && !f.includes("data/live."))) return;
       // at most one automatic reload per page per minute, so a slow-to-update server can't cause a loop; only an
       // actual reload counts toward that (a check that finds the page stale but waits doesn't restart the clock)
       const key = "wsu-reloaded:" + location.pathname;
@@ -104,6 +105,7 @@ export default {
   // Load a guaranteed-new copy: a one-time "_r" parameter gets past any cached copy (a tab the browser put to
   // sleep can come back from an old one); the parameter is taken off the address once the page loads.
   function fresh() {
+    try { sessionStorage.setItem("wsu-y:" + location.pathname, String(scrollY)); } catch {}  // the results page returns here
     const u = new URL(location.href);
     u.searchParams.set("_r", String(Date.now()));
     location.replace(u.href);

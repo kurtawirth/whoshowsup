@@ -47,9 +47,44 @@ export function fromCivic(list, races, civic) {
   return out;
 }
 
+// ---------- keeping the reader's place ----------
+// Each update redraws the page: the old content goes first, the page collapses, and the browser pulls the reader up
+// to fit. So before a redraw, hold the page's height and note a heading near the reader; afterward, put that heading
+// back where it was on screen, unless the reader has scrolled since. Open <details> sections stay open.
+let held = null, lastInput = 0;
+if (typeof window !== "undefined") for (const ev of ["wheel", "touchmove", "keydown"]) addEventListener(ev, () => (lastInput = Date.now()), {passive: true});
+const landmarks = () => [...document.querySelectorAll("#observablehq-main h2, #observablehq-main h3")].filter((el) => el.offsetParent);
+const label = (el) => el.textContent.trim().slice(0, 60);
+export function holdPlace() {
+  const main = document.getElementById("observablehq-main");
+  if (!main || held) return;
+  const near = landmarks().filter((el) => el.getBoundingClientRect().top <= innerHeight / 2).at(-1);
+  held = {main, at: Date.now(), y: scrollY, mark: near ? label(near) : null, top: near?.getBoundingClientRect().top,
+    open: new Set([...main.querySelectorAll("details[open] > summary")].map(label))};
+  main.style.minHeight = `${main.offsetHeight}px`;
+  const mine = held;
+  setTimeout(() => { if (held === mine) releasePlace(); }, 5000);  // a redraw that never finished shouldn't hold the page
+}
+export function releasePlace() {
+  if (!held) return;
+  const {main, at, y, mark, top, open} = held;
+  held = null;
+  for (const s of main.querySelectorAll("details > summary")) if (open.has(label(s))) s.parentElement.open = true;
+  const fix = () => {
+    if (lastInput > at) return;
+    const el = mark && landmarks().find((x) => label(x) === mark);
+    const want = el ? scrollY + el.getBoundingClientRect().top - top : y;
+    if (Math.abs(want - scrollY) > 1) scrollTo({top: want, behavior: "instant"});
+  };
+  fix();
+  requestAnimationFrame(fix);
+  // the maps can settle a moment later; let the page's height go only after that (unless another redraw has begun)
+  setTimeout(() => { fix(); if (!held) main.style.minHeight = ""; }, 200);
+}
+
 /** A live results stream for the Election night page: our published file, upgraded to civicAPI's direct feed
  *  during the night (or with ?direct in the address, for testing). Yields {mode, asof, races, source, ...}. */
-export function liveStream(liveFile, races, civic, {Generators, force = false}) {
+export function liveStream(liveFile, races, civic, {Generators, force = false, before = null}) {
   return Generators.observe((notify) => {
     let published = null, direct = null, directAt = 0, last = {};
     let delay = 60_000, timer = null, stopped = false;
@@ -74,6 +109,7 @@ export function liveStream(liveFile, races, civic, {Generators, force = false}) 
       }
       last = races_;
       const vals = Object.entries(races_).filter(([rid]) => contested.has(rid)).map(([, v]) => v);
+      before?.();
       notify({...published, races: races_, mode: fresh && published.mode === "waiting" ? "live" : published.mode,
         source: fresh ? "direct" : "published", asof: fresh ? new Date(directAt).toISOString() : published.asof,
         called: vals.filter((v) => v.called).length, reporting: vals.filter((v) => (v.d ?? 0) + (v.r ?? 0) > 0).length,

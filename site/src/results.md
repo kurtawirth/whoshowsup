@@ -4,7 +4,7 @@ title: Election night
 
 ```js
 import {tokens, pct, margin, date, sides, raceLink, raceHref, raceTable, withSearch, hexMap, stateMap, shareRow, tip} from "./components/wsu.js";
-import {liveStream, liveOdds, raceMath, countiesOf, fetchRace, nightRead} from "./components/live.js";
+import {liveStream, liveOdds, raceMath, countiesOf, fetchRace, nightRead, holdPlace, releasePlace} from "./components/live.js";
 import {racePanel, finish, sideText, lastName, k} from "./components/night.js";
 const liveModel = FileAttachment("data/live_model.json").json();
 const races = FileAttachment("data/races.json").json();
@@ -21,7 +21,9 @@ const statesMeta = FileAttachment("data/states.json").json();
 // footer; a browser that restores or nudges the scroll position then can pin the view to the footer and leave the
 // reader at the bottom once everything appears. So: no scroll restoring here, and back to the top after the first
 // full draw unless the reader has already scrolled, or the address names a race (#senate-tx), which opens on it.
-const opening = {done: false, touched: false, race: /^#(senate|house|governor)-/.test(location.hash)};
+const opening = {done: false, touched: false, race: /^#(senate|house|governor)-/.test(location.hash), y: 0};
+// (a reload the site did on its own, for a new version of the page, comes back to where the reader was)
+try { const s = window.sessionStorage, key = "wsu-y:" + window.location.pathname; opening.y = Number(s.getItem(key)) || 0; s.removeItem(key); } catch (e) { console.warn(e); }
 if (!opening.race) { history.scrollRestoration = "manual"; scrollTo(0, 0); }
 for (const ev of ["wheel", "touchstart", "keydown", "mousedown"]) addEventListener(ev, () => (opening.touched = true), {once: true, passive: true});
 ```
@@ -31,7 +33,7 @@ for (const ev of ["wheel", "touchstart", "keydown", "mousedown"]) addEventListen
 ```js
 // Results: civicAPI directly during the night (every reader shares its cached answer), with the copy our poller
 // publishes every few minutes as the fallback (components/live.js). ?direct in the address turns the direct feed on early, for testing.
-const live = liveStream(liveFile, races, liveModel.civic, {Generators, force: new URLSearchParams(location.search).has("direct")});
+const live = liveStream(liveFile, races, liveModel.civic, {Generators, force: new URLSearchParams(location.search).has("direct"), before: () => { if (opening.done) holdPlace(); }});
 ```
 
 ```js
@@ -738,10 +740,12 @@ if (!opening.done) {
   opening.done = true;
   requestAnimationFrame(() => {
     if (opening.touched) return;
-    if (opening.race) document.querySelector(`tr[data-id="${CSS.escape(location.hash.slice(1))}"]`)?.scrollIntoView({block: "start"});
+    if (opening.y) scrollTo(0, opening.y);
+    else if (opening.race) document.querySelector(`tr[data-id="${CSS.escape(location.hash.slice(1))}"]`)?.scrollIntoView({block: "start"});
     else scrollTo(0, 0);
   });
 }
+releasePlace();
 ```
 
 
