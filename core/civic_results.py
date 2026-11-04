@@ -37,10 +37,10 @@ HEADERS = {"User-Agent": "WhoShowsUp/1.0 (https://whoshowsup.net; election-night
 OFFICE = {"US Senate": "SEN", "US Senate Special": "SEN", "Senate": "SEN", "Governor": "GOV", "House of Representatives": "HOUSE"}
 
 
-def get(path: str, tries: int = 3) -> dict:
+def get(path: str, tries: int = 3, timeout: int = 30) -> dict:
     for k in range(tries):
         try:
-            r = requests.get(f"{API}/{path}", headers=HEADERS, timeout=30)
+            r = requests.get(f"{API}/{path}", headers=HEADERS, timeout=timeout)
             r.raise_for_status()
             return r.json()
         except (requests.RequestException, ValueError):
@@ -129,19 +129,47 @@ def county_key(s: str) -> str:
     return {"shannon": "oglalalakota"}.get(k, k)
 
 
+def fetch_bulk() -> dict:
+    """Every race at once from civicAPI's search, the feed the page itself reads: a request or two where fetch() needs
+    hundreds, so it can get through when civicAPI is struggling. No county counts, and Alaska's bloc races need every
+    candidate, so fetch() still fills those in. Empty if civicAPI can't answer."""
+    m = pd.read_csv(MAP)
+    by_civic = dict(zip(m["civic_id"], m["race_id"]))
+    ours = our_races().set_index("race_id")
+    out = {}
+    for kind in ("General", "Statewide"):
+        q = f"race/search?country=US&startDate={ELECTION_DAY}&endDate={ELECTION_DAY}&limit=50000&election_type={kind}"
+        try:
+            found = get(q, tries=3, timeout=60)
+        except Exception as e:
+            print(f"  bulk {kind}: {e!r}")
+            continue
+        for x in found.get("races") or []:
+            rid = by_civic.get(x.get("id"))
+            if rid is None or rid not in ours.index or ours.loc[rid, "race_type"] == "rcv_bloc" or x.get("test_data"):
+                continue
+            d, r, called = _side_votes(ours.loc[rid].to_dict(), x.get("candidates") or [])
+            out[rid] = {"pct": x.get("percent_reporting"), "d": d, "r": r,
+                        "margin": round(100 * (d - r) / (d + r), 2) if d + r else None,
+                        "called": called, "updated": x.get("last_updated")}
+    return out
+
+
 def fetch(race_ids: list[str] | None = None, pause: float = 0.25, allow_test: bool = False,
-          skipped: list[str] | None = None, on_batch=None, batch: int = 35) -> dict:
+          skipped: list[str] | None = None, on_batch=None) -> dict:
     """Each race's count; Senate and governor races also carry each county's count ({key: [d, r, pct]}), which the
     results page compares with our county benchmarks and expected turnout. civicAPI fills races with made-up
     counts when it tests its own feed (it did on Oct. 27, flagged test_data); those are left out, and their
-    race_ids added to `skipped`, unless allow_test (practice runs). on_batch, if given, gets the results so far after
-    every `batch` races, so a slow pass can publish as it goes."""
+    race_ids added to `skipped`, unless allow_test (practice runs). on_batch, if given, gets the results so far before
+    each race, so a slow pass can publish as it goes."""
     m = pd.read_csv(MAP)
     ours = our_races().set_index("race_id")
     if race_ids is not None:
         m = m[m["race_id"].isin(race_ids)]
     out = {}
     for row in m.itertuples():
+        if on_batch:
+            on_batch(out)
         statewide = ours.loc[row.race_id, "office"] != "HOUSE"
         try:
             x = get(f"race/{row.civic_id}" if statewide else f"race/{row.civic_id}?light")
@@ -167,8 +195,6 @@ def fetch(race_ids: list[str] | None = None, pause: float = 0.25, allow_test: bo
                     counties[county_key(v.get("name") or k)] = [cd, cr_, round(float(v.get("percent_reporting") or 0))]
             if counties:
                 out[row.race_id]["counties"] = counties
-        if on_batch and len(out) % batch == 0:
-            on_batch(out)
         time.sleep(pause)
     return out
 

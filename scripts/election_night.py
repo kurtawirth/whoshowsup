@@ -11,8 +11,8 @@
 Every round fetches the close races (Senate, governor, and House races neither side is 98% sure to win)
 and, every fifth round, all the rest; writes site/src/data/live.json; and, unless practicing, commits
 that one file and pushes it, which rebuilds the site (about 1.5 minutes). When civicAPI is slow enough that a
-round takes many minutes, it also publishes what's new partway through, at most every PARTWAY_GAP seconds. Stops
-at --until or when every race has been called. Results are display only: they never feed the forecast.
+round takes many minutes, it also reads civicAPI's all-races feed and publishes what's new partway through, every
+PARTWAY_GAP seconds. Stops at --until or when every race has been called. Results are display only: they never feed the forecast.
 
 --simulate draws a plausible night from our own forecast (each race's final margin from its forecast
 range, counted up gradually in poll-closing order, called once it's out of reach) so the page and the
@@ -202,15 +202,21 @@ def run() -> None:
     mode = "simulation" if SIMULATE else "practice (not publishing)" if PRACTICE else "LIVE"
     log(f"Election night {mode}: {len(close)} close races every {INTERVAL}s, all {total} every 5th round")
     k = 0
-    last_publish = time.monotonic()
+    last_publish = time.monotonic() - PARTWAY_GAP  # the first look at the all-races feed comes right away
 
     def save(res: dict, test: list) -> tuple[int, int]:
         """Merge results into live.json; returns how many races are called and how many have votes."""
         # when each call first showed up (civicAPI doesn't say), for the page's "Latest calls"
         now_iso = (datetime(2026, 11, 3, tzinfo=timezone.utc) + timedelta(hours=sim.clock + 5) if SIMULATE
                    else datetime.now(timezone.utc)).isoformat(timespec="seconds")
+        votes = lambda x: (x.get("d") or 0) + (x.get("r") or 0)  # noqa: E731
         for rid, v in res.items():
             old = live["races"].get(rid) or {}
+            if votes(v) < votes(old):  # fetched before a newer reading came in: keep the higher count
+                v.update({x: old.get(x) for x in ("pct", "d", "r", "margin", "updated")})
+            if "counties" not in v and old.get("counties"):  # the all-races feed has none
+                v["counties"] = old["counties"]
+            v["called"] = v.get("called") or old.get("called")
             if v.get("called"):
                 v["called_at"] = old.get("called_at") if old.get("called") == v["called"] and old.get("called_at") else now_iso
         live["races"].update(res)
@@ -233,15 +239,16 @@ def run() -> None:
         nonlocal last_publish
         if time.monotonic() - last_publish < PARTWAY_GAP:
             return
+        last_publish = time.monotonic()  # (a look at the feed that fails waits its turn too)
         keys = ("pct", "d", "r", "called")
-        new = {rid: v for rid, v in so_far.items() if any(v.get(x) != (live["races"].get(rid) or {}).get(x) for x in keys)}
-        if not new:
-            return
         try:
+            latest = {**so_far, **({} if test else cr.fetch_bulk())}
+            new = {rid: dict(v) for rid, v in latest.items() if any(v.get(x) != (live["races"].get(rid) or {}).get(x) for x in keys)}
+            if not new:
+                return
             called, reporting = save(new, test)
             log(f"  partway: {len(new)} races changed, {reporting} with votes, {called} of {total} called")
             publish(called, total)
-            last_publish = time.monotonic()
         except Exception as e:  # keep the round going; its end publishes everything anyway
             log(f"  partway publish failed: {e!r}")
 

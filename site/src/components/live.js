@@ -86,7 +86,11 @@ export function releasePlace() {
  *  during the night (or with ?direct in the address, for testing). Yields {mode, asof, races, source, ...}. */
 export function liveStream(liveFile, races, civic, {Generators, force = false, before = null}) {
   return Generators.observe((notify) => {
-    let published = null, direct = null, directAt = 0, last = {};
+    let published = null, direct = null, directAt = 0, last = {}, shownAt = 0;
+    // the freshest numbers this browser has seen, so a reload (or civicAPI failing for a while) can't step back to
+    // the older copy we've published
+    const KEPT = "wsu-live-2026";
+    try { ({races: last = {}, at: shownAt = 0} = JSON.parse(localStorage.getItem(KEPT)) ?? {}); } catch { last = {}; shownAt = 0; }
     let delay = 60_000, timer = null, stopped = false;
     // same-party races (two Democrats in a California top-two) are decided before the night: not in the tally
     const contested = new Set(races.filter((r) => r.race_type !== "same_party").map((r) => r.race_id));
@@ -95,11 +99,11 @@ export function liveStream(liveFile, races, civic, {Generators, force = false, b
       const rehearsal = ["simulation", "practice"].includes(published.mode);
       const fresh = direct && Date.now() - directAt < 4 * 60_000 && !rehearsal && !published.civic_test;
       const races_ = {...(published.races ?? {})};
+      const tot = (o) => (o ? (o.d ?? 0) + (o.r ?? 0) : -1);
       if (fresh) {
         for (const [rid, v] of Object.entries(direct)) {
           const old = races_[rid], prev = last[rid];
           // never step backward: a count lower than one already shown keeps the higher one
-          const tot = (o) => (o ? (o.d ?? 0) + (o.r ?? 0) : -1);
           const best = [v, old, prev].reduce((a, b) => (tot(b) > tot(a) ? b : a));
           // civicAPI's search has no county breakdown: keep the counties from our published copy
           const called = v.called ?? old?.called ?? null;
@@ -107,11 +111,22 @@ export function liveStream(liveFile, races, civic, {Generators, force = false, b
             called_at: called && old?.called === called ? old.called_at : best.called_at ?? null};
         }
       }
+      if (!rehearsal) {
+        for (const [rid, kept] of Object.entries(last)) {
+          const cur = races_[rid];
+          if (tot(kept) > tot(cur)) races_[rid] = {...kept, counties: cur?.counties ?? kept.counties, called: cur?.called ?? kept.called, called_at: cur?.called_at ?? kept.called_at};
+        }
+        shownAt = Math.max(shownAt, fresh ? directAt : Date.parse(published.asof) || 0);
+        try {
+          const slim = Object.fromEntries(Object.entries(races_).filter(([, v]) => tot(v) > 0).map(([rid, {counties, ...v}]) => [rid, v]));
+          localStorage.setItem(KEPT, JSON.stringify({races: slim, at: shownAt}));
+        } catch { /* private window or full: this browser just doesn't remember */ }
+      }
       last = races_;
       const vals = Object.entries(races_).filter(([rid]) => contested.has(rid)).map(([, v]) => v);
       before?.();
       notify({...published, races: races_, mode: fresh && published.mode === "waiting" ? "live" : published.mode,
-        source: fresh ? "direct" : "published", asof: fresh ? new Date(directAt).toISOString() : published.asof,
+        source: fresh ? "direct" : "published", asof: !rehearsal && shownAt ? new Date(shownAt).toISOString() : published.asof,
         called: vals.filter((v) => v.called).length, reporting: vals.filter((v) => (v.d ?? 0) + (v.r ?? 0) > 0).length,
         total: published.total ?? contested.size});
     };
