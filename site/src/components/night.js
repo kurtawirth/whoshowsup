@@ -68,7 +68,8 @@ export function racePanel(d, counties, {link = true, countyTable = true} = {}) {
         <div class="rn-top">${chip(d.tagOf(side))} <span class="rn-name">${d.nameOf(side)}</span> <b>${votes.toLocaleString()}</b> <span class="muted">${((100 * votes) / m.counted).toFixed(1)}%</span></div>
         ${el}<div class="rn-go">${note}</div></div>`;
     };
-    out.push(html`<div class="rn-head"><b>${k(m.counted)}</b> votes counted of about <b>${k(f.total)}</b> we now expect${m.pct ? html` <span class="muted">(civicAPI estimates ${m.pct}%)</span>` : ""}</div>`);
+    if (m.pct) out.push(html`<div class="rn-in"><b>${m.pct < 1 ? "Under 1%" : `${Math.round(m.pct)}%`} of the vote is in</b> <span class="muted">(civicAPI's estimate)</span></div>`);
+    out.push(html`<div class="rn-head"><b>${k(m.counted)}</b> votes counted of about <b>${k(f.total)}</b> we now expect</div>`);
     out.push(html`<div class="rn-race">${order.map(bar)}</div>`);
     out.push(html`<div class="rn-key"><span><b class="sw"></b>counted so far</span>${d.called ? "" : html`<span><i class="sw"></i>where we now expect them to finish</span>`}<span><u class="sw"></u>${k(f.line)} to win: half the ${k(f.total)} votes we now expect${f.adjusted ? ` (we expected ${k(m.expected)} this morning; the count's pace has moved it)` : ""}</span></div>`);
   }

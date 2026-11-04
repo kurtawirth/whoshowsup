@@ -560,6 +560,10 @@ details.schedule > summary { font: 600 16px var(--sans); cursor: pointer; paddin
 }
 
 /* ---------- one race's election-night panel (components/night.js) ---------- */
+.rn-in { font: 19px/1.3 var(--sans); margin: 12px 0 2px; }
+.rn-in b { font-weight: 700; color: var(--ink); }
+.rn-in .muted { font-size: 14px; }
+.rn-in + .rn-head { margin-top: 2px; }
 .rn-head { font: 15px/1.45 var(--sans); margin: 10px 0 8px; max-width: none; }
 .rn-head b { font-weight: 700; font-variant-numeric: tabular-nums; }
 .rn-race { display: grid; gap: 12px; margin: 6px 0 4px; max-width: 720px; }
