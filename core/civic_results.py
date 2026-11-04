@@ -129,10 +129,10 @@ def county_key(s: str) -> str:
     return {"shannon": "oglalalakota"}.get(k, k)
 
 
-def fetch_bulk() -> dict:
+def fetch_bulk(failed: list[str] | None = None) -> dict:
     """Every race at once from civicAPI's search, the feed the page itself reads: a request or two where fetch() needs
     hundreds, so it can get through when civicAPI is struggling. No county counts, and Alaska's bloc races need every
-    candidate, so fetch() still fills those in. Empty if civicAPI can't answer."""
+    candidate, so fetch() still fills those in. Empty if civicAPI can't answer; a part it couldn't get goes in `failed`."""
     m = pd.read_csv(MAP)
     by_civic = dict(zip(m["civic_id"], m["race_id"]))
     ours = our_races().set_index("race_id")
@@ -143,6 +143,8 @@ def fetch_bulk() -> dict:
             found = get(q, tries=3, timeout=60)
         except Exception as e:
             print(f"  bulk {kind}: {e!r}")
+            if failed is not None:
+                failed.append(kind)
             continue
         for x in found.get("races") or []:
             rid = by_civic.get(x.get("id"))

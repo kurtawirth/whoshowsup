@@ -12,7 +12,7 @@ Every round fetches the close races (Senate, governor, and House races neither s
 and, every fifth round, all the rest; writes site/src/data/live.json; and, unless practicing, commits
 that one file and pushes it, which rebuilds the site (about 1.5 minutes). When civicAPI is slow enough that a
 round takes many minutes, it also reads civicAPI's all-races feed and publishes what's new partway through, every
-PARTWAY_GAP seconds. Stops at --until or when every race has been called. Results are display only: they never feed the forecast.
+PARTWAY_GAP seconds, or RETRY_GAP seconds if part of the feed failed. Stops at --until or when every race has been called. Results are display only: they never feed the forecast.
 
 --simulate draws a plausible night from our own forecast (each race's final margin from its forecast
 range, counted up gradually in poll-closing order, called once it's out of reach) so the page and the
@@ -39,7 +39,9 @@ INTERVAL = int(ARGS.get("--interval", 180))
 UNTIL = pd.Timestamp(ARGS.get("--until", "2026-11-04T09:00"), tz="UTC")
 PRACTICE, SIMULATE, ONCE = "--practice" in ARGS, "--simulate" in ARGS, "--once" in ARGS
 WRITE_ONLY = "--write-only" in ARGS
-PARTWAY_GAP = 240  # seconds between publishes in the middle of a round; longer than a deploy, since a newer deploy cancels the one running
+PARTWAY_GAP = 240  # seconds between reads of the all-races feed in the middle of a round
+RETRY_GAP = 60     # the same when part of the feed failed
+DEPLOY_TIME = 150  # a newer deploy cancels the one running, so a partial read waits this long after a publish
 
 
 def keep_awake(on: bool = True) -> None:
@@ -202,7 +204,8 @@ def run() -> None:
     mode = "simulation" if SIMULATE else "practice (not publishing)" if PRACTICE else "LIVE"
     log(f"Election night {mode}: {len(close)} close races every {INTERVAL}s, all {total} every 5th round")
     k = 0
-    last_publish = time.monotonic() - PARTWAY_GAP  # the first look at the all-races feed comes right away
+    next_read = 0.0  # the first look at the all-races feed comes right away
+    last_publish = 0.0
 
     def save(res: dict, test: list) -> tuple[int, int]:
         """Merge results into live.json; returns how many races are called and how many have votes."""
@@ -236,18 +239,21 @@ def run() -> None:
 
     def partway(so_far: dict, test: list) -> None:
         """A slow pass shouldn't hold back what it has: publish the races that changed so far."""
-        nonlocal last_publish
-        if time.monotonic() - last_publish < PARTWAY_GAP:
+        nonlocal next_read, last_publish
+        if time.monotonic() < next_read:
             return
-        last_publish = time.monotonic()  # (a look at the feed that fails waits its turn too)
         keys = ("pct", "d", "r", "called")
+        failed = []
+        next_read = time.monotonic() + RETRY_GAP  # in case the read below raises
         try:
-            latest = {**so_far, **({} if test else cr.fetch_bulk())}
+            latest = {**so_far, **({} if test else cr.fetch_bulk(failed))}
+            next_read = time.monotonic() + (RETRY_GAP if failed else PARTWAY_GAP)
             new = {rid: dict(v) for rid, v in latest.items() if any(v.get(x) != (live["races"].get(rid) or {}).get(x) for x in keys)}
-            if not new:
-                return
+            if not new or (failed and time.monotonic() - last_publish < DEPLOY_TIME):
+                return  # (anything new is still new at the next read)
             called, reporting = save(new, test)
-            log(f"  partway: {len(new)} races changed, {reporting} with votes, {called} of {total} called")
+            last_publish = time.monotonic()
+            log(f"  partway: {len(new)} races changed, {reporting} with votes, {called} of {total} called" + (f" ({'/'.join(failed)} part failed)" if failed else ""))
             publish(called, total)
         except Exception as e:  # keep the round going; its end publishes everything anyway
             log(f"  partway publish failed: {e!r}")
