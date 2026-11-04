@@ -638,10 +638,17 @@ function latestCalls() {
     toggle.textContent = ui.callsOpen ? "Show fewer" : `Show all ${all.length} calls`;
     toggle.setAttribute("aria-expanded", String(ui.callsOpen));
   };
-  toggle.onclick = () => { ui.callsOpen = !ui.callsOpen; draw(); };
-  draw();
-  return html`<div class="calls"><h3>Latest calls</h3>${list}${all.length > 8 ? toggle : ""}
+  // the button stays on screen down the long list; closing it from far down comes back to the top of the box
+  const box = html`<div class="calls"><div class="calls-head"><h3>Latest calls</h3>${all.length > 8 ? toggle : ""}</div>${list}
     <p class="caption">Newest first, by when each call reached our page. Calls that arrived in the same update share a time.</p></div>`;
+  toggle.onclick = () => {
+    const wasDown = ui.callsOpen && box.getBoundingClientRect().top < 0;
+    ui.callsOpen = !ui.callsOpen;
+    draw();
+    if (wasDown) box.scrollIntoView({block: "start"});
+  };
+  draw();
+  return box;
 }
 // ---------- what's left to count, in plain words ----------
 // Votes: every contested House district (together they cover nearly the whole country's vote), each counted up

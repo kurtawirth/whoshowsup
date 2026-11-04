@@ -641,7 +641,9 @@ details.rn-counties > summary { font: 600 14px var(--sans); cursor: pointer; pad
 .calls li { display: grid; grid-template-columns: 4.6em 1fr; gap: 8px; font-size: 14.5px; line-height: 1.45; color: var(--ink-2); max-width: none; }
 .calls .when { color: var(--ink-3); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .calls b { color: var(--ink); }
-.calls .calls-more { background: none; cursor: pointer; margin-top: 10px; }
+.calls-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; position: sticky; top: var(--wsu-header-h, 92px); z-index: 2; background: var(--card); padding: 6px 0; margin-bottom: 4px; }
+.calls-head h3 { margin: 0; }
+.calls .calls-more { background: var(--card); cursor: pointer; white-space: nowrap; }
 .calls .caption { margin: 8px 0 0; }
 .call-race { font: inherit; color: var(--accent); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
 .pill-flip { display: inline-block; font: 700 10.5px var(--sans); text-transform: uppercase; letter-spacing: .05em; color: var(--ink); background: color-mix(in srgb, var(--accent) 18%, var(--card)); border-radius: 999px; padding: 2px 7px; vertical-align: 1px; }
