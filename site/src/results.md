@@ -406,6 +406,7 @@ function tipRows(r) {
   rows_.push(["t-sub", d.counted ? `Count: ${sideText(d, d.x.margin)}` : "No votes yet"]);
   if (d.counted) rows_.push(["t-sub", `${d.x.pct ?? 0}% counted`]);
   if (gapText(d)) rows_.push(["t-sub", gapText(d)]);
+  if (turnoutVs(d) != null) rows_.push(["t-sub", turnoutText(turnoutVs(d))]);
   rows_.push(["t-sub", "Click for the full count"]);
   return rows_;
 }
@@ -427,10 +428,22 @@ function fillMorning(r) {
   if (!d) return r.race_type === "same_party" ? (r.race_note === "D" ? t["Safe D"] : t["Safe R"]) : t.hair;
   return chanceFill(d, d.p_dem);
 }
-const MAP_MODES = [["lead", "Who's ahead", fillLead], ["chance", "Chance to win now", fillChance], ["gap", "Against our forecast", fillGap], ["morning", "This morning's forecast", fillMorning]];
+// turnout against what we expected: where the race looks set to finish, from its count and how much of it is in
+function turnoutVs(d) {
+  if (!d?.counted || (d.x.pct ?? 0) < 20 || !d.expected_votes) return null;
+  return d.m.counted / (Math.min(d.x.pct, 100) / 100) / d.expected_votes - 1;
+}
+const TURNOUT_STEPS = [[0.3, "var(--turn-high3)", "30%+ above"], [0.15, "var(--turn-high2)", "15–30% above"], [0.05, "var(--turn-high1)", "5–15% above"], [-0.05, t["Toss-up"], "within 5%"], [-0.15, "var(--turn-low1)", "5–15% below"], [-Infinity, "var(--turn-low2)", "15%+ below"]];
+function fillTurnout(r) {
+  const g = turnoutVs(rowOf.get(r.race_id));
+  return g == null ? t.surface : TURNOUT_STEPS.find(([lo]) => g >= lo)[1];
+}
+const turnoutText = (g) => `Turnout: ${Math.abs(g) < 0.005 ? "as expected" : `${Math.round(Math.abs(g) * 100)}% ${g > 0 ? "above" : "below"} expected`}`;
+const MAP_MODES = [["lead", "Who's ahead", fillLead], ["chance", "Chance to win now", fillChance], ["gap", "Against our forecast", fillGap], ["turnout", "Turnout vs. expected", fillTurnout], ["morning", "This morning's forecast", fillMorning]];
 function legend(mode, office) {
   const sw = (c, label) => html`<span><i style="background:${c}"></i>${label}</span>`;
   const called = mode === "morning" ? "" : office === "HOUSE" ? html`<span><b class="call-dot"></b>called</span>` : html`<span><b class="call-check">✓</b>called</span>`;
+  if (mode === "turnout") return html`<div class="map-legend">${TURNOUT_STEPS.map(([, c, label]) => sw(c, label))}${sw(t.surface, "under 20% counted")}${called}</div>`;
   if (mode === "lead") return html`<div class="map-legend">${sw(t["Safe D"], "Democrat won")}${sw(t["Lean D"], "Democrat leading")}${sw(t.hair, "No votes yet")}${sw(t["Lean R"], "Republican leading")}${sw(t["Safe R"], "Republican won")}${called}</div>`;
   if (mode === "gap") return html`<div class="map-legend">${sw(t["Safe D"], "6+ pts bluer")}${sw(t["Lean D"], "1–3 bluer")}${sw(t["Toss-up"], "within 1")}${sw(t["Lean R"], "1–3 redder")}${sw(t["Safe R"], "6+ pts redder")}${sw(t.surface, "under 10% counted")}${called}</div>`;
   return html`<div class="map-legend">${sw(t["Safe D"], "D 95%+")}${sw(t["Likely D"], "D 75–95%")}${sw(t["Lean D"], "D 60–75%")}${sw(t["Toss-up"], "under 60% either way")}${sw(t["Lean R"], "R 60–75%")}${sw(t["Likely R"], "R 75–95%")}${sw(t["Safe R"], "R 95%+")}${mode === "chance" ? sw(t.ind, "independent favored") : ""}${called}</div>`;
@@ -439,9 +452,10 @@ const MAP_NOTES = {
   lead: (off) => `Solid colors with a ${off === "HOUSE" ? "dot" : "check mark"} are races civicAPI has called; lighter ones, who leads the count so far; solid with no mark, seats where only one party is on the ballot.`,
   chance: "Our live chance to win: this morning's forecast, moved by each race's own count and by the races that have finished counting. Called races count for their winners.",
   gap: "Each race's count against what our forecast expected",
+  turnout: (off) => `Where each race's vote looks set to finish, from its count and civicAPI's estimate of how much is in, against what we expected: ${off === "HOUSE" ? "the district's 2024 vote, scaled by its state's drop-off from 2024 to 2022" : "the state's 2022 vote"}. Votes for the two major parties only, and a rough guide, since which ballots are counted first varies by state.`,
   morning: "Our forecast as of this morning, before any votes were counted."
 };
-// a map with its four views; clicking a state or district opens that race in `table`. With offices, the map
+// a map with its five views; clicking a state or district opens that race in `table`. With offices, the map
 // also switches between the Senate, the House and governors (the Overview tab).
 function mapPanel(key, office, table, {offices = null} = {}) {
   const box = html`<div class="map-panel"></div>`;

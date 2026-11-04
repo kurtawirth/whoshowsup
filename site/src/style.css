@@ -23,6 +23,7 @@
   --likely-d: #2a78d6;
   --lean-d: #6da7ec;
   --tossup: #e3e1db;
+  --turn-high3: #0e5b57; --turn-high2: #2a938a; --turn-high1: #93d2c9; --turn-low1: #eac78f; --turn-low2: #b5691c;
   --lean-r: #ec8277;
   --likely-r: #d6403a;
   --safe-r: #a3232a;
@@ -60,6 +61,7 @@
     --likely-d: #3987e5;
     --lean-d: #86b6ef;
     --tossup: #4a4a46;
+    --turn-high3: #93e6d9; --turn-high2: #4fb3a7; --turn-high1: #2b6f68; --turn-low1: #7d5c2b; --turn-low2: #e0a052;
     --lean-r: #f09a90;
     --likely-r: #e0463f;
     --safe-r: #a3232a;
