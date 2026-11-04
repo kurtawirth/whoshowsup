@@ -48,7 +48,8 @@ const ui = {tab: hashTab ?? "overview", mapMode: {overview: "lead", senate: "lea
   mem: {},          // each table's search, filters, sort and "Show more", kept across updates
   prev: {}, changedAt: {},  // each race's last count, and when it last changed (its row flashes)
   tables: {},       // the tables now on the page, so the maps and "Find a race" can open a race in them
-  counties: {}};    // the latest county counts fetched for each race opened, kept across updates
+  counties: {},     // the latest county counts fetched for each race opened, kept across updates
+  callsOpen: false}; // "Latest calls" showing every call
 const openSet = (k) => (ui.open[k] ??= new Set());
 const memOf = (k) => (ui.mem[k] ??= {});
 ```
@@ -621,14 +622,26 @@ function overview() {
 }
 // ---------- the latest calls, newest first (when each call first showed up in our poller's copy) ----------
 function latestCalls() {
-  const list = rows.filter((d) => d.called && d.x.called_at).sort((a, b) => d3.descending(a.x.called_at, b.x.called_at)).slice(0, 8);
-  if (!list.length) return null;
-  return html`<div class="calls"><h3>Latest calls</h3><ul>${list.map((d) => {
+  // a call this browser saw before our poller did has no time yet: it's the newest
+  const all = rows.filter((d) => d.called).sort((a, b) => d3.descending(a.x.called_at ?? "9", b.x.called_at ?? "9"));
+  if (!all.length) return null;
+  const item = (d) => {
     const go = html`<button type="button" class="call-race">${raceName(d)}</button>`;
     go.onclick = () => openRace(ui.tables.all, d.race_id);
     const gave = d.called === "D" ? d.p_dem : 1 - d.p_dem;
-    return html`<li><span class="when">${etTime(new Date(d.x.called_at)).replace(" ET", "")}</span><span>${chip(d.tagOf(d.called))} <b>${lastName(d.nameOf(d.called))}</b> wins ${go}${d.flipped ? html` <span class="pill-flip">Flip</span>` : ""}<span class="muted"> · we gave ${pct(gave)} this morning</span></span></li>`;
-  })}</ul></div>`;
+    return html`<li><span class="when">${d.x.called_at ? etTime(new Date(d.x.called_at)).replace(" ET", "") : "Just in"}</span><span>${chip(d.tagOf(d.called))} <b>${lastName(d.nameOf(d.called))}</b> wins ${go}${d.flipped ? html` <span class="pill-flip">Flip</span>` : ""}<span class="muted"> · we gave ${pct(gave)} this morning</span></span></li>`;
+  };
+  const list = html`<ul></ul>`;
+  const toggle = html`<button type="button" class="more-btn calls-more"></button>`;
+  const draw = () => {
+    list.replaceChildren(...(ui.callsOpen ? all : all.slice(0, 8)).map(item));
+    toggle.textContent = ui.callsOpen ? "Show fewer" : `Show all ${all.length} calls`;
+    toggle.setAttribute("aria-expanded", String(ui.callsOpen));
+  };
+  toggle.onclick = () => { ui.callsOpen = !ui.callsOpen; draw(); };
+  draw();
+  return html`<div class="calls"><h3>Latest calls</h3>${list}${all.length > 8 ? toggle : ""}
+    <p class="caption">Newest first, by when each call reached our page. Calls that arrived in the same update share a time.</p></div>`;
 }
 // ---------- what's left to count, in plain words ----------
 // Votes: every contested House district (together they cover nearly the whole country's vote), each counted up
