@@ -47,7 +47,8 @@ const ui = {tab: hashTab ?? "overview", mapMode: {overview: "lead", senate: "lea
   open: hashTab && hashTab !== hash ? {[hashTab]: new Set([hash])} : {},
   mem: {},          // each table's search, filters, sort and "Show more", kept across updates
   prev: {}, changedAt: {},  // each race's last count, and when it last changed (its row flashes)
-  tables: {}};      // the tables now on the page, so the maps and "Find a race" can open a race in them
+  tables: {},       // the tables now on the page, so the maps and "Find a race" can open a race in them
+  counties: {}};    // the latest county counts fetched for each race opened, kept across updates
 const openSet = (k) => (ui.open[k] ??= new Set());
 const memOf = (k) => (ui.mem[k] ??= {});
 ```
@@ -370,11 +371,12 @@ function detail(d) {
   const draw = (counties) => el.replaceChildren(back, ...racePanel(d, counties),
     ...(order ? [html`<p class="count-order"><b>How ${d.state_name} counts:</b> ${order}</p>`] : []));
   const cs = countiesOf(d.x);
-  draw(cs);
-  // without counties in our published copy, ask civicAPI for this one race while it's open
+  draw(cs ?? ui.counties[d.race_id] ?? null);
+  // without counties in our published copy, ask civicAPI for this one race while it's open; each update redraws this
+  // panel, so it starts from the last answer, and a request that fails leaves those counties up
   const cid = liveModel.civic?.[d.race_id];
   if (!cs && d.b && cid && d.counted && live.mode !== "simulation") {
-    fetchRace(d, cid).then(({counties}) => { if (counties.size) draw(counties); }).catch(() => {});
+    fetchRace(d, cid).then(({counties}) => { if (counties.size) { ui.counties[d.race_id] = counties; draw(counties); } }).catch(() => {});
   }
   return el;
 }

@@ -76,7 +76,7 @@ export function racePanel(d, counties, {link = true, countyTable = true} = {}) {
   // three numbers to scan
   const tiles = [];
   if (f && !d.called && m.pct < 100) tiles.push(tile("Votes left", `~${k(f.left)}`, `of the ${k(f.total)} we now expect`));
-  if (m.gap != null) tiles.push(tile("Against our forecast", Math.abs(m.gap) < 0.5 ? "On target" : `${lastName(d.nameOf(m.gap > 0 ? "D" : "R"))} +${Math.abs(m.gap).toFixed(1)}`,
+  if (m.gap != null) tiles.push(tile("Against our forecast", Math.abs(m.gap) < 0.5 ? "On target" : `${Math.abs(m.gap).toFixed(1)} pts better for ${lastName(d.nameOf(m.gap > 0 ? "D" : "R"))}`,
     `in the counties counted so far: we expected ${sideText(d, m.expectedNow)} there; the count is ${sideText(d, (100 * m.lead) / m.counted)}`));
   else tiles.push(tile("Against our forecast", sideText(d, d.x.margin), `the count so far; our most likely result was ${sideText(d, d.margin_median)}${d.office === "HOUSE" ? " (no county breakdown for House districts, so early counts can mislead)" : ""}`));
   // where the votes still out lean: our county benchmarks for the places still counting
