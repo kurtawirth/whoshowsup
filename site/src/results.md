@@ -276,13 +276,6 @@ function gapText(d) {
   if (Math.abs(g) < 0.5) return "Right on our forecast";
   return `${lastName(d.nameOf(g > 0 ? "D" : "R"))} running ${Math.abs(g).toFixed(1)} ahead of forecast`;
 }
-// the same in the tables, by party, so each row names its people only once
-function gapCell(d) {
-  const g = d.m.gap;
-  if (g == null) return "";
-  if (Math.abs(g) < 0.5) return html`<div class="adj">Right on our forecast</div>`;
-  return html`<div class="adj">${chip(d.tagOf(g > 0 ? "D" : "R"))} ${Math.abs(g).toFixed(1)} pts ahead of our forecast</div>`;
-}
 const status = (d) => (d.called
   ? html`<span><span class="res-called">${chip(d.tagOf(d.called))} Won by ${Math.abs(d.x.margin ?? 0) < 0.05 ? "under 0.1" : Math.abs(d.x.margin).toFixed(1)}</span>${(d.x.pct ?? 0) < 100 ? html`<div class="adj">${d.x.pct ?? 0}% counted</div>` : ""}</span>`
   : d.counted ? html`<span><span class="res-lead">${chip(d.tagOf(d.lead))} ${sideText(d, d.x.margin)}</span>${leftText(d)}${leanText(d)}${favNote(d)}</span>`
@@ -315,7 +308,7 @@ const COLUMNS = [
   {key: "label", label: "Race", sort: true, sortValue: (d) => `${d.state_name} ${String(d.district ?? 0).padStart(2, "0")}`, render: (d) => html`<span class="rd-name">${raceName(d)}</span>`},
   {key: "status", label: "Result so far", render: status},
   {key: "pct", label: "Counted", num: true, sort: true, defaultDir: -1, sortValue: (d) => d.x.pct ?? -1, render: (d) => (d.counted ? `${d.x.pct ?? 0}%` : "")},
-  {key: "range", label: "vs. our forecast", render: (d) => html`<span>${rangeBar(d)}${gapCell(d)}</span>`},
+  {key: "range", label: "vs. our forecast", render: (d) => html`<span>${rangeBar(d)}</span>`},
   {key: "p_dem", label: "Chance to win", sort: true, sortValue: (d) => { const p = d.pNow ?? d.p_dem; return Math.max(p, 1 - p); }, render: oddsCell}
 ];
 const STATUS_FILTER = {key: "status", label: "Every race", options: [["open", "Not called yet"], ["called", "Called"], ["flip", "Seats that flipped"], ["against", "Leader isn't our favorite"]],
