@@ -152,6 +152,8 @@ const read = started ? nightRead(rows.filter((d) => d.office !== "HOUSE").map((d
 const importance = (d) => (d.office === "GOV" ? 0.5 - Math.abs(d.p_dem - 0.5) : d.tipping_point ?? 0);
 ```
 
+${started && live.mode === "live" ? html`<div class="callout warn"><b>Our counts are running behind.</b> civicAPI, the service that supplies our results, is having outages tonight, so counts and odds here may lag well behind what has been reported elsewhere. Check the "Updated" time below to see how fresh they are.</div>` : ""}
+
 ${live.mode === "simulation" ? html`<div class="sim-banner"><b>Rehearsal.</b> These are made-up results for testing the page, not real votes.</div>` : live.mode === "practice" ? html`<div class="sim-banner"><b>Practice run.</b> Real counts from civicAPI, fetched to test the page; not published.</div>` : ""}
 
 ${html`<p class="kicker">Election night · November 3, 2026${started ? ` · ${live.called} of ${live.total} races called` : ""}${asof && started ? html` · Updated ${etTime(asof)}<span class="ago" data-t=${+asof}>${agoText(+asof)}</span>${live.source === "direct" ? " · live from civicAPI" : ""}` : ""}</p>`}
@@ -159,7 +161,7 @@ ${html`<p class="kicker">Election night · November 3, 2026${started ? ` · ${li
 # ${started && headline ? headline : started ? `${live.called} of ${live.total} races called` : "Results will appear here on election night"}
 
 <p class="dek">${started
-  ? html`Live results and odds, updated every few minutes. The odds are our estimates from the counts so far, not calls, and will swing as votes come in.`
+  ? html`Live results and odds. The odds are our estimates from the counts so far, not calls, and will swing as votes come in.`
   : html`From the first poll closings at 6 p.m. Eastern on November 3, the count for every House, Senate and governor race will appear here every few minutes, next to what our forecast expected, with a running tally of the House and Senate. ${(() => { const today = new Date().toLocaleDateString("en-CA", {timeZone: "America/New_York"}), days = Math.round((Date.parse("2026-11-03") - Date.parse(today)) / 864e5); return days > 1 ? `That's ${days} days away.` : days === 1 ? "That's tomorrow." : days === 0 ? "That's tonight." : ""; })()}`}</p>
 
 ```js
