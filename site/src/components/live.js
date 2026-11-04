@@ -421,7 +421,7 @@ export function raceMath(r, x, bench, counties) {
         row.gap = row.margin - b;
         if (p24 != null) row.shift24 = row.margin - p24;   // against the 2024 presidential margin there
         w += n; wb += n * b;
-        if (expected && c.pct >= 10) {
+        if (expected && c.pct >= 10 && share > 0) {  // (the tiniest counties round to a share of zero: nothing to compare with)
           const proj = n / (Math.min(c.pct, 100) / 100), exp = share * expected;
           row.turnout = proj / exp - 1;
           projT += proj; expT += exp;
