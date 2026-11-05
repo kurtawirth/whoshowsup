@@ -154,7 +154,7 @@ const read = started ? nightRead(rows.filter((d) => d.office !== "HOUSE").map((d
 const importance = (d) => (d.office === "GOV" ? 0.5 - Math.abs(d.p_dem - 0.5) : d.tipping_point ?? 0);
 ```
 
-${started && live.mode === "live" ? html`<div class="callout warn"><b>Our counts are running behind.</b> civicAPI, the service that supplies our results, is having outages tonight, so counts and odds here may lag well behind what has been reported elsewhere. Some races may lag more than others, so a recent "Updated" time doesn't mean every race is current.</div>` : ""}
+${started && live.mode === "live" ? html`<div class="callout warn"><b>These aren't final results.</b> This page no longer updates automatically, so counts, calls and odds here may lag what has been reported elsewhere, and some races may lag more than others. The "Updated" time shows our last update, using counts from civicAPI. For final results, check your state's election office.</div>` : ""}
 
 ${live.mode === "simulation" ? html`<div class="sim-banner"><b>Rehearsal.</b> These are made-up results for testing the page, not real votes.</div>` : live.mode === "practice" ? html`<div class="sim-banner"><b>Practice run.</b> Real counts from civicAPI, fetched to test the page; not published.</div>` : ""}
 
