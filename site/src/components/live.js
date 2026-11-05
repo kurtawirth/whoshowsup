@@ -89,7 +89,9 @@ export function liveStream(liveFile, races, civic, {Generators, force = false, b
     let published = null, direct = null, directAt = 0, last = {}, shownAt = 0;
     // the freshest numbers this browser has seen, so a reload (or civicAPI failing for a while) can't step back to
     // the older copy we've published
-    const KEPT = "wsu-live-2026";
+    // (renamed Nov 5 so browsers drop the bad high counts they saved for New York and NV-2)
+    const KEPT = "wsu-live-2026b";
+    try { localStorage.removeItem("wsu-live-2026"); } catch { /* private window: nothing was kept */ }
     try { ({races: last = {}, at: shownAt = 0} = JSON.parse(localStorage.getItem(KEPT)) ?? {}); } catch { last = {}; shownAt = 0; }
     let delay = 60_000, timer = null, stopped = false;
     // same-party races (two Democrats in a California top-two) are decided before the night: not in the tally
