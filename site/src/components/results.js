@@ -70,7 +70,8 @@ export function resultBox(r, row, sc, {outletMeta = []} = {}) {
       ${vs}
     </div>
     ${raters.length ? html`<div class="result-raters"><div class="k">How the other forecasters called it</div><ul>
-      <li class="g-${ours}"><span class="rr-name"><b>Who Shows Up</b></span><span class="rr-p">${ourPick(r, row)}</span><span class="rr-mark" title="${WORD[ours]}">${MARK[ours]}</span></li>${raters}</ul></div>` : ""}
+      ${(() => { const v = r.rating, g = grade(PICK[v], w);
+        return html`<li class="g-${g}"><span class="rr-name"><b>Who Shows Up</b> <span class="muted">(${ourPick(r, row)})</span></span><span class="cmp-pill" style="background:${t[v]};color:${v.startsWith("Safe") || v.startsWith("Likely") ? "#fff" : "#111"}">${v}</span><span class="rr-mark" title="${WORD[g]}">${MARK[g]}</span></li>`; })()}${raters}</ul></div>` : ""}
     <p class="result-more"><a href="${link("scorecard")}">How our forecast did in every race, and against the other forecasters →</a></p>
   </div>`;
 }

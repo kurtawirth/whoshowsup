@@ -150,7 +150,36 @@ for off, key in (("HOUSE", "house"), ("SEN", "senate"), ("GOV", "gov")):
         "seats_total": 435 if off == "HOUSE" else 100 if off == "SEN" else len(ws),
     }
 
-# other forecasters, on the races each one rated that have been called
+# other forecasters, on the races each one rated that have been called. The main comparison uses our own
+# published ratings (Safe/Likely/Lean/Toss-up; Toss-up = 40-60%), the same kind of call the raters make. A second
+# yardstick scores every call as a probability (Brier score), turning categories into chances with a common
+# convention (CAT_P), so a confident miss costs more than a Toss-up. Our probability picks are kept alongside.
+CAT_P = {"Safe": .975, "Likely": .875, "Lean": .70, "Tilt": .55}
+
+
+def cat_p(rating):
+    if rating == "Toss-up":
+        return .5
+    k, side = rating.split()
+    return CAT_P[k] if side == "D" else 1 - CAT_P[k]
+
+
+def brier(ws, prob):
+    return round(sum((prob(w) - (w["called"] == "D")) ** 2 for w in ws) / len(ws), 4)
+
+
+for w in rows:
+    w["rating"] = by_id[w["id"]]["rating"]
+our_pick = lambda w: PICK[w["rating"]]
+
+
+def grade(ws, pick):
+    right = sum(pick(w) == w["called"] for w in ws)
+    toss = sum(pick(w) is None for w in ws)
+    return {"right": right, "wrong": len(ws) - right - toss, "toss": toss}
+
+
+ours_all = grade(called, our_pick) | {"brier_cat": brier(called, lambda w: cat_p(w["rating"]))}
 comp = []
 for o in outlets["outlets"]:
     name = o["name"]
@@ -158,30 +187,27 @@ for o in outlets["outlets"]:
     if not ws:
         continue
     pick = lambda w: PICK[w["outlets"][name]]
-    right = sum(pick(w) == w["called"] for w in ws)
-    toss = [w for w in ws if pick(w) is None]
-    both = [w for w in ws if pick(w) and w["fav"]]
-    dis = [w for w in both if pick(w) != w["fav"]]
+    toss = [w for w in ws if pick(w) is None and our_pick(w)]
+    dis = [w for w in ws if pick(w) and our_pick(w) and pick(w) != our_pick(w)]
     comp.append({
         "name": name, "short": o["short"], "kind": o["kind"], "rated_on": o["rated_on"], "n": len(ws),
-        "right": right, "wrong": len(ws) - right - len(toss), "toss": len(toss),
-        "ours_right": sum(w["right"] for w in ws), "ours_wrong": sum(not w["right"] and w["fav"] is not None for w in ws),
-        "ours_coin": sum(w["fav"] is None for w in ws),
-        "toss_ours_right": sum(w["right"] for w in toss),
-        "disagree": [{"id": w["id"], "theirs": w["outlets"][name], "ours_right": w["right"]} for w in dis],
+        **grade(ws, pick), "brier_cat": brier(ws, lambda w: cat_p(w["outlets"][name])),
+        "ours": grade(ws, our_pick) | {"brier_cat": brier(ws, lambda w: cat_p(w["rating"])), "brier": brier(ws, lambda w: w["p"])},
+        "ours_odds": {"right": sum(w["right"] for w in ws), "wrong": sum(not w["right"] and w["fav"] is not None for w in ws)},
+        "toss_we_picked": len(toss), "toss_ours_right": sum(our_pick(w) == w["called"] for w in toss),
+        "disagree": [{"id": w["id"], "theirs": w["outlets"][name], "ours": w["rating"], "ours_right": our_pick(w) == w["called"]} for w in dis],
     })
 ws = [w for w in called if "pi" in w]
 if ws:
+    # a market gives probabilities, so it's compared with our probabilities
     pi_fav = lambda w: "D" if w["pi"] > .5 else "R" if w["pi"] < .5 else None
     comp.append({
         "name": "PredictIt", "short": "PredictIt", "kind": "market", "rated_on": markets["asof"], "n": len(ws),
-        "right": sum(pi_fav(w) == w["called"] for w in ws), "wrong": sum(pi_fav(w) not in (None, w["called"]) for w in ws),
-        "toss": sum(pi_fav(w) is None for w in ws),
-        "ours_right": sum(w["right"] for w in ws), "ours_wrong": sum(not w["right"] and w["fav"] is not None for w in ws),
-        "ours_coin": sum(w["fav"] is None for w in ws), "toss_ours_right": 0,
-        "brier": round(sum((w["pi"] - (w["called"] == "D")) ** 2 for w in ws) / len(ws), 4),
-        "ours_brier": round(sum((w["p"] - (w["called"] == "D")) ** 2 for w in ws) / len(ws), 4),
-        "disagree": [{"id": w["id"], "theirs": round(w["pi"], 3), "ours_right": w["right"]}
+        **grade(ws, pi_fav), "brier": brier(ws, lambda w: w["pi"]),
+        "ours": grade(ws, lambda w: w["fav"]) | {"brier": brier(ws, lambda w: w["p"])},
+        "ours_odds": {"right": sum(w["right"] for w in ws), "wrong": sum(not w["right"] and w["fav"] is not None for w in ws)},
+        "toss_we_picked": 0, "toss_ours_right": 0,
+        "disagree": [{"id": w["id"], "theirs": round(w["pi"], 3), "ours": None, "ours_right": w["right"]}
                      for w in ws if pi_fav(w) and w["fav"] and pi_fav(w) != w["fav"]],
     })
 markets_ctl = {k: markets["races"][f"control-{k}"]["p"] for k in ("house", "senate") if f"control-{k}" in markets["races"]}
@@ -190,7 +216,7 @@ out = {
     "asof": live["asof"], "source": live.get("source", "civicAPI"), "forecast_date": top["forecast_date"],
     "called": len(called), "contested": len(rows),
     "summary": summary, "calibration": calib, "margins": margins, "chambers": chambers,
-    "forecasters": comp, "markets_control": markets_ctl, "races": rows,
+    "ours_ratings": ours_all, "cat_p": CAT_P, "forecasters": comp, "markets_control": markets_ctl, "races": rows,
 }
 json.dump(out, open(os.path.join(D, "scorecard.json"), "w", encoding="utf-8"), separators=(",", ":"))
 
@@ -205,7 +231,7 @@ for k, v in margins.items():
     print(f"  margins {k}: n {v['n']}, mean miss {v['mean_miss']:+} (D+ = toward Democrats), mean abs {v['mean_abs']}, inside 80% {v['inside']}")
 for k, v in chambers.items():
     print(f"  {k}: {v}")
+print("our ratings, all called:", ours_all)
 for c in comp:
-    print(f"  {c['short']:16} n {c['n']:3} right {c['right']} toss {c['toss']} wrong {c['wrong']} | ours right {c['ours_right']} wrong {c['ours_wrong']} | disagreements {len(c['disagree'])}, ours right {sum(d['ours_right'] for d in c['disagree'])} | their toss-ups, our pick right {c['toss_ours_right']}/{c['toss']}"
-          + (f" | Brier PI {c['brier']} ours {c['ours_brier']}" if "brier" in c else ""))
+    print(f"  {c['short']:16} n {c['n']:3} theirs {c['right']}/{c['wrong']}/{c['toss']} score {c.get('brier_cat', c.get('brier'))} | ours {c['ours']} | disagreements {len(c['disagree'])}, ours right {sum(d['ours_right'] for d in c['disagree'])} | their toss-ups we picked {c['toss_ours_right']}/{c['toss_we_picked']}")
 print("misses:", [w["id"] for w in called if not w["right"]])

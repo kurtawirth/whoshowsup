@@ -135,37 +135,48 @@ display(html`<div class="table-wrap"><table class="wsu-table">
 ## How the other forecasters did
 
 ```js
-const F = sc.forecasters;
+const F = sc.forecasters, OR = sc.ours_ratings, CP = sc.cat_p;
 const kindName = {rater: "Expert ratings", model: "Statistical model", market: "Prediction market"};
-display(html`<p>Every forecaster below published its final calls before Election Day; none of them fed into ours. Each row compares a forecaster with Who Shows Up <i>on the same races</i>: the ones that forecaster rated and that have been called. Raters and models that use categories (Safe, Likely, Lean) count as picking the side they lean toward; a Toss-up is no pick. PredictIt's favorite is whichever side its final price favored.</p>`);
+const pc = (v) => `${Math.round(v * 1000) / 10}%`;
+display(html`<p>Most forecasters publish categories (Safe, Likely, Lean, Toss-up) rather than chances, so the fairest comparison uses our own categories. We published a rating for every race alongside our odds, the same way they did, before Election Day: Toss-up meant a 40–60% chance, Lean 60–80%, Likely 80–95% and Safe above 95%. A Lean, Likely or Safe rating counts as a pick for that side; a Toss-up is no pick. None of these forecasts fed into ours.</p>
+  <p>Our ratings picked the winner in ${OR.right} of the ${all.n} called races, missed ${OR.wrong} and called ${OR.toss} Toss-ups. Counting our odds instead (anything over 50% as a pick), the forecast picked ${all.right} and missed ${misses.length}, the figures used elsewhere on this page.</p>`);
+```
+
+```js
 display(html`<div class="table-wrap"><table class="wsu-table fc-table">
-  <thead><tr><th>Forecaster</th><th class="num">Races</th><th class="num">Their picks<br><small>right · wrong · Toss-up</small></th><th class="num us">Our picks, same races<br><small>right · wrong</small></th><th class="num">Where we disagreed<br><small>we were right</small></th><th class="num">Their Toss-ups<br><small>our pick won</small></th></tr></thead>
+  <thead><tr><th>Forecaster</th><th class="num">Races</th><th class="num">Their calls<br><small>right · wrong · Toss-up</small></th><th class="num us">Our ratings, same races<br><small>right · wrong · Toss-up</small></th><th class="num">Score<br><small>theirs vs. ours, lower is better</small></th><th class="num">Where we disagreed<br><small>we were right</small></th><th class="num">Their Toss-ups<br><small>our pick won</small></th></tr></thead>
   <tbody>${F.map((f) => { const dis = f.disagree.length, ours = f.disagree.filter((d) => d.ours_right).length;
+    const mkt = f.kind === "market", a = mkt ? f.brier : f.brier_cat, b = mkt ? f.ours.brier : f.ours.brier_cat;
     return html`<tr>
     <td><b>${f.short}</b><div class="cmp-p">${kindName[f.kind]}, final as of ${date(f.rated_on)}</div></td>
     <td class="num">${f.n}</td>
     <td class="num">${f.right} · ${f.wrong} · ${f.toss}</td>
-    <td class="num us">${f.ours_right} · ${f.ours_wrong}</td>
+    <td class="num us">${f.ours.right} · ${f.ours.wrong}${mkt ? html`<div class="cmp-p">our odds</div>` : ` · ${f.ours.toss}`}</td>
+    <td class="num">${a.toFixed(3)} vs. <b>${b.toFixed(3)}</b><div class="cmp-p">${Math.abs(a - b) < 0.002 ? "about even" : b < a ? "ours better" : "theirs better"}</div></td>
     <td class="num">${dis ? `${ours} of ${dis}` : "never disagreed"}</td>
-    <td class="num">${f.toss ? `${f.toss_ours_right} of ${f.toss}` : "–"}</td></tr>`; })}</tbody></table></div>`);
+    <td class="num">${f.toss_we_picked ? `${f.toss_ours_right} of ${f.toss_we_picked}` : "–"}</td></tr>`; })}</tbody></table></div>`);
 ```
 
+<p class="caption">"Score" is the Brier score: the average squared gap between the chance given and what happened (1 for a win, 0 for a loss), so a confident miss costs much more than a Toss-up. To score categories as chances, every forecaster's ratings, ours included, are converted the same way: Safe = 97.5%, Likely = 87.5%, Lean = 70%, Toss-up = 50%. That conversion is our convention, not something the outlets publish. PredictIt's prices are chances already, so it's compared with our actual odds. "Their Toss-ups" counts races they rated a Toss-up and we didn't.</p>
+
 ```js
-const big3 = F.filter((f) => f.n >= 300), raters = F.filter((f) => f.kind !== "market");
-const pi = F.find((f) => f.kind === "market");
+const big3 = F.filter((f) => f.n >= 300), pi = F.find((f) => f.kind === "market");
 const list = (xs) => (xs.length < 3 ? xs.join(" and ") : `${xs.slice(0, -1).join(", ")} and ${xs.at(-1)}`);
-const more = big3.filter((f) => f.ours_right > f.right), same = big3.filter((f) => f.ours_right === f.right);
-const tossN = d3.sum(big3, (f) => f.toss), tossOurs = d3.sum(big3, (f) => f.toss_ours_right);
+const ourCat = big3[0]?.ours;
+const better = big3.filter((f) => ourCat.brier_cat < f.brier_cat - 0.002), worse = big3.filter((f) => ourCat.brier_cat > f.brier_cat + 0.002), even = big3.filter((f) => !better.includes(f) && !worse.includes(f));
+const tossN = d3.sum(big3, (f) => f.toss_we_picked), tossOurs = d3.sum(big3, (f) => f.toss_ours_right);
+const raters = F.filter((f) => f.kind !== "market");
 const disN = d3.sum(raters, (f) => f.disagree.length), disOurs = d3.sum(raters, (f) => f.disagree.filter((d) => d.ours_right).length);
-display(html`<p>Against the forecasters who rated nearly every race (${list(big3.map((f) => f.short))}), the trade-off is clear. ${more.length ? `We picked more winners than ${list(more.map((f) => f.short))}${same.length ? ` and as many as ${list(same.map((f) => f.short))}` : ""}, mostly because we always picked a side while they left ${d3.min(big3, (f) => f.toss)} to ${d3.max(big3, (f) => f.toss)} races as Toss-ups.` : ""} But they made fewer wrong calls: ${list(big3.map((f) => `${f.short} ${f.wrong}`))}, against our ${big3[0]?.ours_wrong}. In their Toss-ups, our pick won ${tossOurs} of ${tossN} times (${share(tossOurs, tossN)}), about what a coin would do. And in the ${disN} cases where a rater or model picked a different winner from ours, ${disOurs === 0 ? "they were right every time" : `we were right ${disOurs} time${disOurs === 1 ? "" : "s"} and they were right ${disN - disOurs}`}.${pi ? ` Against PredictIt's final prices, our forecast was ${pi.ours_brier < pi.brier ? "a little more" : "a little less"} accurate (a Brier score of ${pi.ours_brier.toFixed(3)} for us and ${pi.brier.toFixed(3)} for the market on its ${pi.n} called races; lower is better).` : ""}</p>`);
+display(html`<p>Against the forecasters who rated nearly every race (${list(big3.map((f) => f.short))}), the main difference is how often each was willing to pick. We called ${ourCat.toss} of those races Toss-ups; they called ${d3.min(big3, (f) => f.toss)} to ${d3.max(big3, (f) => f.toss)}. So we picked about as many winners (${ourCat.right}, against ${list(big3.map((f) => `${f.short} ${f.right}`))}) and made more wrong calls (${ourCat.wrong}, against ${d3.min(big3, (f) => f.wrong)} to ${d3.max(big3, (f) => f.wrong)}). In the races they left as Toss-ups and we didn't, our pick won ${tossOurs} of ${tossN}, little better than a coin. And in the ${disN} races where a rater or model picked a different winner from ours, ${disOurs === 0 ? "they were right every time" : `we were right ${disOurs} time${disOurs === 1 ? "" : "s"} and they were right ${disN - disOurs}`}.</p>
+<p>Scored as chances, which charges more for a confident miss than for a Toss-up, our ratings come out ${[better.length ? `ahead of ${list(better.map((f) => f.short))}` : "", even.length ? `about even with ${list(even.map((f) => f.short))}` : "", worse.length ? `behind ${list(worse.map((f) => f.short))}` : ""].filter(Boolean).join(", ")}.${pi ? ` Against PredictIt's final prices, our actual odds scored ${pi.ours.brier < pi.brier ? "better" : "worse"} (${pi.ours.brier.toFixed(3)} against ${pi.brier.toFixed(3)} on its ${pi.n} called races).` : ""} The honest summary: at picking winners, the forecast kept pace with the best raters, and it was wrong more often in the close races because it was more willing to commit.</p>`);
 ```
 
 ```js
 const disRows = F.flatMap((f) => f.disagree.map((d) => ({f, d, w: rows.find((x) => x.id === d.id)}))).filter((x) => x.w);
 display(disRows.length ? html`<details><summary>Every race where another forecaster picked a different winner (${disRows.length})</summary>
-  <div class="table-wrap"><table class="wsu-table"><thead><tr><th>Race</th><th>Forecaster</th><th>Their call</th><th>Our forecast</th><th>Winner</th></tr></thead>
+  <div class="table-wrap"><table class="wsu-table"><thead><tr><th>Race</th><th>Forecaster</th><th>Their call</th><th>Our call</th><th>Winner</th></tr></thead>
   <tbody>${disRows.map(({f, d, w}) => { const I = sideInfo(w.r);
-    return html`<tr><td>${raceLink(w.r, raceName(w.r))}</td><td>${f.short}</td><td>${typeof d.theirs === "number" ? `${I.last(d.theirs > 0.5 ? "D" : "R")} ${pct(Math.max(d.theirs, 1 - d.theirs))}` : d.theirs}</td><td>${ourPick(w.r, w)}</td><td>${I.last(w.called)} <span class="miss-chip ${d.ours_right ? "right" : "wrong"}">${d.ours_right ? "we were right" : "they were right"}</span></td></tr>`; })}</tbody></table></div></details>` : html``);
+    return html`<tr><td>${raceLink(w.r, raceName(w.r))}</td><td>${f.short}</td><td>${typeof d.theirs === "number" ? `${I.last(d.theirs > 0.5 ? "D" : "R")} ${pct(Math.max(d.theirs, 1 - d.theirs))}` : d.theirs}</td><td>${d.ours ?? ourPick(w.r, w)}${d.ours ? html`<div class="cmp-p">${ourPick(w.r, w)}</div>` : ""}</td><td>${I.last(w.called)} <span class="miss-chip ${d.ours_right ? "right" : "wrong"}">${d.ours_right ? "we were right" : "they were right"}</span></td></tr>`; })}</tbody></table></div></details>` : html``);
 ```
 
 <p class="caption">Ratings are each outlet's final published ratings, collected before Election Day for our <a href="./compare">Compare page</a>; PredictIt prices are from its free data feed on ${date(sc.forecast_date)}. Margins aren't compared here because most of these forecasters publish categories, not margins.</p>
