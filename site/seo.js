@@ -8,6 +8,10 @@ export const SITE_URL = "https://whoshowsup.net";
 const load = (f) => JSON.parse(readFileSync(new URL(`./src/data/${f}`, import.meta.url), "utf-8"));
 export const races = load("races.json");
 export const top = load("topline.json");
+// after the election: results and the forecast's grades (midterms_2026/export_results.py)
+const sc = (() => { try { return load("scorecard.json"); } catch { return null; } })();
+const scRace = new Map((sc?.races ?? []).map((w) => [w.id, w]));
+const scAsof = sc ? new Date(sc.asof).toLocaleDateString("en-US", {month: "short", day: "numeric", timeZone: "America/New_York"}) : null;
 
 const pctText = (p) => (p >= 0.995 ? ">99%" : p <= 0.005 ? "<1%" : `${Math.round(p * 100)}%`);
 export const fav = (p, d = "Democrats", r = "Republicans") => `${p >= 0.5 ? d : r} ${pctText(Math.max(p, 1 - p))}`;
@@ -31,8 +35,13 @@ const evCount = evCast >= 1e6 ? `${(evCast / 1e6).toFixed(1)} Million` : evCast.
 
 // The site's main pages: title (as shown in search results) and description
 export const PAGES = {
-  "/index": ["2026 Midterm Election Forecast: House, Senate and Governor Odds",
+  "/index": sc ? ["2026 Midterm Results and Forecast Scorecard: House, Senate and Governors",
+    `2026 midterm results race by race next to the Who Shows Up forecast, which picked the winner in ${sc.summary.all.right} of ${sc.summary.all.n} called races (results as of ${scAsof}). Our final odds: House ${fav(top.p_house_d)}, Senate ${fav(top.p_senate_d)}.`]
+    : ["2026 Midterm Election Forecast: House, Senate and Governor Odds",
     `Who Shows Up forecasts the 2026 midterms: House ${fav(top.p_house_d)}, Senate ${fav(top.p_senate_d)} to win control (updated ${updated}). ${tail}`],
+  "/scorecard": ["How Our 2026 Midterm Forecast Did: Scorecard vs. Cook, Sabato and Other Forecasters",
+    sc ? `Our final 2026 forecast picked the winner in ${sc.summary.all.right} of ${sc.summary.all.n} called races. Calibration, misses, margins and a race-by-race comparison with Cook, Sabato, Inside Elections, DDHQ, Silver Bulletin, The Economist and PredictIt.`
+      : "How the Who Shows Up 2026 forecast did against the results and the other forecasters."],
   "/house": ["2026 House Forecast: Every District",
     `Democrats win the House in ${pctText(top.p_house_d)} of our simulations, with about ${Math.round(top.house_median)} seats (updated ${updated}). Odds for all 435 districts.`],
   "/senate": ["2026 Senate Forecast: Every Race",
@@ -77,10 +86,13 @@ export function racePage(r) {
   const {place, d, rep, dTag, rTag, same} = raceFacts(r);
   // Search titles lead with what people search for: the candidates' names and "polls" (Search Console: "chris
   // deluzio", "mullock vs van drew polls", "nj-2 polls"); the race follows. The page's own heading is unchanged.
-  const title = same ? `${place} 2026 forecast` : `${d} vs. ${rep} polls and 2026 forecast (${place})`;
+  const title = same ? `${place} 2026 forecast` : scRace.get(r.race_id)?.called ? `${d} vs. ${rep}: 2026 results and forecast (${place})` : `${d} vs. ${rep} polls and 2026 forecast (${place})`;
   const desc = same
     ? `Only ${r.race_note === "D" ? "Democrats" : "Republicans"} are on the November 2026 ballot here. ${tail}`
-    : `Our forecast: ${fav(r.p_dem, d, rep)} to win (updated ${updated}), with the polls, expected margin and past results. ${tail}`;
+    : scRace.get(r.race_id)?.called
+      ? (() => { const w = scRace.get(r.race_id), win = w.called === "D" ? d : rep, m = w.margin;
+          return `Result: ${win} won${m != null ? ` (${lean(m, dTag, rTag)}, ${w.pct}% counted as of ${scAsof})` : ""}. Our final forecast gave ${fav(r.p_dem, d, rep)}; see how every forecaster called it. ${tail}`; })()
+      : `Our forecast: ${fav(r.p_dem, d, rep)} to win (updated ${updated}), with the polls, expected margin and past results. ${tail}`;
   return {title, desc, ogTitle: same ? place : `${place}: ${d} vs. ${rep}`};
 }
 

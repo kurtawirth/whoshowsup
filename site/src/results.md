@@ -169,7 +169,7 @@ ${html`<p class="kicker">Election night · November 3, 2026${started ? ` · ${li
 ```js
 // how the page works, folded away until asked for
 if (started) display(html`<details class="how-works"><summary>How this page works</summary>
-  <p>Vote counts come from <a href="https://civicapi.org">civicAPI</a>, refreshed every few minutes, next to what our forecast expected this morning. Calls are civicAPI's, not ours. Click any race for its full count: the votes left, what each side needs of them, where the uncounted vote leans, and turnout against what we expected. The page updates on its own.</p>
+  <p>Vote counts come from <a href="https://civicapi.org">civicAPI</a>, refreshed every few minutes, next to what our final forecast expected on Election Day morning. Calls are civicAPI's, not ours. Click any race for its full count: the votes left, what each side needs of them, where the uncounted vote leans, and turnout against what we expected.</p>
   ${odds ? html`<p>${odds.used
     ? `Live odds: in the ${odds.used} race${odds.used === 1 ? "" : "s"} at least 95% counted, results are running about ${Math.abs(odds.shift).toFixed(1)} points more ${odds.shift >= 0 ? "Democratic" : "Republican"} than our forecast nationally (more or less in some regions and states). We move every race still out by that much, count called races for their winners, and play out the rest of the night thousands of times.`
     : "Live odds: until races finish counting, the night's overall shift comes from our forecast."} Each race's own count also moves its odds, more as more of it comes in: where we have county results, we compare the counted counties with our forecast and fill in the counties still out from their benchmarks. The same results always give the same odds.</p>` : ""}
@@ -241,7 +241,7 @@ const TALLY = {
 function controlCard(chamber, p, morning) {
   const side = p >= 0.5 ? "D" : "R";
   const now = side === "D" ? p : 1 - p, then = side === "D" ? morning : 1 - morning;
-  return html`<div class="ctl"><div class="k">${PARTY[side]}' chance of ${chamber} control</div><div class="v">${chip(side)} ${pct(now)}</div><div class="muted">this morning: ${pct(then)}</div></div>`;
+  return html`<div class="ctl"><div class="k">${PARTY[side]}' chance of ${chamber} control</div><div class="v">${chip(side)} ${pct(now)}</div><div class="muted">final forecast: ${pct(then)}</div></div>`;
 }
 // the headline, in words: "Republicans are favored to win the Senate; Democrats are all but certain to win the House"
 function controlLine(chamber, p, c, need) {
@@ -301,9 +301,9 @@ function favNote(d) {
 // the number people come for: our chance now, big; this morning's, small
 const oddsCell = (d) => {
   const morning = `${lastName(d.nameOf(d.fav))} ${pct(Math.max(d.p_dem, 1 - d.p_dem))}`;
-  if (d.called) return html`<span><span class="odds-now">${chip(d.tagOf(d.called))} ${lastName(d.nameOf(d.called))} won</span><div class="adj">this morning: ${morning}</div></span>`;
+  if (d.called) return html`<span><span class="odds-now">${chip(d.tagOf(d.called))} ${lastName(d.nameOf(d.called))} won</span><div class="adj">final forecast: ${morning}</div></span>`;
   const p = d.pNow ?? d.p_dem, side = p >= 0.5 ? "D" : "R";
-  return html`<span><span class="odds-now">${chip(d.tagOf(side))} ${lastName(d.nameOf(side))} ${pct(Math.max(p, 1 - p))}</span>${d.pNow != null ? html`<div class="adj">this morning: ${morning}</div>` : ""}</span>`;
+  return html`<span><span class="odds-now">${chip(d.tagOf(side))} ${lastName(d.nameOf(side))} ${pct(Math.max(p, 1 - p))}</span>${d.pNow != null ? html`<div class="adj">final forecast: ${morning}</div>` : ""}</span>`;
 };
 const COLUMNS = [
   {key: "label", label: "Race", sort: true, sortValue: (d) => `${d.state_name} ${String(d.district ?? 0).padStart(2, "0")}`, render: (d) => html`<span class="rd-name">${raceName(d)}</span>`},
@@ -435,7 +435,7 @@ function fillTurnout(r) {
   return g == null ? t.surface : TURNOUT_STEPS.find(([lo]) => g >= lo)[1];
 }
 const turnoutText = (g) => `Turnout: ${Math.abs(g) < 0.005 ? "as expected" : `${Math.round(Math.abs(g) * 100)}% ${g > 0 ? "above" : "below"} expected`}`;
-const MAP_MODES = [["lead", "Who's ahead", fillLead], ["chance", "Chance to win now", fillChance], ["gap", "Against our forecast", fillGap], ["turnout", "Turnout vs. expected", fillTurnout], ["morning", "This morning's forecast", fillMorning]];
+const MAP_MODES = [["lead", "Who's ahead", fillLead], ["chance", "Chance to win now", fillChance], ["gap", "Against our forecast", fillGap], ["turnout", "Turnout vs. expected", fillTurnout], ["morning", "Our final forecast", fillMorning]];
 function legend(mode, office) {
   const sw = (c, label) => html`<span><i style="background:${c}"></i>${label}</span>`;
   const called = mode === "morning" ? "" : office === "HOUSE" ? html`<span><b class="call-dot"></b>called</span>` : html`<span><b class="call-check">✓</b>called</span>`;
@@ -446,10 +446,10 @@ function legend(mode, office) {
 }
 const MAP_NOTES = {
   lead: (off) => `Solid colors with a ${off === "HOUSE" ? "dot" : "check mark"} are races civicAPI has called; lighter ones, who leads the count so far; solid with no mark, seats where only one party is on the ballot.`,
-  chance: "Our live chance to win: this morning's forecast, moved by each race's own count and by the races that have finished counting. Called races count for their winners.",
+  chance: "Our live chance to win: our final forecast, moved by each race's own count and by the races that have finished counting. Called races count for their winners.",
   gap: "Each race's count against what our forecast expected",
   turnout: (off) => `Where each race's vote looks set to finish, from its count and civicAPI's estimate of how much is in, against what we expected: ${off === "HOUSE" ? "the district's 2024 vote, scaled by its state's drop-off from 2024 to 2022" : "the state's 2022 vote"}. Votes for the two major parties only, and a rough guide, since which ballots are counted first varies by state.`,
-  morning: "Our forecast as of this morning, before any votes were counted."
+  morning: "Our final forecast, from Election Day morning, before any votes were counted."
 };
 // a map with its five views; clicking a state or district opens that race in `table`. With offices, the map
 // also switches between the Senate, the House and governors (the Overview tab).
@@ -629,7 +629,7 @@ function latestCalls() {
     const go = html`<button type="button" class="call-race">${raceName(d)}</button>`;
     go.onclick = () => openRace(ui.tables.all, d.race_id);
     const gave = d.called === "D" ? d.p_dem : 1 - d.p_dem;
-    return html`<li><span class="when">${d.x.called_at ? etTime(new Date(d.x.called_at)).replace(" ET", "") : "Just in"}</span><span>${chip(d.tagOf(d.called))} <b>${lastName(d.nameOf(d.called))}</b> wins ${go}${d.flipped ? html` <span class="pill-flip">Flip</span>` : ""}<span class="muted"> · we gave ${pct(gave)} this morning</span></span></li>`;
+    return html`<li><span class="when">${d.x.called_at ? etTime(new Date(d.x.called_at)).replace(" ET", "") : "Just in"}</span><span>${chip(d.tagOf(d.called))} <b>${lastName(d.nameOf(d.called))}</b> wins ${go}${d.flipped ? html` <span class="pill-flip">Flip</span>` : ""}<span class="muted"> · our final forecast gave them ${pct(gave)}</span></span></li>`;
   };
   const list = html`<ul></ul>`;
   const toggle = html`<button type="button" class="more-btn calls-more"></button>`;
@@ -729,7 +729,7 @@ function scorecard() {
       <div class="s"><div class="k">Our favorite won</div><div class="v">${right.length} of ${calledRows.length}</div><div class="muted">${pct(right.length / calledRows.length)} of called races${upsets.length ? `; ${upsets.length} upset${upsets.length === 1 ? "" : "s"}` : ""}</div></div>
       <div class="s"><div class="k">Inside our 80% range</div><div class="v">${settled.length ? `${inRange.length} of ${settled.length}` : "–"}</div><div class="muted">${share != null ? `${pct(share)} of races 95%+ counted; a well-calibrated forecast lands about 80%` : "races 95%+ counted"}</div></div>
     </div>`,
-    html`<p class="caption">Every race civicAPI has called, next to what we said this morning. "We gave them" is the chance our forecast gave the winner before any votes were counted; an upset is a race our underdog won. Results are as counted so far, and margins are between the two main sides. ${outside.length ? `${outside.length} race${outside.length === 1 ? "" : "s"} finished outside our 80% range so far.` : ""}</p>`,
+    html`<p class="caption">Every race civicAPI has called, next to what our final forecast said. "We gave them" is the chance our forecast gave the winner before any votes were counted; an upset is a race our underdog won. Results are as counted so far, and margins are between the two main sides. ${outside.length ? `${outside.length} race${outside.length === 1 ? "" : "s"} finished outside our 80% range so far.` : ""}</p>`,
     tbl];
 }
 const caption = () => html`<p class="caption">"vs. our forecast": the bar is the range our forecast gave an 80% chance, the tick our most likely result, and the dot the count so far (early counts can swing a lot as different kinds of ballots come in). Margins are between the two main sides only.</p>`;

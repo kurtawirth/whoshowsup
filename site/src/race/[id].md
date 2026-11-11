@@ -14,6 +14,10 @@ const finePrint = FileAttachment("../data/fine_print.json").json();
 const benchFile = FileAttachment("../data/benchmarks.json");
 import {raceLive, countyKey, countiesOf, liveOdds, raceMath} from "../components/live.js";
 import {nightRace, racePanel} from "../components/night.js";
+import {resultBox} from "../components/results.js";
+// after the election: the result next to our final forecast and the other forecasters' (export_results.py)
+const scorecard = FileAttachment("../data/scorecard.json").json();
+const outletsData = FileAttachment("../data/outlets.json").json();
 // our poller's published copy of the night's counts: the fallback when civicAPI can't be reached directly
 const publishedLive = FileAttachment("../data/live.json").json();
 ```
@@ -29,17 +33,24 @@ function ordinal(n) { const s = ["th", "st", "nd", "rd"], v = n % 100; return n 
 const first = (s) => String(s ?? "").split(";")[0].trim();
 const {d: dName, r: rName, dTag, rTag} = sides(r);
 const fixed = r.race_type === "same_party";
+const res = scorecard.races.find((x) => x.id === id) ?? null;
+const won = res?.called ? res : null;
 const heading = fixed ? `${place} ${officeName === "House" ? "House" : officeName} race`
   : `${place}${r.office === "HOUSE" ? "" : ` ${officeName}${r.special ? " special election" : ""}`}`;
 ```
 
 ```js
-display(html`<p class="kicker"><a href="${link(r.office === "HOUSE" ? "house" : r.office === "SEN" ? "senate" : "governors")}">${officeName}</a> · ${r.state_name} · Updated ${date(top.forecast_date)}</p>`);
+display(html`<p class="kicker"><a href="${link(r.office === "HOUSE" ? "house" : r.office === "SEN" ? "senate" : "governors")}">${officeName}</a> · ${r.state_name} · ${fixed ? `Updated ${date(top.forecast_date)}` : `Final forecast ${date(top.forecast_date)}`}</p>`);
 ```
 
 ```js
 display(fixed ? html`<h1 class="race-title">${heading}</h1>`
   : html`<h1 class="race-title">${heading}:<span class="matchup">${dName} vs. ${rName}</span></h1>`);
+```
+
+```js
+// The result, at the very top once the race is called
+if (won) display(resultBox(r, won, scorecard, {outletMeta: outletsData.outlets}));
 ```
 
 ```js
@@ -57,7 +68,7 @@ display(fixed ? html`<h1 class="race-title">${heading}</h1>`
     const d = nightRace(r, x, {bench, pNow: odds.p[id], mNow: odds.mFinal[id]});
     const when = night?.at ? new Date(night.at) : publishedLive.asof ? new Date(publishedLive.asof) : null;
     display(html`<div class="callout live-box race-detail">
-      <b>${d.called ? `${d.nameOf(d.called)} wins` : (x.d ?? 0) + (x.r ?? 0) ? "Election results: counting" : "Election night"}</b>
+      <b>${won ? "The count" : d.called ? `${d.nameOf(d.called)} wins` : (x.d ?? 0) + (x.r ?? 0) ? "Election results: counting" : "Election night"}</b>
       ${racePanel(d, counties, {link: false, countyTable: false})}
       <p class="muted">${publishedLive.mode === "simulation" ? "Rehearsal: made-up results for testing. " : ""}Results from <a href="https://civicapi.org">civicAPI</a>${when ? `, updated ${when.toLocaleTimeString("en-US", {timeZone: "America/New_York", hour: "numeric", minute: "2-digit"})} ET` : ""}; calls are civicAPI's. <a href="${link("results")}">All results</a></p></div>`);
   }
@@ -69,6 +80,7 @@ if (fixed) {
   display(html`<p class="dek">Only ${r.race_note === "D" ? "Democrats" : "Republicans"} are on the November ballot here (${String(r.dem_candidate ?? r.rep_candidate ?? "").replaceAll(";", " and")}), so the seat is certain to stay ${r.race_note === "D" ? "Democratic" : "Republican"}.</p>`);
 } else {
   const pD = r.p_dem, lead = pD >= 0.5;
+  if (won) display(html`<h2>Our final forecast</h2>`);
   display(html`<div class="race-head">
     <div class="race-cand"><div class="name">${dName} <span class="party-chip ${dTag === "I" ? "i" : "d"}">${dTag}</span></div>
       <div class="pct" style="color:${dTag === "I" ? t.ind : t.dem}">${pctPair(pD)[0]}</div>
@@ -79,7 +91,9 @@ if (fixed) {
       <div class="role">${r.inc_side === -1 ? "Incumbent" : ""}</div></div>
   </div>`);
   display(probBar(pD, {dLabel: dName, rLabel: rName, dColor: dTag === "I" ? t.ind : t.dem, rColor: rTag === "I" ? t.ind : t.rep}));
-  display(html`<p class="dek" style="margin-top:18px">${lead ? dName : rName} wins in ${pct(Math.max(pD, 1 - pD))} of our simulations, ${oddsText(Math.max(pD, 1 - pD))}. The most likely result is ${margin(r.margin_median).replace("D+", `${dTag}+`)}. ${ratingSentence(r)}</p>`);
+  display(won
+    ? html`<p class="dek" style="margin-top:18px">Our final forecast had ${lead ? dName : rName} winning ${pct(Math.max(pD, 1 - pD))} of our simulations, ${oddsText(Math.max(pD, 1 - pD))}. The most likely result was ${margin(r.margin_median).replace("D+", `${dTag}+`).replace("R+", `${rTag}+`)}, and we rated it ${r.rating}.</p>`
+    : html`<p class="dek" style="margin-top:18px">${lead ? dName : rName} wins in ${pct(Math.max(pD, 1 - pD))} of our simulations, ${oddsText(Math.max(pD, 1 - pD))}. The most likely result is ${margin(r.margin_median).replace("D+", `${dTag}+`)}. ${ratingSentence(r)}</p>`);
   if (r.race_type === "jungle" && r.state_po === "LA") display(html`<div class="callout"><b>How this race works.</b> Louisiana's House races have no party primaries this year: every candidate, from every party, is on the November 3 ballot. If no one wins a majority, the top two finishers, who can be from the same party, meet in a runoff on December 12. Our forecast is for which party ends up with the seat; each party's chance counts all of its candidates together.</div>`);
   if (r.tipping_point != null && (r.office === "SEN" || r.office === "HOUSE")) {
     const chamber = r.office === "SEN" ? "Senate" : "House";
@@ -113,7 +127,10 @@ if (fixed) {
 const goal = r.office === "HOUSE" ? `to win ${place}` : r.office === "SEN" ? `to win ${r.state_name}'s Senate ${r.special ? "special election" : "race"}` : `to win ${r.state_name}'s race for governor`;
 const favP = Math.max(r.p_dem, 1 - r.p_dem), favName = r.p_dem >= 0.5 ? dName : rName;
 const an = /^(8|11|18)/.test(pct(favP)) ? "an" : "a";
-display(shareBar({path: `/race/${id}`, text: fixed
+const winName = won ? (won.called === "D" ? dName : rName) : null;
+display(shareBar({path: `/race/${id}`, label: won ? "Share this result" : "Share this forecast", text: won
+  ? `${winName} won ${heading}. The Who Shows Up 2026 forecast had given ${favName} ${an} ${pct(favP)} chance.`
+  : fixed
   ? `Only ${r.race_note === "D" ? "Democrats" : "Republicans"} are on the ballot in ${heading}, so the seat is certain to stay ${r.race_note === "D" ? "Democratic" : "Republican"}. From the Who Shows Up 2026 forecast:`
   : `The Who Shows Up 2026 forecast gives ${favName} ${an} ${pct(favP)} chance ${goal}.`}));
 function oddsText(p) { return p >= 0.95 ? "a strong favorite" : p >= 0.8 ? "a clear favorite" : p >= 0.6 ? "a modest favorite" : "close to a coin flip"; }
@@ -139,8 +156,9 @@ display(html`<aside class="subscribe-box">
 
 ```js
 if (!fixed && det.quantiles) {
-  display(html`<h2>The range of outcomes</h2><p class="caption">Where the final margin lands across 20,000 simulations. The darker band holds the middle half of outcomes; the lighter band holds 90%.</p>`);
-  display(marginRange(det.quantiles, {width: Math.min(width, 900)}));
+  const showActual = won?.graded || (won && won.margin != null && r.race_type === "standard" && (won.d ?? 0) > 0 && (won.r ?? 0) > 0);
+  display(html`<h2>The range of outcomes</h2><p class="caption">Where the final margin landed across 20,000 simulations in our final forecast. The darker band holds the middle half of outcomes; the lighter band holds 90%.${showActual ? ` The black line is the actual result${won.graded ? "" : ` so far (${won.pct}% counted)`}.` : ""}</p>`);
+  display(marginRange(det.quantiles, {width: Math.min(width, 900), actual: showActual ? won.margin : null}));
 }
 ```
 

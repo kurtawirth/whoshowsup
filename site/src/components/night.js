@@ -71,7 +71,7 @@ export function racePanel(d, counties, {link = true, countyTable = true} = {}) {
     if (m.pct) out.push(html`<div class="rn-in"><b>${m.pct < 1 ? "Under 1%" : `${Math.round(m.pct)}%`} of the vote is in</b> <span class="muted">(civicAPI's estimate)</span></div>`);
     out.push(html`<div class="rn-head"><b>${k(m.counted)}</b> votes counted of about <b>${k(f.total)}</b> we now expect</div>`);
     out.push(html`<div class="rn-race">${order.map(bar)}</div>`);
-    out.push(html`<div class="rn-key"><span><b class="sw"></b>counted so far</span>${d.called ? "" : html`<span><i class="sw"></i>where we now expect them to finish</span>`}<span><u class="sw"></u>${k(f.line)} to win: half the ${k(f.total)} votes we now expect${f.adjusted ? ` (we expected ${k(m.expected)} this morning; the count's pace has moved it)` : ""}</span></div>`);
+    out.push(html`<div class="rn-key"><span><b class="sw"></b>counted so far</span>${d.called ? "" : html`<span><i class="sw"></i>where we now expect them to finish</span>`}<span><u class="sw"></u>${k(f.line)} to win: half the ${k(f.total)} votes we now expect${f.adjusted ? ` (we expected ${k(m.expected)} in our final forecast; the count's pace has moved it)` : ""}</span></div>`);
   }
 
   // three numbers to scan
@@ -119,11 +119,11 @@ export function racePanel(d, counties, {link = true, countyTable = true} = {}) {
 /** The number people come for: our chance now, big, with this morning's beside it. */
 export function chanceNow(d) {
   const morning = `${lastName(d.nameOf(d.fav))} ${pct(Math.max(d.p_dem, 1 - d.p_dem))}`;
-  if (d.called) return html`<div class="rn-odds"><div class="k">Result</div><div class="v">${chip(d.tagOf(d.called))} ${d.nameOf(d.called)} won</div><div class="n">This morning we gave ${morning}</div></div>`;
+  if (d.called) return html`<div class="rn-odds"><div class="k">Result</div><div class="v">${chip(d.tagOf(d.called))} ${d.nameOf(d.called)} won</div><div class="n">Our final forecast gave ${morning}</div></div>`;
   const p = d.pNow ?? d.p_dem, side = p >= 0.5 ? "D" : "R";
   return html`<div class="rn-odds"><div class="k">${d.pNow != null ? "Chance to win now" : "Our forecast"}</div>
     <div class="v">${chip(d.tagOf(side))} ${lastName(d.nameOf(side))} ${pct(Math.max(p, 1 - p))}</div>
-    ${d.pNow != null ? html`<div class="n">This morning: ${morning}. Live odds move with the count here and in races that have finished.</div>` : ""}</div>`;
+    ${d.pNow != null ? html`<div class="n">Our final forecast: ${morning}. Live odds move with the count here and in races that have finished.</div>` : ""}</div>`;
 }
 // the full race page, and a button that copies its address (the race page carries the same live count)
 const raceButton = (d) => {

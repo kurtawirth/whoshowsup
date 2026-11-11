@@ -683,3 +683,47 @@ a.night-banner, a.night-banner:visited { color: var(--surface); }
 .night-banner b { font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; background: color-mix(in srgb, var(--surface) 18%, transparent); white-space: nowrap; }
 .night-banner span:last-child { margin-left: auto; font-size: 18px; }
 .night-banner:hover { opacity: .92; }
+
+/* After the election: a race's result next to the forecasts (components/results.js) */
+.result-box { font-family: var(--sans); background: var(--card); box-shadow: 0 0 0 1px var(--card-ring); border-radius: 14px; padding: 18px 22px 14px; margin: 18px 0 22px; max-width: 860px; }
+.result-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; font-size: 22px; }
+.result-head b { font-weight: 800; letter-spacing: -0.01em; }
+.result-tag { font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-left: auto; }
+.result-tag.right { background: color-mix(in srgb, var(--turn-high2) 16%, transparent); color: var(--turn-high3); }
+.result-tag.wrong { background: color-mix(in srgb, var(--turn-low2) 16%, transparent); color: var(--turn-low2); }
+.result-tag.none { background: var(--hair); color: var(--ink-2); }
+.result-line { font-size: 15px; color: var(--ink-2); margin: 8px 0 12px; max-width: none; }
+.result-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px 28px; padding: 12px 0; border-top: 1px solid var(--hair); }
+.result-box .k { font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: .05em; font-weight: 600; }
+.result-box .v { font-size: 20px; font-weight: 700; margin-top: 2px; }
+.result-raters { border-top: 1px solid var(--hair); padding-top: 12px; }
+.result-raters ul { list-style: none; padding: 0; margin: 8px 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 6px 24px; }
+.result-raters li { display: flex; align-items: center; gap: 10px; font-size: 14px; max-width: none; }
+.result-raters .rr-name { flex: 1; min-width: 0; color: var(--ink-2); }
+.result-raters .rr-p { font-weight: 600; }
+.rr-mark { width: 18px; text-align: center; font-weight: 800; }
+.g-right .rr-mark { color: var(--turn-high2); } .g-wrong .rr-mark { color: var(--turn-low2); } .g-none .rr-mark { color: var(--ink-3); }
+.result-more { font-size: 14px; margin: 12px 0 0; }
+@media (max-width: 640px) { .result-tag { margin-left: 0; } .result-head { font-size: 19px; } }
+
+/* overview and scorecard: results cards */
+.results-banner, .results-banner:hover, .results-banner:visited, .results-banner span, .results-banner b { color: var(--surface); }
+.results-banner { display: flex; align-items: center; gap: 12px; margin: 18px 0 0; padding: 12px 16px; border-radius: 12px; background: var(--ink); color: var(--surface); font: 600 15px/1.35 var(--sans); text-decoration: none; }
+.results-banner b { font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; background: color-mix(in srgb, var(--surface) 18%, transparent); white-space: nowrap; }
+.results-banner span:last-child { margin-left: auto; font-size: 18px; }
+.seat-split { display: flex; align-items: baseline; gap: 6px; font-family: var(--sans); font-size: 44px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; margin: 12px 0 6px; }
+.seat-split small { font-size: 15px; font-weight: 700; color: var(--ink-3); letter-spacing: 0; }
+.seat-split .dash { color: var(--ink-3); font-weight: 400; }
+.seat-scale { position: relative; height: 34px; margin: 14px 0 2px; }
+.seat-scale .track { position: absolute; left: 0; right: 0; top: 14px; height: 6px; border-radius: 3px; background: var(--hair); }
+.seat-scale .band { position: absolute; top: 10px; height: 14px; border-radius: 4px; background: color-mix(in srgb, var(--ink-3) 35%, transparent); }
+.seat-scale .med { position: absolute; top: 6px; width: 2px; height: 22px; background: var(--ink-2); }
+.seat-scale .act { position: absolute; top: 4px; width: 14px; height: 26px; margin-left: -7px; border-radius: 4px; border: 2px solid var(--surface); }
+.seat-scale-lab { position: relative; height: 18px; font: 600 12px var(--sans); color: var(--ink-3); }
+.seat-scale-lab span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+.score-big { font-family: var(--sans); font-size: 15px; color: var(--ink-2); }
+.miss-chip { display: inline-block; font: 700 12px var(--sans); padding: 1px 7px; border-radius: 999px; }
+.miss-chip.right { background: color-mix(in srgb, var(--turn-high2) 16%, transparent); color: var(--turn-high3); }
+.miss-chip.wrong { background: color-mix(in srgb, var(--turn-low2) 18%, transparent); color: var(--turn-low2); }
+.fc-table td.us, .fc-table th.us { background: color-mix(in srgb, var(--accent) 7%, transparent); }
+.result-box li, .result-box p, .result-box ul { font-family: var(--sans); }

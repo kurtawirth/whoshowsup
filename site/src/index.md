@@ -14,6 +14,9 @@ const track = FileAttachment("data/track_record.json").json();
 const changes = FileAttachment("data/changes.json").json();
 const zipFile = FileAttachment("data/zip_lookup.csv");
 import {zipLookup} from "./components/zip.js";
+import {seatCard} from "./components/results.js";
+// after the election: results and the scorecard (midterms_2026/export_results.py)
+const sc = FileAttachment("data/scorecard.json").json();
 ```
 
 ```js
@@ -31,38 +34,54 @@ function headlineFor(pH, pS) {
   const one = (x, name) => (x.lead ? `${x.lead} ${x.verb} the ${name}` : `The ${name} is a toss-up`);
   return `${one(h, "House")}. ${one(s, "Senate")}.`;
 }
-const headline = headlineFor(top.p_house_d, top.p_senate_d);
+const headline = headlineFor(top.p_house_d, top.p_senate_d).replace(/are (strong|clear) favorites to win/g, "were $1 favorites to win").replace(/are favored to win/g, "were favored to win").replace(/have a slight edge in/g, "had a slight edge in").replace(/is a toss-up/g, "was a toss-up");
 const daysLeft = Math.round((new Date(`${top.election_day}T12:00:00`) - new Date(`${top.forecast_date}T12:00:00`)) / 864e5);
 ```
 
 ```js
-// Election week: a banner pointing to the live results (written from the reader's clock, so it changes on its own)
-{
-  const now = Date.now(), open = Date.parse("2026-11-03T23:00:00Z"), day = Date.parse("2026-11-03T05:00:00Z");
-  if (now < Date.parse("2026-11-08T05:00:00Z")) {
-    const text = now >= open ? "Election night: live results and odds, race by race"
-      : now >= day ? "Election night is tonight: live results and odds for every race from 6 p.m. Eastern"
-      : now >= day - 864e5 ? "Election night is tomorrow: live results and odds for every race from 6 p.m. Eastern Tuesday"
-      : "Election night: live results and odds for every race, from 6 p.m. Eastern on November 3";
-    const a = html`<a class="night-banner" href="${link("results")}"><b>${now >= open ? "Live" : "Tuesday"}</b><span>${text}</span><span aria-hidden="true">→</span></a>`;
-    display(a);
-  }
-}
+// After the election: the headline, written from the calls (majorities: 218 House seats; 51 Senate seats for
+// Democrats or 50 for Republicans, since the vice president breaks ties)
+const C = sc.chambers, S = sc.summary;
+function winner(c, dNeed, rNeed) { return c.d_called >= dNeed ? "Democrats" : c.r_called >= rNeed ? "Republicans" : null; }
+const hWin = winner(C.HOUSE, 218, 218), sWin = winner(C.SEN, 51, 50);
+const resultHeadline = hWin && hWin === sWin ? `${hWin} won the House and the Senate.`
+  : `${hWin ? `${hWin} won the House` : "The House is still undecided"}. ${sWin ? `${sWin} won the Senate` : "The Senate is still undecided"}.`;
+const asofText = new Date(sc.asof).toLocaleDateString("en-US", {month: "short", day: "numeric", year: "numeric", timeZone: "America/New_York"});
+const missesN = S.all.n - S.all.right;
+const missBy = {D: S.fav_D.n - S.fav_D.won, R: S.fav_R.n - S.fav_R.won};
+const favSide = (p) => `${p >= 0.5 ? "Democrats" : "Republicans"} ${pct(Math.max(p, 1 - p))}`;
 ```
 
-<p class="kicker">2026 midterm forecast · Updated ${date(top.forecast_date)} · ${daysLeft} day${daysLeft === 1 ? "" : "s"} to Election Day</p>
+<p class="kicker">2026 midterm results · Updated ${asofText}</p>
 
-# ${headline}
+# ${resultHeadline}
+
+```js
+const odds = (top.p_house_d >= 0.5) === (top.p_senate_d >= 0.5)
+  ? `gave ${top.p_house_d >= 0.5 ? "Democrats" : "Republicans"} a ${pct(Math.max(top.p_house_d, 1 - top.p_house_d))} chance of winning the House and ${pct(Math.max(top.p_senate_d, 1 - top.p_senate_d))} for the Senate`
+  : `had ${favSide(top.p_house_d)} to win the House and ${favSide(top.p_senate_d)} to win the Senate`;
+display(html`<p class="dek">Our final forecast ${odds}. It picked the winner in ${S.all.right} of the ${S.all.n} races called so far. ${missBy.D === 0 || missBy.R === 0
+  ? `All ${missesN} misses were ${missBy.D === 0 ? "Republican" : "Democratic"} favorites who lost: it saw which way the election was going, and underestimated how far.`
+  : `Of its ${missesN} misses, ${missBy.R} were Republican favorites and ${missBy.D} Democratic favorites.`}</p>`);
+display(html`<a class="results-banner" href="${link("scorecard")}"><b>Scorecard</b><span>How our forecast did, race by race, and against the other forecasters</span><span aria-hidden="true">→</span></a>`);
+```
+
+```js
+display(html`<div class="hero-grid">${seatCard("House", C.HOUSE, "House", {href: link("scorecard")})}${seatCard("Senate", C.SEN, "Senate", {href: link("scorecard")})}${seatCard("Governors", C.GOV, "Governors", {href: link("scorecard")})}</div>`);
+display(html`<p class="caption">Seats as called by civicAPI. ${C.HOUSE.uncalled + C.SEN.uncalled + C.GOV.uncalled} races are still uncalled; follow them on the <a href="${link("results")}">results page</a>.</p>`);
+```
+
+```js
+display(shareBar({path: "/", label: "Share", text: `${resultHeadline} The Who Shows Up forecast picked the winner in ${S.all.right} of ${S.all.n} called races. How it did:`}));
+```
+
+## Our final forecast
+
+<p class="caption">The forecast as it stood on ${date(top.forecast_date)}, the morning of Election Day. It stays up unchanged, so anyone can check it against the results. Each race page now shows the result next to our forecast.</p>
 
 <p class="dek">Who Shows Up forecasts every House, Senate and governor race by asking whose voters will actually turn out. It reads the electorate's enthusiasm from more than 100 special elections, blends it with polls and fundamentals, and simulates the election 20,000 times.</p>
 
-```js
-{
-const side = (p) => (p >= 0.5 ? ["Democrats", p] : ["Republicans", 1 - p]);
-const [hp, hv] = side(top.p_house_d), [sp, sv] = side(top.p_senate_d);
-display(shareBar({path: "/", text: `The Who Shows Up 2026 midterm forecast: ${hp} have ${/^(8|11|18)/.test(pct(hv)) ? "an" : "a"} ${pct(hv)} chance to win the House, and ${sp === hp ? "" : `${sp} `}${/^(8|11|18)/.test(pct(sv)) ? "an" : "a"} ${pct(sv)} chance to win the Senate.`}));
-}
-```
+<h3>${headline}</h3>
 
 ```js
 const t = (dark, tokens());
@@ -119,7 +138,7 @@ display(html`<div class="hero-grid">
 
 ## Your races
 
-<p class="caption">Enter your ZIP code to see the House, Senate and governor races on your ballot, our odds in each, and where a single vote is likeliest to decide control. It uses the new district maps where states redrew them for 2026.</p>
+<p class="caption">Enter your ZIP code to see the House, Senate and governor races on your ballot, our final odds in each, and where a single vote is likeliest to decide control. It uses the new district maps where states redrew them for 2026.</p>
 
 ```js
 display(zipLookup(races, zipFile));
@@ -178,40 +197,6 @@ const strongest = [...reads].sort((a, b) => b.dem_margin - a.dem_margin)[0];
 display(html`<p>Three independent readings of the national mood, each corrected for how it has missed before, are blended by how accurate they have historically been. ${strongest.read === "specials"
   ? "Special-election results, our main turnout signal, currently point to the most Democratic environment of the three."
   : `Right now the ${readLabel[strongest.read].toLowerCase()} reading is the most favorable to Democrats.`} <a href="./national">See the national picture →</a></p>`);
-```
-
-```js
-// What moved since the previous daily run, and why (changes.json; see export_site_data.changes)
-const ch = changes;
-const office = {SEN: "Senate", GOV: "governor", HOUSE: "House"};
-const nameOf = (r) => (r.office === "HOUSE" ? `House: ${r.label}` : `${r.state_name} ${office[r.office]}${r.special ? " (special)" : ""}`);
-const last = (s) => String(s).trim().split(/\s+/).filter((w) => !/^(Jr\.?|Sr\.?|I{2,3})$/.test(w)).pop();
-const favText = (p) => `${p >= 0.5 ? "Democrats" : "Republicans"} ${pct(Math.max(p, 1 - p))}`;
-function why(x, r) {
-  const s = sides(r), toward = (v) => last(v > 0 ? s.d : s.r);
-  const dm = x.m1 - x.m0;
-  const label = {
-    polls: x.new_polls ? `${x.new_polls} new poll${x.new_polls === 1 ? "" : "s"}${x.pollsters.length ? ` (${x.pollsters.join(", ")})` : ""}` : "older polls counting for less as they age",
-    national: "our national estimate", money: "new campaign-finance reports", candidates: "candidate factors", other: "other model inputs"};
-  const parts = Object.entries(x.parts).filter(([k, v]) => Math.abs(v) >= Math.max(0.3, 0.25 * Math.abs(dm)))
-    .sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]));
-  const withMove = parts.filter(([, v]) => Math.sign(v) === Math.sign(dm)), against = parts.filter(([, v]) => Math.sign(v) !== Math.sign(dm));
-  if (!withMove.length) return "";
-  const list = (xs) => xs.map(([k]) => label[k]).join(" and ");
-  return ` Driven mostly by ${list(withMove)}, which moved our expected margin ${Math.abs(dm).toFixed(1)} points toward ${toward(dm)}${against.length ? `, partly offset by ${list(against)}` : ""}.`;
-}
-const byId = new Map(races.map((r) => [r.race_id, r]));
-if (ch && ch.date) {
-  const items = ch.races.filter((x) => byId.has(x.race_id)).map((x) => {
-    const r = byId.get(x.race_id), s = sides(r), up = x.p1 > x.p0;
-    const who = last(up ? s.d : s.r), a = up ? x.p0 : 1 - x.p0, b = up ? x.p1 : 1 - x.p1;
-    return html`<li><a href="./race/${r.race_id}">${nameOf(r)}</a>: ${who}'s chance rose from ${pct(a)} to ${pct(b)}.${why(x, r)}</li>`;
-  });
-  display(html`<h2>What changed since ${date(ch.prev)}</h2>
-  <p>House: ${favText(ch.house1)} (was ${favText(ch.house0)}). Senate: ${favText(ch.senate1)} (was ${favText(ch.senate0)}). National estimate: ${margin(ch.nat1)} (was ${margin(ch.nat0)}).</p>
-  ${items.length ? html`<ul class="changes">${items}</ul>${ch.moved > items.length ? html`<p class="caption">${ch.moved} races moved 2 points or more; the biggest moves are shown.</p>` : ""}`
-    : html`<p class="caption">No race's odds moved by 2 points or more.</p>`}`);
-}
 ```
 
 ## How the forecast has moved

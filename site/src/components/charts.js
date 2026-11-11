@@ -78,7 +78,7 @@ export function marginRange(q, {width, height = 110, actual = null}) {
   // q = margin at the 5th, 10th, ..., 95th percentiles (19 values)
   const t = tokens();
   const at = (p) => q[Math.round(p / 5) - 1];
-  const lo = Math.min(at(5), -5), hi = Math.max(at(95), 5);
+  const lo = Math.min(at(5), -5, actual ?? 0), hi = Math.max(at(95), 5, actual ?? 0);
   const pad = (hi - lo) * 0.08;
   const bands = [
     {a: at(5), b: at(95), label: "90% of simulations", h: 18, o: 0.18},
@@ -106,6 +106,12 @@ export function marginRange(q, {width, height = 110, actual = null}) {
       Plot.text([med], {x: (d) => d, y: 0.9, text: (d) => `Median ${margin(d)}`, fill: t.ink, fontWeight: 700, fontSize: 13}),
       Plot.text([bands[0]], {x: "a", y: 0.12, text: () => margin(at(5)), fill: t["ink-3"], textAnchor: "end"}),
       Plot.text([bands[0]], {x: "b", y: 0.12, text: () => margin(at(95)), fill: t["ink-3"], textAnchor: "start"}),
+      // after the election: the actual result, as a black line with its label above
+      ...(actual == null ? [] : [
+        Plot.ruleX([actual], {y1: 0.12, y2: 0.82, stroke: t.ink, strokeWidth: 2.5}),
+        Plot.text([actual], {x: (d) => d, y: 1.02, text: (d) => `Result ${margin(d)}`, fill: t.ink, fontWeight: 700, fontSize: 13,
+          textAnchor: Math.abs(actual - med) < (hi - lo) * 0.18 ? (actual > med ? "end" : "start") : "middle"})
+      ]),
       // Hover zones follow the bands: the dark middle reports the 50% range, the light ends the 90% range.
       Plot.tip(zones, Plot.pointerX({x: "x", y: 0.5, maxRadius: 12, title: "tip"}))
     ]

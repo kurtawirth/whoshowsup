@@ -33,6 +33,7 @@ ${jsonLd(path)}
 
 const nav = [
   ["/", "Overview"],
+  ["/scorecard", "How we did"],
   ["/house", "House"],
   ["/senate", "Senate"],
   ["/governors", "Governors"],
